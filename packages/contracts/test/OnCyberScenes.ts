@@ -74,6 +74,16 @@ describe('OnCyberScenes', function () {
 
   })
 
+  it('Should failed to get uri of not existing token', async () => {
+
+    await expect(
+      memory.contract
+        .connect(memory.other)
+        .uri(0)
+    ).to.be.revertedWith('ERC1155URIStorage: tokenId not exist')
+
+  })
+
   it("can't mint with invalid signature", async () => {
     const uri = 'Qmsfzefi221ifjzifj'
     const amount = '1'
