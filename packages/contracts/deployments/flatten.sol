@@ -2586,7 +2586,6 @@ abstract contract ERC1155URIStorage is ERC1155 {
 
 // File contracts/OnCyberScenes.sol
 
-//SPDX-License-Identifier: MIT
 pragma solidity 0.8.4;
 
 
