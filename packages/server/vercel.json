@@ -2,7 +2,7 @@
   "functions": {
     "api/generate.ts": {
       "memory": 1024,
-      "maxDuration": 60
+      "maxDuration": 10
     }
   },
   "headers": [
