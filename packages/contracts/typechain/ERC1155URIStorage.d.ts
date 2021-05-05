@@ -23,7 +23,6 @@ interface ERC1155URIStorageInterface extends ethers.utils.Interface {
   functions: {
     "balanceOf(address,uint256)": FunctionFragment;
     "balanceOfBatch(address[],uint256[])": FunctionFragment;
-    "c_0xa6f2166a(bytes32)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
     "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)": FunctionFragment;
     "safeTransferFrom(address,address,uint256,uint256,bytes)": FunctionFragment;
@@ -39,10 +38,6 @@ interface ERC1155URIStorageInterface extends ethers.utils.Interface {
   encodeFunctionData(
     functionFragment: "balanceOfBatch",
     values: [string[], BigNumberish[]]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "c_0xa6f2166a",
-    values: [BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "isApprovedForAll",
@@ -69,10 +64,6 @@ interface ERC1155URIStorageInterface extends ethers.utils.Interface {
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "balanceOfBatch",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "c_0xa6f2166a",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -178,16 +169,6 @@ export class ERC1155URIStorage extends Contract {
       overrides?: CallOverrides
     ): Promise<[BigNumber[]]>;
 
-    c_0xa6f2166a(
-      c__0xa6f2166a: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<[void]>;
-
-    "c_0xa6f2166a(bytes32)"(
-      c__0xa6f2166a: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<[void]>;
-
     isApprovedForAll(
       account: string,
       operator: string,
@@ -290,16 +271,6 @@ export class ERC1155URIStorage extends Contract {
     overrides?: CallOverrides
   ): Promise<BigNumber[]>;
 
-  c_0xa6f2166a(
-    c__0xa6f2166a: BytesLike,
-    overrides?: CallOverrides
-  ): Promise<void>;
-
-  "c_0xa6f2166a(bytes32)"(
-    c__0xa6f2166a: BytesLike,
-    overrides?: CallOverrides
-  ): Promise<void>;
-
   isApprovedForAll(
     account: string,
     operator: string,
@@ -401,16 +372,6 @@ export class ERC1155URIStorage extends Contract {
       ids: BigNumberish[],
       overrides?: CallOverrides
     ): Promise<BigNumber[]>;
-
-    c_0xa6f2166a(
-      c__0xa6f2166a: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    "c_0xa6f2166a(bytes32)"(
-      c__0xa6f2166a: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<void>;
 
     isApprovedForAll(
       account: string,
@@ -565,16 +526,6 @@ export class ERC1155URIStorage extends Contract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    c_0xa6f2166a(
-      c__0xa6f2166a: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    "c_0xa6f2166a(bytes32)"(
-      c__0xa6f2166a: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     isApprovedForAll(
       account: string,
       operator: string,
@@ -675,16 +626,6 @@ export class ERC1155URIStorage extends Contract {
     "balanceOfBatch(address[],uint256[])"(
       accounts: string[],
       ids: BigNumberish[],
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    c_0xa6f2166a(
-      c__0xa6f2166a: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    "c_0xa6f2166a(bytes32)"(
-      c__0xa6f2166a: BytesLike,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

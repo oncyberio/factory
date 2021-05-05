@@ -23,8 +23,6 @@ interface OnCyberScenesInterface extends ethers.utils.Interface {
   functions: {
     "balanceOf(address,uint256)": FunctionFragment;
     "balanceOfBatch(address[],uint256[])": FunctionFragment;
-    "c_0xa6f2166a(bytes32)": FunctionFragment;
-    "c_0xa740900f(bytes32)": FunctionFragment;
     "changeManager(address)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
     "manager()": FunctionFragment;
@@ -44,14 +42,6 @@ interface OnCyberScenesInterface extends ethers.utils.Interface {
   encodeFunctionData(
     functionFragment: "balanceOfBatch",
     values: [string[], BigNumberish[]]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "c_0xa6f2166a",
-    values: [BytesLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "c_0xa740900f",
-    values: [BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "changeManager",
@@ -91,14 +81,6 @@ interface OnCyberScenesInterface extends ethers.utils.Interface {
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "balanceOfBatch",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "c_0xa6f2166a",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "c_0xa740900f",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -215,26 +197,6 @@ export class OnCyberScenes extends Contract {
       ids: BigNumberish[],
       overrides?: CallOverrides
     ): Promise<[BigNumber[]]>;
-
-    c_0xa6f2166a(
-      c__0xa6f2166a: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<[void]>;
-
-    "c_0xa6f2166a(bytes32)"(
-      c__0xa6f2166a: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<[void]>;
-
-    c_0xa740900f(
-      c__0xa740900f: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<[void]>;
-
-    "c_0xa740900f(bytes32)"(
-      c__0xa740900f: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<[void]>;
 
     changeManager(
       _newManager: string,
@@ -374,26 +336,6 @@ export class OnCyberScenes extends Contract {
     overrides?: CallOverrides
   ): Promise<BigNumber[]>;
 
-  c_0xa6f2166a(
-    c__0xa6f2166a: BytesLike,
-    overrides?: CallOverrides
-  ): Promise<void>;
-
-  "c_0xa6f2166a(bytes32)"(
-    c__0xa6f2166a: BytesLike,
-    overrides?: CallOverrides
-  ): Promise<void>;
-
-  c_0xa740900f(
-    c__0xa740900f: BytesLike,
-    overrides?: CallOverrides
-  ): Promise<void>;
-
-  "c_0xa740900f(bytes32)"(
-    c__0xa740900f: BytesLike,
-    overrides?: CallOverrides
-  ): Promise<void>;
-
   changeManager(
     _newManager: string,
     overrides?: Overrides & { from?: string | Promise<string> }
@@ -527,26 +469,6 @@ export class OnCyberScenes extends Contract {
       ids: BigNumberish[],
       overrides?: CallOverrides
     ): Promise<BigNumber[]>;
-
-    c_0xa6f2166a(
-      c__0xa6f2166a: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    "c_0xa6f2166a(bytes32)"(
-      c__0xa6f2166a: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    c_0xa740900f(
-      c__0xa740900f: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    "c_0xa740900f(bytes32)"(
-      c__0xa740900f: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<void>;
 
     changeManager(
       _newManager: string,
@@ -742,26 +664,6 @@ export class OnCyberScenes extends Contract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    c_0xa6f2166a(
-      c__0xa6f2166a: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    "c_0xa6f2166a(bytes32)"(
-      c__0xa6f2166a: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    c_0xa740900f(
-      c__0xa740900f: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    "c_0xa740900f(bytes32)"(
-      c__0xa740900f: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     changeManager(
       _newManager: string,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -894,26 +796,6 @@ export class OnCyberScenes extends Contract {
     "balanceOfBatch(address[],uint256[])"(
       accounts: string[],
       ids: BigNumberish[],
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    c_0xa6f2166a(
-      c__0xa6f2166a: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    "c_0xa6f2166a(bytes32)"(
-      c__0xa6f2166a: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    c_0xa740900f(
-      c__0xa740900f: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    "c_0xa740900f(bytes32)"(
-      c__0xa740900f: BytesLike,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

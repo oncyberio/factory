@@ -12,7 +12,7 @@ import 'solidity-coverage'
 import { parseUnits } from 'ethers/lib/utils'
 
 const defaultPrivateKey = '0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80' // hardhat 0
-const defaultManagerAddress = '0xE4D29ec42F4057EfF92c9124c82844b2689f9C6d'
+const defaultManagerAddress = '0x2968cC604C2b29b031C0E773300074992c9C5C13'
 
 const config: HardhatUserConfig = {
   preprocess: {
@@ -51,13 +51,13 @@ const config: HardhatUserConfig = {
         defaultPrivateKey,
       ]
     },
-    rinkeby: {
-      url: `https://eth-rinkeby.alchemyapi.io/v2/${process.env.ALCHEMY_API_KEY}`,
-      gasPrice: parseUnits('5', 'gwei').toNumber(),
+    mumbai: {
+      url: 'https://rpc-mumbai.maticvigil.com',
+      gasPrice: parseUnits('1', 'gwei').toNumber(),
       accounts: [
-        process.env.RINKEBY_PRIVATE_KEY || defaultPrivateKey,
+        process.env.MUMBAI_PRIVATE_KEY || defaultPrivateKey,
       ]
-    }
+    },
   },
 }
 

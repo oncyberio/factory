@@ -14,8 +14,8 @@
     "lint:fix": "eslint --fix \"**/*.{js,ts}\" && solhint --fix src/**/*.sol",
     "scripts": "hardhat --network localhost run",
     "deploy:localhost": "hardhat --network localhost deploy",
-    "deploy:rinkeby": "hardhat --network rinkeby deploy",
-    "verify:rinkeby": "hardhat verify --network rinkeby 0xa2b726f5ecf900384767CEeb1F97ACe3B329Afac '0xE4D29ec42F4057EfF92c9124c82844b2689f9C6d' '0x91a5D3bCe5317D5579E780d67021fEc692575d1d'"
+    "deploy:mumbai": "hardhat --network mumbai deploy",
+    "flatten": "hardhat flatten contracts/OnCyberScenes.sol > deployments/flatten.sol"
   },
   "author": "",
   "license": "MIT",
