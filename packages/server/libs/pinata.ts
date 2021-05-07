@@ -8,17 +8,20 @@ import { config } from '../config'
 const logger = Log({ service: 'pinata' })
 const pinata = pinataSDK(config.pinata.apiKey, config.pinata.apiSecret)
 
-export async function uploadImage(writeStream, address: string): Promise<string> {
+export async function uploadImage(
+  writeStream,
+  address: string
+): Promise<string> {
   const file: ReadStream = createReadStream(writeStream.path)
 
   const options = {
     pinataMetadata: {
       name: `file_${address}_${Date.now()}`,
-      keyvalues: {}
+      keyvalues: {},
     },
     pinataOptions: {
       cidVersion: 0,
-    }
+    },
   }
 
   return pinata
@@ -34,39 +37,49 @@ export async function uploadImage(writeStream, address: string): Promise<string>
     })
 }
 
-export async function uploadMetadata(ipfsHashImage: string, address: string, amount: number): Promise<any> {
-
+export async function uploadMetadata(
+  ipfsHashImage: string,
+  address: string,
+  amount: number
+): Promise<any> {
   const options = {
     pinataMetadata: {
       name: `metadata_${address}_${Date.now()}`,
       keyvalues: {
         address,
         amount,
-        ipfsHashImage
-      }
+        ipfsHashImage,
+      },
     },
     pinataOptions: {
-      cidVersion: 0
-    }
-  };
+      cidVersion: 0,
+    },
+  }
 
-  return pinata.pinJSONToIPFS({
-    image: `ipfs://${ipfsHashImage}`,
-    description: `OnCyber scene ${address}`,
-    external_url: `${config.pinata.externalUrlBase}${address}`,
-    name: address,
-    // background_color: 'ffffff',
-    // attributes: [
-    //   {
-    //     display_type: 'date',
-    //     trait_type: 'birthday',
-    //     value: Date.now().toString()
-    //   }
-    // ]
-  }, options)
+  return pinata
+    .pinJSONToIPFS(
+      {
+        image: `ipfs://${ipfsHashImage}`,
+        description: `OnCyber scene ${address}`,
+        external_url: `${config.pinata.externalUrlBase}${address}`,
+        name: address,
+        // background_color: 'ffffff',
+        // attributes: [
+        //   {
+        //     display_type: 'date',
+        //     trait_type: 'birthday',
+        //     value: Date.now().toString()
+        //   }
+        // ]
+      },
+      options
+    )
     .then((result: any) => {
       // logger.info('result uploadMetadata', { result })
-      assert(result && result.IpfsHash, 'Pinata uploadMetadata invalid response')
+      assert(
+        result && result.IpfsHash,
+        'Pinata uploadMetadata invalid response'
+      )
       return result.IpfsHash
     })
     .catch((error: Error) => {
@@ -74,7 +87,6 @@ export async function uploadMetadata(ipfsHashImage: string, address: string, amo
 
       throw error
     })
-
 }
 
 export default { uploadImage, uploadMetadata }

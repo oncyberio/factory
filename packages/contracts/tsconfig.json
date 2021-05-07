@@ -10,9 +10,10 @@
     "outDir": "dist"
   },
   "include": [
+    "./lib/biconomy.d.ts",
     "hardhat.config.ts",
     "./lib",
-    "./scripts",
+    "./script",
     "./deploy",
     "./test",
     "typechain/**/*"

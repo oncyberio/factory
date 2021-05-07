@@ -19,20 +19,14 @@ import { Listener, Provider } from "@ethersproject/providers";
 import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 import { TypedEventFilter, TypedEvent, TypedListener } from "./commons";
 
-interface OnCyberScenesInterface extends ethers.utils.Interface {
+interface IERC1155DiamondInterface extends ethers.utils.Interface {
   functions: {
     "balanceOf(address,uint256)": FunctionFragment;
     "balanceOfBatch(address[],uint256[])": FunctionFragment;
-    "changeManager(address)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
-    "manager()": FunctionFragment;
-    "mint(string,uint256,bytes)": FunctionFragment;
     "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)": FunctionFragment;
     "safeTransferFrom(address,address,uint256,uint256,bytes)": FunctionFragment;
     "setApprovalForAll(address,bool)": FunctionFragment;
-    "supportsInterface(bytes4)": FunctionFragment;
-    "totalSupply()": FunctionFragment;
-    "uri(uint256)": FunctionFragment;
   };
 
   encodeFunctionData(
@@ -44,17 +38,8 @@ interface OnCyberScenesInterface extends ethers.utils.Interface {
     values: [string[], BigNumberish[]]
   ): string;
   encodeFunctionData(
-    functionFragment: "changeManager",
-    values: [string]
-  ): string;
-  encodeFunctionData(
     functionFragment: "isApprovedForAll",
     values: [string, string]
-  ): string;
-  encodeFunctionData(functionFragment: "manager", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "mint",
-    values: [string, BigNumberish, BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "safeBatchTransferFrom",
@@ -68,15 +53,6 @@ interface OnCyberScenesInterface extends ethers.utils.Interface {
     functionFragment: "setApprovalForAll",
     values: [string, boolean]
   ): string;
-  encodeFunctionData(
-    functionFragment: "supportsInterface",
-    values: [BytesLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "totalSupply",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "uri", values: [BigNumberish]): string;
 
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
   decodeFunctionResult(
@@ -84,15 +60,9 @@ interface OnCyberScenesInterface extends ethers.utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "changeManager",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
     functionFragment: "isApprovedForAll",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "manager", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "safeBatchTransferFrom",
     data: BytesLike
@@ -105,32 +75,21 @@ interface OnCyberScenesInterface extends ethers.utils.Interface {
     functionFragment: "setApprovalForAll",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "supportsInterface",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "totalSupply",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "uri", data: BytesLike): Result;
 
   events: {
     "ApprovalForAll(address,address,bool)": EventFragment;
-    "Minted(address,uint256,uint256)": EventFragment;
     "TransferBatch(address,address,address,uint256[],uint256[])": EventFragment;
     "TransferSingle(address,address,address,uint256,uint256)": EventFragment;
     "URI(string,uint256)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "ApprovalForAll"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Minted"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "TransferBatch"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "TransferSingle"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "URI"): EventFragment;
 }
 
-export class OnCyberScenes extends Contract {
+export class IERC1155Diamond extends Contract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
@@ -171,7 +130,7 @@ export class OnCyberScenes extends Contract {
     toBlock?: string | number | undefined
   ): Promise<Array<TypedEvent<EventArgsArray & EventArgsObject>>>;
 
-  interface: OnCyberScenesInterface;
+  interface: IERC1155DiamondInterface;
 
   functions: {
     balanceOf(
@@ -198,16 +157,6 @@ export class OnCyberScenes extends Contract {
       overrides?: CallOverrides
     ): Promise<[BigNumber[]]>;
 
-    changeManager(
-      _newManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
-    "changeManager(address)"(
-      _newManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
     isApprovedForAll(
       account: string,
       operator: string,
@@ -219,24 +168,6 @@ export class OnCyberScenes extends Contract {
       operator: string,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
-
-    manager(overrides?: CallOverrides): Promise<[string]>;
-
-    "manager()"(overrides?: CallOverrides): Promise<[string]>;
-
-    mint(
-      _uri: string,
-      _amount: BigNumberish,
-      _signature: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
-    "mint(string,uint256,bytes)"(
-      _uri: string,
-      _amount: BigNumberish,
-      _signature: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
 
     safeBatchTransferFrom(
       from: string,
@@ -285,31 +216,6 @@ export class OnCyberScenes extends Contract {
       approved: boolean,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
-
-    supportsInterface(
-      interfaceId: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
-
-    "supportsInterface(bytes4)"(
-      interfaceId: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
-
-    totalSupply(
-      overrides?: CallOverrides
-    ): Promise<[BigNumber] & { _value: BigNumber }>;
-
-    "totalSupply()"(
-      overrides?: CallOverrides
-    ): Promise<[BigNumber] & { _value: BigNumber }>;
-
-    uri(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
-
-    "uri(uint256)"(
-      _tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
   };
 
   balanceOf(
@@ -336,16 +242,6 @@ export class OnCyberScenes extends Contract {
     overrides?: CallOverrides
   ): Promise<BigNumber[]>;
 
-  changeManager(
-    _newManager: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  "changeManager(address)"(
-    _newManager: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
   isApprovedForAll(
     account: string,
     operator: string,
@@ -357,24 +253,6 @@ export class OnCyberScenes extends Contract {
     operator: string,
     overrides?: CallOverrides
   ): Promise<boolean>;
-
-  manager(overrides?: CallOverrides): Promise<string>;
-
-  "manager()"(overrides?: CallOverrides): Promise<string>;
-
-  mint(
-    _uri: string,
-    _amount: BigNumberish,
-    _signature: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  "mint(string,uint256,bytes)"(
-    _uri: string,
-    _amount: BigNumberish,
-    _signature: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
 
   safeBatchTransferFrom(
     from: string,
@@ -424,27 +302,6 @@ export class OnCyberScenes extends Contract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  supportsInterface(
-    interfaceId: BytesLike,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
-
-  "supportsInterface(bytes4)"(
-    interfaceId: BytesLike,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
-
-  totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
-
-  "totalSupply()"(overrides?: CallOverrides): Promise<BigNumber>;
-
-  uri(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
-
-  "uri(uint256)"(
-    _tokenId: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<string>;
-
   callStatic: {
     balanceOf(
       account: string,
@@ -470,16 +327,6 @@ export class OnCyberScenes extends Contract {
       overrides?: CallOverrides
     ): Promise<BigNumber[]>;
 
-    changeManager(
-      _newManager: string,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
-
-    "changeManager(address)"(
-      _newManager: string,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
-
     isApprovedForAll(
       account: string,
       operator: string,
@@ -491,24 +338,6 @@ export class OnCyberScenes extends Contract {
       operator: string,
       overrides?: CallOverrides
     ): Promise<boolean>;
-
-    manager(overrides?: CallOverrides): Promise<string>;
-
-    "manager()"(overrides?: CallOverrides): Promise<string>;
-
-    mint(
-      _uri: string,
-      _amount: BigNumberish,
-      _signature: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    "mint(string,uint256,bytes)"(
-      _uri: string,
-      _amount: BigNumberish,
-      _signature: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
 
     safeBatchTransferFrom(
       from: string,
@@ -557,27 +386,6 @@ export class OnCyberScenes extends Contract {
       approved: boolean,
       overrides?: CallOverrides
     ): Promise<void>;
-
-    supportsInterface(
-      interfaceId: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
-
-    "supportsInterface(bytes4)"(
-      interfaceId: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
-
-    totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
-
-    "totalSupply()"(overrides?: CallOverrides): Promise<BigNumber>;
-
-    uri(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
-
-    "uri(uint256)"(
-      _tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<string>;
   };
 
   filters: {
@@ -588,15 +396,6 @@ export class OnCyberScenes extends Contract {
     ): TypedEventFilter<
       [string, string, boolean],
       { account: string; operator: string; approved: boolean }
-    >;
-
-    Minted(
-      account: null,
-      tokenId: BigNumberish | null,
-      amount: BigNumberish | null
-    ): TypedEventFilter<
-      [string, BigNumber, BigNumber],
-      { account: string; tokenId: BigNumber; amount: BigNumber }
     >;
 
     TransferBatch(
@@ -664,16 +463,6 @@ export class OnCyberScenes extends Contract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    changeManager(
-      _newManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    "changeManager(address)"(
-      _newManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
     isApprovedForAll(
       account: string,
       operator: string,
@@ -684,24 +473,6 @@ export class OnCyberScenes extends Contract {
       account: string,
       operator: string,
       overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    manager(overrides?: CallOverrides): Promise<BigNumber>;
-
-    "manager()"(overrides?: CallOverrides): Promise<BigNumber>;
-
-    mint(
-      _uri: string,
-      _amount: BigNumberish,
-      _signature: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    "mint(string,uint256,bytes)"(
-      _uri: string,
-      _amount: BigNumberish,
-      _signature: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     safeBatchTransferFrom(
@@ -750,27 +521,6 @@ export class OnCyberScenes extends Contract {
       operator: string,
       approved: boolean,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    supportsInterface(
-      interfaceId: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    "supportsInterface(bytes4)"(
-      interfaceId: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
-
-    "totalSupply()"(overrides?: CallOverrides): Promise<BigNumber>;
-
-    uri(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
-
-    "uri(uint256)"(
-      _tokenId: BigNumberish,
-      overrides?: CallOverrides
     ): Promise<BigNumber>;
   };
 
@@ -799,16 +549,6 @@ export class OnCyberScenes extends Contract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    changeManager(
-      _newManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    "changeManager(address)"(
-      _newManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
     isApprovedForAll(
       account: string,
       operator: string,
@@ -819,24 +559,6 @@ export class OnCyberScenes extends Contract {
       account: string,
       operator: string,
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    manager(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    "manager()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    mint(
-      _uri: string,
-      _amount: BigNumberish,
-      _signature: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    "mint(string,uint256,bytes)"(
-      _uri: string,
-      _amount: BigNumberish,
-      _signature: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     safeBatchTransferFrom(
@@ -885,30 +607,6 @@ export class OnCyberScenes extends Contract {
       operator: string,
       approved: boolean,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    supportsInterface(
-      interfaceId: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    "supportsInterface(bytes4)"(
-      interfaceId: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    "totalSupply()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    uri(
-      _tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    "uri(uint256)"(
-      _tokenId: BigNumberish,
-      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };
 }

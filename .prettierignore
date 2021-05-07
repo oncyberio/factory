@@ -5,3 +5,5 @@ public
 artifacts
 cache
 .next
+coverage/
+deployments/
