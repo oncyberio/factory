@@ -3,24 +3,20 @@
 /* eslint-disable */
 export type { IERC1155 } from "./IERC1155";
 export type { IERC165 } from "./IERC165";
-export type { BaseRelayRecipient } from "./BaseRelayRecipient";
-export type { IDiamondCut } from "./IDiamondCut";
-export type { LibDiamond } from "./LibDiamond";
-export type { ERC1155URIStorage } from "./ERC1155URIStorage";
-export type { OnCyberScenesFacet } from "./OnCyberScenesFacet";
+export type { ERC165 } from "./ERC165";
 export type { ERC1155 } from "./ERC1155";
-export type { IERC1155Diamond } from "./IERC1155Diamond";
-export type { IERC1155MetadataURI } from "./IERC1155MetadataURI";
+export type { ERC1155Base } from "./ERC1155Base";
 export type { IERC1155Receiver } from "./IERC1155Receiver";
+export type { BaseRelayRecipient } from "./BaseRelayRecipient";
+export type { ERC1155URI } from "./ERC1155URI";
+export type { OnCyberScenesFacet } from "./OnCyberScenesFacet";
 
 export { IERC1155__factory } from "./factories/IERC1155__factory";
 export { IERC165__factory } from "./factories/IERC165__factory";
-export { BaseRelayRecipient__factory } from "./factories/BaseRelayRecipient__factory";
-export { IDiamondCut__factory } from "./factories/IDiamondCut__factory";
-export { LibDiamond__factory } from "./factories/LibDiamond__factory";
-export { ERC1155URIStorage__factory } from "./factories/ERC1155URIStorage__factory";
-export { OnCyberScenesFacet__factory } from "./factories/OnCyberScenesFacet__factory";
+export { ERC165__factory } from "./factories/ERC165__factory";
 export { ERC1155__factory } from "./factories/ERC1155__factory";
-export { IERC1155Diamond__factory } from "./factories/IERC1155Diamond__factory";
-export { IERC1155MetadataURI__factory } from "./factories/IERC1155MetadataURI__factory";
+export { ERC1155Base__factory } from "./factories/ERC1155Base__factory";
 export { IERC1155Receiver__factory } from "./factories/IERC1155Receiver__factory";
+export { BaseRelayRecipient__factory } from "./factories/BaseRelayRecipient__factory";
+export { ERC1155URI__factory } from "./factories/ERC1155URI__factory";
+export { OnCyberScenesFacet__factory } from "./factories/OnCyberScenesFacet__factory";

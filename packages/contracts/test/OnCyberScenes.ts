@@ -21,6 +21,7 @@ describe('OnCyberScenes', function () {
     memory.manager = memory.signers[1]
     memory.other = memory.signers[2]
     memory.other2 = memory.signers[3]
+    memory.other3 = memory.signers[4]
     const contract = await deployments.get('DiamondCyber')
     memory.contract = await ethers.getContractAt(
       contract.abi,
@@ -106,7 +107,7 @@ describe('OnCyberScenes', function () {
   it('Should failed to get uri of not existing token', async () => {
     await expect(
       memory.contract.connect(memory.other).uri(0)
-    ).to.be.revertedWith('ERC1155URIStorage: tokenId not exist')
+    ).to.be.revertedWith('ERC1155URI: tokenId not exist')
   })
 
   it("can't mint with invalid signature", async () => {
@@ -178,4 +179,21 @@ describe('OnCyberScenes', function () {
         .mint(uri, amount, invalidNonceSignature)
     ).to.be.revertedWith('NM')
   })
+
+  it('Should owner initialise', async () => {
+
+    await memory.contract
+      .connect(memory.deployer)
+      .initialize('new_uri', memory.other.address, memory.other2.address, memory.other3.address)
+    expect(await memory.contract.manager()).to.be.eq(memory.other.address)
+    expect(await memory.contract.isTrustedForwarder(memory.other2.address) ).to.be.true
+
+    await expect(
+      memory.contract
+        .connect(memory.other)
+        .initialize('new_uri', memory.other.address, memory.other2.address, memory.other3.address)
+    ).to.be.revertedWith('NO')
+
+  })
+
 })

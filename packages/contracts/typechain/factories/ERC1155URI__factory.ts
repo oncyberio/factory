@@ -5,14 +5,14 @@
 import { Contract, Signer } from "ethers";
 import { Provider } from "@ethersproject/providers";
 
-import type { ERC1155 } from "../ERC1155";
+import type { ERC1155URI } from "../ERC1155URI";
 
-export class ERC1155__factory {
+export class ERC1155URI__factory {
   static connect(
     address: string,
     signerOrProvider: Signer | Provider
-  ): ERC1155 {
-    return new Contract(address, _abi, signerOrProvider) as ERC1155;
+  ): ERC1155URI {
+    return new Contract(address, _abi, signerOrProvider) as ERC1155URI;
   }
 }
 
@@ -305,6 +305,25 @@ const _abi = [
         internalType: "bool",
         name: "",
         type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_tokenId",
+        type: "uint256",
+      },
+    ],
+    name: "uri",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
       },
     ],
     stateMutability: "view",

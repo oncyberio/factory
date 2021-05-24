@@ -2,16 +2,15 @@
 
 pragma solidity ^0.8.0;
 
-import "./libraries/LibAppStorage.sol";
-import "./BaseFacet.sol";
 import "@openzeppelin/contracts/utils/Context.sol";
+import "./BaseRelayRecipientStorage.sol";
 
 /**
  * A base contract to be inherited by any contract that want to receive relayed transactions
  * A subclass must use "_msgSender()" instead of "msg.sender"
  */
 
-abstract contract BaseRelayRecipient is BaseFacet, Context {
+abstract contract BaseRelayRecipient is Context {
 
   /*
    * require a function to be called through GSN only
@@ -22,7 +21,7 @@ abstract contract BaseRelayRecipient is BaseFacet, Context {
 //  }
 
   function isTrustedForwarder(address forwarder) public view returns(bool) {
-    return forwarder == s.trustedForwarder;
+    return forwarder == BaseRelayRecipientStorage.layout().trustedForwarder;
   }
 
   /**

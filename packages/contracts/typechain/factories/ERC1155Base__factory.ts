@@ -5,14 +5,14 @@
 import { Contract, Signer } from "ethers";
 import { Provider } from "@ethersproject/providers";
 
-import type { ERC1155 } from "../ERC1155";
+import type { ERC1155Base } from "../ERC1155Base";
 
-export class ERC1155__factory {
+export class ERC1155Base__factory {
   static connect(
     address: string,
     signerOrProvider: Signer | Provider
-  ): ERC1155 {
-    return new Contract(address, _abi, signerOrProvider) as ERC1155;
+  ): ERC1155Base {
+    return new Contract(address, _abi, signerOrProvider) as ERC1155Base;
   }
 }
 

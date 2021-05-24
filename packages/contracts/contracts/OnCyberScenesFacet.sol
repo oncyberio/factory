@@ -2,54 +2,49 @@
 pragma solidity 0.8.4;
 
 //import "hardhat/console.sol";
-import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
-import "./ERC1155URIStorage.sol";
-import "./libraries/LibAppStorage.sol";
-import "./BaseRelayRecipient.sol";
-import "./diamond/LibDiamond.sol";
-import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
+import '@solidstate/contracts/token/ERC1155/IERC1155.sol';
+import "./ERC1155URI/ERC1155URI.sol";
+import "./BaseRelayRecipient/BaseRelayRecipient.sol";
 
-contract OnCyberScenesFacet is BaseRelayRecipient, ERC1155URIStorage {
+import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
+import "./Diamond/LibDiamond.sol";
+import "./BaseRelayRecipient/BaseRelayRecipientStorage.sol";
+import "./libraries/LibAppStorage.sol";
+
+contract OnCyberScenesFacet is BaseRelayRecipient, ERC1155URI {
 
   using ECDSA for bytes32;
   using Counters for Counters.Counter;
 
   event Minted(address indexed account, uint256 indexed tokenId, uint256 indexed amount);
 
-  function _msgSender() internal override(BaseRelayRecipient, Context) view returns (address) {
-
-    return BaseRelayRecipient._msgSender();
-
-  }
-
   function initialize(string memory _uri, address _manager, address _trustedForwarder, address _opensea) public {
 
-    LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage();
-    require(ds.contractOwner == msg.sender, "NO");
+    require(LibDiamond.diamondStorage().contractOwner == msg.sender, "NO");
 
-    ds.supportedInterfaces[type(IERC1155).interfaceId] = true;
-    _setURI(_uri);
-    s.manager = _manager;
-    s.trustedForwarder = _trustedForwarder;
-    s.opensea = _opensea;
+    BaseRelayRecipientStorage.layout().trustedForwarder = _trustedForwarder;
+    LibDiamond.diamondStorage().supportedInterfaces[type(IERC1155).interfaceId] = true;
+    setURI(_uri);
+    LibAppStorage.layout().manager = _manager;
+    LibAppStorage.layout().opensea = _opensea;
 
   }
 
   function totalSupply() public view returns (uint256) {
 
-    return s.totalSupply.current();
+    return LibAppStorage.layout().totalSupply.current();
 
   }
 
   function manager() public view returns (address) {
 
-    return s.manager;
+    return LibAppStorage.layout().manager;
 
   }
 
   function minterNonce(address _minter) public view returns (uint256){
 
-    return s.minterNonce[_minter].current();
+    return LibAppStorage.layout().minterNonce[_minter].current();
 
   }
 
@@ -60,20 +55,20 @@ contract OnCyberScenesFacet is BaseRelayRecipient, ERC1155URIStorage {
 
     bytes memory _message = abi.encodePacked(_uri, _amount, nonce, sender);
     address _recoveredAddress = keccak256(_message).toEthSignedMessageHash().recover(_signature);
-    require(_recoveredAddress == s.manager, "NM");
+    require(_recoveredAddress == LibAppStorage.layout().manager, "NM");
 
     // Mint token
-    _tokenId = s.totalSupply.current();
-    _setTokenURI(_tokenId, _uri);
-    s.totalSupply.increment();
-    s.minterNonce[sender].increment();
-    _mint(sender, _tokenId, _amount, "");
+    _tokenId = LibAppStorage.layout().totalSupply.current();
+    setTokenURI(_tokenId, _uri);
+    LibAppStorage.layout().totalSupply.increment();
+    LibAppStorage.layout().minterNonce[sender].increment();
+    _safeMint(sender, _tokenId, _amount, "");
 
     emit Minted(sender, _tokenId, _amount);
 
-    if(!isApprovedForAll(sender, s.opensea) ){
+    if(!isApprovedForAll(sender, LibAppStorage.layout().opensea) ){
 
-      setApprovalForAll(s.opensea, true);
+      setApprovalForAll(LibAppStorage.layout().opensea, true);
 
     }
 
