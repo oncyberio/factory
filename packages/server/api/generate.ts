@@ -1,7 +1,7 @@
 import { VercelRequest, VercelResponse } from '@vercel/node'
 import { Wallet } from '@ethersproject/wallet'
 import { getAddress } from 'ethers/lib/utils'
-import formidable from 'formidable-serverless'
+import CID from 'cids'
 
 import { config } from '../config'
 import { Log } from '../libs/logger'
@@ -29,27 +29,30 @@ function getAddressCatch(address: string): string | boolean {
 
 }
 
+function getCIDCatch(cid: string): string | boolean {
+
+  let cidParsed: any = false
+
+  try {
+
+    cidParsed = new CID(cid)
+
+  } catch (error) {
+
+    logger.error('cid invalid', { error, cid })
+
+  }
+
+  return cidParsed
+
+}
+
 export default async (req: VercelRequest, res: VercelResponse) => {
   if (req.method === 'OPTIONS') {
     return res.status(200).end()
   }
 
-  const form = new formidable.IncomingForm()
-
-  const { error, fields, files } = await new Promise((resolve) =>
-    form.parse(req, (error, fields, files) => resolve({ error, fields, files }))
-  )
-
-  if (error) {
-    logger.error('Error on form parse', { error })
-    return res.status(400).json({
-      status: 'error',
-      message: 'invalid request format',
-      ipfsHashMetadata: null,
-      ipfsHashImage: null,
-      signature: null,
-    })
-  }
+  const fields = req.body
 
   const amount =
     !isNaN(fields.amount) &&
@@ -60,10 +63,10 @@ export default async (req: VercelRequest, res: VercelResponse) => {
     !isNaN(parseInt(fields.nonce)) &&
     parseInt(fields.nonce)
   const address = getAddressCatch(fields.address)
-  const file = files.file
+  const hash = getCIDCatch(fields.hash)
 
-  if (!amount || !address || !file) {
-    logger.error('Error on form data', { error, fields })
+  if (!amount || !address || !hash) {
+    logger.error('Error on form data', { fields })
     return res.status(400).json({
       status: 'error',
       message: 'invalid request data',
@@ -75,43 +78,40 @@ export default async (req: VercelRequest, res: VercelResponse) => {
 
   if(!config.allowedMinter.includes(address as string) ){
 
-    logger.error('Error on form data address not allowed', { error, fields })
+    logger.error('Error on form data address not allowed', { fields })
     return res.status(400).json({
       status: 'error',
       message: 'invalid request data address not allowed',
       ipfsHashMetadata: null,
-      ipfsHashImage: null,
       signature: null,
     })
 
   }
 
   if(nonce < 0 || nonce > config.minterNonceMax){
-    logger.error('Error max form data nonce', { error, fields })
+    logger.error('Error max form data nonce', { fields })
     return res.status(400).json({
       status: 'error',
       message: 'invalid request data nonce max reach',
       ipfsHashMetadata: null,
-      ipfsHashImage: null,
       signature: null,
     })
   }
   logger.info('start processing', { address })
 
-  const ipfsHashImage = await Pinata.uploadImage(file, address as string)
+  await Pinata.pinHash(fields.hash, address as string)
   const ipfsHashMetadata = await Pinata.uploadMetadata(
-    ipfsHashImage,
+    fields.hash,
     address as string,
     amount
   )
   const signature = await signURI(ipfsHashMetadata, amount, nonce, address as string, signer)
 
-  logger.info('end processing', { address, ipfsHashMetadata, ipfsHashImage })
+  logger.info('end processing', { fields, ipfsHashMetadata, })
 
   res.status(200).json({
     status: 'success',
     ipfsHashMetadata,
-    ipfsHashImage,
     signature,
   })
 }

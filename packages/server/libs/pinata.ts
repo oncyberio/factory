@@ -37,6 +37,32 @@ export async function uploadImage(
     })
 }
 
+export async function pinHash(hash: string, address: string){
+
+  const options = {
+    pinataMetadata: {
+      name: `file_${address}_${Date.now()}`,
+      keyvalues: {},
+    },
+    pinataOptions: {
+      cidVersion: 0,
+    },
+  }
+
+  return pinata
+    .pinByHash(hash, options)
+    .then((result: any) => {
+      assert(['prechecking'].includes(result.status), 'Pinata pin by hash invalid response')
+      return result.IpfsHash
+    })
+    .catch((error: any) => {
+      logger.error('Pinata pin by hash error', error)
+
+      throw error
+    })
+
+}
+
 export async function uploadMetadata(
   ipfsHashImage: string,
   address: string,
@@ -89,4 +115,4 @@ export async function uploadMetadata(
     })
 }
 
-export default { uploadImage, uploadMetadata }
+export default { uploadImage, pinHash, uploadMetadata }
