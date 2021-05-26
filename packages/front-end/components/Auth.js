@@ -1,4 +1,4 @@
-import {Button, LinkButton, NormalButton} from './Form';
+import {Button, LinkButton, NormalButton} from './Elements';
 import WalletConnect from "@walletconnect/client";
 import WalletLink from "walletlink";
 import Fortmatic from "fortmatic";

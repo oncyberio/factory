@@ -1,13 +1,13 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const Input = styled.input`
-    border: 2px solid #F2EEE8;
     width: 100%;
     height: 40px;
     font-size: 16px;
     padding: 2px 10px;
-    background: #fff;
-    color: #425466;
+    border: 2px solid #000;
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
     outline: none;
     transition: .2s;
     box-shadow: none !important;
@@ -41,14 +41,14 @@ export const Select = styled.select`
 `
 
 export const TextArea = styled.textarea`
-    border: 2px solid #F2EEE8;
     width: 100%;
-    min-height: 100px;
+    min-height: 75px;
     font-size: 16px;
 
     padding: 10px 15px;
-    background: white;
-    color: #000;
+    border: 2px solid #000;
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
     outline: none;
     transition: .2s;
     box-shadow: none !important;
@@ -62,93 +62,6 @@ export const TextArea = styled.textarea`
     }
 `
 
-export const NormalButton = styled.button`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    // margin-bottom: 20px;
-    padding: 10px 24px;
-    border-radius: 10px;
-    font-size: 18px;
-    line-height: 1.133;
-    text-align: center;
-    user-select: none;
-    appearance: none;
-    cursor: pointer;
-    background-color: transparent;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    color: #000;
-    transition: .4s;
-    outline: none;
-    height: 48px;
-    overflow: hidden;
-    font-weight: 400;
-    cursor: pointer;
-
-    img {
-        width: 40px;
-        margin: 0 10px 0 0px;
-    }
-
-    @media (max-width: 600px) {
-        font-size: 12px;
-        padding: 8px 15px;
-
-        img {
-            width: 20px;
-            margin: 0 5px 0 5px;
-        }
-    }
-`
-
-export const LinkButton = styled.a`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    // margin-bottom: 20px;
-    padding: 10px 24px;
-    border-radius: 4px;
-    font-weight: 600;
-    font-size: 18px;
-    line-height: 1.133;
-    text-align: center;
-    user-select: none;
-    appearance: none;
-    cursor: pointer;
-    background-color: transparent;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    color: #000;
-    transition: .4s;
-    outline: none;
-    height: 48px;
-    overflow: hidden;
-    font-weight: 400 !important;
-    cursor: pointer;
-
-    img {
-        width: 40px;
-        margin: 0 10px 0 0px;
-    }
-
-    &:hover {
-        // background: linear-gradient(270deg, rgb(255, 220, 36) 3%, rgb(255, 92, 0) 100%);
-        border-color: transparent;
-        box-shadow: rgb(0 0 0 / 25%) 0px 4px 7px;
-        transform: translateY(-1px);
-    }
-
-    @media (max-width: 600px) {
-        font-size: 14px;
-        padding: 8px 15px;
-
-        img {
-            width: 20px;
-            margin: 0 5px 0 5px;
-        }
-    }
-`
 
 export const Button = styled.button`
     display: flex;
@@ -165,9 +78,13 @@ export const Button = styled.button`
     user-select: none;
     appearance: none;
     cursor: pointer;
-    background-color: transparent;
+    background: #fff;
+    color: black;
+    ${({purple}) => purple && css`
+        background-color: #610eff;
+        color: #fff;
+    `}
     border: 1px solid rgba(0, 0, 0, 0.1);
-    color: #000;
     transition: .2s;
     outline: none;
     height: 48px;
@@ -189,7 +106,6 @@ export const Button = styled.button`
         background: #111111;
         color: white;
     }
-
 `
 
 export const DeleteButton = styled.button`
