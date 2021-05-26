@@ -122,10 +122,10 @@ function Authentication({ isShowing, toggle, className }) {
                 <span>{loading ? 'Loading...' : 'Metamask'}</span>
             </Button>
 
-            <Button disabled={ loading }  onClick={(e) => connectWalletLink()}>
+            {/* <Button disabled={ loading }  onClick={(e) => connectWalletLink()}>
                 <img style={{width: '30px', marginLeft: '2px'}} src='../images/icons/coinbase.svg'/>
                 <span>{loading ? 'Loading...' : 'Coinbase Mobile'}</span>
-            </Button>
+            </Button> */}
 
             <Button disabled={ loading }  onClick={(e) => walletConnect()}>
                 <img style={{width: '34px'}} src='../images/icons/walletconnect.png'/>

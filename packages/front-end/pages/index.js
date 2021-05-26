@@ -7,17 +7,18 @@ import Factory from '../components/Factory';
 import styled from 'styled-components';
 
 export default function Home() {
-  const { user, authenticated } = useContext(UserContext);
+  const { authenticated, token } = useContext(UserContext);
+  const [success, setSuccess] = useState(false);
 
 
   return !authenticated ? 
   <Auth /> :
   <Container>
     <Grid>
-      <Factory />
+      {!success ? <Factory setSuccess={setSuccess} token={token} /> : <h1>Success, finished minting! Now list your asset pls</h1>}
       {/* <h1> Preview </h1> */}
     </Grid>
-  </Container> 
+  </Container>
 }
 
 const Container = styled.div`

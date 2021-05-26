@@ -3,30 +3,61 @@ import styled from 'styled-components';
 import FileUploader from './FileUploader';
 import { Button, Input, TextArea } from './Elements';
 import Ipfs from 'ipfs';
+import { mint } from '../utils/minter';
 
-function Factory() {
+function Factory({token, setSuccess}) {
+    const [loading, setLoading] = useState(false);
 
     const [title, setTitle] = useState();
     const [description, setDescription] = useState();
     const [traits, setTraits] = useState({height: 10, placeholders: 30, scale: .2});
     const [ thumbnail, setThumbnail ] = useState();
     const [ destination, setDestination] = useState();
+    const [ quantity, setQuantity ] = useState(20);
 
     const submit = async () => {
-        console.log(title, description, traits)
+        setLoading(true);
         if (!title || !description) {
             alert("Please set title and description!")
         }
-        if (thumbnail && destination) {
+        else if (thumbnail && destination) {
             const ipfs = await Ipfs.create()
-            const dest = await ipfs.add(destination);
-            const thumb = await ipfs.add(thumbnail);
+            try {
+                const dest = await ipfs.add(destination);
+                const thumb = await ipfs.add(thumbnail);
+                console.info('Hash', dest.cid, thumb.cid);
+                const {status, ipfsHashMetadata, signature} = await (await fetch('/api/generate', {
+                    method: "POST",
+                    body: JSON.stringify({
+                      token,
+                      payload: {
+                        destHash: dest.cid.string,
+                        thumbHash: thumb.cid.string, 
+                        nonce: 0,
+                        amount: quantity
+                      },
+                    }),
+                })).json();
 
-            console.info('Hash', dest.cid, thumb.cid);
+                if (status == 'success') {
+                    const balance = await mint(ipfsHashMetadata, quantity, signature)
+                    console.log(balance)
+                    setSuccess(true);
+                }
+                else {
+                    alert("Did not manage to pin hash... Try again later.")
+                }
+            }
+            catch (e) {
+                console.log(e)
+                alert("There was an error while uploading your assets. Please refresh and try again")
+            }
+
         }
         else {
             alert("Upload both a thumbnail and the 3D model")
         }
+        setLoading(false);
     }
 
 
@@ -60,7 +91,7 @@ function Factory() {
             <FileUploader setFile={setDestination} />
         </div>
         <div>
-            <Button onClick={submit} purple> Upload</Button>
+            <Button disabled={loading} onClick={submit} purple> {loading ? 'Loading...': 'Upload'}</Button>
         </div>
     </Container>
 }
