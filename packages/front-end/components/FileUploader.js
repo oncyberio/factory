@@ -14,11 +14,12 @@ function FileUploader({ setFile, type }) {
                 var image = new Image();
                 image.src = reader.result;
                 image.onload = function() {
-                    setFile({file: reader.result, type});
+                    // display image
+                    setFile(reader.result);
                 }
             }
             else {
-                setFile({file: reader.result, type});
+                setFile(reader.result);
             }
         }, false);
     }

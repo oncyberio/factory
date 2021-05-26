@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import FileUploader from './FileUploader';
 import { Button, Input, TextArea } from './Elements';
-
+import Ipfs from 'ipfs';
 
 function Factory() {
 
@@ -12,8 +12,21 @@ function Factory() {
     const [ thumbnail, setThumbnail ] = useState();
     const [ destination, setDestination] = useState();
 
-    const submit = () => {
+    const submit = async () => {
         console.log(title, description, traits)
+        if (!title || !description) {
+            alert("Please set title and description!")
+        }
+        if (thumbnail && destination) {
+            const ipfs = await Ipfs.create()
+            const dest = await ipfs.add(destination);
+            const thumb = await ipfs.add(thumbnail);
+
+            console.info('Hash', dest.cid, thumb.cid);
+        }
+        else {
+            alert("Upload both a thumbnail and the 3D model")
+        }
     }
 
 
@@ -47,7 +60,7 @@ function Factory() {
             <FileUploader setFile={setDestination} />
         </div>
         <div>
-            <Button purple> Upload</Button>
+            <Button onClick={submit} purple> Upload</Button>
         </div>
     </Container>
 }
