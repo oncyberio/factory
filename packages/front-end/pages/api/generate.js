@@ -1,15 +1,13 @@
 import { Wallet } from '@ethersproject/wallet'
 import { getAddress } from 'ethers/lib/utils'
 import CID from 'cids'
-
-import { config } from '../../utils/config'
 import { Log } from '../../libs/logger'
 import Pinata from '../../libs/pinata'
 import { signURI } from '../../libs/sign'
 import { auth } from '../../utils/authMiddleware'
 
 const logger = Log({ service: 'generation' })
-const signer = new Wallet(config.privateKey)
+const signer = new Wallet(process.env.privateKey)
 
 function getAddressCatch(address) {
 
@@ -68,10 +66,12 @@ export default async (req, res) => {
     (!isNaN(payload.amount) &&
     !isNaN(parseInt(payload.amount)) &&
     parseInt(payload.amount));
+
   const nonce =
     !isNaN(payload.nonce) &&
     !isNaN(parseInt(payload.nonce)) &&
-    parseInt(payload.nonce)
+    parseInt(payload.nonce);
+    
   const address = getAddressCatch(userId)
   const thumbHash = getCIDCatch(payload.thumbHash)
 
@@ -86,7 +86,7 @@ export default async (req, res) => {
     })
   }
 
-  if(!config.allowedMinter.includes(address) ){
+  if(!process.env.allowedMinter.includes(address) ){
 
     logger.error('Error on form data address not allowed', { payload })
     return res.status(400).json({
@@ -97,7 +97,7 @@ export default async (req, res) => {
     })
   }
 
-  if(nonce < 0 || nonce > config.minterNonceMax){
+  if(nonce < 0 || nonce > process.env.minterNonceMax){
     logger.error('Error max form data nonce', { payload })
     return res.status(400).json({
       status: 'error',

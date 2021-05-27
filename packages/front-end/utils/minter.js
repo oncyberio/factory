@@ -8,7 +8,7 @@ async function mint(uri, amount, signature) {
   const provider = new ethers.providers.Web3Provider(window.ethereum);
   const minter = provider.getSigner();
 
-  const contract = await ethers.getContractAt(
+  const contract = new ethers.Contract(
     abi,
     address,
     minter

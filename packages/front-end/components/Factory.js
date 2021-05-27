@@ -25,14 +25,14 @@ function Factory({token, setSuccess}) {
             try {
                 const dest = await ipfs.add(destination);
                 const thumb = await ipfs.add(thumbnail);
-                console.info('Hash', dest.cid, thumb.cid);
+                console.info('Hash', dest.cid.toBaseEncodedString(), thumb.cid.toBaseEncodedString());
                 const {status, ipfsHashMetadata, signature} = await (await fetch('/api/generate', {
                     method: "POST",
                     body: JSON.stringify({
                       token,
                       payload: {
-                        destHash: dest.cid.string,
-                        thumbHash: thumb.cid.string, 
+                        destHash: dest.cid.toString(),
+                        thumbHash: thumb.cid.toString(), 
                         nonce: 0,
                         amount: quantity
                       },
