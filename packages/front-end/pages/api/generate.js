@@ -5,9 +5,10 @@ import { Log } from '../../libs/logger'
 import Pinata from '../../libs/pinata'
 import { signURI } from '../../libs/sign'
 import { auth } from '../../utils/authMiddleware'
+import config from '../../config';
 
 const logger = Log({ service: 'generation' })
-const signer = new Wallet(process.env.privateKey)
+const signer = new Wallet(config.privateKey)
 
 function getAddressCatch(address) {
 
@@ -56,10 +57,7 @@ export default async (req, res) => {
   // decode token here, acts like a middleware
   var userId = await auth(req);
 
-
   const { payload } = req.body;
-
-  console.log(payload)
 
   // default of 20 editions minted
   const amount =
@@ -71,7 +69,7 @@ export default async (req, res) => {
     !isNaN(payload.nonce) &&
     !isNaN(parseInt(payload.nonce)) &&
     parseInt(payload.nonce);
-    
+
   const address = getAddressCatch(userId)
   const thumbHash = getCIDCatch(payload.thumbHash)
 
@@ -86,7 +84,7 @@ export default async (req, res) => {
     })
   }
 
-  if(!process.env.allowedMinter.includes(address) ){
+  if(!config.allowedMinter.includes(address) ){
 
     logger.error('Error on form data address not allowed', { payload })
     return res.status(400).json({
@@ -97,7 +95,7 @@ export default async (req, res) => {
     })
   }
 
-  if(nonce < 0 || nonce > process.env.minterNonceMax){
+  if(nonce < 0 || nonce > config.minterNonceMax){
     logger.error('Error max form data nonce', { payload })
     return res.status(400).json({
       status: 'error',

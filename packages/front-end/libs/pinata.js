@@ -3,10 +3,11 @@ import assert from 'assert'
 import pinataSDK from '@pinata/sdk'
 
 import { Log } from './logger'
+import config from '../config'
 
 const logger = Log({ service: 'pinata' })
 
-const pinata = pinataSDK(process.env.pinata.apiKey, process.env.pinata.apiSecret)
+const pinata = pinataSDK(config.pinata.apiKey, config.pinata.apiSecret)
 
 export async function uploadImage(
   writeStream,
