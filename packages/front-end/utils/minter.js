@@ -1,16 +1,15 @@
 // @ts-ignore
 import * as Web3 from 'web3'
-import ethers from 'ethers';
-import {abi, address} from './contract';
+import { ethers } from 'ethers';
+import jsonContract from './contract.json';
 
 async function mint(uri, amount, signature) {
-
   const provider = new ethers.providers.Web3Provider(window.ethereum);
   const minter = provider.getSigner();
 
   const contract = new ethers.Contract(
-    abi,
-    address,
+    jsonContract,
+    "0xFBe0421c53706746151ACa2Cf22F81Dc41262519",
     minter
   )
 
