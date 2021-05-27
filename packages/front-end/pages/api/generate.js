@@ -74,7 +74,7 @@ export default async (req, res) => {
   const thumbHash = getCIDCatch(payload.thumbHash)
   const destHash = getCIDCatch(payload.destHash)
 
-  if (!amount || !address || !thumbHash || !destHash) {
+  if (!amount || !address || !thumbHash || !destHash || !payload.name || !payload.description) {
     logger.error('Error on form data', { payload })
     return res.status(400).json({
       status: 'error',

@@ -8,7 +8,7 @@ import { getNonce, mint } from '../utils/minter';
 function Factory({token, setSuccess}) {
     const [loading, setLoading] = useState(false);
 
-    const [title, setTitle] = useState();
+    const [name, setName] = useState();
     const [description, setDescription] = useState();
     const [traits, setTraits] = useState({height: 10, placeholders: 30, scale: .2});
     const [ thumbnail, setThumbnail ] = useState();
@@ -17,8 +17,8 @@ function Factory({token, setSuccess}) {
 
     const submit = async () => {
         setLoading(true);
-        if (!title || !description) {
-            alert("Please set title and description!")
+        if (!name || !description) {
+            alert("Please set name and description!")
         }
         else if (thumbnail && destination) {
             const ipfs = await Ipfs.create()
@@ -26,6 +26,7 @@ function Factory({token, setSuccess}) {
                 const dest = await ipfs.add(destination);
                 const thumb = await ipfs.add(thumbnail);
                 const nonce = await getNonce();
+
                 const {status, ipfsHashMetadata, signature} = await (await fetch('/api/generate', {
                     method: "POST",
                     body: JSON.stringify({
@@ -34,7 +35,9 @@ function Factory({token, setSuccess}) {
                         destHash: dest.cid.toString(),
                         thumbHash: thumb.cid.toString(), 
                         nonce,
-                        amount: quantity
+                        amount: quantity,
+                        name,
+                        description
                       },
                     }),
                 })).json();
@@ -63,8 +66,8 @@ function Factory({token, setSuccess}) {
 
     return <Container>
         <div>
-            <h4>Title</h4>
-            <Input type="text" value={ title } name="title" onChange={(e) => setTitle(e.target.value)} />
+            <h4>name</h4>
+            <Input type="text" value={ name } name="name" onChange={(e) => setName(e.target.value)} />
         </div>
         <div>
             <h4> Description </h4>
