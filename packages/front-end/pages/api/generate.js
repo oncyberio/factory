@@ -42,7 +42,7 @@ function getCIDCatch(cid) {
 
   }
 
-  return cidParsed
+  return cidParsed.toString()
 
 }
 
@@ -108,7 +108,10 @@ export default async (req, res) => {
 
   logger.info('start processing', { address })
 
-  await Pinata.pinHash(thumbHash, address);
+  await Promise.all([
+    Pinata.pinHash(thumbHash, address),
+    Pinata.pinHash(destHash, address)
+  ])
 
   const ipfsHashMetadata = await Pinata.uploadMetadata(
     thumbHash,
