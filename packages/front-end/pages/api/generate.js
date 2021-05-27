@@ -72,8 +72,9 @@ export default async (req, res) => {
 
   const address = getAddressCatch(userId)
   const thumbHash = getCIDCatch(payload.thumbHash)
+  const destHash = getCIDCatch(payload.destHash)
 
-  if (!amount || !address || !thumbHash) {
+  if (!amount || !address || !thumbHash || !destHash) {
     logger.error('Error on form data', { payload })
     return res.status(400).json({
       status: 'error',
@@ -111,6 +112,7 @@ export default async (req, res) => {
 
   const ipfsHashMetadata = await Pinata.uploadMetadata(
     thumbHash,
+    destHash,
     address,
     amount
   )
