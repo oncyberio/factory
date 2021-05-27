@@ -1,7 +1,7 @@
 // @ts-ignore
 import * as Web3 from 'web3'
 import { ethers } from 'ethers';
-import jsonContract from '../../contracts/deployments/mumbai/DiamondCyberDestinationFactory.json';
+import jsonContract from '../config/DiamondCyberDestinationFactory.json';
 
 
 async function getNonce() {
