@@ -2,9 +2,19 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Contract, Signer, utils } from "ethers";
+import { Contract, Signer } from "ethers";
 import { Provider } from "@ethersproject/providers";
-import type { ERC1155URI, ERC1155URIInterface } from "../ERC1155URI";
+
+import type { ERC1155URI } from "../ERC1155URI";
+
+export class ERC1155URI__factory {
+  static connect(
+    address: string,
+    signerOrProvider: Signer | Provider
+  ): ERC1155URI {
+    return new Contract(address, _abi, signerOrProvider) as ERC1155URI;
+  }
+}
 
 const _abi = [
   {
@@ -320,16 +330,3 @@ const _abi = [
     type: "function",
   },
 ];
-
-export class ERC1155URI__factory {
-  static readonly abi = _abi;
-  static createInterface(): ERC1155URIInterface {
-    return new utils.Interface(_abi) as ERC1155URIInterface;
-  }
-  static connect(
-    address: string,
-    signerOrProvider: Signer | Provider
-  ): ERC1155URI {
-    return new Contract(address, _abi, signerOrProvider) as ERC1155URI;
-  }
-}
