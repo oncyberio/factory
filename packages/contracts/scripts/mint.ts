@@ -12,7 +12,7 @@ async function main() {
   const minter = new ethers.Wallet(process.env.MUMBAI_ACCOUNT_1_PRIVATE_KEY as string, provider)
   const manager = new ethers.Wallet(process.env.MUMBAI_MANAGER_PRIVATE_KEY as string, provider)
 
-  const Contract = await deployments.get('DiamondCyber')
+  const Contract = await deployments.get('DiamondCyberSceneFactory')
   const contract = await ethers.getContractAt(
     Contract.abi,
     Contract.address,

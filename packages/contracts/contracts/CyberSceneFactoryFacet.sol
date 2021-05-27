@@ -11,7 +11,7 @@ import "./Diamond/LibDiamond.sol";
 import "./BaseRelayRecipient/BaseRelayRecipientStorage.sol";
 import "./libraries/LibAppStorage.sol";
 
-contract OnCyberScenesFacet is BaseRelayRecipient, ERC1155URI {
+contract CyberSceneFactoryFacet is BaseRelayRecipient, ERC1155URI {
 
   using ECDSA for bytes32;
   using Counters for Counters.Counter;

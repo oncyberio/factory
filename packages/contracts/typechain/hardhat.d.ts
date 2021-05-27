@@ -41,13 +41,13 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.BaseRelayRecipient__factory>;
     getContractFactory(
+      name: "CyberSceneFactoryFacet",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.CyberSceneFactoryFacet__factory>;
+    getContractFactory(
       name: "ERC1155URI",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ERC1155URI__factory>;
-    getContractFactory(
-      name: "OnCyberScenesFacet",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.OnCyberScenesFacet__factory>;
 
     // default types
     getContractFactory(

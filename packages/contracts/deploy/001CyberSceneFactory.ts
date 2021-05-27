@@ -6,10 +6,10 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { diamond } = deployments
 
   const namedAccounts = await getNamedAccounts()
-  await diamond.deploy('DiamondCyber', {
+  await diamond.deploy('DiamondCyberSceneFactory', {
     from: namedAccounts.deployer,
     owner: namedAccounts.deployer,
-    facets: ['OnCyberScenesFacet'],
+    facets: ['CyberSceneFactoryFacet'],
     execute: {
       methodName: 'initialize',
       args: ['ipfs://', namedAccounts.manager, namedAccounts.biconomyForwarder, namedAccounts.opensea],
@@ -18,4 +18,4 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   })
 }
 export default func
-func.tags = ['DiamondCyber']
+func.tags = ['DiamondCyberSceneFactory']

@@ -17,7 +17,7 @@
     "scripts:mint:mumbai": "hardhat --network mumbai run ./scripts/mint.ts",
     "scripts:mint-forwarder:mumbai": "hardhat --network mumbai run scripts/mintForwarder.ts",
     "deploy:mumbai": "hardhat --network mumbai deploy",
-    "flatten": "hardhat flatten contracts/OnCyberScenesFacet.sol > deployments/OnCyberScenesFacet.flatten.sol"
+    "flatten": "hardhat flatten contracts/CyberSceneFactoryFacet.sol > deployments/CyberSceneFactoryFacet.flatten.sol"
   },
   "author": "",
   "license": "MIT",

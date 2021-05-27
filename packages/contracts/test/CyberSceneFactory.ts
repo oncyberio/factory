@@ -7,7 +7,7 @@ const memory: any = {}
 
 const tokenURI = (uri: string) => `ipfs://${uri}`
 
-describe('OnCyberScenes', function () {
+describe('CyberSceneFactory', function () {
   before(async () => {
     memory.signers = await ethers.getSigners()
   })
@@ -22,7 +22,7 @@ describe('OnCyberScenes', function () {
     memory.other = memory.signers[2]
     memory.other2 = memory.signers[3]
     memory.other3 = memory.signers[4]
-    const contract = await deployments.get('DiamondCyber')
+    const contract = await deployments.get('DiamondCyberSceneFactory')
     memory.contract = await ethers.getContractAt(
       contract.abi,
       contract.address,
