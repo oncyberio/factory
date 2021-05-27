@@ -2,19 +2,9 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Contract, Signer } from "ethers";
+import { Contract, Signer, utils } from "ethers";
 import { Provider } from "@ethersproject/providers";
-
-import type { ERC1155Base } from "../ERC1155Base";
-
-export class ERC1155Base__factory {
-  static connect(
-    address: string,
-    signerOrProvider: Signer | Provider
-  ): ERC1155Base {
-    return new Contract(address, _abi, signerOrProvider) as ERC1155Base;
-  }
-}
+import type { ERC1155Base, ERC1155BaseInterface } from "../ERC1155Base";
 
 const _abi = [
   {
@@ -311,3 +301,16 @@ const _abi = [
     type: "function",
   },
 ];
+
+export class ERC1155Base__factory {
+  static readonly abi = _abi;
+  static createInterface(): ERC1155BaseInterface {
+    return new utils.Interface(_abi) as ERC1155BaseInterface;
+  }
+  static connect(
+    address: string,
+    signerOrProvider: Signer | Provider
+  ): ERC1155Base {
+    return new Contract(address, _abi, signerOrProvider) as ERC1155Base;
+  }
+}

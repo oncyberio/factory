@@ -9,7 +9,7 @@ import {
   BigNumber,
   BigNumberish,
   PopulatedTransaction,
-  Contract,
+  BaseContract,
   ContractTransaction,
   CallOverrides,
 } from "ethers";
@@ -36,7 +36,7 @@ interface BaseRelayRecipientInterface extends ethers.utils.Interface {
   events: {};
 }
 
-export class BaseRelayRecipient extends Contract {
+export class BaseRelayRecipient extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
@@ -84,11 +84,6 @@ export class BaseRelayRecipient extends Contract {
       forwarder: string,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
-
-    "isTrustedForwarder(address)"(
-      forwarder: string,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
   };
 
   isTrustedForwarder(
@@ -96,18 +91,8 @@ export class BaseRelayRecipient extends Contract {
     overrides?: CallOverrides
   ): Promise<boolean>;
 
-  "isTrustedForwarder(address)"(
-    forwarder: string,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
-
   callStatic: {
     isTrustedForwarder(
-      forwarder: string,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
-
-    "isTrustedForwarder(address)"(
       forwarder: string,
       overrides?: CallOverrides
     ): Promise<boolean>;
@@ -120,20 +105,10 @@ export class BaseRelayRecipient extends Contract {
       forwarder: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
-
-    "isTrustedForwarder(address)"(
-      forwarder: string,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     isTrustedForwarder(
-      forwarder: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    "isTrustedForwarder(address)"(
       forwarder: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
