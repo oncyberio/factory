@@ -9,7 +9,7 @@ import {
   BigNumber,
   BigNumberish,
   PopulatedTransaction,
-  Contract,
+  BaseContract,
   ContractTransaction,
   CallOverrides,
 } from "ethers";
@@ -36,7 +36,7 @@ interface ERC165Interface extends ethers.utils.Interface {
   events: {};
 }
 
-export class ERC165 extends Contract {
+export class ERC165 extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
@@ -84,11 +84,6 @@ export class ERC165 extends Contract {
       interfaceId: BytesLike,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
-
-    "supportsInterface(bytes4)"(
-      interfaceId: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
   };
 
   supportsInterface(
@@ -96,18 +91,8 @@ export class ERC165 extends Contract {
     overrides?: CallOverrides
   ): Promise<boolean>;
 
-  "supportsInterface(bytes4)"(
-    interfaceId: BytesLike,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
-
   callStatic: {
     supportsInterface(
-      interfaceId: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
-
-    "supportsInterface(bytes4)"(
       interfaceId: BytesLike,
       overrides?: CallOverrides
     ): Promise<boolean>;
@@ -120,20 +105,10 @@ export class ERC165 extends Contract {
       interfaceId: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
-
-    "supportsInterface(bytes4)"(
-      interfaceId: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     supportsInterface(
-      interfaceId: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    "supportsInterface(bytes4)"(
       interfaceId: BytesLike,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
