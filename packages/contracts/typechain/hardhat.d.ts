@@ -41,9 +41,13 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.BaseRelayRecipient__factory>;
     getContractFactory(
-      name: "CyberSceneFactoryFacet",
+      name: "CyberDestinationFactoryFacet",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.CyberSceneFactoryFacet__factory>;
+    ): Promise<Contracts.CyberDestinationFactoryFacet__factory>;
+    getContractFactory(
+      name: "CyberDestinationFactoryFacet",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.CyberDestinationFactoryFacet__factory>;
     getContractFactory(
       name: "ERC1155URI",
       signerOrOptions?: ethers.Signer | FactoryOptions
