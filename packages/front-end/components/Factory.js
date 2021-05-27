@@ -25,7 +25,11 @@ function Factory({token, setSuccess}) {
             try {
                 const dest = await ipfs.add(destination);
                 const thumb = await ipfs.add(thumbnail);
+
+                console.log("BEFORE GET NONCE")
                 const nonce = await getNonce();
+
+                console.log("BEFORE PINATA")
 
                 const {status, ipfsHashMetadata, signature} = await (await fetch('/api/generate', {
                     method: "POST",
@@ -41,6 +45,9 @@ function Factory({token, setSuccess}) {
                       },
                     }),
                 })).json();
+
+                console.log("STATUS")
+                console.log(status, ipfsHashMetadata, signature);
 
                 if (status == 'success') {
                     const balance = await mint(ipfsHashMetadata, quantity, signature)
@@ -66,7 +73,7 @@ function Factory({token, setSuccess}) {
 
     return <Container>
         <div>
-            <h4>name</h4>
+            <h4>Name</h4>
             <Input type="text" value={ name } name="name" onChange={(e) => setName(e.target.value)} />
         </div>
         <div>

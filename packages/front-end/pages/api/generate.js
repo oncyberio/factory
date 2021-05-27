@@ -118,7 +118,7 @@ export default async (req, res) => {
     destHash,
     address,
     amount,
-    payload.title,
+    payload.name,
     payload.description
   )
 

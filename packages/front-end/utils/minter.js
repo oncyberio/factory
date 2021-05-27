@@ -14,10 +14,15 @@ async function getNonce() {
         minter
     )
 
-    return (await contract.minterNonce(minter.address)).toString();
+    const address = await minter.getAddress()
+
+    return (await contract.minterNonce(address)).toString();
 }
 
 async function mint(uri, amount, signature) {
+
+  console.log("GOT TO MINTING")
+
   const provider = new ethers.providers.Web3Provider(window.ethereum);
   const minter = provider.getSigner();
 

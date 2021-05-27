@@ -91,7 +91,7 @@ export async function uploadMetadata(
     .pinJSONToIPFS(
       {
         image: `ipfs://${ipfsHashImage}`,
-        animation_url: `ipfs://${ipfsHashFile}`,
+        destination_url: `ipfs://${ipfsHashFile}`,
         description,
         external_url: `${config.pinata.externalUrlBase}${address}`,
         name,
