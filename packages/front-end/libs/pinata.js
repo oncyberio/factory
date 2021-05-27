@@ -3,9 +3,10 @@ import assert from 'assert'
 import pinataSDK from '@pinata/sdk'
 
 import { Log } from './logger'
-import { config } from '../utils/config'
+import config from '../config'
 
 const logger = Log({ service: 'pinata' })
+
 const pinata = pinataSDK(config.pinata.apiKey, config.pinata.apiSecret)
 
 export async function uploadImage(
@@ -65,8 +66,11 @@ export async function pinHash(hash, address){
 
 export async function uploadMetadata(
   ipfsHashImage,
+  ipfsHashFile,
   address,
-  amount
+  amount,
+  name, 
+  description
 ) {
   const options = {
     pinataMetadata: {
@@ -75,6 +79,7 @@ export async function uploadMetadata(
         address,
         amount,
         ipfsHashImage,
+        ipfsHashFile,
       },
     },
     pinataOptions: {
@@ -86,9 +91,10 @@ export async function uploadMetadata(
     .pinJSONToIPFS(
       {
         image: `ipfs://${ipfsHashImage}`,
-        description: `OnCyber scene ${address}`,
+        destination_url: `ipfs://${ipfsHashFile}`,
+        description,
         external_url: `${config.pinata.externalUrlBase}${address}`,
-        name: address,
+        name,
         // background_color: 'ffffff',
         // attributes: [
         //   {

@@ -9,9 +9,12 @@
   },
   "dependencies": {
     "@ethersproject/wallet": "^5.2.0",
+    "@pinata/sdk": "^1.1.20",
     "ethereumjs-util": "^7.0.10",
     "ethers": "^5.2.0",
     "fortmatic": "^2.2.1",
+    "hardhat": "^2.3.0",
+    "ipfs": "^0.55.2",
     "jsonwebtoken": "^8.5.1",
     "next": "10.2.2",
     "react": "17.0.2",

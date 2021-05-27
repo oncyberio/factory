@@ -9,7 +9,7 @@ import {
   BigNumber,
   BigNumberish,
   PopulatedTransaction,
-  Contract,
+  BaseContract,
   ContractTransaction,
   Overrides,
   CallOverrides,
@@ -19,14 +19,21 @@ import { Listener, Provider } from "@ethersproject/providers";
 import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 import { TypedEventFilter, TypedEvent, TypedListener } from "./commons";
 
-interface IERC1155MetadataURIInterface extends ethers.utils.Interface {
+interface CyberSceneFactoryFacetInterface extends ethers.utils.Interface {
   functions: {
     "balanceOf(address,uint256)": FunctionFragment;
     "balanceOfBatch(address[],uint256[])": FunctionFragment;
+    "initialize(string,address,address,address)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
+    "isTrustedForwarder(address)": FunctionFragment;
+    "manager()": FunctionFragment;
+    "mint(string,uint256,bytes)": FunctionFragment;
+    "minterNonce(address)": FunctionFragment;
     "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)": FunctionFragment;
     "safeTransferFrom(address,address,uint256,uint256,bytes)": FunctionFragment;
     "setApprovalForAll(address,bool)": FunctionFragment;
+    "supportsInterface(bytes4)": FunctionFragment;
+    "totalSupply()": FunctionFragment;
     "uri(uint256)": FunctionFragment;
   };
 
@@ -39,9 +46,23 @@ interface IERC1155MetadataURIInterface extends ethers.utils.Interface {
     values: [string[], BigNumberish[]]
   ): string;
   encodeFunctionData(
+    functionFragment: "initialize",
+    values: [string, string, string, string]
+  ): string;
+  encodeFunctionData(
     functionFragment: "isApprovedForAll",
     values: [string, string]
   ): string;
+  encodeFunctionData(
+    functionFragment: "isTrustedForwarder",
+    values: [string]
+  ): string;
+  encodeFunctionData(functionFragment: "manager", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "mint",
+    values: [string, BigNumberish, BytesLike]
+  ): string;
+  encodeFunctionData(functionFragment: "minterNonce", values: [string]): string;
   encodeFunctionData(
     functionFragment: "safeBatchTransferFrom",
     values: [string, string, BigNumberish[], BigNumberish[], BytesLike]
@@ -54,6 +75,14 @@ interface IERC1155MetadataURIInterface extends ethers.utils.Interface {
     functionFragment: "setApprovalForAll",
     values: [string, boolean]
   ): string;
+  encodeFunctionData(
+    functionFragment: "supportsInterface",
+    values: [BytesLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "totalSupply",
+    values?: undefined
+  ): string;
   encodeFunctionData(functionFragment: "uri", values: [BigNumberish]): string;
 
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
@@ -61,8 +90,19 @@ interface IERC1155MetadataURIInterface extends ethers.utils.Interface {
     functionFragment: "balanceOfBatch",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "isApprovedForAll",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "isTrustedForwarder",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "manager", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "minterNonce",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -77,22 +117,32 @@ interface IERC1155MetadataURIInterface extends ethers.utils.Interface {
     functionFragment: "setApprovalForAll",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "supportsInterface",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "totalSupply",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "uri", data: BytesLike): Result;
 
   events: {
     "ApprovalForAll(address,address,bool)": EventFragment;
+    "Minted(address,uint256,uint256)": EventFragment;
     "TransferBatch(address,address,address,uint256[],uint256[])": EventFragment;
     "TransferSingle(address,address,address,uint256,uint256)": EventFragment;
     "URI(string,uint256)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "ApprovalForAll"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Minted"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "TransferBatch"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "TransferSingle"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "URI"): EventFragment;
 }
 
-export class IERC1155MetadataURI extends Contract {
+export class CyberSceneFactoryFacet extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
@@ -133,16 +183,10 @@ export class IERC1155MetadataURI extends Contract {
     toBlock?: string | number | undefined
   ): Promise<Array<TypedEvent<EventArgsArray & EventArgsObject>>>;
 
-  interface: IERC1155MetadataURIInterface;
+  interface: CyberSceneFactoryFacetInterface;
 
   functions: {
     balanceOf(
-      account: string,
-      id: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
-
-    "balanceOf(address,uint256)"(
       account: string,
       id: BigNumberish,
       overrides?: CallOverrides
@@ -154,11 +198,13 @@ export class IERC1155MetadataURI extends Contract {
       overrides?: CallOverrides
     ): Promise<[BigNumber[]]>;
 
-    "balanceOfBatch(address[],uint256[])"(
-      accounts: string[],
-      ids: BigNumberish[],
-      overrides?: CallOverrides
-    ): Promise<[BigNumber[]]>;
+    initialize(
+      _uri: string,
+      _manager: string,
+      _trustedForwarder: string,
+      _opensea: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
     isApprovedForAll(
       account: string,
@@ -166,22 +212,26 @@ export class IERC1155MetadataURI extends Contract {
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
-    "isApprovedForAll(address,address)"(
-      account: string,
-      operator: string,
+    isTrustedForwarder(
+      forwarder: string,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
-    safeBatchTransferFrom(
-      from: string,
-      to: string,
-      ids: BigNumberish[],
-      amounts: BigNumberish[],
-      data: BytesLike,
+    manager(overrides?: CallOverrides): Promise<[string]>;
+
+    mint(
+      _uri: string,
+      _amount: BigNumberish,
+      _signature: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)"(
+    minterNonce(
+      _minter: string,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
+    safeBatchTransferFrom(
       from: string,
       to: string,
       ids: BigNumberish[],
@@ -199,42 +249,23 @@ export class IERC1155MetadataURI extends Contract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    "safeTransferFrom(address,address,uint256,uint256,bytes)"(
-      from: string,
-      to: string,
-      id: BigNumberish,
-      amount: BigNumberish,
-      data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
     setApprovalForAll(
       operator: string,
-      approved: boolean,
+      status: boolean,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    "setApprovalForAll(address,bool)"(
-      operator: string,
-      approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
-    uri(id: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
-
-    "uri(uint256)"(
-      id: BigNumberish,
+    supportsInterface(
+      interfaceId: BytesLike,
       overrides?: CallOverrides
-    ): Promise<[string]>;
+    ): Promise<[boolean]>;
+
+    totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    uri(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
   };
 
   balanceOf(
-    account: string,
-    id: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
-
-  "balanceOf(address,uint256)"(
     account: string,
     id: BigNumberish,
     overrides?: CallOverrides
@@ -246,11 +277,13 @@ export class IERC1155MetadataURI extends Contract {
     overrides?: CallOverrides
   ): Promise<BigNumber[]>;
 
-  "balanceOfBatch(address[],uint256[])"(
-    accounts: string[],
-    ids: BigNumberish[],
-    overrides?: CallOverrides
-  ): Promise<BigNumber[]>;
+  initialize(
+    _uri: string,
+    _manager: string,
+    _trustedForwarder: string,
+    _opensea: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
 
   isApprovedForAll(
     account: string,
@@ -258,22 +291,23 @@ export class IERC1155MetadataURI extends Contract {
     overrides?: CallOverrides
   ): Promise<boolean>;
 
-  "isApprovedForAll(address,address)"(
-    account: string,
-    operator: string,
+  isTrustedForwarder(
+    forwarder: string,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
-  safeBatchTransferFrom(
-    from: string,
-    to: string,
-    ids: BigNumberish[],
-    amounts: BigNumberish[],
-    data: BytesLike,
+  manager(overrides?: CallOverrides): Promise<string>;
+
+  mint(
+    _uri: string,
+    _amount: BigNumberish,
+    _signature: BytesLike,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)"(
+  minterNonce(_minter: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+  safeBatchTransferFrom(
     from: string,
     to: string,
     ids: BigNumberish[],
@@ -291,39 +325,23 @@ export class IERC1155MetadataURI extends Contract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  "safeTransferFrom(address,address,uint256,uint256,bytes)"(
-    from: string,
-    to: string,
-    id: BigNumberish,
-    amount: BigNumberish,
-    data: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
   setApprovalForAll(
     operator: string,
-    approved: boolean,
+    status: boolean,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  "setApprovalForAll(address,bool)"(
-    operator: string,
-    approved: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
+  supportsInterface(
+    interfaceId: BytesLike,
+    overrides?: CallOverrides
+  ): Promise<boolean>;
 
-  uri(id: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-  "uri(uint256)"(id: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  uri(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
     balanceOf(
-      account: string,
-      id: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    "balanceOf(address,uint256)"(
       account: string,
       id: BigNumberish,
       overrides?: CallOverrides
@@ -335,11 +353,13 @@ export class IERC1155MetadataURI extends Contract {
       overrides?: CallOverrides
     ): Promise<BigNumber[]>;
 
-    "balanceOfBatch(address[],uint256[])"(
-      accounts: string[],
-      ids: BigNumberish[],
+    initialize(
+      _uri: string,
+      _manager: string,
+      _trustedForwarder: string,
+      _opensea: string,
       overrides?: CallOverrides
-    ): Promise<BigNumber[]>;
+    ): Promise<void>;
 
     isApprovedForAll(
       account: string,
@@ -347,22 +367,23 @@ export class IERC1155MetadataURI extends Contract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    "isApprovedForAll(address,address)"(
-      account: string,
-      operator: string,
+    isTrustedForwarder(
+      forwarder: string,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    safeBatchTransferFrom(
-      from: string,
-      to: string,
-      ids: BigNumberish[],
-      amounts: BigNumberish[],
-      data: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    manager(overrides?: CallOverrides): Promise<string>;
 
-    "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)"(
+    mint(
+      _uri: string,
+      _amount: BigNumberish,
+      _signature: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    minterNonce(_minter: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    safeBatchTransferFrom(
       from: string,
       to: string,
       ids: BigNumberish[],
@@ -380,51 +401,47 @@ export class IERC1155MetadataURI extends Contract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    "safeTransferFrom(address,address,uint256,uint256,bytes)"(
-      from: string,
-      to: string,
-      id: BigNumberish,
-      amount: BigNumberish,
-      data: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
     setApprovalForAll(
       operator: string,
-      approved: boolean,
+      status: boolean,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    "setApprovalForAll(address,bool)"(
-      operator: string,
-      approved: boolean,
+    supportsInterface(
+      interfaceId: BytesLike,
       overrides?: CallOverrides
-    ): Promise<void>;
+    ): Promise<boolean>;
 
-    uri(id: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    "uri(uint256)"(
-      id: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<string>;
+    uri(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {
     ApprovalForAll(
-      account: string | null,
-      operator: string | null,
-      approved: null
+      account?: string | null,
+      operator?: string | null,
+      approved?: null
     ): TypedEventFilter<
       [string, string, boolean],
       { account: string; operator: string; approved: boolean }
     >;
 
+    Minted(
+      account?: string | null,
+      tokenId?: BigNumberish | null,
+      amount?: BigNumberish | null
+    ): TypedEventFilter<
+      [string, BigNumber, BigNumber],
+      { account: string; tokenId: BigNumber; amount: BigNumber }
+    >;
+
     TransferBatch(
-      operator: string | null,
-      from: string | null,
-      to: string | null,
-      ids: null,
-      values: null
+      operator?: string | null,
+      from?: string | null,
+      to?: string | null,
+      ids?: null,
+      values?: null
     ): TypedEventFilter<
       [string, string, string, BigNumber[], BigNumber[]],
       {
@@ -437,11 +454,11 @@ export class IERC1155MetadataURI extends Contract {
     >;
 
     TransferSingle(
-      operator: string | null,
-      from: string | null,
-      to: string | null,
-      id: null,
-      value: null
+      operator?: string | null,
+      from?: string | null,
+      to?: string | null,
+      id?: null,
+      value?: null
     ): TypedEventFilter<
       [string, string, string, BigNumber, BigNumber],
       {
@@ -454,8 +471,8 @@ export class IERC1155MetadataURI extends Contract {
     >;
 
     URI(
-      value: null,
-      id: BigNumberish | null
+      value?: null,
+      id?: BigNumberish | null
     ): TypedEventFilter<[string, BigNumber], { value: string; id: BigNumber }>;
   };
 
@@ -466,22 +483,18 @@ export class IERC1155MetadataURI extends Contract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    "balanceOf(address,uint256)"(
-      account: string,
-      id: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     balanceOfBatch(
       accounts: string[],
       ids: BigNumberish[],
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    "balanceOfBatch(address[],uint256[])"(
-      accounts: string[],
-      ids: BigNumberish[],
-      overrides?: CallOverrides
+    initialize(
+      _uri: string,
+      _manager: string,
+      _trustedForwarder: string,
+      _opensea: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     isApprovedForAll(
@@ -490,22 +503,23 @@ export class IERC1155MetadataURI extends Contract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    "isApprovedForAll(address,address)"(
-      account: string,
-      operator: string,
+    isTrustedForwarder(
+      forwarder: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    safeBatchTransferFrom(
-      from: string,
-      to: string,
-      ids: BigNumberish[],
-      amounts: BigNumberish[],
-      data: BytesLike,
+    manager(overrides?: CallOverrides): Promise<BigNumber>;
+
+    mint(
+      _uri: string,
+      _amount: BigNumberish,
+      _signature: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)"(
+    minterNonce(_minter: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    safeBatchTransferFrom(
       from: string,
       to: string,
       ids: BigNumberish[],
@@ -523,33 +537,20 @@ export class IERC1155MetadataURI extends Contract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    "safeTransferFrom(address,address,uint256,uint256,bytes)"(
-      from: string,
-      to: string,
-      id: BigNumberish,
-      amount: BigNumberish,
-      data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
     setApprovalForAll(
       operator: string,
-      approved: boolean,
+      status: boolean,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    "setApprovalForAll(address,bool)"(
-      operator: string,
-      approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    uri(id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
-
-    "uri(uint256)"(
-      id: BigNumberish,
+    supportsInterface(
+      interfaceId: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
+
+    uri(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -559,22 +560,18 @@ export class IERC1155MetadataURI extends Contract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    "balanceOf(address,uint256)"(
-      account: string,
-      id: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     balanceOfBatch(
       accounts: string[],
       ids: BigNumberish[],
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    "balanceOfBatch(address[],uint256[])"(
-      accounts: string[],
-      ids: BigNumberish[],
-      overrides?: CallOverrides
+    initialize(
+      _uri: string,
+      _manager: string,
+      _trustedForwarder: string,
+      _opensea: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     isApprovedForAll(
@@ -583,22 +580,26 @@ export class IERC1155MetadataURI extends Contract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    "isApprovedForAll(address,address)"(
-      account: string,
-      operator: string,
+    isTrustedForwarder(
+      forwarder: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    manager(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    mint(
+      _uri: string,
+      _amount: BigNumberish,
+      _signature: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    minterNonce(
+      _minter: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     safeBatchTransferFrom(
-      from: string,
-      to: string,
-      ids: BigNumberish[],
-      amounts: BigNumberish[],
-      data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)"(
       from: string,
       to: string,
       ids: BigNumberish[],
@@ -616,34 +617,21 @@ export class IERC1155MetadataURI extends Contract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    "safeTransferFrom(address,address,uint256,uint256,bytes)"(
-      from: string,
-      to: string,
-      id: BigNumberish,
-      amount: BigNumberish,
-      data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
     setApprovalForAll(
       operator: string,
-      approved: boolean,
+      status: boolean,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    "setApprovalForAll(address,bool)"(
-      operator: string,
-      approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    uri(
-      id: BigNumberish,
+    supportsInterface(
+      interfaceId: BytesLike,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    "uri(uint256)"(
-      id: BigNumberish,
+    totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    uri(
+      _tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };

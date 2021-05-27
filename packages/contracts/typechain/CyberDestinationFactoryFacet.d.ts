@@ -19,7 +19,7 @@ import { Listener, Provider } from "@ethersproject/providers";
 import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 import { TypedEventFilter, TypedEvent, TypedListener } from "./commons";
 
-interface OnCyberScenesFacetInterface extends ethers.utils.Interface {
+interface CyberDestinationFactoryFacetInterface extends ethers.utils.Interface {
   functions: {
     "balanceOf(address,uint256)": FunctionFragment;
     "balanceOfBatch(address[],uint256[])": FunctionFragment;
@@ -142,7 +142,7 @@ interface OnCyberScenesFacetInterface extends ethers.utils.Interface {
   getEvent(nameOrSignatureOrTopic: "URI"): EventFragment;
 }
 
-export class OnCyberScenesFacet extends Contract {
+export class CyberDestinationFactoryFacet extends Contract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
@@ -183,7 +183,7 @@ export class OnCyberScenesFacet extends Contract {
     toBlock?: string | number | undefined
   ): Promise<Array<TypedEvent<EventArgsArray & EventArgsObject>>>;
 
-  interface: OnCyberScenesFacetInterface;
+  interface: CyberDestinationFactoryFacetInterface;
 
   functions: {
     balanceOf(

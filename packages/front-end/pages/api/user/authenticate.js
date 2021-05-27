@@ -31,6 +31,9 @@ export default (req, res) => {
         
         // Determine if it is the same address as 'owner' 
         if (addr == owner) {
+            // if (addr in whitelist) continue, otherwise we got an error
+
+
             // If the signature matches the owner supplied, create a
             // JSON web token for the owner that expires in 24 hours.
             const token = jwt.sign({user: owner}, process.env.SECRET_JWT_KEY,  { expiresIn: "1d" });
