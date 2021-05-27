@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import FileUploader from './FileUploader';
 import { Button, Input, TextArea } from './Elements';
 import Ipfs from 'ipfs';
-import { mint } from '../utils/minter';
+import { getNonce, mint } from '../utils/minter';
 
 function Factory({token, setSuccess}) {
     const [loading, setLoading] = useState(false);
@@ -25,7 +25,7 @@ function Factory({token, setSuccess}) {
             try {
                 const dest = await ipfs.add(destination);
                 const thumb = await ipfs.add(thumbnail);
-                console.info('Hash', dest.cid.toBaseEncodedString(), thumb.cid.toBaseEncodedString());
+                const nonce = await getNonce();
                 const {status, ipfsHashMetadata, signature} = await (await fetch('/api/generate', {
                     method: "POST",
                     body: JSON.stringify({
@@ -33,7 +33,7 @@ function Factory({token, setSuccess}) {
                       payload: {
                         destHash: dest.cid.toString(),
                         thumbHash: thumb.cid.toString(), 
-                        nonce: 0,
+                        nonce,
                         amount: quantity
                       },
                     }),

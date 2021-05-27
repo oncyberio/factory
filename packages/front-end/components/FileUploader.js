@@ -7,7 +7,7 @@ function FileUploader({ setFile, type }) {
         if (!e.target.files[0]) return setFile("");
 
         var reader  = new FileReader();
-        reader.readAsDataURL(e.target.files[0]);
+        reader.readAsArrayBuffer(e.target.files[0]);
 
         reader.addEventListener("load", function () {
             if (type == 'image') {

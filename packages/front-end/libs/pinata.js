@@ -68,7 +68,9 @@ export async function uploadMetadata(
   ipfsHashImage,
   ipfsHashFile,
   address,
-  amount
+  amount,
+  name, 
+  description
 ) {
   const options = {
     pinataMetadata: {
@@ -90,9 +92,9 @@ export async function uploadMetadata(
       {
         image: `ipfs://${ipfsHashImage}`,
         animation_url: `ipfs://${ipfsHashFile}`,
-        description: `OnCyber scene ${address}`,
+        description,
         external_url: `${config.pinata.externalUrlBase}${address}`,
-        name: address,
+        name,
         // background_color: 'ffffff',
         // attributes: [
         //   {

@@ -117,7 +117,9 @@ export default async (req, res) => {
     thumbHash,
     destHash,
     address,
-    amount
+    amount,
+    payload.title,
+    payload.description
   )
 
   const signature = await signURI(ipfsHashMetadata, amount, nonce, address, signer)
