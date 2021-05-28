@@ -12,6 +12,8 @@ function Factory({token, setSuccess}) {
     const [description, setDescription] = useState();
     const [traits, setTraits] = useState({height: 10, placeholders: 30, scale: .2});
     const [ thumbnail, setThumbnail ] = useState();
+    const [ video, setVideo ] = useState();
+
     const [ destination, setDestination] = useState();
     const [ quantity, setQuantity ] = useState(33);
 
@@ -25,6 +27,8 @@ function Factory({token, setSuccess}) {
             try {
                 const dest = await ipfs.add(destination);
                 const thumb = await ipfs.add(thumbnail);
+                const animation = await ipfs.add(animation);
+
 
                 console.log("HASHES")
                 console.log(dest)
@@ -38,6 +42,7 @@ function Factory({token, setSuccess}) {
                       token,
                       payload: {
                         destHash: dest.cid.toString(),
+                        animationHash: animation.cid.toString(),
                         thumbHash: thumb.cid.toString(), 
                         nonce,
                         amount: quantity,
@@ -97,6 +102,10 @@ function Factory({token, setSuccess}) {
         <div>
             <h4> Preview (image or video) </h4>
             <FileUploader setFile={setThumbnail} />
+        </div>
+        <div>
+            <h4> Video (video) </h4>
+            <FileUploader setFile={setVideo} />
         </div>
         <div>
             <h4> 3D Model (GLTF Embedded file) </h4>
