@@ -21,8 +21,6 @@ async function getNonce() {
 
 async function mint(uri, amount, signature) {
 
-  console.log("GOT TO MINTING")
-
   const provider = new ethers.providers.Web3Provider(window.ethereum);
   const minter = provider.getSigner();
 

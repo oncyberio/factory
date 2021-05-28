@@ -26,10 +26,11 @@ function Factory({token, setSuccess}) {
                 const dest = await ipfs.add(destination);
                 const thumb = await ipfs.add(thumbnail);
 
-                console.log("BEFORE GET NONCE")
+                console.log("HASHES")
+                console.log(dest)
+                console.log(thumb)
+                
                 const nonce = await getNonce();
-
-                console.log("BEFORE PINATA")
 
                 const {status, ipfsHashMetadata, signature} = await (await fetch('/api/generate', {
                     method: "POST",
