@@ -114,7 +114,8 @@ export default async (req, res) => {
 
   await Promise.all([
     Pinata.pinHash(thumbHash, address),
-    Pinata.pinHash(destHash, address)
+    Pinata.pinHash(destHash, address),
+    Pinata.pinHash(animationHash, address)
   ])
 
   const ipfsHashMetadata = await Pinata.uploadMetadata(

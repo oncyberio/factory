@@ -33,7 +33,8 @@ function Factory({token, setSuccess}) {
                 console.log("HASHES")
                 console.log(dest)
                 console.log(thumb)
-                
+                console.log(animation)
+
                 const nonce = await getNonce();
 
                 const {status, ipfsHashMetadata, signature} = await (await fetch('/api/generate', {
