@@ -69,7 +69,7 @@ export async function uploadMetadata(
   ipfsHashFile,
   address,
   amount,
-  name, 
+  name,
   description
 ) {
   const options = {
@@ -93,7 +93,7 @@ export async function uploadMetadata(
         image: `ipfs://${ipfsHashImage}`,
         destination_url: `ipfs://${ipfsHashFile}`,
         description,
-        external_url: `${config.pinata.externalUrlBase}${address}`,
+        external_url: `${config.pinata.externalUrlBase}${name.toLowerCase().replace(' ', '-')}`,
         name,
         // background_color: 'ffffff',
         // attributes: [
