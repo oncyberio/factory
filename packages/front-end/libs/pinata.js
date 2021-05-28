@@ -66,6 +66,7 @@ export async function pinHash(hash, address){
 
 export async function uploadMetadata(
   ipfsHashImage,
+  ipfsHashAnimation,
   ipfsHashFile,
   address,
   amount,
@@ -80,6 +81,7 @@ export async function uploadMetadata(
         amount,
         ipfsHashImage,
         ipfsHashFile,
+        ipfsHashAnimation
       },
     },
     pinataOptions: {
@@ -92,6 +94,7 @@ export async function uploadMetadata(
       {
         image: `ipfs://${ipfsHashImage}`,
         destination_url: `ipfs://${ipfsHashFile}`,
+        animation_url: `ipfs://${ipfsHashAnimation}`,
         description,
         external_url: `${config.pinata.externalUrlBase}${name.toLowerCase().replace(' ', '')}`,
         name,
