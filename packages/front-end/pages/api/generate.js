@@ -73,8 +73,11 @@ export default async (req, res) => {
   const address = getAddressCatch(userId)
   const thumbHash = getCIDCatch(payload.thumbHash)
   const destHash = getCIDCatch(payload.destHash)
+  const name = payload.name
+  const description = payload.description
 
-  if (!amount || !address || !thumbHash || !destHash || !payload.name || !payload.description) {
+  if (!amount || !address || !thumbHash || !destHash ||
+    !payload.name || payload.name.length < 1 || !payload.description || payload.description.length < 1) {
     logger.error('Error on form data', { payload })
     return res.status(400).json({
       status: 'error',
@@ -118,8 +121,8 @@ export default async (req, res) => {
     destHash,
     address,
     amount,
-    payload.name,
-    payload.description
+    name,
+    description
   )
 
   const signature = await signURI(ipfsHashMetadata, amount, nonce, address, signer)

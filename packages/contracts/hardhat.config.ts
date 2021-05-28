@@ -46,8 +46,8 @@ const config: HardhatUserConfig = {
   namedAccounts: {
     deployer: 0,
     manager: process.env.MANAGER_ADDRESS || 1,
-    biconomyForwarder: '0x9399BB24DBB5C4b782C70c2969F58716Ebbd6a3b',
-    opensea: '0x53d791f18155c211ff8b58671d0f7e9b50e596ad'
+    biconomyForwarder: process.env.BICONOMY_FORWARDER || '0x9399BB24DBB5C4b782C70c2969F58716Ebbd6a3b',
+    opensea: process.env.OPENSEA || '0x53d791f18155c211ff8b58671d0f7e9b50e596ad'
   },
   networks: {
     localhost: {
@@ -60,6 +60,12 @@ const config: HardhatUserConfig = {
       url: 'https://rpc-mumbai.maticvigil.com',
       gasPrice: parseUnits('1', 'gwei').toNumber(),
       accounts: [process.env.MUMBAI_PRIVATE_KEY || defaultPrivateKey],
+    },
+    mainnet: {
+      chainId: 137,
+      url: 'https://rpc-mainnet.matic.network',
+      gasPrice: parseUnits('1', 'gwei').toNumber(),
+      accounts: [process.env.MAINNET_PRIVATE_KEY || defaultPrivateKey],
     },
   },
 }
