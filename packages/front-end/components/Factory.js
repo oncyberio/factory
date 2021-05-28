@@ -13,7 +13,7 @@ function Factory({token, setSuccess}) {
     const [traits, setTraits] = useState({height: 10, placeholders: 30, scale: .2});
     const [ thumbnail, setThumbnail ] = useState();
     const [ destination, setDestination] = useState();
-    const [ quantity, setQuantity ] = useState(20);
+    const [ quantity, setQuantity ] = useState(33);
 
     const submit = async () => {
         setLoading(true);
@@ -79,9 +79,13 @@ function Factory({token, setSuccess}) {
             <TextArea type="text" value={ description } name="description" onChange={(e) => setDescription(e.target.value)} />
         </div>
         <div>
+            <h4> Editions minted </h4>
+            <Input type="number" value={ quantity } name="quantity" onChange={(e) => setQuantity(e.target.value)} />
+        </div>
+        {/* <div>
             <h4> Placeholders </h4>
             <Input type="number" value={ traits.placeholders } name="placeholders" onChange={(e) => setTraits({traits, ...{placeholders: e.target.value}})} />
-        </div>
+        </div> */}
         {/* <div>
             <h4> Camera Height </h4>
             <TextArea type="text" name="height" onChange={(e) => setTraits({traits, ...{height: e.target.value}})} />
