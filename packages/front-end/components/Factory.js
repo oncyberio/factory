@@ -27,7 +27,7 @@ function Factory({token, setSuccess}) {
             try {
                 const dest = await ipfs.add(destination);
                 const thumb = await ipfs.add(thumbnail);
-                const animation = await ipfs.add(animation);
+                const animation = await ipfs.add(video);
 
 
                 console.log("HASHES")
