@@ -1,2 +1,2 @@
 all:
-	cp ./packages/contracts/deployments/mumbai/DiamondCyberDestinationFactory.json ./packages/front-end/config/.
+	cp ./packages/contracts/deployments/mainnet/DiamondCyberDestinationFactory.json ./packages/front-end/config/.
