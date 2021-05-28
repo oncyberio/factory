@@ -20,7 +20,7 @@ const config: Config = {
     apiKey: process.env.PINATA_API_KEY,
     apiSecret: process.env.PINATA_API_SECRET,
     externalUrlBase:
-      process.env.PINATA_EXTERNAL_URL_BASE || 'https://oncyber.io/scenes/',
+      process.env.PINATA_EXTERNAL_URL_BASE || 'https://oncyber.io/destinations/',
   },
   privateKey:
     process.env.PRIVATE_KEY ||

@@ -35,16 +35,16 @@ async function mint(uri, amount, signature) {
   const tx = await contract.mint(uri, amount, signature)
 
   const txReceipt = await tx.wait()
-  const iface = new ethers.utils.Interface(jsonContract.abi);
-  let tokenId = null
+  // const iface = new ethers.utils.Interface(jsonContract.abi);
+  // let tokenId = null
 
-  txReceipt.logs.forEach( (log) => {
-    const logParsed = iface.parseLog(log)
-    if(logParsed.name === 'Minted'){
-      tokenId = logParsed.args[1].toString()
-      console.log('tokenId', tokenId)
-    }
-  })
+  // txReceipt.logs.forEach( (log) => {
+  //   const logParsed = iface.parseLog(log)
+  //   if(logParsed.name === 'Minted'){
+  //     tokenId = logParsed.args[1].toString()
+  //     console.log('tokenId', tokenId)
+  //   }
+  // })
 
   return 1;
 }

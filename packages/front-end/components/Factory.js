@@ -46,9 +46,6 @@ function Factory({token, setSuccess}) {
                     }),
                 })).json();
 
-                console.log("STATUS")
-                console.log(status, ipfsHashMetadata, signature);
-
                 if (status == 'success') {
                     const balance = await mint(ipfsHashMetadata, quantity, signature)
                     console.log(balance)
