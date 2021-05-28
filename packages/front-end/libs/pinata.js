@@ -93,7 +93,7 @@ export async function uploadMetadata(
         image: `ipfs://${ipfsHashImage}`,
         destination_url: `ipfs://${ipfsHashFile}`,
         description,
-        external_url: `${config.pinata.externalUrlBase}${name.toLowerCase().replace(' ', '-')}`,
+        external_url: `${config.pinata.externalUrlBase}${name.toLowerCase().replace(' ', '')}`,
         name,
         // background_color: 'ffffff',
         // attributes: [

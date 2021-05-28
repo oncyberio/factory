@@ -1,7 +1,6 @@
 import { useEffect, useReducer } from "react";
 import React from "react";
 import Web3 from 'web3';
-import { useRouter } from "next/router";
 
 const userInitialState = {
     id: "",
@@ -61,7 +60,6 @@ const reducer = (state, action) => {
 
 export const UserProvider = ({ children }) => {
     const [ authenticationState, dispatch ] = useReducer(reducer, initialState)
-    const router = useRouter();
 
     const login = async () => {
         try {
@@ -81,8 +79,6 @@ export const UserProvider = ({ children }) => {
     }
 
     const simple_authenticate = async (ethereumAccountId, type = "coinbase") => {
-        ethereumAccountId = ethereumAccountId;
-
         return fetch(`/api/user/simple_authenticate`, {
             method: 'POST',
             body: JSON.stringify({ 
@@ -109,8 +105,6 @@ export const UserProvider = ({ children }) => {
     }   
 
     const authenticate = async (ethereumAccountId) => {
-        ethereumAccountId = ethereumAccountId;
-
         return new Promise((resolve, reject) => {
             if (typeof window.ethereum !== 'undefined') {
 
