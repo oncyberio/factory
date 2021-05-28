@@ -17,6 +17,7 @@
     "scripts:mint:mumbai": "hardhat --network mumbai run ./scripts/mint.ts",
     "scripts:mint-forwarder:mumbai": "hardhat --network mumbai run scripts/mintForwarder.ts",
     "deploy:mumbai": "hardhat --network mumbai deploy",
+    "deploy:mainnet": "hardhat --network mainnet deploy",
     "flatten": "hardhat flatten contracts/CyberDestinationFactoryFacet.sol > deployments/CyberDestinationFactoryFacet.flatten.sol"
   },
   "author": "",
