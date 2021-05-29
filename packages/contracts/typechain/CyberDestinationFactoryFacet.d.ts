@@ -23,12 +23,14 @@ interface CyberDestinationFactoryFacetInterface extends ethers.utils.Interface {
   functions: {
     "balanceOf(address,uint256)": FunctionFragment;
     "balanceOfBatch(address[],uint256[])": FunctionFragment;
-    "initialize(string,address,address,address)": FunctionFragment;
+    "initialize(string,address,address,address,address,uint256)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
     "isTrustedForwarder(address)": FunctionFragment;
     "manager()": FunctionFragment;
     "mint(string,uint256,bytes)": FunctionFragment;
     "minterNonce(address)": FunctionFragment;
+    "oncyber()": FunctionFragment;
+    "oncyberShare()": FunctionFragment;
     "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)": FunctionFragment;
     "safeTransferFrom(address,address,uint256,uint256,bytes)": FunctionFragment;
     "setApprovalForAll(address,bool)": FunctionFragment;
@@ -47,7 +49,7 @@ interface CyberDestinationFactoryFacetInterface extends ethers.utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "initialize",
-    values: [string, string, string, string]
+    values: [string, string, string, string, string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "isApprovedForAll",
@@ -63,6 +65,11 @@ interface CyberDestinationFactoryFacetInterface extends ethers.utils.Interface {
     values: [string, BigNumberish, BytesLike]
   ): string;
   encodeFunctionData(functionFragment: "minterNonce", values: [string]): string;
+  encodeFunctionData(functionFragment: "oncyber", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "oncyberShare",
+    values?: undefined
+  ): string;
   encodeFunctionData(
     functionFragment: "safeBatchTransferFrom",
     values: [string, string, BigNumberish[], BigNumberish[], BytesLike]
@@ -103,6 +110,11 @@ interface CyberDestinationFactoryFacetInterface extends ethers.utils.Interface {
   decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "minterNonce",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "oncyber", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "oncyberShare",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -203,6 +215,8 @@ export class CyberDestinationFactoryFacet extends BaseContract {
       _manager: string,
       _trustedForwarder: string,
       _opensea: string,
+      _oncyber: string,
+      _oncyberShare: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -230,6 +244,10 @@ export class CyberDestinationFactoryFacet extends BaseContract {
       _minter: string,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
+
+    oncyber(overrides?: CallOverrides): Promise<[string]>;
+
+    oncyberShare(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     safeBatchTransferFrom(
       from: string,
@@ -282,6 +300,8 @@ export class CyberDestinationFactoryFacet extends BaseContract {
     _manager: string,
     _trustedForwarder: string,
     _opensea: string,
+    _oncyber: string,
+    _oncyberShare: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -306,6 +326,10 @@ export class CyberDestinationFactoryFacet extends BaseContract {
   ): Promise<ContractTransaction>;
 
   minterNonce(_minter: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+  oncyber(overrides?: CallOverrides): Promise<string>;
+
+  oncyberShare(overrides?: CallOverrides): Promise<BigNumber>;
 
   safeBatchTransferFrom(
     from: string,
@@ -358,6 +382,8 @@ export class CyberDestinationFactoryFacet extends BaseContract {
       _manager: string,
       _trustedForwarder: string,
       _opensea: string,
+      _oncyber: string,
+      _oncyberShare: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -382,6 +408,10 @@ export class CyberDestinationFactoryFacet extends BaseContract {
     ): Promise<BigNumber>;
 
     minterNonce(_minter: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    oncyber(overrides?: CallOverrides): Promise<string>;
+
+    oncyberShare(overrides?: CallOverrides): Promise<BigNumber>;
 
     safeBatchTransferFrom(
       from: string,
@@ -494,6 +524,8 @@ export class CyberDestinationFactoryFacet extends BaseContract {
       _manager: string,
       _trustedForwarder: string,
       _opensea: string,
+      _oncyber: string,
+      _oncyberShare: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -518,6 +550,10 @@ export class CyberDestinationFactoryFacet extends BaseContract {
     ): Promise<BigNumber>;
 
     minterNonce(_minter: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    oncyber(overrides?: CallOverrides): Promise<BigNumber>;
+
+    oncyberShare(overrides?: CallOverrides): Promise<BigNumber>;
 
     safeBatchTransferFrom(
       from: string,
@@ -571,6 +607,8 @@ export class CyberDestinationFactoryFacet extends BaseContract {
       _manager: string,
       _trustedForwarder: string,
       _opensea: string,
+      _oncyber: string,
+      _oncyberShare: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -598,6 +636,10 @@ export class CyberDestinationFactoryFacet extends BaseContract {
       _minter: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
+
+    oncyber(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    oncyberShare(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     safeBatchTransferFrom(
       from: string,

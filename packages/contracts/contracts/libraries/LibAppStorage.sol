@@ -14,6 +14,8 @@ library LibAppStorage {
     address opensea;
     Counters.Counter totalSupply;
     mapping (address => Counters.Counter) minterNonce;
+    address oncyber;
+    uint256 oncyberShare;
 
   }
 

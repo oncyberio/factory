@@ -18,7 +18,7 @@ contract CyberDestinationFactoryFacet is BaseRelayRecipient, ERC1155URI {
 
   event Minted(address indexed account, uint256 indexed tokenId, uint256 indexed amount);
 
-  function initialize(string memory _uri, address _manager, address _trustedForwarder, address _opensea) public {
+  function initialize(string memory _uri, address _manager, address _trustedForwarder, address _opensea, address _oncyber, uint256 _oncyberShare) public {
 
     require(LibDiamond.diamondStorage().contractOwner == msg.sender, "NO");
 
@@ -27,6 +27,8 @@ contract CyberDestinationFactoryFacet is BaseRelayRecipient, ERC1155URI {
     setURI(_uri);
     LibAppStorage.layout().manager = _manager;
     LibAppStorage.layout().opensea = _opensea;
+    LibAppStorage.layout().oncyber = _oncyber;
+    LibAppStorage.layout().oncyberShare = _oncyberShare;
 
   }
 
@@ -39,6 +41,18 @@ contract CyberDestinationFactoryFacet is BaseRelayRecipient, ERC1155URI {
   function manager() public view returns (address) {
 
     return LibAppStorage.layout().manager;
+
+  }
+
+  function oncyber() public view returns (address) {
+
+    return LibAppStorage.layout().oncyber;
+
+  }
+
+  function oncyberShare() public view returns (uint256) {
+
+    return LibAppStorage.layout().oncyberShare;
 
   }
 
@@ -57,12 +71,16 @@ contract CyberDestinationFactoryFacet is BaseRelayRecipient, ERC1155URI {
     address _recoveredAddress = keccak256(_message).toEthSignedMessageHash().recover(_signature);
     require(_recoveredAddress == LibAppStorage.layout().manager, "NM");
 
+    require(_amount * LibAppStorage.layout().oncyberShare % 100 == 0, "IA");
+    uint256 oncyberAmount = _amount * LibAppStorage.layout().oncyberShare / 100;
+
     // Mint token
     _tokenId = LibAppStorage.layout().totalSupply.current();
     setTokenURI(_tokenId, _uri);
     LibAppStorage.layout().totalSupply.increment();
     LibAppStorage.layout().minterNonce[sender].increment();
     _safeMint(sender, _tokenId, _amount, "");
+    _safeTransfer(sender, sender, LibAppStorage.layout().oncyber, _tokenId, oncyberAmount, "");
 
     emit Minted(sender, _tokenId, _amount);
 
