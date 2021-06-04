@@ -5,16 +5,16 @@ export const Input = styled.input`
     height: 40px;
     font-size: 16px;
     padding: 2px 10px;
-    border: 2px solid #000;
-    background: rgba(255, 255, 255, 0.05);
-    color: #fff;
+    border: 1px solid #000;
+    background: rgba(0, 0, 0, 0.05);
+    color: #000;
     outline: none;
     transition: .2s;
     box-shadow: none !important;
 
 
     &:focus{
-        border: 2px solid #610eff;
+        border: 1px solid #610eff;
     }
 
     @media(max-width: 600px) {
@@ -46,9 +46,9 @@ export const TextArea = styled.textarea`
     font-size: 16px;
 
     padding: 10px 15px;
-    border: 2px solid #000;
-    background: rgba(255, 255, 255, 0.05);
-    color: #fff;
+    border: 1px solid #000;
+    background: rgba(0, 0, 0, 0.05);
+    color: #000;
     outline: none;
     transition: .2s;
     box-shadow: none !important;
@@ -58,7 +58,7 @@ export const TextArea = styled.textarea`
     }
 
     &:focus{
-        border: 2px solid #610eff;
+        border: 1px solid #610eff;
     }
 `
 

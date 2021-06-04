@@ -42,7 +42,7 @@ const Container = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(0, 0, 0, 0.05);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

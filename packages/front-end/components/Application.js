@@ -5,17 +5,16 @@ import { Button, Input, TextArea } from './Elements';
 import Ipfs from 'ipfs';
 import { getNonce, mint } from '../utils/minter';
 
-function Factory({token, setSuccess}) {
+function Application({token, setSuccess, destination}) {
     const [loading, setLoading] = useState(false);
 
-    const [name, setName] = useState();
-    const [description, setDescription] = useState();
-    const [traits, setTraits] = useState({height: 10, placeholders: 30, scale: .2});
+    const [name, setName] = useState(destination?.name || "");
+    const [description, setDescription] = useState(destination?.description || "");
+    const [ quantity, setQuantity ] = useState(destination?.quantity || 33);
+    // const [traits, setTraits] = useState({height: 10, placeholders: 30, scale: .2});
     const [ thumbnail, setThumbnail ] = useState();
     const [ video, setVideo ] = useState();
-
-    const [ destination, setDestination] = useState();
-    const [ quantity, setQuantity ] = useState(33);
+    const [ model, setModel ] = useState()
 
     const submit = async () => {
         setLoading(true);
@@ -25,16 +24,9 @@ function Factory({token, setSuccess}) {
         else if (thumbnail && destination) {
             const ipfs = await Ipfs.create()
             try {
-                const dest = await ipfs.add(destination);
-                const thumb = await ipfs.add(thumbnail);
-                const animation = await ipfs.add(video);
-
-
-                console.log("HASHES")
-                console.log(dest)
-                console.log(thumb)
-                console.log(animation)
-
+                const modelHash = await ipfs.add(model);
+                const thumbHash = await ipfs.add(thumbnail);
+                const animationHash = await ipfs.add(video);
                 const nonce = await getNonce();
 
                 const {status, ipfsHashMetadata, signature} = await (await fetch('/api/generate', {
@@ -42,9 +34,9 @@ function Factory({token, setSuccess}) {
                     body: JSON.stringify({
                       token,
                       payload: {
-                        destHash: dest.cid.toString(),
-                        animationHash: animation.cid.toString(),
-                        thumbHash: thumb.cid.toString(), 
+                        modelHash: modelHash.cid.toString(),
+                        animationHash: animationHash.cid.toString(),
+                        thumbHash: thumbHash.cid.toString(), 
                         nonce,
                         amount: quantity,
                         name,
@@ -54,6 +46,7 @@ function Factory({token, setSuccess}) {
                 })).json();
 
                 if (status == 'success') {
+                    // save all to db
                     const balance = await mint(ipfsHashMetadata, quantity, signature)
                     console.log(balance)
                     setSuccess(true);
@@ -110,7 +103,7 @@ function Factory({token, setSuccess}) {
         </div>
         <div>
             <h4> 3D Model (GLTF Embedded file) </h4>
-            <FileUploader setFile={setDestination} />
+            <FileUploader setFile={setModel} />
         </div>
         <div>
             <Button disabled={loading} onClick={submit} purple> {loading ? 'Loading...': 'Upload'}</Button>
@@ -130,4 +123,4 @@ const Container = styled.div`
     }
 `
 
-export default Factory;
+export default Application;

@@ -72,12 +72,12 @@ export default async (req, res) => {
 
   const address = getAddressCatch(userId)
   const thumbHash = getCIDCatch(payload.thumbHash)
-  const destHash = getCIDCatch(payload.destHash)
+  const modelHash = getCIDCatch(payload.modelHash)
   const animationHash = getCIDCatch(payload.animationHash)
   const name = payload.name
   const description = payload.description
 
-  if (!amount || !address || !thumbHash || !destHash || !animationHash ||
+  if (!amount || !address || !thumbHash || !modelHash || !animationHash ||
     !payload.name || payload.name.length < 1 || !payload.description || payload.description.length < 1) {
     logger.error('Error on form data', { payload })
     return res.status(400).json({
@@ -114,14 +114,14 @@ export default async (req, res) => {
 
   await Promise.all([
     Pinata.pinHash(thumbHash, address),
-    Pinata.pinHash(destHash, address),
+    Pinata.pinHash(modelHash, address),
     Pinata.pinHash(animationHash, address)
   ])
 
   const ipfsHashMetadata = await Pinata.uploadMetadata(
     thumbHash,
     animationHash,
-    destHash,
+    modelHash,
     address,
     amount,
     name,

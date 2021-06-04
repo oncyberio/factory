@@ -127,7 +127,7 @@ function Authentication({ isShowing, toggle, className }) {
                 <span>{loading ? 'Loading...' : 'Coinbase Mobile'}</span>
             </Button> */}
 
-            <Button disabled={ loading }  onClick={(e) => walletConnect()}>
+            {/* <Button disabled={ loading }  onClick={(e) => walletConnect()}>
                 <img style={{width: '34px'}} src='../images/icons/walletconnect.png'/>
                 <span>{loading ? 'Loading...' : 'WalletConnect (Trust)'}</span>
             </Button>
@@ -135,7 +135,7 @@ function Authentication({ isShowing, toggle, className }) {
             <Button disabled={ loading }  onClick={(e) => formaticConnect()}>
                 <img style={{width: '32px'}} src='../images/icons/fortmatic.png'/>
                 <span>{loading  ? 'Loading...' : 'Fortmatic'}</span>
-            </Button>
+            </Button> */}
             </>}
     </div>
 }
