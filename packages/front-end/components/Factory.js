@@ -4,6 +4,7 @@ import FileUploader from './FileUploader';
 import { Button, Input, TextArea } from './Elements';
 import Ipfs from 'ipfs';
 import { getNonce, mint } from '../utils/minter';
+import config from '../config';
 
 function Factory({token, setSuccess}) {
     const [loading, setLoading] = useState(false);
@@ -47,6 +48,7 @@ function Factory({token, setSuccess}) {
                         thumbHash: thumb.cid.toString(), 
                         nonce,
                         amount: quantity,
+                        amountOncyber: config.minOncyberShares * quantity,
                         name,
                         description
                       },
@@ -54,6 +56,7 @@ function Factory({token, setSuccess}) {
                 })).json();
 
                 if (status == 'success') {
+                    console.log("PIN SUCCESS")
                     const balance = await mint(ipfsHashMetadata, quantity, signature)
                     console.log(balance)
                     setSuccess(true);

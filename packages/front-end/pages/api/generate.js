@@ -83,7 +83,7 @@ export default async (req, res) => {
   const description = payload.description
 
   if (!contractName || !amount || !amountOncyber || !address || !thumbHash || !destHash || !animationHash ||
-    !payload.name || payload.name.length < 1 || !payload.description || payload.description.length < 1) {
+    !name || name.length < 1 || !description || description.length < 1) {
     logger.error('Error on form data', { payload })
     return res.status(400).json({
       status: 'error',
@@ -125,6 +125,20 @@ export default async (req, res) => {
     })
   }
 
+  console.log("BEFORE AMOUNT")
+
+  if((amountOncyber / amount) < config.minOncyberShares){
+    logger.error('Error min oncyber shares not reach', { payload })
+    return res.status(400).json({
+      status: 'error',
+      message: 'invalid request data min oncyber shares not reach',
+      ipfsHashMetadata: null,
+      signature: null,
+    })
+  }
+
+  console.log("AFTER AMOUNT")
+
   logger.info('start processing', { address })
 
   await Promise.all([
@@ -142,6 +156,8 @@ export default async (req, res) => {
     name,
     description
   )
+
+  console.log("BEFORE SIG")
 
   const signature = await signURI(ipfsHashMetadata, amount, amountOncyber, nonce, address, signer)
 

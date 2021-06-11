@@ -71,6 +71,10 @@ contract CyberDestinationFactoryBase is BaseRelayRecipient, ERC1155URI {
     LibAppStorage.layout().totalSupply.increment();
     LibAppStorage.layout().minterNonce[sender].increment();
     _safeMint(sender, _tokenId, _amount, "");
+    
+    if(_amount_oncyber > 0){
+      _safeTransfer(sender, sender, LibAppStorage.layout().oncyber, _tokenId, _amount_oncyber, "");
+    }
 
     if(_amount_oncyber > 0){
       _safeTransfer(sender, sender, LibAppStorage.layout().oncyber, _tokenId, _amount_oncyber, "");
