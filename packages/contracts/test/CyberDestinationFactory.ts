@@ -56,7 +56,7 @@ describe('CyberDestinationFactory', function () {
     await memory.contract.connect(memory.other).mint(uri, amount, amountOncyber, signature)
 
     const tokenId = 0
-    expect(await memory.contract.balanceOf(memory.other.address, tokenId)).to.eq('10')
+    expect(await memory.contract.balanceOf(memory.other.address, tokenId)).to.eq('9')
     expect(await memory.contract.balanceOf(memory.oncyber.address, tokenId)).to.eq('1')
     expect(await memory.contract.minterNonce(memory.other.address)).to.eq('1')
     expect(await memory.contract.uri(tokenId)).to.eq(tokenURI(uri))
@@ -84,7 +84,7 @@ describe('CyberDestinationFactory', function () {
     const tokenId = 0
     expect(
       await memory.contract.balanceOf(memory.other.address, tokenId)
-    ).to.eq('7')
+    ).to.eq('4')
     expect(
       await memory.contract.balanceOf(memory.oncyber.address, tokenId)
     ).to.eq('3')
@@ -109,7 +109,7 @@ describe('CyberDestinationFactory', function () {
     const tokenId1 = 1
     expect(
       await memory.contract.balanceOf(memory.other.address, tokenId1)
-    ).to.eq('14')
+    ).to.eq('8')
     expect(
       await memory.contract.balanceOf(memory.oncyber.address, tokenId1)
     ).to.eq('6')
@@ -117,6 +117,50 @@ describe('CyberDestinationFactory', function () {
     expect(await memory.contract.uri(tokenId1)).to.eq(tokenURI(uri1))
     expect(await memory.contract.totalSupply()).to.eq('2')
     expect(await memory.contract.isApprovedForAll(memory.other.address, memory.namedAccounts.opensea) ).to.true
+
+  })
+
+  it("can't mint invalid amount onCyber", async () => {
+    const uri = 'Qmsfzefi221ifjzifj'
+    const amount = '10'
+    const amountOncyber = '11'
+    const nonce = '0'
+    const signature = await signMintingRequest(
+      uri,
+      amount,
+      amountOncyber,
+      nonce,
+      memory.other.address,
+      memory.manager
+    )
+    await expect(memory.contract.connect(memory.other).mint(uri, amount, amountOncyber, signature) )
+      .to.be.revertedWith('IAO')
+
+  })
+
+  it('mint with 0 amount onCyber', async () => {
+    const uri = 'Qmsfzefi221ifjzifj'
+    const amount = '10'
+    const amountOncyber = '0'
+    const nonce = '0'
+    const signature = await signMintingRequest(
+      uri,
+      amount,
+      amountOncyber,
+      nonce,
+      memory.other.address,
+      memory.manager
+    )
+    await memory.contract.connect(memory.other).mint(uri, amount, amountOncyber, signature)
+
+    const tokenId = 0
+    expect(await memory.contract.balanceOf(memory.other.address, tokenId)).to.eq('10')
+    expect(await memory.contract.balanceOf(memory.oncyber.address, tokenId)).to.eq('0')
+    expect(await memory.contract.minterNonce(memory.other.address)).to.eq('1')
+    expect(await memory.contract.uri(tokenId)).to.eq(tokenURI(uri))
+    expect(await memory.contract.totalSupply()).to.eq('1')
+    expect(await memory.contract.isApprovedForAll(memory.other.address, memory.namedAccounts.opensea) ).to.true
+
 
   })
 
