@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity 0.8.4;
+pragma solidity 0.8.5;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
 // import "hardhat/console.sol";
@@ -14,6 +14,7 @@ library LibAppStorage {
     address opensea;
     Counters.Counter totalSupply;
     mapping (address => Counters.Counter) minterNonce;
+    address oncyber;
 
   }
 

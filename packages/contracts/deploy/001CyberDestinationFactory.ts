@@ -12,7 +12,13 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     facets: ['CyberDestinationFactoryFacet'],
     execute: {
       methodName: 'initialize',
-      args: ['ipfs://', namedAccounts.manager, namedAccounts.biconomyForwarder, namedAccounts.opensea],
+      args: [
+        'ipfs://',
+        namedAccounts.manager,
+        namedAccounts.biconomyForwarder,
+        namedAccounts.opensea,
+        namedAccounts.oncyber
+      ],
     },
     log: true,
   })

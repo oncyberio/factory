@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.4;
+pragma solidity 0.8.5;
 
 //import "hardhat/console.sol";
 import '@solidstate/contracts/token/ERC1155/IERC1155.sol';
@@ -18,7 +18,7 @@ contract CyberDestinationFactoryFacet is BaseRelayRecipient, ERC1155URI {
 
   event Minted(address indexed account, uint256 indexed tokenId, uint256 indexed amount);
 
-  function initialize(string memory _uri, address _manager, address _trustedForwarder, address _opensea) public {
+  function initialize(string memory _uri, address _manager, address _trustedForwarder, address _opensea, address _oncyber) public {
 
     require(LibDiamond.diamondStorage().contractOwner == msg.sender, "NO");
 
@@ -27,6 +27,7 @@ contract CyberDestinationFactoryFacet is BaseRelayRecipient, ERC1155URI {
     setURI(_uri);
     LibAppStorage.layout().manager = _manager;
     LibAppStorage.layout().opensea = _opensea;
+    LibAppStorage.layout().oncyber = _oncyber;
 
   }
 
@@ -42,20 +43,27 @@ contract CyberDestinationFactoryFacet is BaseRelayRecipient, ERC1155URI {
 
   }
 
+  function oncyber() public view returns (address) {
+
+    return LibAppStorage.layout().oncyber;
+
+  }
+
   function minterNonce(address _minter) public view returns (uint256){
 
     return LibAppStorage.layout().minterNonce[_minter].current();
 
   }
 
-  function mint(string memory _uri, uint256 _amount, bytes memory _signature) public returns (uint256 _tokenId) {
+  function mint(string memory _uri, uint256 _amount, uint256 _amount_oncyber, bytes memory _signature) public returns (uint256 _tokenId) {
 
     address sender = _msgSender();
     uint256 nonce = minterNonce(sender);
 
-    bytes memory _message = abi.encodePacked(_uri, _amount, nonce, sender);
+    bytes memory _message = abi.encodePacked(_uri, _amount, _amount_oncyber, nonce, sender);
     address _recoveredAddress = keccak256(_message).toEthSignedMessageHash().recover(_signature);
     require(_recoveredAddress == LibAppStorage.layout().manager, "NM");
+    require(_amount >= _amount_oncyber, "IAO");
 
     // Mint token
     _tokenId = LibAppStorage.layout().totalSupply.current();
@@ -63,6 +71,10 @@ contract CyberDestinationFactoryFacet is BaseRelayRecipient, ERC1155URI {
     LibAppStorage.layout().totalSupply.increment();
     LibAppStorage.layout().minterNonce[sender].increment();
     _safeMint(sender, _tokenId, _amount, "");
+    
+    if(_amount_oncyber > 0){
+      _safeTransfer(sender, sender, LibAppStorage.layout().oncyber, _tokenId, _amount_oncyber, "");
+    }
 
     emit Minted(sender, _tokenId, _amount);
 

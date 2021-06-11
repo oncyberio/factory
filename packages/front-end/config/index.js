@@ -1,7 +1,11 @@
+
+console.log("MIN ONCYBER SHARES")
+console.log(process.env.NEXT_PUBLIC_MIN_ONCYBER_SHARES)
 const config = {
   env: process.env.NODE_ENV || 'development',
   minterNonceMax: parseInt(process.env.MINTER_MAX_NONCE || '99'),
   allowedMinter: process.env.ALLOWED_MINTER_ADDRESS ? process.env.ALLOWED_MINTER_ADDRESS.split(',') : ['0xBeb171bA24e66014F356Bca0DB05329EFea14964', '0x76DB02500F7631d57BC2DcDCa9d4cf782b99E119'],
+  minOncyberShares: process.env.NEXT_PUBLIC_MIN_ONCYBER_SHARES, // 30%
   pinata: {
     apiKey: process.env.PINATA_API_KEY,
     apiSecret: process.env.PINATA_API_SECRET,
