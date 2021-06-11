@@ -1,8 +1,16 @@
 const config = {
   env: process.env.NODE_ENV || 'development',
-  minterNonceMax: parseInt(process.env.MINTER_MAX_NONCE || '99'),
-  allowedMinter: process.env.ALLOWED_MINTER_ADDRESS ? process.env.ALLOWED_MINTER_ADDRESS.split(',') : ['0xBeb171bA24e66014F356Bca0DB05329EFea14964', '0x76DB02500F7631d57BC2DcDCa9d4cf782b99E119'],
-  minOncyberShares: parseFloat(process.env.MIN_ONCYBER_SHARES || '0.3'), // 30%
+  supportedContracts: process.env.SUPPORTED_CONTRACTS ? process.env.SUPPORTED_CONTRACTS.split(',') : ['destination', 'destinationOpen'],
+  destination: {
+    allowedMinter: process.env.DESTINATION_ALLOWED_MINTER_ADDRESS ? process.env.DESTINATION_ALLOWED_MINTER_ADDRESS.split(',') : ['0xBeb171bA24e66014F356Bca0DB05329EFea14964', '0x76DB02500F7631d57BC2DcDCa9d4cf782b99E119'],
+    minterNonceMax: parseInt(process.env.DESTINATION_MINTER_MAX_NONCE || '99'),
+    minOncyberShares: parseFloat(process.env.DESTINATION_MIN_ONCYBER_SHARES || '0.3'), // 30%
+  },
+  destinationOpen: {
+    allowedMinter: process.env.DESTINATION_ALLOWED_MINTER_ADDRESS ? process.env.DESTINATION_OPEN_ALLOWED_MINTER_ADDRESS.split(',') : ['0xBeb171bA24e66014F356Bca0DB05329EFea14964', '0x76DB02500F7631d57BC2DcDCa9d4cf782b99E119'],
+    minterNonceMax: parseInt(process.env.DESTINATION_OPEN_MINTER_MAX_NONCE || '99'),
+    minOncyberShares: parseFloat(process.env.DESTINATION_OPEN_MIN_ONCYBER_SHARES || '0.3'), // 30%
+  },
   pinata: {
     apiKey: process.env.PINATA_API_KEY,
     apiSecret: process.env.PINATA_API_SECRET,

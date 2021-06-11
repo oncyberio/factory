@@ -18,7 +18,9 @@
     "scripts:mint-forwarder:mumbai": "hardhat --network mumbai run scripts/mintForwarder.ts",
     "deploy:mumbai": "hardhat --network mumbai deploy",
     "deploy:mainnet": "hardhat --network mainnet deploy",
-    "flatten": "hardhat flatten contracts/CyberDestinationFactoryFacet.sol > deployments/CyberDestinationFactoryFacet.flatten.sol"
+    "flatten": "npm run flatten:CyberDestinationFactoryFacet && npm run flatten:CyberDestinationOpenFactoryFacet",
+    "flatten:CyberDestinationFactoryFacet": "hardhat flatten contracts/Destination/CyberDestinationFactoryFacet.sol > deployments/CyberDestinationFactoryFacet.flatten.sol",
+    "flatten:CyberDestinationOpenFactoryFacet": "hardhat flatten contracts/Destination/CyberDestinationOpenFactoryFacet.sol > deployments/CyberDestinationOpenFactoryFacet.flatten.sol"
   },
   "author": "",
   "license": "MIT",

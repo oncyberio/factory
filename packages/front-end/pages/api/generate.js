@@ -59,6 +59,7 @@ export default async (req, res) => {
 
   const { payload } = req.body;
 
+  const contractName = config.supportedContracts.includes(payload.contractName) && payload.contractName
   const amount =
     (!isNaN(payload.amount) &&
     !isNaN(parseInt(payload.amount)) &&
@@ -81,7 +82,7 @@ export default async (req, res) => {
   const name = payload.name
   const description = payload.description
 
-  if (!amount || !amountOncyber || !address || !thumbHash || !destHash || !animationHash ||
+  if (!contractName || !amount || !amountOncyber || !address || !thumbHash || !destHash || !animationHash ||
     !payload.name || payload.name.length < 1 || !payload.description || payload.description.length < 1) {
     logger.error('Error on form data', { payload })
     return res.status(400).json({
@@ -93,7 +94,7 @@ export default async (req, res) => {
     })
   }
 
-  if(!config.allowedMinter.includes(address) ){
+  if(!config[contractName].allowedMinter.includes(address) ){
 
     logger.error('Error on form data address not allowed', { payload })
     return res.status(400).json({
@@ -104,7 +105,7 @@ export default async (req, res) => {
     })
   }
 
-  if(nonce < 0 || nonce > config.minterNonceMax){
+  if(nonce < 0 || nonce > config[contractName].minterNonceMax){
     logger.error('Error max form data nonce', { payload })
     return res.status(400).json({
       status: 'error',
@@ -114,7 +115,7 @@ export default async (req, res) => {
     })
   }
 
-  if(amountOncyber / amount < config.minOncyberShares){
+  if(amountOncyber / amount < config[contractName].minOncyberShares){
     logger.error('Error min oncyber shares not reach', { payload })
     return res.status(400).json({
       status: 'error',

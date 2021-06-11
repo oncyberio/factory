@@ -11,10 +11,11 @@ const biconomy = new Biconomy(ethersProvider, {
 
 async function main() {
 
+  const contractName = 'DiamondCyberDestinationFactory'
   const { deployments } = hre
   const minter = new ethers.Wallet(process.env.MUMBAI_ACCOUNT_1_PRIVATE_KEY as string).connect(ethersProvider)
   const manager = new ethers.Wallet(process.env.MUMBAI_MANAGER_PRIVATE_KEY as string)
-  const Contract = await deployments.get('DiamondCyberDestinationFactory')
+  const Contract = await deployments.get(contractName)
   const contract = await ethers.getContractAt(
     Contract.abi,
     Contract.address,
