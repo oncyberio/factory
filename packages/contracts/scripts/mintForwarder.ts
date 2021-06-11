@@ -24,16 +24,18 @@ async function main() {
 
   const uri = 'QmQwfto3zFsasHnvNpyKW7jZVVkAgxpLAKfxQhTbnykHh8'
   const amount = '11'
+  const amountOncyber = '1'
   const nonce = await contract.minterNonce(minter.address);
   const signatureManager = await signMintingRequest(
     uri,
     amount,
+    amountOncyber,
     nonce.toString(),
     minter.address,
     manager
   )
 
-  const functionSignature = contractInterface.encodeFunctionData('mint', [uri, amount, signatureManager])
+  const functionSignature = contractInterface.encodeFunctionData('mint', [uri, amount, amountOncyber, signatureManager])
 
   const rawTx = {
     to: Contract.address,

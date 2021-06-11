@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity 0.8.4;
+pragma solidity 0.8.5;
 
 import "@solidstate/contracts/token/ERC1155/ERC1155.sol";
 import "./ERC1155URIStorage.sol";

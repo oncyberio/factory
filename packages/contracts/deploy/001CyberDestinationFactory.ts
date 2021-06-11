@@ -6,7 +6,6 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { diamond } = deployments
 
   const namedAccounts = await getNamedAccounts()
-  const oncyberShare = parseInt(process.env.ONCYBER_SHARE || '30')//in %
   await diamond.deploy('DiamondCyberDestinationFactory', {
     from: namedAccounts.deployer,
     owner: namedAccounts.deployer,
@@ -18,8 +17,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
         namedAccounts.manager,
         namedAccounts.biconomyForwarder,
         namedAccounts.opensea,
-        namedAccounts.oncyber,
-        oncyberShare
+        namedAccounts.oncyber
       ],
     },
     log: true,

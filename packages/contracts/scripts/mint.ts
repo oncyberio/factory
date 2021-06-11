@@ -21,15 +21,17 @@ async function main() {
 
   const uri = 'QmQwfto3zFsasHnvNpyKW7jZVVkAgxpLAKfxQhTbnykHh8'
   const amount = '11'
+  const amountOncyber = '1'
   const nonce = await contract.minterNonce(minter.address)
   const signature = await signMintingRequest(
     uri,
     amount,
+    amountOncyber,
     nonce.toString(),
     minter.address,
     manager
   )
-  const tx = await contract.mint(uri, amount, signature)
+  const tx = await contract.mint(uri, amount, amountOncyber, signature)
   const txReceipt = await tx.wait()
   const iface = new ethers.utils.Interface(Contract.abi);
   let tokenId = null

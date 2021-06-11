@@ -36,7 +36,6 @@ describe('CyberDestinationFactory', function () {
     expect(await memory.contract.totalSupply()).to.eq('0')
     expect(await memory.contract.manager()).to.be.eq(memory.manager.address)
     expect(await memory.contract.oncyber()).to.be.eq(memory.oncyber.address)
-    expect(await memory.contract.oncyberShare()).to.be.eq('30')
     expect(await memory.contract.isTrustedForwarder(memory.namedAccounts.biconomyForwarder) ).to.be.true
     expect(await memory.contract.minterNonce(memory.other.address) ).to.eq('0')
   })
@@ -44,19 +43,21 @@ describe('CyberDestinationFactory', function () {
   it('mint', async () => {
     const uri = 'Qmsfzefi221ifjzifj'
     const amount = '10'
+    const amountOncyber = '1'
     const nonce = '0'
     const signature = await signMintingRequest(
       uri,
       amount,
+      amountOncyber,
       nonce,
       memory.other.address,
       memory.manager
     )
-    await memory.contract.connect(memory.other).mint(uri, amount, signature)
+    await memory.contract.connect(memory.other).mint(uri, amount, amountOncyber, signature)
 
     const tokenId = 0
-    expect(await memory.contract.balanceOf(memory.other.address, tokenId)).to.eq('7')
-    expect(await memory.contract.balanceOf(memory.oncyber.address, tokenId)).to.eq('3')
+    expect(await memory.contract.balanceOf(memory.other.address, tokenId)).to.eq('10')
+    expect(await memory.contract.balanceOf(memory.oncyber.address, tokenId)).to.eq('1')
     expect(await memory.contract.minterNonce(memory.other.address)).to.eq('1')
     expect(await memory.contract.uri(tokenId)).to.eq(tokenURI(uri))
     expect(await memory.contract.totalSupply()).to.eq('1')
@@ -67,16 +68,18 @@ describe('CyberDestinationFactory', function () {
   it('mint more than one time', async () => {
 
     const uri = 'Qmsfzefi221ifjzifj'
-    const amount = '10'
+    const amount = '7'
+    const amountOncyber = '3'
     const nonce = '0'
     const signature = await signMintingRequest(
       uri,
       amount,
+      amountOncyber,
       nonce,
       memory.other.address,
       memory.manager
     )
-    await memory.contract.connect(memory.other).mint(uri, amount, signature)
+    await memory.contract.connect(memory.other).mint(uri, amount, amountOncyber, signature)
 
     const tokenId = 0
     expect(
@@ -90,16 +93,18 @@ describe('CyberDestinationFactory', function () {
     expect(await memory.contract.isApprovedForAll(memory.other.address, memory.namedAccounts.opensea) ).to.true
 
     const uri1 = 'Qmsfzefi221ifjzifj1'
-    const amount1 = '20'
+    const amount1 = '14'
+    const amountOncyber1 = '6'
     const nonce1 = '1'
     const signature1 = await signMintingRequest(
       uri1,
       amount1,
+      amountOncyber1,
       nonce1,
       memory.other.address,
       memory.manager
     )
-    await memory.contract.connect(memory.other).mint(uri1, amount1, signature1)
+    await memory.contract.connect(memory.other).mint(uri1, amount1, amountOncyber1, signature1)
 
     const tokenId1 = 1
     expect(
@@ -124,10 +129,12 @@ describe('CyberDestinationFactory', function () {
   it("can't mint with invalid signature", async () => {
     const uri = 'Qmsfzefi221ifjzifj'
     const amount = '1'
+    const amountOncyber = '1'
     const nonce = '0'
     const invalidSignerSignature = await signMintingRequest(
       uri,
       amount,
+      amountOncyber,
       nonce,
       memory.other.address,
       memory.other
@@ -135,12 +142,13 @@ describe('CyberDestinationFactory', function () {
     await expect(
       memory.contract
         .connect(memory.other)
-        .mint(uri, amount, invalidSignerSignature)
+        .mint(uri, amount, amountOncyber, invalidSignerSignature)
     ).to.be.revertedWith('NM')
 
     const invalidAccountSignature = await signMintingRequest(
       uri,
       amount,
+      amountOncyber,
       nonce,
       memory.manager.address,
       memory.manager
@@ -148,12 +156,13 @@ describe('CyberDestinationFactory', function () {
     await expect(
       memory.contract
         .connect(memory.other)
-        .mint(uri, amount, invalidAccountSignature)
+        .mint(uri, amount, amountOncyber, invalidAccountSignature)
     ).to.be.revertedWith('NM')
 
     const invalidAmountSignature = await signMintingRequest(
       uri,
       '2',
+      amountOncyber,
       nonce,
       memory.other.address,
       memory.manager
@@ -161,12 +170,27 @@ describe('CyberDestinationFactory', function () {
     await expect(
       memory.contract
         .connect(memory.other)
-        .mint(uri, amount, invalidAmountSignature)
+        .mint(uri, amount, amountOncyber, invalidAmountSignature)
+    ).to.be.revertedWith('NM')
+
+    const invalidAmountOncyberSignature = await signMintingRequest(
+      uri,
+      amount,
+      '33',
+      nonce,
+      memory.other.address,
+      memory.manager
+    )
+    await expect(
+      memory.contract
+        .connect(memory.other)
+        .mint(uri, amount, amountOncyber, invalidAmountOncyberSignature)
     ).to.be.revertedWith('NM')
 
     const invalidUriSignature = await signMintingRequest(
       'uri',
       amount,
+      amountOncyber,
       nonce,
       memory.other.address,
       memory.manager
@@ -174,12 +198,13 @@ describe('CyberDestinationFactory', function () {
     await expect(
       memory.contract
         .connect(memory.other)
-        .mint(uri, amount, invalidUriSignature)
+        .mint(uri, amount, amountOncyber, invalidUriSignature)
     ).to.be.revertedWith('NM')
 
     const invalidNonceSignature = await signMintingRequest(
       uri,
       amount,
+      amountOncyber,
       '1',
       memory.other.address,
       memory.manager
@@ -187,37 +212,22 @@ describe('CyberDestinationFactory', function () {
     await expect(
       memory.contract
         .connect(memory.other)
-        .mint(uri, amount, invalidNonceSignature)
+        .mint(uri, amount, amountOncyber, invalidNonceSignature)
     ).to.be.revertedWith('NM')
-  })
-
-  it("can't mint with invalid amount", async () => {
-    const uri = 'Qmsfzefi221ifjzifj'
-    const amount = '11'
-    const nonce = '0'
-    const signature = await signMintingRequest(
-      uri,
-      amount,
-      nonce,
-      memory.other.address,
-      memory.manager
-    )
-    await expect(memory.contract.connect(memory.other).mint(uri, amount, signature) ).to.be.revertedWith('IA')
-
   })
 
   it('Should owner initialise', async () => {
 
     await memory.contract
       .connect(memory.deployer)
-      .initialize('new_uri', memory.other.address, memory.other2.address, memory.other3.address, memory.other4.address, '50')
+      .initialize('new_uri', memory.other.address, memory.other2.address, memory.other3.address, memory.other4.address)
     expect(await memory.contract.manager()).to.be.eq(memory.other.address)
     expect(await memory.contract.isTrustedForwarder(memory.other2.address) ).to.be.true
 
     await expect(
       memory.contract
         .connect(memory.other)
-        .initialize('new_uri', memory.other.address, memory.other2.address, memory.other3.address, memory.other4.address, '50')
+        .initialize('new_uri', memory.other.address, memory.other2.address, memory.other3.address, memory.other4.address)
     ).to.be.revertedWith('NO')
 
   })
