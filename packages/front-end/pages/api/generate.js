@@ -59,11 +59,15 @@ export default async (req, res) => {
 
   const { payload } = req.body;
 
-  // default of 20 editions minted
   const amount =
     (!isNaN(payload.amount) &&
     !isNaN(parseInt(payload.amount)) &&
     parseInt(payload.amount));
+
+  const amountOncyber =
+    (!isNaN(payload.amountOncyber) &&
+      !isNaN(parseInt(payload.amountOncyber)) &&
+      parseInt(payload.amountOncyber));
 
   const nonce =
     !isNaN(payload.nonce) &&
@@ -77,7 +81,7 @@ export default async (req, res) => {
   const name = payload.name
   const description = payload.description
 
-  if (!amount || !address || !thumbHash || !destHash || !animationHash ||
+  if (!amount || !amountOncyber || !address || !thumbHash || !destHash || !animationHash ||
     !payload.name || payload.name.length < 1 || !payload.description || payload.description.length < 1) {
     logger.error('Error on form data', { payload })
     return res.status(400).json({
@@ -110,6 +114,16 @@ export default async (req, res) => {
     })
   }
 
+  if(amountOncyber / amount < config.minOncyberShares){
+    logger.error('Error min oncyber shares not reach', { payload })
+    return res.status(400).json({
+      status: 'error',
+      message: 'invalid request data min oncyber shares not reach',
+      ipfsHashMetadata: null,
+      signature: null,
+    })
+  }
+
   logger.info('start processing', { address })
 
   await Promise.all([
@@ -128,7 +142,7 @@ export default async (req, res) => {
     description
   )
 
-  const signature = await signURI(ipfsHashMetadata, amount, nonce, address, signer)
+  const signature = await signURI(ipfsHashMetadata, amount, amountOncyber, nonce, address, signer)
 
   logger.info('end processing', { payload, ipfsHashMetadata, })
 
