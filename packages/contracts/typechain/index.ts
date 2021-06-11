@@ -10,7 +10,7 @@ export type { IERC1155Receiver } from "./IERC1155Receiver";
 export type { BaseRelayRecipient } from "./BaseRelayRecipient";
 export type { CyberDestinationFactoryBase } from "./CyberDestinationFactoryBase";
 export type { CyberDestinationFactoryFacet } from "./CyberDestinationFactoryFacet";
-export type { CyberDestinationOpenFactoryFacet } from "./CyberDestinationOpenFactoryFacet";
+export type { CyberDestinationUtilityFactoryFacet } from "./CyberDestinationUtilityFactoryFacet";
 export type { ERC1155URI } from "./ERC1155URI";
 
 export { ERC165__factory } from "./factories/ERC165__factory";
@@ -22,5 +22,5 @@ export { IERC1155Receiver__factory } from "./factories/IERC1155Receiver__factory
 export { BaseRelayRecipient__factory } from "./factories/BaseRelayRecipient__factory";
 export { CyberDestinationFactoryBase__factory } from "./factories/CyberDestinationFactoryBase__factory";
 export { CyberDestinationFactoryFacet__factory } from "./factories/CyberDestinationFactoryFacet__factory";
-export { CyberDestinationOpenFactoryFacet__factory } from "./factories/CyberDestinationOpenFactoryFacet__factory";
+export { CyberDestinationUtilityFactoryFacet__factory } from "./factories/CyberDestinationUtilityFactoryFacet__factory";
 export { ERC1155URI__factory } from "./factories/ERC1155URI__factory";

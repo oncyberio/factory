@@ -6,10 +6,10 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { diamond } = deployments
 
   const namedAccounts = await getNamedAccounts()
-  await diamond.deploy('DiamondCyberDestinationOpenFactory', {
+  await diamond.deploy('DiamondCyberDestinationUtilityFactory', {
     from: namedAccounts.deployer,
     owner: namedAccounts.deployer,
-    facets: ['CyberDestinationOpenFactoryFacet'],
+    facets: ['CyberDestinationUtilityFactoryFacet'],
     execute: {
       methodName: 'initialize',
       args: [
@@ -24,4 +24,4 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   })
 }
 export default func
-func.tags = ['DiamondCyberDestinationOpenFactory']
+func.tags = ['DiamondCyberDestinationUtilityFactory']

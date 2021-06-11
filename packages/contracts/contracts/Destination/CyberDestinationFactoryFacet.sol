@@ -4,4 +4,4 @@ pragma solidity 0.8.5;
 //import "hardhat/console.sol";
 import "../CyberDestinationFactoryBase.sol";
 
-contract CyberDestinationOpenFactoryFacet is CyberDestinationFactoryBase {}
+contract CyberDestinationFactoryFacet is CyberDestinationFactoryBase {}

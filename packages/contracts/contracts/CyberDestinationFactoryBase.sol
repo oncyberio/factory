@@ -11,7 +11,7 @@ import "./Diamond/LibDiamond.sol";
 import "./BaseRelayRecipient/BaseRelayRecipientStorage.sol";
 import "./libraries/LibAppStorage.sol";
 
-contract CyberDestinationFactoryFacet is BaseRelayRecipient, ERC1155URI {
+contract CyberDestinationFactoryBase is BaseRelayRecipient, ERC1155URI {
 
   using ECDSA for bytes32;
   using Counters for Counters.Counter;
@@ -71,7 +71,7 @@ contract CyberDestinationFactoryFacet is BaseRelayRecipient, ERC1155URI {
     LibAppStorage.layout().totalSupply.increment();
     LibAppStorage.layout().minterNonce[sender].increment();
     _safeMint(sender, _tokenId, _amount, "");
-    
+
     if(_amount_oncyber > 0){
       _safeTransfer(sender, sender, LibAppStorage.layout().oncyber, _tokenId, _amount_oncyber, "");
     }
