@@ -38,7 +38,8 @@ function Factory({token, setSuccess}) {
                 console.log(animation)
 
                 const nonce = await getNonce();
-                const amountOncyber = quantity * config.minOncyberShares;
+                const contractName = 'destinationUtility'
+                const amountOncyber = quantity * config[contractName].minOncyberShares;
 
                 if(parseInt(amountOncyber).toString() !== amountOncyber.toString() ){
                   throw new Error('invalid amount');
@@ -56,7 +57,8 @@ function Factory({token, setSuccess}) {
                         amount: quantity,
                         amountOncyber,
                         name,
-                        description
+                        description,
+                        contractName
                       },
                     }),
                 })).json();

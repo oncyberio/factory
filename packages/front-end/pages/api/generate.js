@@ -59,6 +59,7 @@ export default async (req, res) => {
 
   const { payload } = req.body;
 
+  const contractName = config.supportedContracts.includes(payload.contractName) && payload.contractName
   const amount =
     (!isNaN(payload.amount) &&
       !isNaN(parseInt(payload.amount)) &&
@@ -83,7 +84,7 @@ export default async (req, res) => {
   const name = payload.name
   const description = payload.description
 
-  if (!amount || !amountOncyber || !address || !thumbHash || !destHash || !animationHash ||
+  if (!contractName || !amount || !amountOncyber || !address || !thumbHash || !destHash || !animationHash ||
     !name || name.length < 1 || !description || description.length < 1) {
     logger.error('Error on form data', { payload })
     return res.status(400).json({
@@ -95,7 +96,7 @@ export default async (req, res) => {
     })
   }
 
-  if(!config.allowedMinter.includes(address) ){
+  if(!config[contractName].allowedMinter.includes(address) ){
 
     logger.error('Error on form data address not allowed', { payload })
     return res.status(400).json({
@@ -106,7 +107,7 @@ export default async (req, res) => {
     })
   }
 
-  if(nonce < 0 || nonce > config.minterNonceMax){
+  if(nonce < 0 || nonce > config[contractName].minterNonceMax){
     logger.error('Error max form data nonce', { payload })
     return res.status(400).json({
       status: 'error',
@@ -116,11 +117,9 @@ export default async (req, res) => {
     })
   }
 
-  console.log("BEFORE AMOUNT")
-
   if(amountOncyber > amount || (
     amount !== 0 && (
-      (amountOncyber / amount) < config.minOncyberShares ||
+      (amountOncyber / amount) < config[contractName].minOncyberShares ||
       (amountOncyber / amount) > 1
     )
   ) ){
@@ -132,8 +131,6 @@ export default async (req, res) => {
       signature: null,
     })
   }
-
-  console.log("AFTER AMOUNT")
 
   logger.info('start processing', { address })
 
@@ -152,8 +149,6 @@ export default async (req, res) => {
     name,
     description
   )
-
-  console.log("BEFORE SIG")
 
   const signature = await signURI(ipfsHashMetadata, amount, amountOncyber, nonce, address, signer)
 

@@ -3,16 +3,19 @@ import hre, { ethers } from 'hardhat'
 import { signMintingRequest } from '../lib/utils'
 
 async function main() {
+  const contractName = 'DiamondCyberDestinationFactory'
   const { deployments } = hre
   const accounts = await ethers.getSigners()
   const manager = accounts[1]
   const minter = accounts[0]
 
+  // for testnet
   // const provider = new ethers.providers.JsonRpcProvider('https://rpc-mumbai.maticvigil.com')
   // const minter = new ethers.Wallet(process.env.MUMBAI_ACCOUNT_1_PRIVATE_KEY as string, provider)
   // const manager = new ethers.Wallet(process.env.MUMBAI_MANAGER_PRIVATE_KEY as string, provider)
 
-  const Contract = await deployments.get('DiamondCyberDestinationFactory')
+  // for local
+  const Contract = await deployments.get(contractName)
   const contract = await ethers.getContractAt(
     Contract.abi,
     Contract.address,
