@@ -5,7 +5,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "copy:contract": "npm run copy:contract:prod && npm run copy:contract:test",
+    "copy:contract:prod": "cp ../contracts/deployments/mainnet/DiamondCyberDestinationFactory.json ./config/mainnet/",
+    "copy:contract:test": "cp ../contracts/deployments/mumbai/DiamondCyberDestinationFactory.json ./config/mumbai/"
   },
   "dependencies": {
     "@biconomy/mexa": "^2.0.9",

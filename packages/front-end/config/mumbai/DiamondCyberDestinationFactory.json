@@ -894,49 +894,14 @@
       ]
     }
   ],
-  "diamondCut": [
-    {
-      "facetAddress": "0x0000000000000000000000000000000000000000",
-      "functionSelectors": [
-        "0xf34822b4",
-        "0x10662e91"
-      ],
-      "action": 2
-    },
-    {
-      "facetAddress": "0x23E384DAD9683bFF49e87Dd7C372E1E25afEd6Eb",
-      "functionSelectors": [
-        "0x00fdd58e",
-        "0x4e1273f4",
-        "0xe985e9c5",
-        "0x572b6c05",
-        "0x481c6a75",
-        "0x1b023947",
-        "0x2eb2c2d6",
-        "0xf242432a",
-        "0xa22cb465",
-        "0x18160ddd",
-        "0x0e89341c"
-      ],
-      "action": 1
-    },
-    {
-      "facetAddress": "0x23E384DAD9683bFF49e87Dd7C372E1E25afEd6Eb",
-      "functionSelectors": [
-        "0x0b885ac3",
-        "0x7a15c41c",
-        "0xbc01188e"
-      ],
-      "action": 0
-    }
-  ],
+  "diamondCut": [],
   "execute": {
     "methodName": "initialize",
     "args": [
       "ipfs://",
       "0xDd6243aA1226994A0fA54E3Cb076c641f25b746d",
       "0x9399BB24DBB5C4b782C70c2969F58716Ebbd6a3b",
-      "0x53d791f18155C211FF8b58671d0f7E9b50E596ad",
+      "0x207Fa8Df3a17D96Ca7EA4f2893fcdCb78a304101",
       "0x584E34B153038a19fFf3cdb87942a736Aa0045E4"
     ]
   },
