@@ -7,30 +7,30 @@ import mumbaiContract from '../config/mumbai/DiamondCyberDestinationFactory.json
 import config from '../config';
 
 async function getNonce() {
-  const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
 
-  const minter = provider.getSigner();
+    const minter = provider.getSigner();
 
-  let jsonContract;
+    let jsonContract;
 
-  if (config.env == 'development') {
-    console.log("get dev")
-    jsonContract = mumbaiContract;
-  }
-  else {
-    console.log('not dev')
-    jsonContract = mainnetContract;
-  }
+    if (config.env == 'development') {
+      console.log("get dev")
+      jsonContract = mumbaiContract;
+    }
+    else {
+      console.log('not dev')
+      jsonContract = mainnetContract;
+    }
 
-  const contract = new ethers.Contract(
-    jsonContract.address,
-    jsonContract.abi,
-    minter
-  )
+    const contract = new ethers.Contract(
+        jsonContract.address,
+        jsonContract.abi,
+        minter
+    )
 
-  const address = await minter.getAddress()
+    const address = await minter.getAddress()
 
-  return (await contract.minterNonce(address)).toString();
+    return (await contract.minterNonce(address)).toString();
 }
 
 async function mint(uri, amount, signature) {
