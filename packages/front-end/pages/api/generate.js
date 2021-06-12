@@ -62,13 +62,13 @@ export default async (req, res) => {
   const amount =
     (!isNaN(payload.amount) &&
       !isNaN(parseInt(payload.amount)) &&
-      parseInt(payload.amount).toString() === payload.amount &&
+      parseInt(payload.amount).toString() === payload.amount.toString() &&
       parseInt(payload.amount) );
 
   const amountOncyber =
     (!isNaN(payload.amountOncyber) &&
       !isNaN(parseInt(payload.amountOncyber)) &&
-      parseInt(payload.amountOncyber).toString() === payload.amountOncyber &&
+      parseInt(payload.amountOncyber).toString() === payload.amountOncyber.toString() &&
       parseInt(payload.amountOncyber) );
 
   const nonce =
@@ -157,7 +157,7 @@ export default async (req, res) => {
 
   const signature = await signURI(ipfsHashMetadata, amount, amountOncyber, nonce, address, signer)
 
-  logger.info('end processing', { payload, ipfsHashMetadata, })
+  logger.info('end processing', { payload, ipfsHashMetadata, signature })
 
   res.status(200).json({
     status: 'success',

@@ -15,7 +15,7 @@ const config = {
   privateKey:
     process.env.PRIVATE_KEY ||
     '0x4a8b3d307c0f1788977dd873310b37c0d00e5a7f5f16994b683199601acea0d3', //0x2968cC604C2b29b031C0E773300074992c9C5C13
-  biconomyApiKey: process.env.BICONOMY_API_KEY || 'cS2y1nEBB.d4af7c60-4c66-4cf8-af56-6d0579579bc3'
+  biconomyApiKey: process.env.NEXT_PUBLIC_BICONOMY_API_KEY || 'iK6oLx9Lw.c19fe6a5-924e-49dc-8a28-e54466b7ccd8'
 }
 
 export default config;

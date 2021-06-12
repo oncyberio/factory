@@ -1,5 +1,5 @@
 // @ts-ignore
-import * as Web3 from 'web3'
+import Web3 from 'web3';
 import { ethers } from 'ethers';
 import { Biconomy } from '@biconomy/mexa';
 import mainnetContract from '../config/mainnet/DiamondCyberDestinationFactory.json';
@@ -35,7 +35,7 @@ async function getNonce() {
     return (await contract.minterNonce(address)).toString();
 }
 
-async function mint(uri, amount, signature) {
+async function mint(uri, amount, amountOncyber, signature) {
 
   const provider = new ethers.providers.Web3Provider(window.ethereum);
   const minter = provider.getSigner();
@@ -57,9 +57,7 @@ async function mint(uri, amount, signature) {
     minter
   )
 
-  const amountOnCyber = amount * config.minOncyberShares;
-
-  const tx = await contract.mint(uri, amount, amountOnCyber, signature)
+  const tx = await contract.mint(uri, amount, amountOncyber, signature)
 
   const txReceipt = await tx.wait()
   // const iface = new ethers.utils.Interface(jsonContract.abi);
@@ -78,54 +76,62 @@ async function mint(uri, amount, signature) {
 
 async function mintForwarder(uri, amount, amountOncyber, signature) {
 
-  await window.ethereum.enable();
-  const provider = new ethers.providers.Web3Provider(window.ethereum);
-  const biconomy = new Biconomy(provider, {
-    apiKey: config.biconomyApiKey,
-    debug: false
-  })
-
-  const minter = provider.getSigner();
-
+  let provider;
   let jsonContract;
-
   if (config.env == 'development') {
-    console.log("NODE ENV TEST")
+    console.log("get dev")
     jsonContract = mumbaiContract;
+    provider = new ethers.providers.JsonRpcProvider('https://rpc-mumbai.matic.today');
   }
   else {
-    console.log("NODE ENV PROD")
+    console.log('not dev')
     jsonContract = mainnetContract;
+    provider = new ethers.providers.JsonRpcProvider('https://rpc-mainnet.matic.network');
   }
 
-  const contractInterface = new ethers.utils.Interface(jsonContract.abi)
-  const functionSignature = contractInterface.encodeFunctionData('mint', [uri, amount, amountOncyber, signature])
-  const rawTx = {
-    to: jsonContract.address,
-    data: functionSignature,
-    from: await minter.getAddress()
-  }
-
-  const signedTx = await minter.signTransaction(rawTx);
+  const biconomy = new Biconomy(provider, {
+    walletProvider: window.ethereum,
+    apiKey: config.biconomyApiKey,
+    strictMode: true,
+    debug: true
+  })
   await new Promise( (resolve, reject) =>
     biconomy.onEvent(biconomy.READY, () => resolve(true) ).onEvent(biconomy.ERROR, (error) => reject(error) ) );
 
-  const forwardData = await biconomy.getForwardRequestAndMessageToSign(signedTx);
-  console.log(forwardData);
+  const ethersProvider = new ethers.providers.Web3Provider(Web3.givenProvider);
 
-  const signatureBiconomy = await minter.signMessage(forwardData.personalSignatureFormat);
+  const minter = ethersProvider.getSigner();
+  const minterAddress = await minter.getAddress();
 
-  const data = {
-    signature: signatureBiconomy,
-    forwardRequest: forwardData.request,
-    rawTransaction: signedTx,
-    signatureType: biconomy.PERSONAL_SIGN
+  const contract = new ethers.Contract(
+    jsonContract.address,
+    jsonContract.abi,
+    biconomy.getSignerByAddress(minterAddress)
+  )
+  const { data } = await contract.populateTransaction.mint(uri, amount, amountOncyber, signature);
+  const providerBiconomy = biconomy.getEthersProvider();
+  const gasLimit = await providerBiconomy.estimateGas({
+    to: jsonContract.address,
+    from: minterAddress,
+    data: data
+  });
+  const txParams = {
+    to: jsonContract.address,
+    data,
+    from: minterAddress,
+    gasLimit,
+    signatureType: "EIP712_SIGN"
   }
-
-  const providerBiconomy = biconomy.getEthersProvider()
-  const txHash = await providerBiconomy.send('eth_sendRawTransaction', [data])
+  const txHash = await providerBiconomy.send("eth_sendTransaction", [txParams]);
 
   console.log('txHash', txHash)
+  provider.once(txHash, (transaction) => {
+    // Emitted when the transaction has been mined
+    //show success message
+    console.log('transaction', transaction);
+    //do something with transaction hash
+  });
+
   const receipt = await provider.waitForTransaction(txHash)
   console.log('receipt', receipt)
   // const iface = new ethers.utils.Interface(jsonContract.abi);
