@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import FileUploader from './FileUploader';
 import { Button, Input, TextArea } from './Elements';
 import Ipfs from 'ipfs';
-import { getNonce, mint } from '../utils/minter';
+import { getNonce, mint, mintForwarder } from '../utils/minter';
 import config from '../config';
 
 function Factory({token, setSuccess}) {
@@ -19,6 +19,7 @@ function Factory({token, setSuccess}) {
     const [ quantity, setQuantity ] = useState(33);
 
     const submit = async () => {
+        // await mintForwarder('QmSYktNBCkYtc8wQiEmzhn9mo3EPyejrxevALaSYahhDVE', 100, 30, '0xa83a8f84e5219f78b1d2a448c540334b5b4e9a3d1bd6047405f51a4872a9007e438a205acfc0fc19ea7287ebb828429db1a0e661687733eaf826c7c011922c8d1b')
         setLoading(true);
         if (!name || !description) {
             alert("Please set name and description!")
@@ -37,6 +38,11 @@ function Factory({token, setSuccess}) {
                 console.log(animation)
 
                 const nonce = await getNonce();
+                const amountOncyber = quantity * config.minOncyberShares;
+
+                if(parseInt(amountOncyber).toString() !== amountOncyber.toString() ){
+                  throw new Error('invalid amount');
+                }
 
                 const {status, ipfsHashMetadata, signature} = await (await fetch('/api/generate', {
                     method: "POST",
@@ -45,10 +51,10 @@ function Factory({token, setSuccess}) {
                       payload: {
                         destHash: dest.cid.toString(),
                         animationHash: animation.cid.toString(),
-                        thumbHash: thumb.cid.toString(), 
+                        thumbHash: thumb.cid.toString(),
                         nonce,
                         amount: quantity,
-                        amountOncyber: config.minOncyberShares * quantity,
+                        amountOncyber,
                         name,
                         description
                       },
@@ -57,7 +63,7 @@ function Factory({token, setSuccess}) {
 
                 if (status == 'success') {
                     console.log("PIN SUCCESS")
-                    const balance = await mint(ipfsHashMetadata, quantity, signature)
+                    const balance = await mintForwarder(ipfsHashMetadata, quantity, amountOncyber, signature)
                     console.log(balance)
                     setSuccess(true);
                 }

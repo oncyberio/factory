@@ -62,13 +62,15 @@ export default async (req, res) => {
   const contractName = config.supportedContracts.includes(payload.contractName) && payload.contractName
   const amount =
     (!isNaN(payload.amount) &&
-    !isNaN(parseInt(payload.amount)) &&
-    parseInt(payload.amount));
+      !isNaN(parseInt(payload.amount)) &&
+      parseInt(payload.amount).toString() === payload.amount.toString() &&
+      parseInt(payload.amount) );
 
   const amountOncyber =
     (!isNaN(payload.amountOncyber) &&
       !isNaN(parseInt(payload.amountOncyber)) &&
-      parseInt(payload.amountOncyber));
+      parseInt(payload.amountOncyber).toString() === payload.amountOncyber.toString() &&
+      parseInt(payload.amountOncyber) );
 
   const nonce =
     !isNaN(payload.nonce) &&
@@ -115,7 +117,12 @@ export default async (req, res) => {
     })
   }
 
-  if(amountOncyber / amount < config[contractName].minOncyberShares){
+  if(amountOncyber > amount || (
+    amount !== 0 && (
+      (amountOncyber / amount) < config[contractName].minOncyberShares ||
+      (amountOncyber / amount) > 1
+    )
+  ) ){
     logger.error('Error min oncyber shares not reach', { payload })
     return res.status(400).json({
       status: 'error',
@@ -147,7 +154,7 @@ export default async (req, res) => {
 
   const signature = await signURI(ipfsHashMetadata, amount, amountOncyber, nonce, address, signer)
 
-  logger.info('end processing', { payload, ipfsHashMetadata, })
+  logger.info('end processing', { payload, ipfsHashMetadata, signature })
 
   res.status(200).json({
     status: 'success',
