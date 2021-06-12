@@ -30,15 +30,16 @@ function Factory({token, setSuccess}) {
                 const dest = await ipfs.add(destination);
                 const thumb = await ipfs.add(thumbnail);
                 const animation = await ipfs.add(video);
-
-
                 console.log("HASHES")
                 console.log(dest)
                 console.log(thumb)
                 console.log(animation)
 
-                const nonce = await getNonce();
-                const amountOncyber = quantity * config.minOncyberShares;
+                // should find contract according to who's connected
+                const contract = 'destination';
+
+                const nonce = await getNonce(contract);
+                const amountOncyber = quantity * config.destination.minOncyberShares;
 
                 if(parseInt(amountOncyber).toString() !== amountOncyber.toString() ){
                   throw new Error('invalid amount');
@@ -57,14 +58,14 @@ function Factory({token, setSuccess}) {
                         amountOncyber,
                         name,
                         description,
-                        contractName: 'destinationUtility'
+                        contractName: contract
                       },
                     }),
                 })).json();
 
                 if (status == 'success') {
                     console.log("PIN SUCCESS")
-                    const balance = await mintForwarder(ipfsHashMetadata, quantity, amountOncyber, signature)
+                    const balance = await mintForwarder(ipfsHashMetadata, quantity, amountOncyber, signature, contract)
                     console.log(balance)
                     setSuccess(true);
                 }
