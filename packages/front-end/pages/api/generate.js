@@ -125,20 +125,6 @@ export default async (req, res) => {
     })
   }
 
-  console.log("BEFORE AMOUNT")
-
-  if((amountOncyber / amount) < config.minOncyberShares){
-    logger.error('Error min oncyber shares not reach', { payload })
-    return res.status(400).json({
-      status: 'error',
-      message: 'invalid request data min oncyber shares not reach',
-      ipfsHashMetadata: null,
-      signature: null,
-    })
-  }
-
-  console.log("AFTER AMOUNT")
-
   logger.info('start processing', { address })
 
   await Promise.all([
