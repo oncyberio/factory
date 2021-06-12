@@ -35,11 +35,9 @@ function Factory({token, setSuccess}) {
                 console.log(thumb)
                 console.log(animation)
 
-                // should find contract according to who's connected
-                const contract = 'destination';
-
-                const nonce = await getNonce(contract);
-                const amountOncyber = quantity * config.destination.minOncyberShares;
+                const nonce = await getNonce();
+                const contractName = 'destinationUtility'
+                const amountOncyber = quantity * config[contractName].minOncyberShares;
 
                 if(parseInt(amountOncyber).toString() !== amountOncyber.toString() ){
                   throw new Error('invalid amount');
@@ -58,7 +56,7 @@ function Factory({token, setSuccess}) {
                         amountOncyber,
                         name,
                         description,
-                        contractName: contract
+                        contractName
                       },
                     }),
                 })).json();
