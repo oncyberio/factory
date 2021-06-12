@@ -37,7 +37,12 @@ function Factory({token, setSuccess}) {
                 console.log(animation)
 
                 const nonce = await getNonce();
-                const amountOncyber = config.minOncyberShares * quantity;
+                const amountOncyber = quantity * config.minOncyberShares;
+
+                if(parseInt(amountOncyber).toString() !== amountOncyber.toString() ){
+                  throw new Error('invalid amount');
+                }
+
                 const {status, ipfsHashMetadata, signature} = await (await fetch('/api/generate', {
                     method: "POST",
                     body: JSON.stringify({

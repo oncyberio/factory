@@ -61,13 +61,15 @@ export default async (req, res) => {
 
   const amount =
     (!isNaN(payload.amount) &&
-    !isNaN(parseInt(payload.amount)) &&
-    parseInt(payload.amount));
+      !isNaN(parseInt(payload.amount)) &&
+      parseInt(payload.amount).toString() === payload.amount &&
+      parseInt(payload.amount) );
 
   const amountOncyber =
     (!isNaN(payload.amountOncyber) &&
       !isNaN(parseInt(payload.amountOncyber)) &&
-      parseInt(payload.amountOncyber));
+      parseInt(payload.amountOncyber).toString() === payload.amountOncyber &&
+      parseInt(payload.amountOncyber) );
 
   const nonce =
     !isNaN(payload.nonce) &&
@@ -116,7 +118,12 @@ export default async (req, res) => {
 
   console.log("BEFORE AMOUNT")
 
-  if((amountOncyber / amount) < config.minOncyberShares){
+  if(amountOncyber > amount || (
+    amount !== 0 && (
+      (amountOncyber / amount) < config.minOncyberShares ||
+      (amountOncyber / amount) > 1
+    )
+  ) ){
     logger.error('Error min oncyber shares not reach', { payload })
     return res.status(400).json({
       status: 'error',
