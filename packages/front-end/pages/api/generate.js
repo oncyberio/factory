@@ -150,8 +150,6 @@ export default async (req, res) => {
     description
   )
 
-  console.log("BEFORE SIG")
-
   const signature = await signURI(ipfsHashMetadata, amount, amountOncyber, nonce, address, signer)
 
   logger.info('end processing', { payload, ipfsHashMetadata, signature })
