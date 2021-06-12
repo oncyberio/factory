@@ -56,7 +56,8 @@ function Factory({token, setSuccess}) {
                         amount: quantity,
                         amountOncyber,
                         name,
-                        description
+                        description,
+                        contractName: 'destinationUtility'
                       },
                     }),
                 })).json();
