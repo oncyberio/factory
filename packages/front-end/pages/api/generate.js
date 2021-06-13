@@ -59,7 +59,7 @@ export default async (req, res) => {
   const { payload } = req.body;
 
   const contractName = config.supportedContracts.includes(payload.contractName) && payload.contractName
-  const signer = new Wallet(config[contractName].privateKey)
+  const signer = new Wallet(config[contractName].managerPrivateKey)
 
   const amount =
     (!isNaN(payload.amount) &&
