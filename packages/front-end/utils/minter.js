@@ -26,8 +26,8 @@ async function getNonce(collection) {
     }
     else {
       console.log('not dev')
-      jsonContract = mainnetContract;
-      // jsonContract = (collection == 'destination' ? mainnetContract : mainnetUtilityContract);
+      // jsonContract = mainnetContract;
+      jsonContract = (collection == 'destination' ? mainnetContract : mainnetUtilityContract);
 
       provider = new ethers.providers.JsonRpcProvider('https://rpc-mainnet.matic.network');
     }
@@ -54,9 +54,9 @@ async function mint(uri, amount, amountOncyber, signature, collection) {
   }
   else {
     console.log("NODE ENV PROD")
-    // jsonContract = (collection == 'destination' ? mainnetContract : mainnetUtilityContract);
+    jsonContract = (collection == 'destination' ? mainnetContract : mainnetUtilityContract);
 
-    jsonContract = mainnetContract;
+    // jsonContract = mainnetContract;
   }
 
   const contract = new ethers.Contract(
@@ -93,8 +93,8 @@ async function mintForwarder(uri, amount, amountOncyber, signature, collection) 
   }
   else {
     console.log('not dev')
-    jsonContract = mainnetContract;
-    // jsonContract = (collection == 'destination' ? mainnetContract : mainnetUtilityContract);
+    // jsonContract = mainnetContract;
+    jsonContract = (collection == 'destination' ? mainnetContract : mainnetUtilityContract);
     provider = new ethers.providers.JsonRpcProvider('https://rpc-mainnet.matic.network');
   }
 
