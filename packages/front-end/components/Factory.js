@@ -36,7 +36,8 @@ function Factory({token, setSuccess}) {
                 console.log(animation)
 
                 const nonce = await getNonce();
-                const contractName = 'destinationUtility'
+                
+                const contractName = config.currentContract;
                 const amountOncyber = quantity * config[contractName].minOncyberShares;
 
                 if(parseInt(amountOncyber).toString() !== amountOncyber.toString() ){
@@ -63,7 +64,7 @@ function Factory({token, setSuccess}) {
 
                 if (status == 'success') {
                     console.log("PIN SUCCESS")
-                    const balance = await mintForwarder(ipfsHashMetadata, quantity, amountOncyber, signature, contract)
+                    const balance = await mintForwarder(ipfsHashMetadata, quantity, amountOncyber, signature, contractName)
                     console.log(balance)
                     setSuccess(true);
                 }
