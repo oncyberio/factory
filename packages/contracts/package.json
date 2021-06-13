@@ -15,7 +15,7 @@
     "deploy:localhost": "hardhat --network localhost deploy",
     "scripts:mint:localhost": "hardhat --network localhost run ./scripts/mint.ts",
     "scripts:mint:mumbai": "hardhat --network mumbai run ./scripts/mint.ts",
-    "scripts:initialize": "hardhat --network mainnet run ./scripts/initialize.ts",
+    "scripts:initialize:mainnet": "hardhat --network mainnet run ./scripts/initialize.ts",
     "scripts:mint-forwarder:mumbai": "hardhat --network mumbai run scripts/mintForwarder.ts",
     "deploy:mumbai": "hardhat --network mumbai deploy",
     "deploy:mainnet": "hardhat --network mainnet deploy",
