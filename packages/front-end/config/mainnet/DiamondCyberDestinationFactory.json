@@ -894,42 +894,7 @@
       ]
     }
   ],
-  "diamondCut": [
-    {
-      "facetAddress": "0x0000000000000000000000000000000000000000",
-      "functionSelectors": [
-        "0xf34822b4",
-        "0x10662e91"
-      ],
-      "action": 2
-    },
-    {
-      "facetAddress": "0x2db5b8887a59bbcB7b926B899e5463E29214afbf",
-      "functionSelectors": [
-        "0x00fdd58e",
-        "0x4e1273f4",
-        "0xe985e9c5",
-        "0x572b6c05",
-        "0x481c6a75",
-        "0x1b023947",
-        "0x2eb2c2d6",
-        "0xf242432a",
-        "0xa22cb465",
-        "0x18160ddd",
-        "0x0e89341c"
-      ],
-      "action": 1
-    },
-    {
-      "facetAddress": "0x2db5b8887a59bbcB7b926B899e5463E29214afbf",
-      "functionSelectors": [
-        "0x0b885ac3",
-        "0x7a15c41c",
-        "0xbc01188e"
-      ],
-      "action": 0
-    }
-  ],
+  "diamondCut": [],
   "execute": {
     "methodName": "initialize",
     "args": [
