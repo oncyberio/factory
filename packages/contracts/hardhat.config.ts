@@ -45,7 +45,8 @@ const config: HardhatUserConfig = {
   },
   namedAccounts: {
     deployer: 0,
-    manager: process.env.MANAGER_ADDRESS || 1,
+    managerDestination: process.env.MANAGER_DESTINATION_ADDRESS || 1,
+    managerDestinationUtility: process.env.MANAGER_DESTINATION_UTILITY_ADDRESS || 1,
     oncyber: process.env.ONCYBER_ADDRESS || 2,
     biconomyForwarder: process.env.BICONOMY_FORWARDER || '0x9399BB24DBB5C4b782C70c2969F58716Ebbd6a3b',
     opensea: process.env.OPENSEA || '0x53d791f18155c211ff8b58671d0f7e9b50e596ad'

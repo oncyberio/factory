@@ -14,7 +14,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
       methodName: 'initialize',
       args: [
         'ipfs://',
-        namedAccounts.manager,
+        namedAccounts.managerDestination,
         namedAccounts.biconomyForwarder,
         namedAccounts.opensea,
         namedAccounts.oncyber
