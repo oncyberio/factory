@@ -8,7 +8,6 @@ import { auth } from '../../utils/authMiddleware'
 import config from '../../config';
 
 const logger = Log({ service: 'generation' })
-const signer = new Wallet(config.privateKey)
 
 function getAddressCatch(address) {
 
@@ -60,6 +59,8 @@ export default async (req, res) => {
   const { payload } = req.body;
 
   const contractName = config.supportedContracts.includes(payload.contractName) && payload.contractName
+  const signer = new Wallet(config[contractName].privateKey)
+
   const amount =
     (!isNaN(payload.amount) &&
       !isNaN(parseInt(payload.amount)) &&
