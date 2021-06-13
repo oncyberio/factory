@@ -27,7 +27,6 @@ async function getNonce(collection) {
     else {
       console.log('not dev')
       jsonContract = (collection == 'destination' ? mainnetContract : mainnetUtilityContract);
-
       provider = new ethers.providers.JsonRpcProvider('https://rpc-mainnet.matic.network');
     }
 
@@ -102,6 +101,7 @@ async function mintForwarder(uri, amount, amountOncyber, signature, collection) 
     strictMode: true,
     debug: true
   })
+  
   await new Promise( (resolve, reject) =>
     biconomy.onEvent(biconomy.READY, () => resolve(true) ).onEvent(biconomy.ERROR, (error) => reject(error) ) );
 
