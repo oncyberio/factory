@@ -7,12 +7,12 @@ const config = {
   destination: {
     allowedMinter: process.env.DESTINATION_ALLOWED_MINTER_ADDRESS ? process.env.DESTINATION_ALLOWED_MINTER_ADDRESS.split(',') : ['0xBeb171bA24e66014F356Bca0DB05329EFea14964', '0x76DB02500F7631d57BC2DcDCa9d4cf782b99E119'],
     minterNonceMax: parseInt(process.env.DESTINATION_MINTER_MAX_NONCE || '99'),
-    minOncyberShares: parseFloat(process.env.NEXT_PUBLIC_DESTINATION_MIN_ONCYBER_SHARES || '0.3'), // 30%
+    minOncyberShares: parseFloat(process.env.NEXT_PUBLIC_MIN_ONCYBER_SHARES || '0.3'), // 30%
   },
   destinationUtility: {
     allowedMinter: process.env.DESTINATION_UTILITY_ALLOWED_MINTER_ADDRESS ? process.env.DESTINATION_UTILITY_ALLOWED_MINTER_ADDRESS.split(',') : ['0xBeb171bA24e66014F356Bca0DB05329EFea14964', '0x76DB02500F7631d57BC2DcDCa9d4cf782b99E119'],
     minterNonceMax: parseInt(process.env.DESTINATION_UTILITY_MINTER_MAX_NONCE || '99'),
-    minOncyberShares: parseFloat(process.env.NEXT_PUBLIC_DESTINATION_UTILITY_MIN_ONCYBER_SHARES || '0.3'), // 30%
+    minOncyberShares: parseFloat(process.env.NEXT_PUBLIC_MIN_ONCYBER_SHARES || '0.3'), // 30%
   },
   pinata: {
     apiKey: process.env.PINATA_API_KEY,
@@ -23,7 +23,8 @@ const config = {
   privateKey:
     process.env.PRIVATE_KEY ||
     '0x4a8b3d307c0f1788977dd873310b37c0d00e5a7f5f16994b683199601acea0d3', //0x2968cC604C2b29b031C0E773300074992c9C5C13
-  biconomyApiKey: process.env.NEXT_PUBLIC_BICONOMY_API_KEY || 'iK6oLx9Lw.c19fe6a5-924e-49dc-8a28-e54466b7ccd8'
+  biconomyApiKey: process.env.NEXT_PUBLIC_BICONOMY_API_KEY || 'iK6oLx9Lw.c19fe6a5-924e-49dc-8a28-e54466b7ccd8',
+  currentContract: process.env.NEXT_PUBLIC_DESTINATION_CURRENT || 'destinationUtility'
 }
 
 export default config;

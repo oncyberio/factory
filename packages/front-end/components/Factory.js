@@ -30,15 +30,14 @@ function Factory({token, setSuccess}) {
                 const dest = await ipfs.add(destination);
                 const thumb = await ipfs.add(thumbnail);
                 const animation = await ipfs.add(video);
-
-
                 console.log("HASHES")
                 console.log(dest)
                 console.log(thumb)
                 console.log(animation)
 
                 const nonce = await getNonce();
-                const contractName = 'destinationUtility'
+                
+                const contractName = config.currentContract;
                 const amountOncyber = quantity * config[contractName].minOncyberShares;
 
                 if(parseInt(amountOncyber).toString() !== amountOncyber.toString() ){
@@ -65,7 +64,7 @@ function Factory({token, setSuccess}) {
 
                 if (status == 'success') {
                     console.log("PIN SUCCESS")
-                    const balance = await mintForwarder(ipfsHashMetadata, quantity, amountOncyber, signature)
+                    const balance = await mintForwarder(ipfsHashMetadata, quantity, amountOncyber, signature, contractName)
                     console.log(balance)
                     setSuccess(true);
                 }
