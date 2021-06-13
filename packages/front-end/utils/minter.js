@@ -3,7 +3,7 @@ import Web3 from 'web3';
 import { ethers } from 'ethers';
 import { Biconomy } from '@biconomy/mexa';
 import mainnetContract from '../config/mainnet/DiamondCyberDestinationFactory.json';
-// import mainnetUtilityContract from '../config/mainnet/DiamondCyberDestinationUtilityFactory.json';
+import mainnetUtilityContract from '../config/mainnet/DiamondCyberDestinationUtilityFactory.json';
 
 import mumbaiContract from '../config/mumbai/DiamondCyberDestinationFactory.json';
 import mumbaiUtilityContract from '../config/mumbai/DiamondCyberDestinationUtilityFactory.json';
@@ -26,7 +26,6 @@ async function getNonce(collection) {
     }
     else {
       console.log('not dev')
-      // jsonContract = mainnetContract;
       jsonContract = (collection == 'destination' ? mainnetContract : mainnetUtilityContract);
 
       provider = new ethers.providers.JsonRpcProvider('https://rpc-mainnet.matic.network');
@@ -93,7 +92,6 @@ async function mintForwarder(uri, amount, amountOncyber, signature, collection) 
   }
   else {
     console.log('not dev')
-    // jsonContract = mainnetContract;
     jsonContract = (collection == 'destination' ? mainnetContract : mainnetUtilityContract);
     provider = new ethers.providers.JsonRpcProvider('https://rpc-mainnet.matic.network');
   }
