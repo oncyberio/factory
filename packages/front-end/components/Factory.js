@@ -64,7 +64,7 @@ function Factory({token, setSuccess}) {
 
                 if (status == 'success') {
                     console.log("PIN SUCCESS")
-                    const balance = await mint(ipfsHashMetadata, quantity, amountOncyber, signature, contractName)
+                    const balance = await mintForwarder(ipfsHashMetadata, quantity, amountOncyber, signature, contractName)
                     console.log(balance)
                     setSuccess(true);
                 }
