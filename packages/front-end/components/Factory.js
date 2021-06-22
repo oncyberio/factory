@@ -34,11 +34,11 @@ function Factory({token, setSuccess}) {
                 console.log(dest)
                 console.log(thumb)
                 console.log(animation)
-
-                const nonce = await getNonce();
                 
                 const contractName = config.currentContract;
                 const amountOncyber = quantity * config[contractName].minOncyberShares;
+
+                const nonce = await getNonce(contractName);
 
                 if(parseInt(amountOncyber).toString() !== amountOncyber.toString() ){
                   throw new Error('invalid amount');
