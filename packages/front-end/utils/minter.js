@@ -2,32 +2,31 @@
 import Web3 from 'web3';
 import { ethers } from 'ethers';
 import { Biconomy } from '@biconomy/mexa';
-import mainnetContract from '../config/mainnet/DiamondCyberDestinationFactory.json';
-import mainnetUtilityContract from '../config/mainnet/DiamondCyberDestinationUtilityFactory.json';
 
-import mumbaiContract from '../config/mumbai/DiamondCyberDestinationFactory.json';
-import mumbaiUtilityContract from '../config/mumbai/DiamondCyberDestinationUtilityFactory.json';
+// ETH Curated contract
+import mainCuratedContract from '../config/mainnet/DiamondCyberDestinationFactory.json';
+import testCuratedContract from '../config/mumbai/DiamondCyberDestinationFactory.json';
+
+// MATIC Factory contract
+import mainUtilityContract from '../config/mainnet/DiamondCyberDestinationUtilityFactory.json';
+import testUtilityContract from '../config/mumbai/DiamondCyberDestinationUtilityFactory.json';
 
 import config from '../config';
 
 async function getNonce(collection) {
     const providerSigner = new ethers.providers.Web3Provider(window.ethereum);
+    const provider = new ethers.providers.JsonRpcProvider(config[collection].rpc);
 
     const minter = providerSigner.getSigner();
     const address = await minter.getAddress();
 
-    let provider;
     let jsonContract;
 
     if (config.env == 'development') {
-      console.log("get dev")
-      jsonContract = (collection == 'destination' ? mumbaiContract : mumbaiUtilityContract);
-      provider = new ethers.providers.JsonRpcProvider('https://rpc-mumbai.matic.today');
+      jsonContract = (collection == 'destination' ? testCuratedContract : testUtilityContract);
     }
     else {
-      console.log('not dev')
-      jsonContract = (collection == 'destination' ? mainnetContract : mainnetUtilityContract);
-      provider = new ethers.providers.JsonRpcProvider('https://rpc-mainnet.matic.network');
+      jsonContract = (collection == 'destination' ? mainCuratedContract : mainUtilityContract);
     }
 
     const contract = new ethers.Contract(
@@ -47,14 +46,10 @@ async function mint(uri, amount, amountOncyber, signature, collection) {
   let jsonContract;
 
   if (config.env == 'development') {
-    console.log("NODE ENV TEST")
-    jsonContract = (collection == 'destination' ? mumbaiContract : mumbaiUtilityContract);
+    jsonContract = (collection == 'destination' ? testCuratedContract : testUtilityContract);
   }
   else {
-    console.log("NODE ENV PROD")
-    jsonContract = (collection == 'destination' ? mainnetContract : mainnetUtilityContract);
-
-    // jsonContract = mainnetContract;
+    jsonContract = (collection == 'destination' ? mainCuratedContract : mainUtilityContract);
   }
 
   const contract = new ethers.Contract(
@@ -82,17 +77,14 @@ async function mint(uri, amount, amountOncyber, signature, collection) {
 
 async function mintForwarder(uri, amount, amountOncyber, signature, collection) {
 
-  let provider;
   let jsonContract;
+  const provider = new ethers.providers.JsonRpcProvider(config[collection].rpc);
+
   if (config.env == 'development') {
-    console.log("get dev")
-    jsonContract = (collection == 'destination' ? mumbaiContract : mumbaiUtilityContract);
-    provider = new ethers.providers.JsonRpcProvider('https://rpc-mumbai.matic.today');
+    jsonContract = (collection == 'destination' ? testCuratedContract : testUtilityContract);
   }
   else {
-    console.log('not dev')
-    jsonContract = (collection == 'destination' ? mainnetContract : mainnetUtilityContract);
-    provider = new ethers.providers.JsonRpcProvider('https://rpc-mainnet.matic.network');
+    jsonContract = (collection == 'destination' ? mainCuratedContract : mainUtilityContract);
   }
 
   const biconomy = new Biconomy(provider, {
