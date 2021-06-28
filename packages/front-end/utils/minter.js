@@ -5,7 +5,7 @@ import { Biconomy } from '@biconomy/mexa';
 
 // ETH Curated contract
 import mainCuratedContract from '../config/mainnet/DiamondCyberDestinationFactory.json';
-import testCuratedContract from '../config/mumbai/DiamondCyberDestinationFactory.json';
+import testCuratedContract from '../config/test/DiamondCyberDestinationFactory.json';
 
 // MATIC Factory contract
 import mainUtilityContract from '../config/mainnet/DiamondCyberDestinationUtilityFactory.json';

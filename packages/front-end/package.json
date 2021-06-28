@@ -8,7 +8,7 @@
     "start": "next start",
     "copy:contract": "npm run copy:contract:prod && npm run copy:utilcontract:prod &&  npm run copy:contract:test && npm run copy:utilcontract:test",
     "copy:contract:prod": "cp ../contracts/deployments/mainnet/DiamondCyberDestinationFactory.json ./config/mainnet/",
-    "copy:contract:test": "cp ../contracts/deployments/mumbai/DiamondCyberDestinationFactory.json ./config/mumbai/",
+    "copy:contract:test": "cp ../contracts/deployments/test/DiamondCyberDestinationFactory.json ./config/test/",
     "copy:utilcontract:prod": "cp ../contracts/deployments/mainnet/DiamondCyberDestinationUtilityFactory.json ./config/mainnet/",
     "copy:utilcontract:test": "cp ../contracts/deployments/mumbai/DiamondCyberDestinationUtilityFactory.json ./config/mumbai/"
   },
