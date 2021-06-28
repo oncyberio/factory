@@ -5,7 +5,7 @@ import { Biconomy } from '@biconomy/mexa';
 
 // ETH Curated contract
 import mainCuratedContract from '../config/mainnet/DiamondCyberDestinationFactory.json';
-import testCuratedContract from '../config/test/DiamondCyberDestinationFactory.json';
+import rinkebyCuratedContract from '../config/rinkeby/DiamondCyberDestinationFactory.json';
 
 // MATIC Factory contract
 import mainUtilityContract from '../config/mainnet/DiamondCyberDestinationUtilityFactory.json';
@@ -23,7 +23,7 @@ async function getNonce(collection) {
     let jsonContract;
 
     if (config.env == 'development') {
-      jsonContract = (collection == 'destination' ? testCuratedContract : testUtilityContract);
+      jsonContract = (collection == 'destination' ? rinkebyCuratedContract : testUtilityContract);
     }
     else {
       jsonContract = (collection == 'destination' ? mainCuratedContract : mainUtilityContract);
@@ -46,7 +46,7 @@ async function mint(uri, amount, amountOncyber, signature, collection) {
   let jsonContract;
 
   if (config.env == 'development') {
-    jsonContract = (collection == 'destination' ? testCuratedContract : testUtilityContract);
+    jsonContract = (collection == 'destination' ? rinkebyCuratedContract : testUtilityContract);
   }
   else {
     jsonContract = (collection == 'destination' ? mainCuratedContract : mainUtilityContract);
@@ -81,7 +81,7 @@ async function mintForwarder(uri, amount, amountOncyber, signature, collection) 
   const provider = new ethers.providers.JsonRpcProvider(config[collection].rpc);
 
   if (config.env == 'development') {
-    jsonContract = (collection == 'destination' ? testCuratedContract : testUtilityContract);
+    jsonContract = (collection == 'destination' ? rinkebyCuratedContract : testUtilityContract);
   }
   else {
     jsonContract = (collection == 'destination' ? mainCuratedContract : mainUtilityContract);

@@ -3,7 +3,7 @@ const config = {
   env: process.env.NEXT_PUBLIC_NODE_ENV || 'development',
   supportedContracts: process.env.SUPPORTED_CONTRACTS ? process.env.SUPPORTED_CONTRACTS.split(',') : ['destination', 'destinationUtility'],
   destination: {
-    allowedMinter: process.env.DESTINATION_ALLOWED_MINTER_ADDRESS ? process.env.DESTINATION_ALLOWED_MINTER_ADDRESS.split(',') : ['0xBeb171bA24e66014F356Bca0DB05329EFea14964', '0x18E61e64d06dbE100350bF1A0EBAB956Db7732ef'],
+    allowedMinter: process.env.DESTINATION_ALLOWED_MINTER_ADDRESS ? process.env.DESTINATION_ALLOWED_MINTER_ADDRESS.split(',') : ['0xBeb171bA24e66014F356Bca0DB05329EFea14964', '0x9e82ba3123107087aEeEfc46f6e47810f29537dF'],
     minterNonceMax: parseInt(process.env.DESTINATION_MINTER_MAX_NONCE || '99'),
     minOncyberShares: parseFloat(process.env.NEXT_PUBLIC_MIN_ONCYBER_SHARES || '0.3'), // 30%
     rpc: process.env.NEXT_PUBLIC_ETH_RPC || 'https://rinkeby.infura.io/v3/b89e58ca51184cb783845c58340629c4',
