@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "next start",
     "copy:contract": "npm run copy:contract:prod && npm run copy:utilcontract:prod &&  npm run copy:contract:test && npm run copy:utilcontract:test",
-    "copy:contract:prod": "cp ../contracts/deployments/mainnet/DiamondCyberDestinationFactory.json ./config/mainnet/",
-    "copy:contract:test": "cp ../contracts/deployments/mumbai/DiamondCyberDestinationFactory.json ./config/mumbai/",
+    "copy:contract:prod": "cp ../contracts/deployments/ethereum/DiamondCyberDestinationFactory.json ./config/ethereum/",
+    "copy:contract:rinkeby": "cp ../contracts/deployments/rinkeby/DiamondCyberDestinationFactory.json ./config/rinkeby/",
     "copy:utilcontract:prod": "cp ../contracts/deployments/mainnet/DiamondCyberDestinationUtilityFactory.json ./config/mainnet/",
     "copy:utilcontract:test": "cp ../contracts/deployments/mumbai/DiamondCyberDestinationUtilityFactory.json ./config/mumbai/"
   },
