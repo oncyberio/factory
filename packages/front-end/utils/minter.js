@@ -4,7 +4,7 @@ import { ethers } from 'ethers';
 import { Biconomy } from '@biconomy/mexa';
 
 // ETH Curated contract
-import mainCuratedContract from '../config/mainnet/DiamondCyberDestinationFactory.json';
+import mainCuratedContract from '../config/ethereum/DiamondCyberDestinationFactory.json';
 import rinkebyCuratedContract from '../config/rinkeby/DiamondCyberDestinationFactory.json';
 
 // MATIC Factory contract
