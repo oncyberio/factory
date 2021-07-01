@@ -69,6 +69,18 @@ const config: HardhatUserConfig = {
       gasPrice: parseUnits('1', 'gwei').toNumber(),
       accounts: [process.env.MAINNET_PRIVATE_KEY || defaultPrivateKey],
     },
+    rinkeby: {
+      chainId: 4,
+      url: 'https://rinkeby.infura.io/v3/b89e58ca51184cb783845c58340629c4',
+      gasPrice: parseUnits('1', 'gwei').toNumber(),
+      accounts: [process.env.MUMBAI_PRIVATE_KEY || defaultPrivateKey],
+    },
+    ethereum: {
+      chainId: 1,
+      url: process.env.ALCHEMY_URL,
+      gasPrice: parseUnits('24', 'gwei').toNumber(),
+      accounts: [process.env.MAINNET_PRIVATE_KEY || defaultPrivateKey],
+    }
   },
 }
 

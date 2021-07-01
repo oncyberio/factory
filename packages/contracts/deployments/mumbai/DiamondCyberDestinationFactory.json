@@ -880,33 +880,12 @@
       ]
     }
   ],
-  "diamondCut": [
-    {
-      "facetAddress": "0x5766da54bc4078e4a4b0c6c6a27926f000918039",
-      "functionSelectors": [
-        "0x00fdd58e",
-        "0x4e1273f4",
-        "0x0b885ac3",
-        "0xe985e9c5",
-        "0x572b6c05",
-        "0x481c6a75",
-        "0x7a15c41c",
-        "0x1b023947",
-        "0xbc01188e",
-        "0x2eb2c2d6",
-        "0xf242432a",
-        "0xa22cb465",
-        "0x18160ddd",
-        "0x0e89341c"
-      ],
-      "action": 1
-    }
-  ],
+  "diamondCut": [],
   "execute": {
     "methodName": "initialize",
     "args": [
       "ipfs://",
-      "0x2968cC604C2b29b031C0E773300074992c9C5C13",
+      "0xDd6243aA1226994A0fA54E3Cb076c641f25b746d",
       "0x9399BB24DBB5C4b782C70c2969F58716Ebbd6a3b",
       "0x53d791f18155C211FF8b58671d0f7E9b50E596ad",
       "0x584E34B153038a19fFf3cdb87942a736Aa0045E4"

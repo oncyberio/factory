@@ -60,8 +60,9 @@ function Factory({token, setSuccess}) {
 
                 if (status == 'success') {
                     console.log("PIN SUCCESS")
-                    const balance = contractName == 'destination' ? await mint(ipfsHashMetadata, quantity, amountOncyber, signature, contractName) : await mintForwarder(ipfsHashMetadata, quantity, amountOncyber, signature, contractName);
-                    console.log(balance)
+                    // store in db
+                    // const balance = contractName == 'destination' ? await mint(ipfsHashMetadata, quantity, amountOncyber, signature, contractName) : await mintForwarder(ipfsHashMetadata, quantity, amountOncyber, signature, contractName);
+                    // console.log(balance)
                     setSuccess(true);
                 }
                 else {
