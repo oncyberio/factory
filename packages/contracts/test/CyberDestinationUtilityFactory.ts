@@ -1,13 +1,13 @@
 import { ethers, deployments, getNamedAccounts } from 'hardhat'
 import { expect } from 'chai'
 
-import { signMintingRequest } from '../lib/utils'
+import { signMintingUtilityRequest } from '../lib/utils'
 
 const memory: any = {}
 
 const tokenURI = (uri: string) => `ipfs://${uri}`
 
-describe('CyberDestinationUtilityFactory', function () {
+describe.only('CyberDestinationUtilityFactory', function () {
   before(async () => {
     memory.signers = await ethers.getSigners()
   })
@@ -40,127 +40,197 @@ describe('CyberDestinationUtilityFactory', function () {
     expect(await memory.contract.minterNonce(memory.other.address) ).to.eq('0')
   })
 
+  it('Should throw to get drop if not exist', async () => {
+    await expect(
+      memory.contract.connect(memory.other).getDrop(0)
+    ).to.be.revertedWith('drop not exist')
+    await expect(
+      memory.contract.connect(memory.other).getDrop(123)
+    ).to.be.revertedWith('drop not exist')
+  })
+
   it('mint', async () => {
+
     const uri = 'Qmsfzefi221ifjzifj'
-    const amount = '10'
-    const amountOncyber = '1'
+    const time_start = parseInt((Date.now() / 1000).toString() )
+    const time_end = parseInt((Date.now() / 1000  + 10).toString() )
+    const price = 100
+    const amount_cap = 10
+    const share_oncyber = 50
     const nonce = '0'
-    const signature = await signMintingRequest(
+    const signature = await signMintingUtilityRequest(
       uri,
-      amount,
-      amountOncyber,
+      time_start,
+      time_end,
+      price,
+      amount_cap,
+      share_oncyber,
       nonce,
       memory.other.address,
       memory.manager
     )
-    await memory.contract.connect(memory.other).mint(uri, amount, amountOncyber, signature)
+    await memory.contract.connect(memory.other).mint(
+      uri,
+      time_start,
+      time_end,
+      price,
+      amount_cap,
+      share_oncyber,
+      signature
+    )
 
     const tokenId = 0
-    expect(await memory.contract.balanceOf(memory.other.address, tokenId)).to.eq('9')
-    expect(await memory.contract.balanceOf(memory.oncyber.address, tokenId)).to.eq('1')
+    expect(await memory.contract.balanceOf(memory.other.address, tokenId)).to.eq('0')
+    expect(await memory.contract.balanceOf(memory.oncyber.address, tokenId)).to.eq('0')
     expect(await memory.contract.minterNonce(memory.other.address)).to.eq('1')
     expect(await memory.contract.uri(tokenId)).to.eq(tokenURI(uri))
     expect(await memory.contract.totalSupply()).to.eq('1')
-    expect(await memory.contract.isApprovedForAll(memory.other.address, memory.namedAccounts.opensea) ).to.true
+
+    const drop = await memory.contract.getDrop(tokenId)
+    expect(drop.time_start).to.eq(time_start)
+    expect(drop.time_end).to.eq(time_end)
+    expect(drop.share_oncyber).to.eq(share_oncyber)
+    expect(drop.price).to.eq(price)
+    expect(drop.amount_cap).to.eq(amount_cap)
+    expect(drop.minted).to.eq('0')
+    expect(drop.creator).to.eq(memory.other.address)
+
+    await expect(
+      memory.contract.connect(memory.other).getDrop(1)
+    ).to.be.revertedWith('drop not exist')
 
   })
 
   it('mint more than one time', async () => {
 
     const uri = 'Qmsfzefi221ifjzifj'
-    const amount = '7'
-    const amountOncyber = '3'
+    const time_start = parseInt((Date.now() / 1000).toString() )
+    const time_end = parseInt((Date.now() / 1000  + 10).toString() )
+    const price = 100
+    const amount_cap = 10
+    const share_oncyber = 50
     const nonce = '0'
-    const signature = await signMintingRequest(
+    const signature = await signMintingUtilityRequest(
       uri,
-      amount,
-      amountOncyber,
+      time_start,
+      time_end,
+      price,
+      amount_cap,
+      share_oncyber,
       nonce,
       memory.other.address,
       memory.manager
     )
-    await memory.contract.connect(memory.other).mint(uri, amount, amountOncyber, signature)
+    await memory.contract.connect(memory.other).mint(
+      uri,
+      time_start,
+      time_end,
+      price,
+      amount_cap,
+      share_oncyber,
+      signature
+    )
 
     const tokenId = 0
-    expect(
-      await memory.contract.balanceOf(memory.other.address, tokenId)
-    ).to.eq('4')
-    expect(
-      await memory.contract.balanceOf(memory.oncyber.address, tokenId)
-    ).to.eq('3')
-    expect(await memory.contract.uri(tokenId)).to.eq(tokenURI(uri))
-    expect(await memory.contract.totalSupply()).to.eq('1')
-    expect(await memory.contract.isApprovedForAll(memory.other.address, memory.namedAccounts.opensea) ).to.true
-
-    const uri1 = 'Qmsfzefi221ifjzifj1'
-    const amount1 = '14'
-    const amountOncyber1 = '6'
-    const nonce1 = '1'
-    const signature1 = await signMintingRequest(
-      uri1,
-      amount1,
-      amountOncyber1,
-      nonce1,
-      memory.other.address,
-      memory.manager
-    )
-    await memory.contract.connect(memory.other).mint(uri1, amount1, amountOncyber1, signature1)
-
-    const tokenId1 = 1
-    expect(
-      await memory.contract.balanceOf(memory.other.address, tokenId1)
-    ).to.eq('8')
-    expect(
-      await memory.contract.balanceOf(memory.oncyber.address, tokenId1)
-    ).to.eq('6')
-    expect(await memory.contract.minterNonce(memory.other.address)).to.eq('2')
-    expect(await memory.contract.uri(tokenId1)).to.eq(tokenURI(uri1))
-    expect(await memory.contract.totalSupply()).to.eq('2')
-    expect(await memory.contract.isApprovedForAll(memory.other.address, memory.namedAccounts.opensea) ).to.true
-
-  })
-
-  it("can't mint invalid amount onCyber", async () => {
-    const uri = 'Qmsfzefi221ifjzifj'
-    const amount = '10'
-    const amountOncyber = '11'
-    const nonce = '0'
-    const signature = await signMintingRequest(
-      uri,
-      amount,
-      amountOncyber,
-      nonce,
-      memory.other.address,
-      memory.manager
-    )
-    await expect(memory.contract.connect(memory.other).mint(uri, amount, amountOncyber, signature) )
-      .to.be.revertedWith('IAO')
-
-  })
-
-  it('mint with 0 amount onCyber', async () => {
-    const uri = 'Qmsfzefi221ifjzifj'
-    const amount = '10'
-    const amountOncyber = '0'
-    const nonce = '0'
-    const signature = await signMintingRequest(
-      uri,
-      amount,
-      amountOncyber,
-      nonce,
-      memory.other.address,
-      memory.manager
-    )
-    await memory.contract.connect(memory.other).mint(uri, amount, amountOncyber, signature)
-
-    const tokenId = 0
-    expect(await memory.contract.balanceOf(memory.other.address, tokenId)).to.eq('10')
+    expect(await memory.contract.balanceOf(memory.other.address, tokenId)).to.eq('0')
     expect(await memory.contract.balanceOf(memory.oncyber.address, tokenId)).to.eq('0')
     expect(await memory.contract.minterNonce(memory.other.address)).to.eq('1')
     expect(await memory.contract.uri(tokenId)).to.eq(tokenURI(uri))
     expect(await memory.contract.totalSupply()).to.eq('1')
-    expect(await memory.contract.isApprovedForAll(memory.other.address, memory.namedAccounts.opensea) ).to.true
 
+    const drop = await memory.contract.getDrop(tokenId)
+    expect(drop.time_start).to.eq(time_start)
+    expect(drop.time_end).to.eq(time_end)
+    expect(drop.share_oncyber).to.eq(share_oncyber)
+    expect(drop.price).to.eq(price)
+    expect(drop.amount_cap).to.eq(amount_cap)
+    expect(drop.minted).to.eq('0')
+    expect(drop.creator).to.eq(memory.other.address)
+
+    await expect(
+      memory.contract.connect(memory.other).getDrop(1)
+    ).to.be.revertedWith('drop not exist')
+
+    const uri1 = 'Qmsfzefi221ifjzifj1'
+    const time_start1 = parseInt((Date.now() / 1000).toString() )
+    const time_end1 = parseInt((Date.now() / 1000  + 10).toString() )
+    const price1 = 100
+    const amount_cap1 = 10
+    const share_oncyber1 = 50
+    const nonce1 = '1'
+    const signature1 = await signMintingUtilityRequest(
+      uri1,
+      time_start1,
+      time_end1,
+      price1,
+      amount_cap1,
+      share_oncyber1,
+      nonce1,
+      memory.other.address,
+      memory.manager
+    )
+    await memory.contract.connect(memory.other).mint(
+      uri1,
+      time_start1,
+      time_end1,
+      price1,
+      amount_cap1,
+      share_oncyber1,
+      signature1
+    )
+
+    const tokenId1 = 1
+    expect(await memory.contract.balanceOf(memory.other.address, tokenId1)).to.eq('0')
+    expect(await memory.contract.balanceOf(memory.oncyber.address, tokenId1)).to.eq('0')
+    expect(await memory.contract.minterNonce(memory.other.address)).to.eq('2')
+    expect(await memory.contract.uri(tokenId1)).to.eq(tokenURI(uri1))
+    expect(await memory.contract.totalSupply()).to.eq('2')
+
+    const drop1 = await memory.contract.getDrop(tokenId1)
+    expect(drop1.time_start).to.eq(time_start)
+    expect(drop1.time_end).to.eq(time_end)
+    expect(drop1.share_oncyber).to.eq(share_oncyber)
+    expect(drop1.price).to.eq(price)
+    expect(drop1.amount_cap).to.eq(amount_cap)
+    expect(drop1.minted).to.eq('0')
+    expect(drop1.creator).to.eq(memory.other.address)
+
+    await expect(
+      memory.contract.connect(memory.other).getDrop(2)
+    ).to.be.revertedWith('drop not exist')
+
+  })
+
+  it("can't mint invalid share onCyber", async () => {
+
+    const uri = 'Qmsfzefi221ifjzifj'
+    const time_start = parseInt((Date.now() / 1000).toString() )
+    const time_end = parseInt((Date.now() / 1000  + 10).toString() )
+    const price = 100
+    const amount_cap = 10
+    const share_oncyber = 101
+    const nonce = '0'
+    const signature = await signMintingUtilityRequest(
+      uri,
+      time_start,
+      time_end,
+      price,
+      amount_cap,
+      share_oncyber,
+      nonce,
+      memory.other.address,
+      memory.manager
+    )
+
+    await expect(memory.contract.connect(memory.other).mint(
+      uri,
+      time_start,
+      time_end,
+      price,
+      amount_cap,
+      share_oncyber,
+      signature
+    ) ).to.be.revertedWith('IAO')
 
   })
 
@@ -170,95 +240,248 @@ describe('CyberDestinationUtilityFactory', function () {
     ).to.be.revertedWith('ERC1155URI: tokenId not exist')
   })
 
-  it("can't mint with invalid signature", async () => {
+  // TODO
+  // it("can't mint with invalid signature", async () => {
+  //   const uri = 'Qmsfzefi221ifjzifj'
+  //   const amount = '1'
+  //   const amountOncyber = '1'
+  //   const nonce = '0'
+  //   const invalidSignerSignature = await signMintingRequest(
+  //     uri,
+  //     amount,
+  //     amountOncyber,
+  //     nonce,
+  //     memory.other.address,
+  //     memory.other
+  //   )
+  //   await expect(
+  //     memory.contract
+  //       .connect(memory.other)
+  //       .mint(uri, amount, amountOncyber, invalidSignerSignature)
+  //   ).to.be.revertedWith('NM')
+  //
+  //   const invalidAccountSignature = await signMintingRequest(
+  //     uri,
+  //     amount,
+  //     amountOncyber,
+  //     nonce,
+  //     memory.manager.address,
+  //     memory.manager
+  //   )
+  //   await expect(
+  //     memory.contract
+  //       .connect(memory.other)
+  //       .mint(uri, amount, amountOncyber, invalidAccountSignature)
+  //   ).to.be.revertedWith('NM')
+  //
+  //   const invalidAmountSignature = await signMintingRequest(
+  //     uri,
+  //     '2',
+  //     amountOncyber,
+  //     nonce,
+  //     memory.other.address,
+  //     memory.manager
+  //   )
+  //   await expect(
+  //     memory.contract
+  //       .connect(memory.other)
+  //       .mint(uri, amount, amountOncyber, invalidAmountSignature)
+  //   ).to.be.revertedWith('NM')
+  //
+  //   const invalidAmountOncyberSignature = await signMintingRequest(
+  //     uri,
+  //     amount,
+  //     '33',
+  //     nonce,
+  //     memory.other.address,
+  //     memory.manager
+  //   )
+  //   await expect(
+  //     memory.contract
+  //       .connect(memory.other)
+  //       .mint(uri, amount, amountOncyber, invalidAmountOncyberSignature)
+  //   ).to.be.revertedWith('NM')
+  //
+  //   const invalidUriSignature = await signMintingRequest(
+  //     'uri',
+  //     amount,
+  //     amountOncyber,
+  //     nonce,
+  //     memory.other.address,
+  //     memory.manager
+  //   )
+  //   await expect(
+  //     memory.contract
+  //       .connect(memory.other)
+  //       .mint(uri, amount, amountOncyber, invalidUriSignature)
+  //   ).to.be.revertedWith('NM')
+  //
+  //   const invalidNonceSignature = await signMintingRequest(
+  //     uri,
+  //     amount,
+  //     amountOncyber,
+  //     '1',
+  //     memory.other.address,
+  //     memory.manager
+  //   )
+  //   await expect(
+  //     memory.contract
+  //       .connect(memory.other)
+  //       .mint(uri, amount, amountOncyber, invalidNonceSignature)
+  //   ).to.be.revertedWith('NM')
+  // })
+
+  it('MintEdition', async () => {
+
     const uri = 'Qmsfzefi221ifjzifj'
-    const amount = '1'
-    const amountOncyber = '1'
+    const time_start = parseInt((Date.now() / 1000 - 100).toString() )
+    const time_end = parseInt((Date.now() / 1000  + 10).toString() )
+    const price = 1000
+    const amount_cap = 10
+    const share_oncyber = 50
     const nonce = '0'
-    const invalidSignerSignature = await signMintingRequest(
+    const signature = await signMintingUtilityRequest(
       uri,
-      amount,
-      amountOncyber,
-      nonce,
-      memory.other.address,
-      memory.other
-    )
-    await expect(
-      memory.contract
-        .connect(memory.other)
-        .mint(uri, amount, amountOncyber, invalidSignerSignature)
-    ).to.be.revertedWith('NM')
-
-    const invalidAccountSignature = await signMintingRequest(
-      uri,
-      amount,
-      amountOncyber,
-      nonce,
-      memory.manager.address,
-      memory.manager
-    )
-    await expect(
-      memory.contract
-        .connect(memory.other)
-        .mint(uri, amount, amountOncyber, invalidAccountSignature)
-    ).to.be.revertedWith('NM')
-
-    const invalidAmountSignature = await signMintingRequest(
-      uri,
-      '2',
-      amountOncyber,
+      time_start,
+      time_end,
+      price,
+      amount_cap,
+      share_oncyber,
       nonce,
       memory.other.address,
       memory.manager
     )
-    await expect(
-      memory.contract
-        .connect(memory.other)
-        .mint(uri, amount, amountOncyber, invalidAmountSignature)
-    ).to.be.revertedWith('NM')
-
-    const invalidAmountOncyberSignature = await signMintingRequest(
+    await memory.contract.connect(memory.other).mint(
       uri,
-      amount,
-      '33',
-      nonce,
-      memory.other.address,
-      memory.manager
+      time_start,
+      time_end,
+      price,
+      amount_cap,
+      share_oncyber,
+      signature
     )
-    await expect(
-      memory.contract
-        .connect(memory.other)
-        .mint(uri, amount, amountOncyber, invalidAmountOncyberSignature)
-    ).to.be.revertedWith('NM')
+    const otherBalance = await ethers.provider.getBalance(memory.other.address)
+    const oncyberBalance = await ethers.provider.getBalance(memory.oncyber.address)
+    const tokenId = 0
+    await memory.contract.connect(memory.other2).mintEdition(tokenId, {
+      value: price
+    })
+    expect(await memory.contract.balanceOf(memory.other2.address, tokenId)).to.eq('1')
+    expect(await ethers.provider.getBalance(memory.other.address)).to.eq(otherBalance.add('500'))
+    expect(await ethers.provider.getBalance(memory.oncyber.address)).to.eq(oncyberBalance.add('500'))
 
-    const invalidUriSignature = await signMintingRequest(
-      'uri',
-      amount,
-      amountOncyber,
-      nonce,
-      memory.other.address,
-      memory.manager
-    )
-    await expect(
-      memory.contract
-        .connect(memory.other)
-        .mint(uri, amount, amountOncyber, invalidUriSignature)
-    ).to.be.revertedWith('NM')
+    const drop = await memory.contract.getDrop(tokenId)
+    expect(drop.minted).to.eq('1')
 
-    const invalidNonceSignature = await signMintingRequest(
-      uri,
-      amount,
-      amountOncyber,
-      '1',
-      memory.other.address,
-      memory.manager
-    )
-    await expect(
-      memory.contract
-        .connect(memory.other)
-        .mint(uri, amount, amountOncyber, invalidNonceSignature)
-    ).to.be.revertedWith('NM')
   })
+
+  it('MintEdition more than one', async () => {
+
+    const uri = 'Qmsfzefi221ifjzifj'
+    const time_start = parseInt((Date.now() / 1000 - 100).toString() )
+    const time_end = parseInt((Date.now() / 1000  + 10).toString() )
+    const price = 1000
+    const amount_cap = 10
+    const share_oncyber = 50
+    const nonce = '0'
+    const signature = await signMintingUtilityRequest(
+      uri,
+      time_start,
+      time_end,
+      price,
+      amount_cap,
+      share_oncyber,
+      nonce,
+      memory.other.address,
+      memory.manager
+    )
+    await memory.contract.connect(memory.other).mint(
+      uri,
+      time_start,
+      time_end,
+      price,
+      amount_cap,
+      share_oncyber,
+      signature
+    )
+    const otherBalance = await ethers.provider.getBalance(memory.other.address)
+    const oncyberBalance = await ethers.provider.getBalance(memory.oncyber.address)
+    const tokenId = 0
+
+    await memory.contract.connect(memory.other2).mintEdition(tokenId, {
+      value: price
+    })
+    expect(await memory.contract.balanceOf(memory.other2.address, tokenId)).to.eq('1')
+    expect(await ethers.provider.getBalance(memory.other.address)).to.eq(otherBalance.add('500'))
+    expect(await ethers.provider.getBalance(memory.oncyber.address)).to.eq(oncyberBalance.add('500'))
+
+    await memory.contract.connect(memory.other3).mintEdition(tokenId, {
+      value: price
+    })
+    expect(await memory.contract.balanceOf(memory.other3.address, tokenId)).to.eq('1')
+    expect(await ethers.provider.getBalance(memory.other.address)).to.eq(otherBalance.add('500').add('500'))
+    expect(await ethers.provider.getBalance(memory.oncyber.address)).to.eq(oncyberBalance.add('500').add('500'))
+
+    const drop = await memory.contract.getDrop(tokenId)
+    expect(drop.minted).to.eq('2')
+  })
+
+  it('MintEdition more than one from same account', async () => {
+
+    const uri = 'Qmsfzefi221ifjzifj'
+    const time_start = parseInt((Date.now() / 1000 - 100).toString() )
+    const time_end = parseInt((Date.now() / 1000  + 10).toString() )
+    const price = 1000
+    const amount_cap = 10
+    const share_oncyber = 50
+    const nonce = '0'
+    const signature = await signMintingUtilityRequest(
+      uri,
+      time_start,
+      time_end,
+      price,
+      amount_cap,
+      share_oncyber,
+      nonce,
+      memory.other.address,
+      memory.manager
+    )
+    await memory.contract.connect(memory.other).mint(
+      uri,
+      time_start,
+      time_end,
+      price,
+      amount_cap,
+      share_oncyber,
+      signature
+    )
+    const otherBalance = await ethers.provider.getBalance(memory.other.address)
+    const oncyberBalance = await ethers.provider.getBalance(memory.oncyber.address)
+    const tokenId = 0
+
+    await memory.contract.connect(memory.other2).mintEdition(tokenId, {
+      value: price
+    })
+    expect(await memory.contract.balanceOf(memory.other2.address, tokenId)).to.eq('1')
+    expect(await ethers.provider.getBalance(memory.other.address)).to.eq(otherBalance.add('500'))
+    expect(await ethers.provider.getBalance(memory.oncyber.address)).to.eq(oncyberBalance.add('500'))
+
+    await memory.contract.connect(memory.other2).mintEdition(tokenId, {
+      value: price
+    })
+    expect(await memory.contract.balanceOf(memory.other2.address, tokenId)).to.eq('2')
+    expect(await ethers.provider.getBalance(memory.other.address)).to.eq(otherBalance.add('500').add('500'))
+    expect(await ethers.provider.getBalance(memory.oncyber.address)).to.eq(oncyberBalance.add('500').add('500'))
+
+    const drop = await memory.contract.getDrop(tokenId)
+    expect(drop.minted).to.eq('2')
+  })
+
+  it('MintEdition throw out of time', async () => {})
+
+  it('MintEdition throw invalid amount', async () => {})
+
+  it('MintEdition throw cap reach', async () => {})
 
   it('Should owner initialise', async () => {
 

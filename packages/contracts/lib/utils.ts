@@ -21,3 +21,31 @@ export async function signMintingRequest(
   const signature = await signer.signMessage(aHash)
   return signature
 }
+
+export async function signMintingUtilityRequest(
+  uri: string,
+  timeStart: number,
+  timeEnd: number,
+  price: number,
+  amountCap: number,
+  shareOncyber: number,
+  nonce: string,
+  minter: string,
+  signer: Signer
+): Promise<string> {
+  const aURI = utils.toUtf8Bytes(uri)
+  const aTimeStart = utils.hexZeroPad(BigNumber.from(timeStart).toHexString(), 32)
+  const aTimeEnd = utils.hexZeroPad(BigNumber.from(timeEnd).toHexString(), 32)
+  const aPrice = utils.hexZeroPad(BigNumber.from(price).toHexString(), 32)
+  const aAmountCap = utils.hexZeroPad(BigNumber.from(amountCap).toHexString(), 32)
+  const aShareOncyber = utils.hexZeroPad(BigNumber.from(shareOncyber).toHexString(), 32)
+  const aNonce = utils.hexZeroPad(BigNumber.from(nonce).toHexString(), 32)
+  const aMinter = utils.arrayify(minter)
+  const message = utils.concat([aURI, aTimeStart, aTimeEnd, aPrice, aAmountCap, aShareOncyber, aNonce, aMinter])
+
+  const hash = utils.keccak256(message)
+  const aHash = utils.arrayify(hash)
+
+  const signature = await signer.signMessage(aHash)
+  return signature
+}

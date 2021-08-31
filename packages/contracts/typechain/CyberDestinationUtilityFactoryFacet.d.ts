@@ -12,6 +12,7 @@ import {
   BaseContract,
   ContractTransaction,
   Overrides,
+  PayableOverrides,
   CallOverrides,
 } from "ethers";
 import { BytesLike } from "@ethersproject/bytes";
@@ -24,11 +25,13 @@ interface CyberDestinationUtilityFactoryFacetInterface
   functions: {
     "balanceOf(address,uint256)": FunctionFragment;
     "balanceOfBatch(address[],uint256[])": FunctionFragment;
+    "getDrop(uint256)": FunctionFragment;
     "initialize(string,address,address,address,address)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
     "isTrustedForwarder(address)": FunctionFragment;
     "manager()": FunctionFragment;
-    "mint(string,uint256,uint256,bytes)": FunctionFragment;
+    "mint(string,uint256,uint256,uint256,uint256,uint256,bytes)": FunctionFragment;
+    "mintEdition(uint256)": FunctionFragment;
     "minterNonce(address)": FunctionFragment;
     "oncyber()": FunctionFragment;
     "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)": FunctionFragment;
@@ -48,6 +51,10 @@ interface CyberDestinationUtilityFactoryFacetInterface
     values: [string[], BigNumberish[]]
   ): string;
   encodeFunctionData(
+    functionFragment: "getDrop",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
     functionFragment: "initialize",
     values: [string, string, string, string, string]
   ): string;
@@ -62,7 +69,19 @@ interface CyberDestinationUtilityFactoryFacetInterface
   encodeFunctionData(functionFragment: "manager", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "mint",
-    values: [string, BigNumberish, BigNumberish, BytesLike]
+    values: [
+      string,
+      BigNumberish,
+      BigNumberish,
+      BigNumberish,
+      BigNumberish,
+      BigNumberish,
+      BytesLike
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "mintEdition",
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "minterNonce", values: [string]): string;
   encodeFunctionData(functionFragment: "oncyber", values?: undefined): string;
@@ -93,6 +112,7 @@ interface CyberDestinationUtilityFactoryFacetInterface
     functionFragment: "balanceOfBatch",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "getDrop", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "isApprovedForAll",
@@ -104,6 +124,10 @@ interface CyberDestinationUtilityFactoryFacetInterface
   ): Result;
   decodeFunctionResult(functionFragment: "manager", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "mintEdition",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "minterNonce",
     data: BytesLike
@@ -202,6 +226,31 @@ export class CyberDestinationUtilityFactoryFacet extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber[]]>;
 
+    getDrop(
+      _tokenId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<
+      [
+        [
+          BigNumber,
+          BigNumber,
+          BigNumber,
+          BigNumber,
+          BigNumber,
+          BigNumber,
+          string
+        ] & {
+          time_start: BigNumber;
+          time_end: BigNumber;
+          share_oncyber: BigNumber;
+          price: BigNumber;
+          amount_cap: BigNumber;
+          minted: BigNumber;
+          creator: string;
+        }
+      ]
+    >;
+
     initialize(
       _uri: string,
       _manager: string,
@@ -226,10 +275,18 @@ export class CyberDestinationUtilityFactoryFacet extends BaseContract {
 
     mint(
       _uri: string,
-      _amount: BigNumberish,
-      _amount_oncyber: BigNumberish,
+      _time_start: BigNumberish,
+      _time_end: BigNumberish,
+      _price: BigNumberish,
+      _amount_cap: BigNumberish,
+      _share_oncyber: BigNumberish,
       _signature: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    mintEdition(
+      _tokenId: BigNumberish,
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     minterNonce(
@@ -285,6 +342,29 @@ export class CyberDestinationUtilityFactoryFacet extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber[]>;
 
+  getDrop(
+    _tokenId: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<
+    [
+      BigNumber,
+      BigNumber,
+      BigNumber,
+      BigNumber,
+      BigNumber,
+      BigNumber,
+      string
+    ] & {
+      time_start: BigNumber;
+      time_end: BigNumber;
+      share_oncyber: BigNumber;
+      price: BigNumber;
+      amount_cap: BigNumber;
+      minted: BigNumber;
+      creator: string;
+    }
+  >;
+
   initialize(
     _uri: string,
     _manager: string,
@@ -309,10 +389,18 @@ export class CyberDestinationUtilityFactoryFacet extends BaseContract {
 
   mint(
     _uri: string,
-    _amount: BigNumberish,
-    _amount_oncyber: BigNumberish,
+    _time_start: BigNumberish,
+    _time_end: BigNumberish,
+    _price: BigNumberish,
+    _amount_cap: BigNumberish,
+    _share_oncyber: BigNumberish,
     _signature: BytesLike,
     overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  mintEdition(
+    _tokenId: BigNumberish,
+    overrides?: PayableOverrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   minterNonce(_minter: string, overrides?: CallOverrides): Promise<BigNumber>;
@@ -365,6 +453,29 @@ export class CyberDestinationUtilityFactoryFacet extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber[]>;
 
+    getDrop(
+      _tokenId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<
+      [
+        BigNumber,
+        BigNumber,
+        BigNumber,
+        BigNumber,
+        BigNumber,
+        BigNumber,
+        string
+      ] & {
+        time_start: BigNumber;
+        time_end: BigNumber;
+        share_oncyber: BigNumber;
+        price: BigNumber;
+        amount_cap: BigNumber;
+        minted: BigNumber;
+        creator: string;
+      }
+    >;
+
     initialize(
       _uri: string,
       _manager: string,
@@ -389,11 +500,19 @@ export class CyberDestinationUtilityFactoryFacet extends BaseContract {
 
     mint(
       _uri: string,
-      _amount: BigNumberish,
-      _amount_oncyber: BigNumberish,
+      _time_start: BigNumberish,
+      _time_end: BigNumberish,
+      _price: BigNumberish,
+      _amount_cap: BigNumberish,
+      _share_oncyber: BigNumberish,
       _signature: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    mintEdition(
+      _tokenId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
 
     minterNonce(_minter: string, overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -505,6 +624,11 @@ export class CyberDestinationUtilityFactoryFacet extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    getDrop(
+      _tokenId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     initialize(
       _uri: string,
       _manager: string,
@@ -529,10 +653,18 @@ export class CyberDestinationUtilityFactoryFacet extends BaseContract {
 
     mint(
       _uri: string,
-      _amount: BigNumberish,
-      _amount_oncyber: BigNumberish,
+      _time_start: BigNumberish,
+      _time_end: BigNumberish,
+      _price: BigNumberish,
+      _amount_cap: BigNumberish,
+      _share_oncyber: BigNumberish,
       _signature: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    mintEdition(
+      _tokenId: BigNumberish,
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     minterNonce(_minter: string, overrides?: CallOverrides): Promise<BigNumber>;
@@ -586,6 +718,11 @@ export class CyberDestinationUtilityFactoryFacet extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    getDrop(
+      _tokenId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     initialize(
       _uri: string,
       _manager: string,
@@ -610,10 +747,18 @@ export class CyberDestinationUtilityFactoryFacet extends BaseContract {
 
     mint(
       _uri: string,
-      _amount: BigNumberish,
-      _amount_oncyber: BigNumberish,
+      _time_start: BigNumberish,
+      _time_end: BigNumberish,
+      _price: BigNumberish,
+      _amount_cap: BigNumberish,
+      _share_oncyber: BigNumberish,
       _signature: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    mintEdition(
+      _tokenId: BigNumberish,
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     minterNonce(
