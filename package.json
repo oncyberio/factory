@@ -5,6 +5,7 @@
     "install": "lerna bootstrap",
     "build": "lerna run build",
     "test": "lerna run test",
+    "lint": "lerna run lint",
     "prettier": "prettier --check .",
     "prettier:write": "prettier --write ."
   },
