@@ -58,7 +58,7 @@ contract CyberDestinationUtilityFactoryFacet is CyberDestinationFactoryBase {
     require(block.timestamp >= drop.time_start && block.timestamp <= drop.time_end, "out of time");
     require(msg.value == drop.price, "invalid amount");
     if(drop.amount_cap != 0){
-      require(drop.minted <= drop.amount_cap, "cap reach");
+      require(drop.minted < drop.amount_cap, "cap reach");
     }
     drop.minted += 1;
     _safeMint(sender, _tokenId, 1, "");

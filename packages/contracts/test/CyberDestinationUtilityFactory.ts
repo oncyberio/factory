@@ -477,11 +477,91 @@ describe.only('CyberDestinationUtilityFactory', function () {
     expect(drop.minted).to.eq('2')
   })
 
-  it('MintEdition throw out of time', async () => {})
+  it('MintEdition throw out of time', async () => {
+    const uri = 'Qmsfzefi221ifjzifj'
+    const time_start = parseInt((Date.now() / 1000 - 100).toString() )
+    const time_end = parseInt((Date.now() / 1000  - 10).toString() )
+    const price = 1000
+    const amount_cap = 10
+    const share_oncyber = 50
+    const nonce = '0'
+    const signature = await signMintingUtilityRequest(
+      uri,
+      time_start,
+      time_end,
+      price,
+      amount_cap,
+      share_oncyber,
+      nonce,
+      memory.other.address,
+      memory.manager
+    )
+    await memory.contract.connect(memory.other).mint(
+      uri,
+      time_start,
+      time_end,
+      price,
+      amount_cap,
+      share_oncyber,
+      signature
+    )
+
+    const tokenId = 0
+
+    await expect(memory.contract.connect(memory.other2).mintEdition(tokenId, {
+      value: price
+    })).to.be.revertedWith('out of time')
+  })
 
   it('MintEdition throw invalid amount', async () => {})
 
-  it('MintEdition throw cap reach', async () => {})
+  it('MintEdition throw cap reach', async () => {
+    const uri = 'Qmsfzefi221ifjzifj'
+    const time_start = parseInt((Date.now() / 1000 - 100).toString() )
+    const time_end = parseInt((Date.now() / 1000  + 10).toString() )
+    const price = 1000
+    const amount_cap = 1
+    const share_oncyber = 50
+    const nonce = '0'
+    const signature = await signMintingUtilityRequest(
+      uri,
+      time_start,
+      time_end,
+      price,
+      amount_cap,
+      share_oncyber,
+      nonce,
+      memory.other.address,
+      memory.manager
+    )
+    await memory.contract.connect(memory.other).mint(
+      uri,
+      time_start,
+      time_end,
+      price,
+      amount_cap,
+      share_oncyber,
+      signature
+    )
+    const otherBalance = await ethers.provider.getBalance(memory.other.address)
+    const oncyberBalance = await ethers.provider.getBalance(memory.oncyber.address)
+    const tokenId = 0
+
+    await memory.contract.connect(memory.other2).mintEdition(tokenId, {
+      value: price
+    })
+    expect(await memory.contract.balanceOf(memory.other2.address, tokenId)).to.eq('1')
+    expect(await ethers.provider.getBalance(memory.other.address)).to.eq(otherBalance.add('500'))
+    expect(await ethers.provider.getBalance(memory.oncyber.address)).to.eq(oncyberBalance.add('500'))
+
+    // await memory.contract.connect(memory.other2).mintEdition(tokenId, {
+    //   value: price
+    // })
+
+    await expect(memory.contract.connect(memory.other2).mintEdition(tokenId, {
+      value: price
+    })).to.be.revertedWith('cap reach')
+  })
 
   it('Should owner initialise', async () => {
 
