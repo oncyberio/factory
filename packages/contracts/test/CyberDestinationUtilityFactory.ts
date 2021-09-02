@@ -7,7 +7,7 @@ const memory: any = {}
 
 const tokenURI = (uri: string) => `ipfs://${uri}`
 
-describe.only('CyberDestinationUtilityFactory', function () {
+describe('CyberDestinationUtilityFactory', function () {
   before(async () => {
     memory.signers = await ethers.getSigners()
   })
@@ -230,7 +230,40 @@ describe.only('CyberDestinationUtilityFactory', function () {
       amount_cap,
       share_oncyber,
       signature
-    ) ).to.be.revertedWith('IAO')
+    ) ).to.be.revertedWith('ISO')
+
+  })
+
+  it("can't mint invalid time start/end", async () => {
+
+    const uri = 'Qmsfzefi221ifjzifj'
+    const time_start = 2
+    const time_end = 1
+    const price = 100
+    const amount_cap = 10
+    const share_oncyber = 10
+    const nonce = '0'
+    const signature = await signMintingUtilityRequest(
+      uri,
+      time_start,
+      time_end,
+      price,
+      amount_cap,
+      share_oncyber,
+      nonce,
+      memory.other.address,
+      memory.manager
+    )
+
+    await expect(memory.contract.connect(memory.other).mint(
+      uri,
+      time_start,
+      time_end,
+      price,
+      amount_cap,
+      share_oncyber,
+      signature
+    ) ).to.be.revertedWith('IT')
 
   })
 
@@ -240,96 +273,216 @@ describe.only('CyberDestinationUtilityFactory', function () {
     ).to.be.revertedWith('ERC1155URI: tokenId not exist')
   })
 
-  // TODO
-  // it("can't mint with invalid signature", async () => {
-  //   const uri = 'Qmsfzefi221ifjzifj'
-  //   const amount = '1'
-  //   const amountOncyber = '1'
-  //   const nonce = '0'
-  //   const invalidSignerSignature = await signMintingRequest(
-  //     uri,
-  //     amount,
-  //     amountOncyber,
-  //     nonce,
-  //     memory.other.address,
-  //     memory.other
-  //   )
-  //   await expect(
-  //     memory.contract
-  //       .connect(memory.other)
-  //       .mint(uri, amount, amountOncyber, invalidSignerSignature)
-  //   ).to.be.revertedWith('NM')
-  //
-  //   const invalidAccountSignature = await signMintingRequest(
-  //     uri,
-  //     amount,
-  //     amountOncyber,
-  //     nonce,
-  //     memory.manager.address,
-  //     memory.manager
-  //   )
-  //   await expect(
-  //     memory.contract
-  //       .connect(memory.other)
-  //       .mint(uri, amount, amountOncyber, invalidAccountSignature)
-  //   ).to.be.revertedWith('NM')
-  //
-  //   const invalidAmountSignature = await signMintingRequest(
-  //     uri,
-  //     '2',
-  //     amountOncyber,
-  //     nonce,
-  //     memory.other.address,
-  //     memory.manager
-  //   )
-  //   await expect(
-  //     memory.contract
-  //       .connect(memory.other)
-  //       .mint(uri, amount, amountOncyber, invalidAmountSignature)
-  //   ).to.be.revertedWith('NM')
-  //
-  //   const invalidAmountOncyberSignature = await signMintingRequest(
-  //     uri,
-  //     amount,
-  //     '33',
-  //     nonce,
-  //     memory.other.address,
-  //     memory.manager
-  //   )
-  //   await expect(
-  //     memory.contract
-  //       .connect(memory.other)
-  //       .mint(uri, amount, amountOncyber, invalidAmountOncyberSignature)
-  //   ).to.be.revertedWith('NM')
-  //
-  //   const invalidUriSignature = await signMintingRequest(
-  //     'uri',
-  //     amount,
-  //     amountOncyber,
-  //     nonce,
-  //     memory.other.address,
-  //     memory.manager
-  //   )
-  //   await expect(
-  //     memory.contract
-  //       .connect(memory.other)
-  //       .mint(uri, amount, amountOncyber, invalidUriSignature)
-  //   ).to.be.revertedWith('NM')
-  //
-  //   const invalidNonceSignature = await signMintingRequest(
-  //     uri,
-  //     amount,
-  //     amountOncyber,
-  //     '1',
-  //     memory.other.address,
-  //     memory.manager
-  //   )
-  //   await expect(
-  //     memory.contract
-  //       .connect(memory.other)
-  //       .mint(uri, amount, amountOncyber, invalidNonceSignature)
-  //   ).to.be.revertedWith('NM')
-  // })
+  it("can't mint with invalid signature", async () => {
+    const uri = 'Qmsfzefi221ifjzifj'
+    const time_start = parseInt((Date.now() / 1000).toString() )
+    const time_end = parseInt((Date.now() / 1000  + 10).toString() )
+    const price = 100
+    const amount_cap = 10
+    const share_oncyber = 50
+    const nonce = '0'
+    const invalidSignerSignature = await signMintingUtilityRequest(
+      uri,
+      time_start,
+      time_end,
+      price,
+      amount_cap,
+      share_oncyber,
+      nonce,
+      memory.other.address,
+      memory.other
+    )
+
+    await expect(
+      memory.contract
+        .connect(memory.other)
+        .mint(
+          uri,
+          time_start,
+          time_end,
+          price,
+          amount_cap,
+          share_oncyber,
+          invalidSignerSignature
+        )
+    ).to.be.revertedWith('NM')
+
+    const invalidAccountSignature = await signMintingUtilityRequest(
+      uri,
+      time_start,
+      time_end,
+      price,
+      amount_cap,
+      share_oncyber,
+      nonce,
+      memory.manager.address,
+      memory.manager
+    )
+    await expect(
+      memory.contract
+        .connect(memory.other)
+        .mint(
+          uri,
+          time_start,
+          time_end,
+          price,
+          amount_cap,
+          share_oncyber,
+          invalidAccountSignature
+        )
+    ).to.be.revertedWith('NM')
+
+    const invalidUriSignature = await signMintingUtilityRequest(
+      uri,
+      time_start,
+      time_end,
+      price,
+      amount_cap,
+      share_oncyber,
+      nonce,
+      memory.other.address,
+      memory.manager
+    )
+    await expect(
+      memory.contract
+        .connect(memory.other)
+        .mint(
+          'invalid_uri',
+          time_start,
+          time_end,
+          price,
+          amount_cap,
+          share_oncyber,
+          invalidUriSignature
+        )
+    ).to.be.revertedWith('NM')
+
+    const invalidTimeStartSignature = await signMintingUtilityRequest(
+      uri,
+      time_start,
+      time_end,
+      price,
+      amount_cap,
+      share_oncyber,
+      nonce,
+      memory.other.address,
+      memory.manager
+    )
+    await expect(
+      memory.contract
+        .connect(memory.other)
+        .mint(
+          uri,
+          1,
+          time_end,
+          price,
+          amount_cap,
+          share_oncyber,
+          invalidTimeStartSignature
+        )
+    ).to.be.revertedWith('NM')
+
+    const invalidTimeEndSignature = await signMintingUtilityRequest(
+      uri,
+      time_start,
+      time_end,
+      price,
+      amount_cap,
+      share_oncyber,
+      nonce,
+      memory.other.address,
+      memory.manager
+    )
+    await expect(
+      memory.contract
+        .connect(memory.other)
+        .mint(
+          uri,
+          time_start,
+          time_start + 1,
+          price,
+          amount_cap,
+          share_oncyber,
+          invalidTimeEndSignature
+        )
+    ).to.be.revertedWith('NM')
+
+    const invalidPriceSignature = await signMintingUtilityRequest(
+      uri,
+      time_start,
+      time_end,
+      price,
+      amount_cap,
+      share_oncyber,
+      nonce,
+      memory.other.address,
+      memory.manager
+    )
+    await expect(
+      memory.contract
+        .connect(memory.other)
+        .mint(
+          uri,
+          time_start,
+          time_end,
+          1,
+          amount_cap,
+          share_oncyber,
+          invalidPriceSignature
+        )
+    ).to.be.revertedWith('NM')
+
+    const invalidAmountCapSignature = await signMintingUtilityRequest(
+      uri,
+      time_start,
+      time_end,
+      price,
+      amount_cap,
+      share_oncyber,
+      nonce,
+      memory.other.address,
+      memory.manager
+    )
+    await expect(
+      memory.contract
+        .connect(memory.other)
+        .mint(
+          uri,
+          time_start,
+          time_end,
+          price,
+          1,
+          share_oncyber,
+          invalidAmountCapSignature
+        )
+    ).to.be.revertedWith('NM')
+
+    const invalidShareOncyberSignature = await signMintingUtilityRequest(
+      uri,
+      time_start,
+      time_end,
+      price,
+      amount_cap,
+      share_oncyber,
+      nonce,
+      memory.other.address,
+      memory.manager
+    )
+    await expect(
+      memory.contract
+        .connect(memory.other)
+        .mint(
+          uri,
+          time_start,
+          time_end,
+          price,
+          amount_cap,
+          1,
+          invalidShareOncyberSignature
+        )
+    ).to.be.revertedWith('NM')
+
+  })
 
   it('MintEdition', async () => {
 
@@ -514,6 +667,8 @@ describe.only('CyberDestinationUtilityFactory', function () {
   })
 
   it('MintEdition throw invalid amount', async () => {})
+
+  it('MintEdition without cap', async () => {})
 
   it('MintEdition throw cap reach', async () => {
     const uri = 'Qmsfzefi221ifjzifj'

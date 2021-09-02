@@ -18,25 +18,25 @@ import { Listener, Provider } from "@ethersproject/providers";
 import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 import { TypedEventFilter, TypedEvent, TypedListener } from "./commons";
 
-interface LibAppStorageInterface extends ethers.utils.Interface {
+interface LibUtilityStorageInterface extends ethers.utils.Interface {
   functions: {
-    "c_0x6adf39b3(bytes32)": FunctionFragment;
+    "c_0xa7c4ff02(bytes32)": FunctionFragment;
   };
 
   encodeFunctionData(
-    functionFragment: "c_0x6adf39b3",
+    functionFragment: "c_0xa7c4ff02",
     values: [BytesLike]
   ): string;
 
   decodeFunctionResult(
-    functionFragment: "c_0x6adf39b3",
+    functionFragment: "c_0xa7c4ff02",
     data: BytesLike
   ): Result;
 
   events: {};
 }
 
-export class LibAppStorage extends BaseContract {
+export class LibUtilityStorage extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
@@ -77,23 +77,23 @@ export class LibAppStorage extends BaseContract {
     toBlock?: string | number | undefined
   ): Promise<Array<TypedEvent<EventArgsArray & EventArgsObject>>>;
 
-  interface: LibAppStorageInterface;
+  interface: LibUtilityStorageInterface;
 
   functions: {
-    c_0x6adf39b3(
-      c__0x6adf39b3: BytesLike,
+    c_0xa7c4ff02(
+      c__0xa7c4ff02: BytesLike,
       overrides?: CallOverrides
     ): Promise<[void]>;
   };
 
-  c_0x6adf39b3(
-    c__0x6adf39b3: BytesLike,
+  c_0xa7c4ff02(
+    c__0xa7c4ff02: BytesLike,
     overrides?: CallOverrides
   ): Promise<void>;
 
   callStatic: {
-    c_0x6adf39b3(
-      c__0x6adf39b3: BytesLike,
+    c_0xa7c4ff02(
+      c__0xa7c4ff02: BytesLike,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -101,15 +101,15 @@ export class LibAppStorage extends BaseContract {
   filters: {};
 
   estimateGas: {
-    c_0x6adf39b3(
-      c__0x6adf39b3: BytesLike,
+    c_0xa7c4ff02(
+      c__0xa7c4ff02: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    c_0x6adf39b3(
-      c__0x6adf39b3: BytesLike,
+    c_0xa7c4ff02(
+      c__0xa7c4ff02: BytesLike,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };

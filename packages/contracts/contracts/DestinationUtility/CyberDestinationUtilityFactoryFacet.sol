@@ -25,7 +25,8 @@ contract CyberDestinationUtilityFactoryFacet is CyberDestinationFactoryBase {
 
     address sender = _msgSender();
     uint256 nonce = minterNonce(sender);
-    require(_share_oncyber <= 100, "IAO");
+    require(_share_oncyber <= 100, "ISO");
+    require(_time_start < _time_end, "IT");
 
     bytes memory _message = abi.encodePacked(_uri, _time_start, _time_end, _price, _amount_cap, _share_oncyber, nonce, sender);
     address _recoveredAddress = keccak256(_message).toEthSignedMessageHash().recover(_signature);
