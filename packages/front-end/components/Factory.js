@@ -60,9 +60,8 @@ function Factory({token, setSuccess}) {
 
                 if (status == 'success') {
                     console.log("PIN SUCCESS")
-                    // store in db
-                    // const balance = contractName == 'destination' ? await mint(ipfsHashMetadata, quantity, amountOncyber, signature, contractName) : await mintForwarder(ipfsHashMetadata, quantity, amountOncyber, signature, contractName);
-                    // console.log(balance)
+                    const balance = contractName == 'destination' ? await mint(ipfsHashMetadata, quantity, amountOncyber, signature, contractName) : await mintForwarder(ipfsHashMetadata, quantity, amountOncyber, signature, contractName);
+                    console.log(balance)
                     setSuccess(true);
                 }
                 else {
@@ -130,7 +129,6 @@ const Container = styled.div`
     text-align: left;
     & > div {
         padding: 8px 0;
-
         & > h4 {
             margin: 0 0 8px 0;
         }
