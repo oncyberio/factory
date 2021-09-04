@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "npm run compile && npm run scripts:publish",
     "compile": "hardhat compile",
     "node": "hardhat node",
     "test": "npm run test:coverage",
@@ -18,9 +17,7 @@
     "deploy:mainnet": "hardhat --network mainnet deploy",
     "deploy:rinkeby": "hardhat --network rinkeby deploy",
     "deploy:ethereum": "hardhat --network ethereum deploy",
-    "flatten": "npm run flatten:CyberDestinationFactoryFacet && npm run flatten:CyberDestinationUtilityFactoryFacet",
-    "flatten:CyberDestinationFactoryFacet": "hardhat flatten contracts/Destination/CyberDestinationFactoryFacet.sol > deployments/CyberDestinationFactoryFacet.flatten.sol",
-    "flatten:CyberDestinationUtilityFactoryFacet": "hardhat flatten contracts/Destination/CyberDestinationUtilityFactoryFacet.sol > deployments/CyberDestinationUtilityFactoryFacet.flatten.sol"
+    "verify:CyberDestinationUtilityFactoryFacet:rinkeby": "hardhat verify --network rinkeby 0xC20f2B809F46De165858144190c402618F59f1C8"
   },
   "author": "",
   "license": "MIT",
