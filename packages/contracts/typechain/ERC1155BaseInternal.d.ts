@@ -11,32 +11,29 @@ import {
   PopulatedTransaction,
   BaseContract,
   ContractTransaction,
-  CallOverrides,
 } from "ethers";
 import { BytesLike } from "@ethersproject/bytes";
 import { Listener, Provider } from "@ethersproject/providers";
 import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 import { TypedEventFilter, TypedEvent, TypedListener } from "./commons";
 
-interface BaseRelayRecipientInterface extends ethers.utils.Interface {
-  functions: {
-    "isTrustedForwarder(address)": FunctionFragment;
+interface ERC1155BaseInternalInterface extends ethers.utils.Interface {
+  functions: {};
+
+  events: {
+    "ApprovalForAll(address,address,bool)": EventFragment;
+    "TransferBatch(address,address,address,uint256[],uint256[])": EventFragment;
+    "TransferSingle(address,address,address,uint256,uint256)": EventFragment;
+    "URI(string,uint256)": EventFragment;
   };
 
-  encodeFunctionData(
-    functionFragment: "isTrustedForwarder",
-    values: [string]
-  ): string;
-
-  decodeFunctionResult(
-    functionFragment: "isTrustedForwarder",
-    data: BytesLike
-  ): Result;
-
-  events: {};
+  getEvent(nameOrSignatureOrTopic: "ApprovalForAll"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "TransferBatch"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "TransferSingle"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "URI"): EventFragment;
 }
 
-export class BaseRelayRecipient extends BaseContract {
+export class ERC1155BaseInternal extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
@@ -77,40 +74,63 @@ export class BaseRelayRecipient extends BaseContract {
     toBlock?: string | number | undefined
   ): Promise<Array<TypedEvent<EventArgsArray & EventArgsObject>>>;
 
-  interface: BaseRelayRecipientInterface;
+  interface: ERC1155BaseInternalInterface;
 
-  functions: {
-    isTrustedForwarder(
-      forwarder: string,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
+  functions: {};
+
+  callStatic: {};
+
+  filters: {
+    ApprovalForAll(
+      account?: string | null,
+      operator?: string | null,
+      approved?: null
+    ): TypedEventFilter<
+      [string, string, boolean],
+      { account: string; operator: string; approved: boolean }
+    >;
+
+    TransferBatch(
+      operator?: string | null,
+      from?: string | null,
+      to?: string | null,
+      ids?: null,
+      values?: null
+    ): TypedEventFilter<
+      [string, string, string, BigNumber[], BigNumber[]],
+      {
+        operator: string;
+        from: string;
+        to: string;
+        ids: BigNumber[];
+        values: BigNumber[];
+      }
+    >;
+
+    TransferSingle(
+      operator?: string | null,
+      from?: string | null,
+      to?: string | null,
+      id?: null,
+      value?: null
+    ): TypedEventFilter<
+      [string, string, string, BigNumber, BigNumber],
+      {
+        operator: string;
+        from: string;
+        to: string;
+        id: BigNumber;
+        value: BigNumber;
+      }
+    >;
+
+    URI(
+      value?: null,
+      id?: BigNumberish | null
+    ): TypedEventFilter<[string, BigNumber], { value: string; id: BigNumber }>;
   };
 
-  isTrustedForwarder(
-    forwarder: string,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
+  estimateGas: {};
 
-  callStatic: {
-    isTrustedForwarder(
-      forwarder: string,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
-  };
-
-  filters: {};
-
-  estimateGas: {
-    isTrustedForwarder(
-      forwarder: string,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-  };
-
-  populateTransaction: {
-    isTrustedForwarder(
-      forwarder: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-  };
+  populateTransaction: {};
 }

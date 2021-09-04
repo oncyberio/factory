@@ -23,10 +23,6 @@ interface CyberDestinationFactoryFacetInterface extends ethers.utils.Interface {
   functions: {
     "balanceOf(address,uint256)": FunctionFragment;
     "balanceOfBatch(address[],uint256[])": FunctionFragment;
-    "c_0x68791152(bytes32)": FunctionFragment;
-    "c_0xd4dc4272(bytes32)": FunctionFragment;
-    "c_0xd7d0b979(bytes32)": FunctionFragment;
-    "c_0xe78f19ac(bytes32)": FunctionFragment;
     "initialize(string,address,address,address,address)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
     "isTrustedForwarder(address)": FunctionFragment;
@@ -49,22 +45,6 @@ interface CyberDestinationFactoryFacetInterface extends ethers.utils.Interface {
   encodeFunctionData(
     functionFragment: "balanceOfBatch",
     values: [string[], BigNumberish[]]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "c_0x68791152",
-    values: [BytesLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "c_0xd4dc4272",
-    values: [BytesLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "c_0xd7d0b979",
-    values: [BytesLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "c_0xe78f19ac",
-    values: [BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "initialize",
@@ -110,22 +90,6 @@ interface CyberDestinationFactoryFacetInterface extends ethers.utils.Interface {
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "balanceOfBatch",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "c_0x68791152",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "c_0xd4dc4272",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "c_0xd7d0b979",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "c_0xe78f19ac",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
@@ -237,26 +201,6 @@ export class CyberDestinationFactoryFacet extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber[]]>;
 
-    c_0x68791152(
-      c__0x68791152: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<[void]>;
-
-    c_0xd4dc4272(
-      c__0xd4dc4272: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<[void]>;
-
-    c_0xd7d0b979(
-      c__0xd7d0b979: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<[void]>;
-
-    c_0xe78f19ac(
-      c__0xe78f19ac: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<[void]>;
-
     initialize(
       _uri: string,
       _manager: string,
@@ -340,26 +284,6 @@ export class CyberDestinationFactoryFacet extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber[]>;
 
-  c_0x68791152(
-    c__0x68791152: BytesLike,
-    overrides?: CallOverrides
-  ): Promise<void>;
-
-  c_0xd4dc4272(
-    c__0xd4dc4272: BytesLike,
-    overrides?: CallOverrides
-  ): Promise<void>;
-
-  c_0xd7d0b979(
-    c__0xd7d0b979: BytesLike,
-    overrides?: CallOverrides
-  ): Promise<void>;
-
-  c_0xe78f19ac(
-    c__0xe78f19ac: BytesLike,
-    overrides?: CallOverrides
-  ): Promise<void>;
-
   initialize(
     _uri: string,
     _manager: string,
@@ -439,26 +363,6 @@ export class CyberDestinationFactoryFacet extends BaseContract {
       ids: BigNumberish[],
       overrides?: CallOverrides
     ): Promise<BigNumber[]>;
-
-    c_0x68791152(
-      c__0x68791152: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    c_0xd4dc4272(
-      c__0xd4dc4272: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    c_0xd7d0b979(
-      c__0xd7d0b979: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    c_0xe78f19ac(
-      c__0xe78f19ac: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<void>;
 
     initialize(
       _uri: string,
@@ -600,26 +504,6 @@ export class CyberDestinationFactoryFacet extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    c_0x68791152(
-      c__0x68791152: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    c_0xd4dc4272(
-      c__0xd4dc4272: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    c_0xd7d0b979(
-      c__0xd7d0b979: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    c_0xe78f19ac(
-      c__0xe78f19ac: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     initialize(
       _uri: string,
       _manager: string,
@@ -698,26 +582,6 @@ export class CyberDestinationFactoryFacet extends BaseContract {
     balanceOfBatch(
       accounts: string[],
       ids: BigNumberish[],
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    c_0x68791152(
-      c__0x68791152: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    c_0xd4dc4272(
-      c__0xd4dc4272: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    c_0xd7d0b979(
-      c__0xd7d0b979: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    c_0xe78f19ac(
-      c__0xe78f19ac: BytesLike,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

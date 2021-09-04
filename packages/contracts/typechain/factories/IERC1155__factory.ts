@@ -272,7 +272,7 @@ const _abi = [
       },
       {
         internalType: "bool",
-        name: "approved",
+        name: "status",
         type: "bool",
       },
     ],

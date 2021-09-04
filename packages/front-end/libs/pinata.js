@@ -9,10 +9,7 @@ const logger = Log({ service: 'pinata' })
 
 const pinata = pinataSDK(config.pinata.apiKey, config.pinata.apiSecret)
 
-export async function uploadImage(
-  writeStream,
-  address
-) {
+export async function uploadImage(writeStream, address) {
   const file = createReadStream(writeStream.path)
 
   const options = {
@@ -38,8 +35,7 @@ export async function uploadImage(
     })
 }
 
-export async function pinHash(hash, address){
-
+export async function pinHash(hash, address) {
   const options = {
     pinataMetadata: {
       name: `file_${address}_${Date.now()}`,
@@ -53,7 +49,10 @@ export async function pinHash(hash, address){
   return pinata
     .pinByHash(hash, options)
     .then((result) => {
-      assert(['prechecking'].includes(result.status), 'Pinata pin by hash invalid response')
+      assert(
+        ['prechecking'].includes(result.status),
+        'Pinata pin by hash invalid response'
+      )
       return result.IpfsHash
     })
     .catch((error) => {
@@ -61,7 +60,6 @@ export async function pinHash(hash, address){
 
       throw error
     })
-
 }
 
 export async function uploadMetadata(
@@ -81,7 +79,7 @@ export async function uploadMetadata(
         amount,
         ipfsHashImage,
         ipfsHashFile,
-        ipfsHashAnimation
+        ipfsHashAnimation,
       },
     },
     pinataOptions: {
@@ -96,7 +94,9 @@ export async function uploadMetadata(
         destination_url: `ipfs://${ipfsHashFile}`,
         animation_url: `ipfs://${ipfsHashAnimation}`,
         description,
-        external_url: `${config.pinata.externalUrlBase}${name.toLowerCase().replace(' ', '')}`,
+        external_url: `${config.pinata.externalUrlBase}${name
+          .toLowerCase()
+          .replace(' ', '')}`,
         name,
         // background_color: 'ffffff',
         // attributes: [

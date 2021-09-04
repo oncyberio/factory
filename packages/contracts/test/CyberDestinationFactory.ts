@@ -13,7 +13,6 @@ describe('CyberDestinationFactory', function () {
   })
 
   beforeEach(async () => {
-
     memory.namedAccounts = await getNamedAccounts()
 
     await deployments.fixture()
@@ -36,8 +35,12 @@ describe('CyberDestinationFactory', function () {
     expect(await memory.contract.totalSupply()).to.eq('0')
     expect(await memory.contract.manager()).to.be.eq(memory.manager.address)
     expect(await memory.contract.oncyber()).to.be.eq(memory.oncyber.address)
-    expect(await memory.contract.isTrustedForwarder(memory.namedAccounts.biconomyForwarder) ).to.be.true
-    expect(await memory.contract.minterNonce(memory.other.address) ).to.eq('0')
+    expect(
+      await memory.contract.isTrustedForwarder(
+        memory.namedAccounts.biconomyForwarder
+      )
+    ).to.be.true
+    expect(await memory.contract.minterNonce(memory.other.address)).to.eq('0')
   })
 
   it('mint', async () => {
@@ -53,20 +56,29 @@ describe('CyberDestinationFactory', function () {
       memory.other.address,
       memory.manager
     )
-    await memory.contract.connect(memory.other).mint(uri, amount, amountOncyber, signature)
+    await memory.contract
+      .connect(memory.other)
+      .mint(uri, amount, amountOncyber, signature)
 
     const tokenId = 0
-    expect(await memory.contract.balanceOf(memory.other.address, tokenId)).to.eq('9')
-    expect(await memory.contract.balanceOf(memory.oncyber.address, tokenId)).to.eq('1')
+    expect(
+      await memory.contract.balanceOf(memory.other.address, tokenId)
+    ).to.eq('9')
+    expect(
+      await memory.contract.balanceOf(memory.oncyber.address, tokenId)
+    ).to.eq('1')
     expect(await memory.contract.minterNonce(memory.other.address)).to.eq('1')
     expect(await memory.contract.uri(tokenId)).to.eq(tokenURI(uri))
     expect(await memory.contract.totalSupply()).to.eq('1')
-    expect(await memory.contract.isApprovedForAll(memory.other.address, memory.namedAccounts.opensea) ).to.true
-
+    expect(
+      await memory.contract.isApprovedForAll(
+        memory.other.address,
+        memory.namedAccounts.opensea
+      )
+    ).to.true
   })
 
   it('mint more than one time', async () => {
-
     const uri = 'Qmsfzefi221ifjzifj'
     const amount = '7'
     const amountOncyber = '3'
@@ -79,7 +91,9 @@ describe('CyberDestinationFactory', function () {
       memory.other.address,
       memory.manager
     )
-    await memory.contract.connect(memory.other).mint(uri, amount, amountOncyber, signature)
+    await memory.contract
+      .connect(memory.other)
+      .mint(uri, amount, amountOncyber, signature)
 
     const tokenId = 0
     expect(
@@ -90,7 +104,12 @@ describe('CyberDestinationFactory', function () {
     ).to.eq('3')
     expect(await memory.contract.uri(tokenId)).to.eq(tokenURI(uri))
     expect(await memory.contract.totalSupply()).to.eq('1')
-    expect(await memory.contract.isApprovedForAll(memory.other.address, memory.namedAccounts.opensea) ).to.true
+    expect(
+      await memory.contract.isApprovedForAll(
+        memory.other.address,
+        memory.namedAccounts.opensea
+      )
+    ).to.true
 
     const uri1 = 'Qmsfzefi221ifjzifj1'
     const amount1 = '14'
@@ -104,7 +123,9 @@ describe('CyberDestinationFactory', function () {
       memory.other.address,
       memory.manager
     )
-    await memory.contract.connect(memory.other).mint(uri1, amount1, amountOncyber1, signature1)
+    await memory.contract
+      .connect(memory.other)
+      .mint(uri1, amount1, amountOncyber1, signature1)
 
     const tokenId1 = 1
     expect(
@@ -116,8 +137,12 @@ describe('CyberDestinationFactory', function () {
     expect(await memory.contract.minterNonce(memory.other.address)).to.eq('2')
     expect(await memory.contract.uri(tokenId1)).to.eq(tokenURI(uri1))
     expect(await memory.contract.totalSupply()).to.eq('2')
-    expect(await memory.contract.isApprovedForAll(memory.other.address, memory.namedAccounts.opensea) ).to.true
-
+    expect(
+      await memory.contract.isApprovedForAll(
+        memory.other.address,
+        memory.namedAccounts.opensea
+      )
+    ).to.true
   })
 
   it("can't mint invalid amount onCyber", async () => {
@@ -133,9 +158,11 @@ describe('CyberDestinationFactory', function () {
       memory.other.address,
       memory.manager
     )
-    await expect(memory.contract.connect(memory.other).mint(uri, amount, amountOncyber, signature) )
-      .to.be.revertedWith('IAO')
-
+    await expect(
+      memory.contract
+        .connect(memory.other)
+        .mint(uri, amount, amountOncyber, signature)
+    ).to.be.revertedWith('IAO')
   })
 
   it('mint with 0 amount onCyber', async () => {
@@ -151,17 +178,26 @@ describe('CyberDestinationFactory', function () {
       memory.other.address,
       memory.manager
     )
-    await memory.contract.connect(memory.other).mint(uri, amount, amountOncyber, signature)
+    await memory.contract
+      .connect(memory.other)
+      .mint(uri, amount, amountOncyber, signature)
 
     const tokenId = 0
-    expect(await memory.contract.balanceOf(memory.other.address, tokenId)).to.eq('10')
-    expect(await memory.contract.balanceOf(memory.oncyber.address, tokenId)).to.eq('0')
+    expect(
+      await memory.contract.balanceOf(memory.other.address, tokenId)
+    ).to.eq('10')
+    expect(
+      await memory.contract.balanceOf(memory.oncyber.address, tokenId)
+    ).to.eq('0')
     expect(await memory.contract.minterNonce(memory.other.address)).to.eq('1')
     expect(await memory.contract.uri(tokenId)).to.eq(tokenURI(uri))
     expect(await memory.contract.totalSupply()).to.eq('1')
-    expect(await memory.contract.isApprovedForAll(memory.other.address, memory.namedAccounts.opensea) ).to.true
-
-
+    expect(
+      await memory.contract.isApprovedForAll(
+        memory.other.address,
+        memory.namedAccounts.opensea
+      )
+    ).to.true
   })
 
   it('Should failed to get uri of not existing token', async () => {
@@ -261,19 +297,29 @@ describe('CyberDestinationFactory', function () {
   })
 
   it('Should owner initialise', async () => {
-
     await memory.contract
       .connect(memory.deployer)
-      .initialize('new_uri', memory.other.address, memory.other2.address, memory.other3.address, memory.other4.address)
+      .initialize(
+        'new_uri',
+        memory.other.address,
+        memory.other2.address,
+        memory.other3.address,
+        memory.other4.address
+      )
     expect(await memory.contract.manager()).to.be.eq(memory.other.address)
-    expect(await memory.contract.isTrustedForwarder(memory.other2.address) ).to.be.true
+    expect(await memory.contract.isTrustedForwarder(memory.other2.address)).to
+      .be.true
 
     await expect(
       memory.contract
         .connect(memory.other)
-        .initialize('new_uri', memory.other.address, memory.other2.address, memory.other3.address, memory.other4.address)
+        .initialize(
+          'new_uri',
+          memory.other.address,
+          memory.other2.address,
+          memory.other3.address,
+          memory.other4.address
+        )
     ).to.be.revertedWith('NO')
-
   })
-
 })

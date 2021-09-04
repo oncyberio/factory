@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.5;
+pragma solidity 0.8.7;
 
 //import "hardhat/console.sol";
 import '@solidstate/contracts/token/ERC1155/IERC1155.sol';

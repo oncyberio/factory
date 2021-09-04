@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity 0.8.5;
+pragma solidity 0.8.7;
 
 library BaseRelayRecipientStorage {
   bytes32 internal constant STORAGE_SLOT = keccak256(
