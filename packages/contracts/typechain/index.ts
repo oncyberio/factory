@@ -3,9 +3,11 @@
 /* eslint-disable */
 export type { ERC165 } from "./ERC165";
 export type { IERC165 } from "./IERC165";
-export type { ERC1155 } from "./ERC1155";
 export type { ERC1155Base } from "./ERC1155Base";
+export type { ERC1155BaseInternal } from "./ERC1155BaseInternal";
+export type { ERC1155 } from "./ERC1155";
 export type { IERC1155 } from "./IERC1155";
+export type { IERC1155Internal } from "./IERC1155Internal";
 export type { IERC1155Receiver } from "./IERC1155Receiver";
 export type { BaseRelayRecipient } from "./BaseRelayRecipient";
 export type { BaseRelayRecipientStorage } from "./BaseRelayRecipientStorage";
@@ -20,9 +22,11 @@ export type { LibAppStorage } from "./LibAppStorage";
 
 export { ERC165__factory } from "./factories/ERC165__factory";
 export { IERC165__factory } from "./factories/IERC165__factory";
-export { ERC1155__factory } from "./factories/ERC1155__factory";
 export { ERC1155Base__factory } from "./factories/ERC1155Base__factory";
+export { ERC1155BaseInternal__factory } from "./factories/ERC1155BaseInternal__factory";
+export { ERC1155__factory } from "./factories/ERC1155__factory";
 export { IERC1155__factory } from "./factories/IERC1155__factory";
+export { IERC1155Internal__factory } from "./factories/IERC1155Internal__factory";
 export { IERC1155Receiver__factory } from "./factories/IERC1155Receiver__factory";
 export { BaseRelayRecipient__factory } from "./factories/BaseRelayRecipient__factory";
 export { BaseRelayRecipientStorage__factory } from "./factories/BaseRelayRecipientStorage__factory";

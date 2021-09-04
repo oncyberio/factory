@@ -3,7 +3,7 @@ import hre, { ethers } from 'hardhat'
 
 async function main() {
   const contractName = 'DiamondCyberDestinationUtilityFactory'
-  const { deployments, getNamedAccounts} = hre
+  const { deployments, getNamedAccounts } = hre
   const namedAccounts = await getNamedAccounts()
   const accounts = await ethers.getSigners()
   const minter = accounts[0]

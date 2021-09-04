@@ -180,7 +180,7 @@ export class IERC1155 extends BaseContract {
 
     setApprovalForAll(
       operator: string,
-      approved: boolean,
+      status: boolean,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -228,7 +228,7 @@ export class IERC1155 extends BaseContract {
 
   setApprovalForAll(
     operator: string,
-    approved: boolean,
+    status: boolean,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -276,7 +276,7 @@ export class IERC1155 extends BaseContract {
 
     setApprovalForAll(
       operator: string,
-      approved: boolean,
+      status: boolean,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -375,7 +375,7 @@ export class IERC1155 extends BaseContract {
 
     setApprovalForAll(
       operator: string,
-      approved: boolean,
+      status: boolean,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -424,7 +424,7 @@ export class IERC1155 extends BaseContract {
 
     setApprovalForAll(
       operator: string,
-      approved: boolean,
+      status: boolean,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 

@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components";
+import styled, { keyframes } from 'styled-components'
 
 function Spinner({ className }) {
   return (
@@ -8,7 +8,7 @@ function Spinner({ className }) {
       <div />
       <div />
     </div>
-  );
+  )
 }
 
 const animation = keyframes`
@@ -47,4 +47,4 @@ export default styled(Spinner)`
   div:nth-child(3) {
     animation-delay: -0.15s;
   }
-`;
+`

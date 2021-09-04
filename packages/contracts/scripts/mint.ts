@@ -36,12 +36,12 @@ async function main() {
   )
   const tx = await contract.mint(uri, amount, amountOncyber, signature)
   const txReceipt = await tx.wait()
-  const iface = new ethers.utils.Interface(Contract.abi);
+  const iface = new ethers.utils.Interface(Contract.abi)
   let tokenId = null
 
-  txReceipt.logs.forEach( (log: any) => {
+  txReceipt.logs.forEach((log: any) => {
     const logParsed = iface.parseLog(log)
-    if(logParsed.name === 'Minted'){
+    if (logParsed.name === 'Minted') {
       tokenId = logParsed.args[1].toString()
       console.log('tokenId', tokenId)
     }

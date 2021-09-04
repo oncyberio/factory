@@ -14,11 +14,14 @@ export async function signURI(
   nonce,
   minter,
   signer
-){
+) {
   const aURI = toUtf8Bytes(uri)
   const aMinter = arrayify(minter)
   const aAmount = hexZeroPad(BigNumber.from(amount).toHexString(), 32)
-  const aAmountOncyber = hexZeroPad(BigNumber.from(amountOncyber).toHexString(), 32)
+  const aAmountOncyber = hexZeroPad(
+    BigNumber.from(amountOncyber).toHexString(),
+    32
+  )
   const aNonce = hexZeroPad(BigNumber.from(nonce).toHexString(), 32)
   const message = concat([aURI, aAmount, aAmountOncyber, aNonce, aMinter])
 
