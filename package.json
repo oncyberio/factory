@@ -6,8 +6,9 @@
     "build": "lerna run build",
     "test": "lerna run test",
     "lint": "lerna run lint",
-    "prettier": "prettier --check .",
-    "prettier:write": "prettier --write ."
+    "lint:fix": "lerna run lint:fix",
+    "prettier": "prettier --check . && lerna run prettier",
+    "prettier:write": "prettier --write . && lerna run prettier:write"
   },
   "devDependencies": {
     "prettier": "^2.3.2",

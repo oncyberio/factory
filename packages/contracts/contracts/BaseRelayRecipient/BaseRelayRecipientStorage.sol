@@ -3,9 +3,8 @@
 pragma solidity 0.8.7;
 
 library BaseRelayRecipientStorage {
-  bytes32 internal constant STORAGE_SLOT = keccak256(
-    'diamond.storage.BaseRelayRecipientStorage'
-  );
+  bytes32 internal constant STORAGE_SLOT =
+    keccak256('diamond.storage.BaseRelayRecipientStorage');
 
   struct Layout {
     /*
@@ -14,9 +13,10 @@ library BaseRelayRecipientStorage {
     address trustedForwarder;
   }
 
-  function layout() internal pure returns (Layout storage l) {
+  function layout() internal pure returns (Layout storage layout) {
     bytes32 slot = STORAGE_SLOT;
-    assembly { l.slot := slot }
+    assembly {
+      layout.slot := slot
+    }
   }
-
 }

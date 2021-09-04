@@ -54,9 +54,12 @@ jobs:
       - name: Fix deps
         run: cd packages/contracts && npm run fix:deps
         env:
-          CI:
-            true
+          CI: true
       - name: Linter
         run: npm run lint
+        env:
+          CI: true
+      - name: Prettier
+        run: npm run prettier
         env:
           CI: true
