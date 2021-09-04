@@ -26,6 +26,10 @@ jobs:
         run: npm i
         env:
           CI: true
+      - name: Fix deps
+        run: cd packages/contracts && npm run fix:deps
+        env:
+          CI: true
       - name: Testing
         run: npm test
         env:
@@ -47,6 +51,11 @@ jobs:
         run: npm i
         env:
           CI: true
+      - name: Fix deps
+        run: cd packages/contracts && npm run fix:deps
+        env:
+          CI:
+            true
       - name: Linter
         run: npm run lint
         env:
