@@ -1,5 +1,5 @@
-// @ts-ignore
-import hre, { ethers } from 'hardhat'
+// @ts-ignore-next-line
+import { ethers, deployments } from 'hardhat'
 import { Biconomy } from '@biconomy/mexa'
 import { signMintingRequest } from '../lib/utils'
 
@@ -13,7 +13,6 @@ const biconomy = new Biconomy(ethersProvider, {
 
 async function main() {
   const contractName = 'DiamondCyberDestinationFactory'
-  const { deployments } = hre
   const minter = new ethers.Wallet(
     process.env.MUMBAI_ACCOUNT_1_PRIVATE_KEY as string
   ).connect(ethersProvider)

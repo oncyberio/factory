@@ -1,10 +1,10 @@
-// @ts-ignore
-import hre, { ethers } from 'hardhat'
+// @ts-ignore-next-line
+import { deployments, ethers } from 'hardhat'
+import { Log } from '@ethersproject/abstract-provider/src.ts/index'
 import { signMintingRequest } from '../lib/utils'
 
 async function main() {
   const contractName = 'DiamondCyberDestinationFactory'
-  const { deployments } = hre
   const accounts = await ethers.getSigners()
   const manager = accounts[1]
   const minter = accounts[0]
@@ -39,7 +39,7 @@ async function main() {
   const iface = new ethers.utils.Interface(Contract.abi)
   let tokenId = null
 
-  txReceipt.logs.forEach((log: any) => {
+  txReceipt.logs.forEach((log: Log) => {
     const logParsed = iface.parseLog(log)
     if (logParsed.name === 'Minted') {
       tokenId = logParsed.args[1].toString()

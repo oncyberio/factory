@@ -1,9 +1,8 @@
-// @ts-ignore
-import hre, { ethers } from 'hardhat'
+// @ts-ignore-next-line
+import { ethers, deployments, getNamedAccounts } from 'hardhat'
 
 async function main() {
   const contractName = 'DiamondCyberDestinationUtilityFactory'
-  const { deployments, getNamedAccounts } = hre
   const namedAccounts = await getNamedAccounts()
   const accounts = await ethers.getSigners()
   const minter = accounts[0]
