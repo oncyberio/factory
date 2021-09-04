@@ -25,10 +25,10 @@ contract CyberDestinationFactoryFacet is CyberDestinationFactoryBase {
       nonce,
       sender
     );
-    address _recoveredAddress = keccak256(_message)
+    address recoveredAddress = keccak256(_message)
       .toEthSignedMessageHash()
       .recover(_signature);
-    require(_recoveredAddress == LibAppStorage.layout().manager, 'NM');
+    require(recoveredAddress == LibAppStorage.layout().manager, 'NM');
     require(_amount >= _amountOncyber, 'IAO');
 
     // Mint token
