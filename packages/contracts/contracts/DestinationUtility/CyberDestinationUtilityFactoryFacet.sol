@@ -11,6 +11,12 @@ contract CyberDestinationUtilityFactoryFacet is CyberDestinationFactoryBase {
   using ECDSA for bytes32;
   using Counters for Counters.Counter;
 
+  event DestinationMinted(
+    address indexed account,
+    uint256 indexed tokenId,
+    uint256 indexed amount
+  );
+
   function getDrop(uint256 _tokenId)
     public
     view
@@ -68,6 +74,9 @@ contract CyberDestinationUtilityFactoryFacet is CyberDestinationFactoryBase {
       minted: 0
     });
     LibUtilityStorage.layout().drops[_tokenId] = drop;
+
+    emit DestinationMinted(sender, _tokenId, 1);
+
 
     return _tokenId;
   }
