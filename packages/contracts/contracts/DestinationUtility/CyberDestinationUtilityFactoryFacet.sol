@@ -13,8 +13,7 @@ contract CyberDestinationUtilityFactoryFacet is CyberDestinationFactoryBase {
 
   event DestinationMinted(
     address indexed account,
-    uint256 indexed tokenId,
-    uint256 indexed amount
+    uint256 indexed tokenId
   );
 
   function getDrop(uint256 _tokenId)
@@ -75,7 +74,7 @@ contract CyberDestinationUtilityFactoryFacet is CyberDestinationFactoryBase {
     });
     LibUtilityStorage.layout().drops[_tokenId] = drop;
 
-    emit DestinationMinted(sender, _tokenId, 1);
+    emit DestinationMinted(sender, _tokenId);
 
 
     return _tokenId;
