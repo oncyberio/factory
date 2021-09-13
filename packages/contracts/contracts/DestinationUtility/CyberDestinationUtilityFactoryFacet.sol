@@ -11,10 +11,7 @@ contract CyberDestinationUtilityFactoryFacet is CyberDestinationFactoryBase {
   using ECDSA for bytes32;
   using Counters for Counters.Counter;
 
-  event DestinationMinted(
-    address indexed account,
-    uint256 indexed tokenId
-  );
+  event DestinationMinted(address indexed account, uint256 indexed tokenId);
 
   function getDrop(uint256 _tokenId)
     public
@@ -76,7 +73,6 @@ contract CyberDestinationUtilityFactoryFacet is CyberDestinationFactoryBase {
 
     emit DestinationMinted(sender, _tokenId);
 
-
     return _tokenId;
   }
 
@@ -85,14 +81,14 @@ contract CyberDestinationUtilityFactoryFacet is CyberDestinationFactoryBase {
     LibUtilityStorage.Drop storage drop = LibUtilityStorage.layout().drops[
       _tokenId
     ];
-    
+
     require(
       block.timestamp >= drop.timeStart && block.timestamp <= drop.timeEnd,
       'OOT'
     );
 
     require(msg.value == drop.price, 'IA');
-    
+
     if (drop.amountCap != 0) {
       require(drop.minted < drop.amountCap, 'CR');
     }

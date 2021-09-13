@@ -2,62 +2,62 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Signer, utils, Contract, ContractFactory, Overrides } from "ethers";
-import { Provider, TransactionRequest } from "@ethersproject/providers";
+import { Signer, utils, Contract, ContractFactory, Overrides } from 'ethers'
+import { Provider, TransactionRequest } from '@ethersproject/providers'
 import type {
   LibUtilityStorage,
   LibUtilityStorageInterface,
-} from "../LibUtilityStorage";
+} from '../LibUtilityStorage'
 
 const _abi = [
   {
     inputs: [],
-    name: "STORAGE_SLOT",
+    name: 'STORAGE_SLOT',
     outputs: [
       {
-        internalType: "bytes32",
-        name: "",
-        type: "bytes32",
+        internalType: 'bytes32',
+        name: '',
+        type: 'bytes32',
       },
     ],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
-];
+]
 
 const _bytecode =
-  "0x60dc610052600b82828239805160001a607314610045577f4e487b7100000000000000000000000000000000000000000000000000000000600052600060045260246000fd5b30600052607381538281f3fe730000000000000000000000000000000000000000301460806040526004361060335760003560e01c8063517d217e146038575b600080fd5b603e6052565b604051604991906083565b60405180910390f35b7f75bce7b27cc8f04e7a4282e725010cbd105f602d082c4b02f7d958135d62562e81565b607d81609c565b82525050565b6000602082019050609660008301846076565b92915050565b600081905091905056fea2646970667358221220df5625167d1877157116ee0a769fcdfb6f233d86b7589da6949386c30859f6b164736f6c63430008070033";
+  '0x60dc610052600b82828239805160001a607314610045577f4e487b7100000000000000000000000000000000000000000000000000000000600052600060045260246000fd5b30600052607381538281f3fe730000000000000000000000000000000000000000301460806040526004361060335760003560e01c8063517d217e146038575b600080fd5b603e6052565b604051604991906083565b60405180910390f35b7f75bce7b27cc8f04e7a4282e725010cbd105f602d082c4b02f7d958135d62562e81565b607d81609c565b82525050565b6000602082019050609660008301846076565b92915050565b600081905091905056fea2646970667358221220df5625167d1877157116ee0a769fcdfb6f233d86b7589da6949386c30859f6b164736f6c63430008070033'
 
 export class LibUtilityStorage__factory extends ContractFactory {
   constructor(signer?: Signer) {
-    super(_abi, _bytecode, signer);
+    super(_abi, _bytecode, signer)
   }
 
   deploy(
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<LibUtilityStorage> {
-    return super.deploy(overrides || {}) as Promise<LibUtilityStorage>;
+    return super.deploy(overrides || {}) as Promise<LibUtilityStorage>
   }
   getDeployTransaction(
     overrides?: Overrides & { from?: string | Promise<string> }
   ): TransactionRequest {
-    return super.getDeployTransaction(overrides || {});
+    return super.getDeployTransaction(overrides || {})
   }
   attach(address: string): LibUtilityStorage {
-    return super.attach(address) as LibUtilityStorage;
+    return super.attach(address) as LibUtilityStorage
   }
   connect(signer: Signer): LibUtilityStorage__factory {
-    return super.connect(signer) as LibUtilityStorage__factory;
+    return super.connect(signer) as LibUtilityStorage__factory
   }
-  static readonly bytecode = _bytecode;
-  static readonly abi = _abi;
+  static readonly bytecode = _bytecode
+  static readonly abi = _abi
   static createInterface(): LibUtilityStorageInterface {
-    return new utils.Interface(_abi) as LibUtilityStorageInterface;
+    return new utils.Interface(_abi) as LibUtilityStorageInterface
   }
   static connect(
     address: string,
     signerOrProvider: Signer | Provider
   ): LibUtilityStorage {
-    return new Contract(address, _abi, signerOrProvider) as LibUtilityStorage;
+    return new Contract(address, _abi, signerOrProvider) as LibUtilityStorage
   }
 }

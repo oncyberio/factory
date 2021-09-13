@@ -227,15 +227,7 @@ describe('CyberDestinationUtilityFactory', function () {
     await expect(
       memory.contract
         .connect(memory.other)
-        .mint(
-          uri,
-          timeStart,
-          timeEnd,
-          price,
-          amountCap,
-          shareCyber,
-          signature
-        )
+        .mint(uri, timeStart, timeEnd, price, amountCap, shareCyber, signature)
     ).to.be.revertedWith('ISO')
   })
 
@@ -262,15 +254,7 @@ describe('CyberDestinationUtilityFactory', function () {
     await expect(
       memory.contract
         .connect(memory.other)
-        .mint(
-          uri,
-          timeStart,
-          timeEnd,
-          price,
-          amountCap,
-          shareCyber,
-          signature
-        )
+        .mint(uri, timeStart, timeEnd, price, amountCap, shareCyber, signature)
     ).to.be.revertedWith('IT')
   })
 

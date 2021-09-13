@@ -3,3 +3,4 @@ cache
 artifacts
 coverage/
 deployments/
+typechain/
