@@ -27,7 +27,9 @@
     "deploy:mainnet": "hardhat --network mainnet deploy",
     "deploy:rinkeby": "hardhat --network rinkeby deploy",
     "deploy:ethereum": "hardhat --network ethereum deploy",
-    "verify:rinkeby": "hardhat etherscan-verify --network rinkeby"
+    "verify:rinkeby": "hardhat etherscan-verify --network rinkeby",
+    "verify:CyberDestinationUtilityFactoryFacet:rinkeby": "hardhat verify --network rinkeby 0xAEf4E2F292eBEBA4996a4B011977C5444b3281FD",
+    "verify:CyberDestinationUtilityFactoryProxy:rinkeby": "hardhat verify --network rinkeby 0xDeFB45F660166B3FE43Ec110AcaFEBcFC5185b33"
   },
   "author": "",
   "license": "MIT",
