@@ -76,7 +76,7 @@
   },
   "settings": {
     "optimizer": {
-      "enabled": true,
+      "enabled": false,
       "runs": 200
     },
     "outputSelection": {
