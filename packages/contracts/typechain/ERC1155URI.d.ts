@@ -13,155 +13,169 @@ import {
   ContractTransaction,
   Overrides,
   CallOverrides,
-} from 'ethers'
-import { BytesLike } from '@ethersproject/bytes'
-import { Listener, Provider } from '@ethersproject/providers'
-import { FunctionFragment, EventFragment, Result } from '@ethersproject/abi'
-import { TypedEventFilter, TypedEvent, TypedListener } from './commons'
+} from "ethers";
+import { BytesLike } from "@ethersproject/bytes";
+import { Listener, Provider } from "@ethersproject/providers";
+import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
+import { TypedEventFilter, TypedEvent, TypedListener } from "./commons";
 
 interface ERC1155URIInterface extends ethers.utils.Interface {
   functions: {
-    'balanceOf(address,uint256)': FunctionFragment
-    'balanceOfBatch(address[],uint256[])': FunctionFragment
-    'isApprovedForAll(address,address)': FunctionFragment
-    'safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)': FunctionFragment
-    'safeTransferFrom(address,address,uint256,uint256,bytes)': FunctionFragment
-    'setApprovalForAll(address,bool)': FunctionFragment
-    'supportsInterface(bytes4)': FunctionFragment
-    'uri(uint256)': FunctionFragment
-  }
+    "balanceOf(address,uint256)": FunctionFragment;
+    "balanceOfBatch(address[],uint256[])": FunctionFragment;
+    "c_0x68791152(bytes32)": FunctionFragment;
+    "isApprovedForAll(address,address)": FunctionFragment;
+    "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)": FunctionFragment;
+    "safeTransferFrom(address,address,uint256,uint256,bytes)": FunctionFragment;
+    "setApprovalForAll(address,bool)": FunctionFragment;
+    "supportsInterface(bytes4)": FunctionFragment;
+    "uri(uint256)": FunctionFragment;
+  };
 
   encodeFunctionData(
-    functionFragment: 'balanceOf',
+    functionFragment: "balanceOf",
     values: [string, BigNumberish]
-  ): string
+  ): string;
   encodeFunctionData(
-    functionFragment: 'balanceOfBatch',
+    functionFragment: "balanceOfBatch",
     values: [string[], BigNumberish[]]
-  ): string
+  ): string;
   encodeFunctionData(
-    functionFragment: 'isApprovedForAll',
-    values: [string, string]
-  ): string
-  encodeFunctionData(
-    functionFragment: 'safeBatchTransferFrom',
-    values: [string, string, BigNumberish[], BigNumberish[], BytesLike]
-  ): string
-  encodeFunctionData(
-    functionFragment: 'safeTransferFrom',
-    values: [string, string, BigNumberish, BigNumberish, BytesLike]
-  ): string
-  encodeFunctionData(
-    functionFragment: 'setApprovalForAll',
-    values: [string, boolean]
-  ): string
-  encodeFunctionData(
-    functionFragment: 'supportsInterface',
+    functionFragment: "c_0x68791152",
     values: [BytesLike]
-  ): string
-  encodeFunctionData(functionFragment: 'uri', values: [BigNumberish]): string
+  ): string;
+  encodeFunctionData(
+    functionFragment: "isApprovedForAll",
+    values: [string, string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "safeBatchTransferFrom",
+    values: [string, string, BigNumberish[], BigNumberish[], BytesLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "safeTransferFrom",
+    values: [string, string, BigNumberish, BigNumberish, BytesLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setApprovalForAll",
+    values: [string, boolean]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "supportsInterface",
+    values: [BytesLike]
+  ): string;
+  encodeFunctionData(functionFragment: "uri", values: [BigNumberish]): string;
 
-  decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: 'balanceOfBatch',
+    functionFragment: "balanceOfBatch",
     data: BytesLike
-  ): Result
+  ): Result;
   decodeFunctionResult(
-    functionFragment: 'isApprovedForAll',
+    functionFragment: "c_0x68791152",
     data: BytesLike
-  ): Result
+  ): Result;
   decodeFunctionResult(
-    functionFragment: 'safeBatchTransferFrom',
+    functionFragment: "isApprovedForAll",
     data: BytesLike
-  ): Result
+  ): Result;
   decodeFunctionResult(
-    functionFragment: 'safeTransferFrom',
+    functionFragment: "safeBatchTransferFrom",
     data: BytesLike
-  ): Result
+  ): Result;
   decodeFunctionResult(
-    functionFragment: 'setApprovalForAll',
+    functionFragment: "safeTransferFrom",
     data: BytesLike
-  ): Result
+  ): Result;
   decodeFunctionResult(
-    functionFragment: 'supportsInterface',
+    functionFragment: "setApprovalForAll",
     data: BytesLike
-  ): Result
-  decodeFunctionResult(functionFragment: 'uri', data: BytesLike): Result
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "supportsInterface",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "uri", data: BytesLike): Result;
 
   events: {
-    'ApprovalForAll(address,address,bool)': EventFragment
-    'TransferBatch(address,address,address,uint256[],uint256[])': EventFragment
-    'TransferSingle(address,address,address,uint256,uint256)': EventFragment
-    'URI(string,uint256)': EventFragment
-  }
+    "ApprovalForAll(address,address,bool)": EventFragment;
+    "TransferBatch(address,address,address,uint256[],uint256[])": EventFragment;
+    "TransferSingle(address,address,address,uint256,uint256)": EventFragment;
+    "URI(string,uint256)": EventFragment;
+  };
 
-  getEvent(nameOrSignatureOrTopic: 'ApprovalForAll'): EventFragment
-  getEvent(nameOrSignatureOrTopic: 'TransferBatch'): EventFragment
-  getEvent(nameOrSignatureOrTopic: 'TransferSingle'): EventFragment
-  getEvent(nameOrSignatureOrTopic: 'URI'): EventFragment
+  getEvent(nameOrSignatureOrTopic: "ApprovalForAll"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "TransferBatch"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "TransferSingle"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "URI"): EventFragment;
 }
 
 export class ERC1155URI extends BaseContract {
-  connect(signerOrProvider: Signer | Provider | string): this
-  attach(addressOrName: string): this
-  deployed(): Promise<this>
+  connect(signerOrProvider: Signer | Provider | string): this;
+  attach(addressOrName: string): this;
+  deployed(): Promise<this>;
 
   listeners<EventArgsArray extends Array<any>, EventArgsObject>(
     eventFilter?: TypedEventFilter<EventArgsArray, EventArgsObject>
-  ): Array<TypedListener<EventArgsArray, EventArgsObject>>
+  ): Array<TypedListener<EventArgsArray, EventArgsObject>>;
   off<EventArgsArray extends Array<any>, EventArgsObject>(
     eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
     listener: TypedListener<EventArgsArray, EventArgsObject>
-  ): this
+  ): this;
   on<EventArgsArray extends Array<any>, EventArgsObject>(
     eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
     listener: TypedListener<EventArgsArray, EventArgsObject>
-  ): this
+  ): this;
   once<EventArgsArray extends Array<any>, EventArgsObject>(
     eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
     listener: TypedListener<EventArgsArray, EventArgsObject>
-  ): this
+  ): this;
   removeListener<EventArgsArray extends Array<any>, EventArgsObject>(
     eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
     listener: TypedListener<EventArgsArray, EventArgsObject>
-  ): this
+  ): this;
   removeAllListeners<EventArgsArray extends Array<any>, EventArgsObject>(
     eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>
-  ): this
+  ): this;
 
-  listeners(eventName?: string): Array<Listener>
-  off(eventName: string, listener: Listener): this
-  on(eventName: string, listener: Listener): this
-  once(eventName: string, listener: Listener): this
-  removeListener(eventName: string, listener: Listener): this
-  removeAllListeners(eventName?: string): this
+  listeners(eventName?: string): Array<Listener>;
+  off(eventName: string, listener: Listener): this;
+  on(eventName: string, listener: Listener): this;
+  once(eventName: string, listener: Listener): this;
+  removeListener(eventName: string, listener: Listener): this;
+  removeAllListeners(eventName?: string): this;
 
   queryFilter<EventArgsArray extends Array<any>, EventArgsObject>(
     event: TypedEventFilter<EventArgsArray, EventArgsObject>,
     fromBlockOrBlockhash?: string | number | undefined,
     toBlock?: string | number | undefined
-  ): Promise<Array<TypedEvent<EventArgsArray & EventArgsObject>>>
+  ): Promise<Array<TypedEvent<EventArgsArray & EventArgsObject>>>;
 
-  interface: ERC1155URIInterface
+  interface: ERC1155URIInterface;
 
   functions: {
     balanceOf(
       account: string,
       id: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>
+    ): Promise<[BigNumber]>;
 
     balanceOfBatch(
       accounts: string[],
       ids: BigNumberish[],
       overrides?: CallOverrides
-    ): Promise<[BigNumber[]]>
+    ): Promise<[BigNumber[]]>;
+
+    c_0x68791152(
+      c__0x68791152: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<[void]>;
 
     isApprovedForAll(
       account: string,
       operator: string,
       overrides?: CallOverrides
-    ): Promise<[boolean]>
+    ): Promise<[boolean]>;
 
     safeBatchTransferFrom(
       from: string,
@@ -170,7 +184,7 @@ export class ERC1155URI extends BaseContract {
       amounts: BigNumberish[],
       data: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>
+    ): Promise<ContractTransaction>;
 
     safeTransferFrom(
       from: string,
@@ -179,39 +193,44 @@ export class ERC1155URI extends BaseContract {
       amount: BigNumberish,
       data: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>
+    ): Promise<ContractTransaction>;
 
     setApprovalForAll(
       operator: string,
       status: boolean,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>
+    ): Promise<ContractTransaction>;
 
     supportsInterface(
       interfaceId: BytesLike,
       overrides?: CallOverrides
-    ): Promise<[boolean]>
+    ): Promise<[boolean]>;
 
-    uri(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<[string]>
-  }
+    uri(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+  };
 
   balanceOf(
     account: string,
     id: BigNumberish,
     overrides?: CallOverrides
-  ): Promise<BigNumber>
+  ): Promise<BigNumber>;
 
   balanceOfBatch(
     accounts: string[],
     ids: BigNumberish[],
     overrides?: CallOverrides
-  ): Promise<BigNumber[]>
+  ): Promise<BigNumber[]>;
+
+  c_0x68791152(
+    c__0x68791152: BytesLike,
+    overrides?: CallOverrides
+  ): Promise<void>;
 
   isApprovedForAll(
     account: string,
     operator: string,
     overrides?: CallOverrides
-  ): Promise<boolean>
+  ): Promise<boolean>;
 
   safeBatchTransferFrom(
     from: string,
@@ -220,7 +239,7 @@ export class ERC1155URI extends BaseContract {
     amounts: BigNumberish[],
     data: BytesLike,
     overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>
+  ): Promise<ContractTransaction>;
 
   safeTransferFrom(
     from: string,
@@ -229,39 +248,44 @@ export class ERC1155URI extends BaseContract {
     amount: BigNumberish,
     data: BytesLike,
     overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>
+  ): Promise<ContractTransaction>;
 
   setApprovalForAll(
     operator: string,
     status: boolean,
     overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>
+  ): Promise<ContractTransaction>;
 
   supportsInterface(
     interfaceId: BytesLike,
     overrides?: CallOverrides
-  ): Promise<boolean>
+  ): Promise<boolean>;
 
-  uri(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>
+  uri(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
     balanceOf(
       account: string,
       id: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<BigNumber>
+    ): Promise<BigNumber>;
 
     balanceOfBatch(
       accounts: string[],
       ids: BigNumberish[],
       overrides?: CallOverrides
-    ): Promise<BigNumber[]>
+    ): Promise<BigNumber[]>;
+
+    c_0x68791152(
+      c__0x68791152: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     isApprovedForAll(
       account: string,
       operator: string,
       overrides?: CallOverrides
-    ): Promise<boolean>
+    ): Promise<boolean>;
 
     safeBatchTransferFrom(
       from: string,
@@ -270,7 +294,7 @@ export class ERC1155URI extends BaseContract {
       amounts: BigNumberish[],
       data: BytesLike,
       overrides?: CallOverrides
-    ): Promise<void>
+    ): Promise<void>;
 
     safeTransferFrom(
       from: string,
@@ -279,21 +303,21 @@ export class ERC1155URI extends BaseContract {
       amount: BigNumberish,
       data: BytesLike,
       overrides?: CallOverrides
-    ): Promise<void>
+    ): Promise<void>;
 
     setApprovalForAll(
       operator: string,
       status: boolean,
       overrides?: CallOverrides
-    ): Promise<void>
+    ): Promise<void>;
 
     supportsInterface(
       interfaceId: BytesLike,
       overrides?: CallOverrides
-    ): Promise<boolean>
+    ): Promise<boolean>;
 
-    uri(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>
-  }
+    uri(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  };
 
   filters: {
     ApprovalForAll(
@@ -303,7 +327,7 @@ export class ERC1155URI extends BaseContract {
     ): TypedEventFilter<
       [string, string, boolean],
       { account: string; operator: string; approved: boolean }
-    >
+    >;
 
     TransferBatch(
       operator?: string | null,
@@ -314,13 +338,13 @@ export class ERC1155URI extends BaseContract {
     ): TypedEventFilter<
       [string, string, string, BigNumber[], BigNumber[]],
       {
-        operator: string
-        from: string
-        to: string
-        ids: BigNumber[]
-        values: BigNumber[]
+        operator: string;
+        from: string;
+        to: string;
+        ids: BigNumber[];
+        values: BigNumber[];
       }
-    >
+    >;
 
     TransferSingle(
       operator?: string | null,
@@ -331,38 +355,43 @@ export class ERC1155URI extends BaseContract {
     ): TypedEventFilter<
       [string, string, string, BigNumber, BigNumber],
       {
-        operator: string
-        from: string
-        to: string
-        id: BigNumber
-        value: BigNumber
+        operator: string;
+        from: string;
+        to: string;
+        id: BigNumber;
+        value: BigNumber;
       }
-    >
+    >;
 
     URI(
       value?: null,
       id?: BigNumberish | null
-    ): TypedEventFilter<[string, BigNumber], { value: string; id: BigNumber }>
-  }
+    ): TypedEventFilter<[string, BigNumber], { value: string; id: BigNumber }>;
+  };
 
   estimateGas: {
     balanceOf(
       account: string,
       id: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<BigNumber>
+    ): Promise<BigNumber>;
 
     balanceOfBatch(
       accounts: string[],
       ids: BigNumberish[],
       overrides?: CallOverrides
-    ): Promise<BigNumber>
+    ): Promise<BigNumber>;
+
+    c_0x68791152(
+      c__0x68791152: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     isApprovedForAll(
       account: string,
       operator: string,
       overrides?: CallOverrides
-    ): Promise<BigNumber>
+    ): Promise<BigNumber>;
 
     safeBatchTransferFrom(
       from: string,
@@ -371,7 +400,7 @@ export class ERC1155URI extends BaseContract {
       amounts: BigNumberish[],
       data: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>
+    ): Promise<BigNumber>;
 
     safeTransferFrom(
       from: string,
@@ -380,40 +409,45 @@ export class ERC1155URI extends BaseContract {
       amount: BigNumberish,
       data: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>
+    ): Promise<BigNumber>;
 
     setApprovalForAll(
       operator: string,
       status: boolean,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>
+    ): Promise<BigNumber>;
 
     supportsInterface(
       interfaceId: BytesLike,
       overrides?: CallOverrides
-    ): Promise<BigNumber>
+    ): Promise<BigNumber>;
 
-    uri(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>
-  }
+    uri(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  };
 
   populateTransaction: {
     balanceOf(
       account: string,
       id: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>
+    ): Promise<PopulatedTransaction>;
 
     balanceOfBatch(
       accounts: string[],
       ids: BigNumberish[],
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>
+    ): Promise<PopulatedTransaction>;
+
+    c_0x68791152(
+      c__0x68791152: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     isApprovedForAll(
       account: string,
       operator: string,
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>
+    ): Promise<PopulatedTransaction>;
 
     safeBatchTransferFrom(
       from: string,
@@ -422,7 +456,7 @@ export class ERC1155URI extends BaseContract {
       amounts: BigNumberish[],
       data: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>
+    ): Promise<PopulatedTransaction>;
 
     safeTransferFrom(
       from: string,
@@ -431,22 +465,22 @@ export class ERC1155URI extends BaseContract {
       amount: BigNumberish,
       data: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>
+    ): Promise<PopulatedTransaction>;
 
     setApprovalForAll(
       operator: string,
       status: boolean,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>
+    ): Promise<PopulatedTransaction>;
 
     supportsInterface(
       interfaceId: BytesLike,
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>
+    ): Promise<PopulatedTransaction>;
 
     uri(
       _tokenId: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>
-  }
+    ): Promise<PopulatedTransaction>;
+  };
 }
