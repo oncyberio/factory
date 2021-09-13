@@ -23,7 +23,7 @@ interface ERC1155URIInterface extends ethers.utils.Interface {
   functions: {
     "balanceOf(address,uint256)": FunctionFragment;
     "balanceOfBatch(address[],uint256[])": FunctionFragment;
-    "c_0x68791152(bytes32)": FunctionFragment;
+    "c_0x2bf71fc6(bytes32)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
     "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)": FunctionFragment;
     "safeTransferFrom(address,address,uint256,uint256,bytes)": FunctionFragment;
@@ -41,7 +41,7 @@ interface ERC1155URIInterface extends ethers.utils.Interface {
     values: [string[], BigNumberish[]]
   ): string;
   encodeFunctionData(
-    functionFragment: "c_0x68791152",
+    functionFragment: "c_0x2bf71fc6",
     values: [BytesLike]
   ): string;
   encodeFunctionData(
@@ -72,7 +72,7 @@ interface ERC1155URIInterface extends ethers.utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "c_0x68791152",
+    functionFragment: "c_0x2bf71fc6",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -166,8 +166,8 @@ export class ERC1155URI extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber[]]>;
 
-    c_0x68791152(
-      c__0x68791152: BytesLike,
+    c_0x2bf71fc6(
+      c__0x2bf71fc6: BytesLike,
       overrides?: CallOverrides
     ): Promise<[void]>;
 
@@ -221,8 +221,8 @@ export class ERC1155URI extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber[]>;
 
-  c_0x68791152(
-    c__0x68791152: BytesLike,
+  c_0x2bf71fc6(
+    c__0x2bf71fc6: BytesLike,
     overrides?: CallOverrides
   ): Promise<void>;
 
@@ -276,8 +276,8 @@ export class ERC1155URI extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber[]>;
 
-    c_0x68791152(
-      c__0x68791152: BytesLike,
+    c_0x2bf71fc6(
+      c__0x2bf71fc6: BytesLike,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -382,8 +382,8 @@ export class ERC1155URI extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    c_0x68791152(
-      c__0x68791152: BytesLike,
+    c_0x2bf71fc6(
+      c__0x2bf71fc6: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -438,8 +438,8 @@ export class ERC1155URI extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    c_0x68791152(
-      c__0x68791152: BytesLike,
+    c_0x2bf71fc6(
+      c__0x2bf71fc6: BytesLike,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

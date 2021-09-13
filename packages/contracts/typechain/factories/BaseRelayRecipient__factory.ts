@@ -14,11 +14,11 @@ const _abi = [
     inputs: [
       {
         internalType: "bytes32",
-        name: "c__0xd4dc4272",
+        name: "c__0xe504ae9e",
         type: "bytes32",
       },
     ],
-    name: "c_0xd4dc4272",
+    name: "c_0xe504ae9e",
     outputs: [],
     stateMutability: "pure",
     type: "function",

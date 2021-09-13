@@ -20,16 +20,16 @@ import { TypedEventFilter, TypedEvent, TypedListener } from "./commons";
 
 interface BaseRelayRecipientStorageInterface extends ethers.utils.Interface {
   functions: {
-    "c_0x08a8f2bf(bytes32)": FunctionFragment;
+    "c_0xc0b0216b(bytes32)": FunctionFragment;
   };
 
   encodeFunctionData(
-    functionFragment: "c_0x08a8f2bf",
+    functionFragment: "c_0xc0b0216b",
     values: [BytesLike]
   ): string;
 
   decodeFunctionResult(
-    functionFragment: "c_0x08a8f2bf",
+    functionFragment: "c_0xc0b0216b",
     data: BytesLike
   ): Result;
 
@@ -80,20 +80,20 @@ export class BaseRelayRecipientStorage extends BaseContract {
   interface: BaseRelayRecipientStorageInterface;
 
   functions: {
-    c_0x08a8f2bf(
-      c__0x08a8f2bf: BytesLike,
+    c_0xc0b0216b(
+      c__0xc0b0216b: BytesLike,
       overrides?: CallOverrides
     ): Promise<[void]>;
   };
 
-  c_0x08a8f2bf(
-    c__0x08a8f2bf: BytesLike,
+  c_0xc0b0216b(
+    c__0xc0b0216b: BytesLike,
     overrides?: CallOverrides
   ): Promise<void>;
 
   callStatic: {
-    c_0x08a8f2bf(
-      c__0x08a8f2bf: BytesLike,
+    c_0xc0b0216b(
+      c__0xc0b0216b: BytesLike,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -101,15 +101,15 @@ export class BaseRelayRecipientStorage extends BaseContract {
   filters: {};
 
   estimateGas: {
-    c_0x08a8f2bf(
-      c__0x08a8f2bf: BytesLike,
+    c_0xc0b0216b(
+      c__0xc0b0216b: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    c_0x08a8f2bf(
-      c__0x08a8f2bf: BytesLike,
+    c_0xc0b0216b(
+      c__0xc0b0216b: BytesLike,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };

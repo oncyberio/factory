@@ -20,12 +20,12 @@ import { TypedEventFilter, TypedEvent, TypedListener } from "./commons";
 
 interface BaseRelayRecipientInterface extends ethers.utils.Interface {
   functions: {
-    "c_0xd4dc4272(bytes32)": FunctionFragment;
+    "c_0xe504ae9e(bytes32)": FunctionFragment;
     "isTrustedForwarder(address)": FunctionFragment;
   };
 
   encodeFunctionData(
-    functionFragment: "c_0xd4dc4272",
+    functionFragment: "c_0xe504ae9e",
     values: [BytesLike]
   ): string;
   encodeFunctionData(
@@ -34,7 +34,7 @@ interface BaseRelayRecipientInterface extends ethers.utils.Interface {
   ): string;
 
   decodeFunctionResult(
-    functionFragment: "c_0xd4dc4272",
+    functionFragment: "c_0xe504ae9e",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -89,8 +89,8 @@ export class BaseRelayRecipient extends BaseContract {
   interface: BaseRelayRecipientInterface;
 
   functions: {
-    c_0xd4dc4272(
-      c__0xd4dc4272: BytesLike,
+    c_0xe504ae9e(
+      c__0xe504ae9e: BytesLike,
       overrides?: CallOverrides
     ): Promise<[void]>;
 
@@ -100,8 +100,8 @@ export class BaseRelayRecipient extends BaseContract {
     ): Promise<[boolean]>;
   };
 
-  c_0xd4dc4272(
-    c__0xd4dc4272: BytesLike,
+  c_0xe504ae9e(
+    c__0xe504ae9e: BytesLike,
     overrides?: CallOverrides
   ): Promise<void>;
 
@@ -111,8 +111,8 @@ export class BaseRelayRecipient extends BaseContract {
   ): Promise<boolean>;
 
   callStatic: {
-    c_0xd4dc4272(
-      c__0xd4dc4272: BytesLike,
+    c_0xe504ae9e(
+      c__0xe504ae9e: BytesLike,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -125,8 +125,8 @@ export class BaseRelayRecipient extends BaseContract {
   filters: {};
 
   estimateGas: {
-    c_0xd4dc4272(
-      c__0xd4dc4272: BytesLike,
+    c_0xe504ae9e(
+      c__0xe504ae9e: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -137,8 +137,8 @@ export class BaseRelayRecipient extends BaseContract {
   };
 
   populateTransaction: {
-    c_0xd4dc4272(
-      c__0xd4dc4272: BytesLike,
+    c_0xe504ae9e(
+      c__0xe504ae9e: BytesLike,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

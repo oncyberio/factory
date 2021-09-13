@@ -21,7 +21,7 @@ import { TypedEventFilter, TypedEvent, TypedListener } from "./commons";
 interface LibUtilityStorageInterface extends ethers.utils.Interface {
   functions: {
     "STORAGE_SLOT()": FunctionFragment;
-    "c_0xa7c4ff02(bytes32)": FunctionFragment;
+    "c_0x034c1ab8(bytes32)": FunctionFragment;
   };
 
   encodeFunctionData(
@@ -29,7 +29,7 @@ interface LibUtilityStorageInterface extends ethers.utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "c_0xa7c4ff02",
+    functionFragment: "c_0x034c1ab8",
     values: [BytesLike]
   ): string;
 
@@ -38,7 +38,7 @@ interface LibUtilityStorageInterface extends ethers.utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "c_0xa7c4ff02",
+    functionFragment: "c_0x034c1ab8",
     data: BytesLike
   ): Result;
 
@@ -91,24 +91,24 @@ export class LibUtilityStorage extends BaseContract {
   functions: {
     STORAGE_SLOT(overrides?: CallOverrides): Promise<[string]>;
 
-    c_0xa7c4ff02(
-      c__0xa7c4ff02: BytesLike,
+    c_0x034c1ab8(
+      c__0x034c1ab8: BytesLike,
       overrides?: CallOverrides
     ): Promise<[void]>;
   };
 
   STORAGE_SLOT(overrides?: CallOverrides): Promise<string>;
 
-  c_0xa7c4ff02(
-    c__0xa7c4ff02: BytesLike,
+  c_0x034c1ab8(
+    c__0x034c1ab8: BytesLike,
     overrides?: CallOverrides
   ): Promise<void>;
 
   callStatic: {
     STORAGE_SLOT(overrides?: CallOverrides): Promise<string>;
 
-    c_0xa7c4ff02(
-      c__0xa7c4ff02: BytesLike,
+    c_0x034c1ab8(
+      c__0x034c1ab8: BytesLike,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -118,8 +118,8 @@ export class LibUtilityStorage extends BaseContract {
   estimateGas: {
     STORAGE_SLOT(overrides?: CallOverrides): Promise<BigNumber>;
 
-    c_0xa7c4ff02(
-      c__0xa7c4ff02: BytesLike,
+    c_0x034c1ab8(
+      c__0x034c1ab8: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
   };
@@ -127,8 +127,8 @@ export class LibUtilityStorage extends BaseContract {
   populateTransaction: {
     STORAGE_SLOT(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    c_0xa7c4ff02(
-      c__0xa7c4ff02: BytesLike,
+    c_0x034c1ab8(
+      c__0x034c1ab8: BytesLike,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };

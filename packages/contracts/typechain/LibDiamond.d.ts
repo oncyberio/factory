@@ -21,7 +21,7 @@ import { TypedEventFilter, TypedEvent, TypedListener } from "./commons";
 interface LibDiamondInterface extends ethers.utils.Interface {
   functions: {
     "DIAMOND_STORAGE_POSITION()": FunctionFragment;
-    "c_0x753e461c(bytes32)": FunctionFragment;
+    "c_0x5bd2cc1c(bytes32)": FunctionFragment;
   };
 
   encodeFunctionData(
@@ -29,7 +29,7 @@ interface LibDiamondInterface extends ethers.utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "c_0x753e461c",
+    functionFragment: "c_0x5bd2cc1c",
     values: [BytesLike]
   ): string;
 
@@ -38,7 +38,7 @@ interface LibDiamondInterface extends ethers.utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "c_0x753e461c",
+    functionFragment: "c_0x5bd2cc1c",
     data: BytesLike
   ): Result;
 
@@ -91,24 +91,24 @@ export class LibDiamond extends BaseContract {
   functions: {
     DIAMOND_STORAGE_POSITION(overrides?: CallOverrides): Promise<[string]>;
 
-    c_0x753e461c(
-      c__0x753e461c: BytesLike,
+    c_0x5bd2cc1c(
+      c__0x5bd2cc1c: BytesLike,
       overrides?: CallOverrides
     ): Promise<[void]>;
   };
 
   DIAMOND_STORAGE_POSITION(overrides?: CallOverrides): Promise<string>;
 
-  c_0x753e461c(
-    c__0x753e461c: BytesLike,
+  c_0x5bd2cc1c(
+    c__0x5bd2cc1c: BytesLike,
     overrides?: CallOverrides
   ): Promise<void>;
 
   callStatic: {
     DIAMOND_STORAGE_POSITION(overrides?: CallOverrides): Promise<string>;
 
-    c_0x753e461c(
-      c__0x753e461c: BytesLike,
+    c_0x5bd2cc1c(
+      c__0x5bd2cc1c: BytesLike,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -118,8 +118,8 @@ export class LibDiamond extends BaseContract {
   estimateGas: {
     DIAMOND_STORAGE_POSITION(overrides?: CallOverrides): Promise<BigNumber>;
 
-    c_0x753e461c(
-      c__0x753e461c: BytesLike,
+    c_0x5bd2cc1c(
+      c__0x5bd2cc1c: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
   };
@@ -129,8 +129,8 @@ export class LibDiamond extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    c_0x753e461c(
-      c__0x753e461c: BytesLike,
+    c_0x5bd2cc1c(
+      c__0x5bd2cc1c: BytesLike,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };
