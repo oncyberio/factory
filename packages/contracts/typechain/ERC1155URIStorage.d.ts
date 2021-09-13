@@ -12,105 +12,105 @@ import {
   BaseContract,
   ContractTransaction,
   CallOverrides,
-} from 'ethers'
-import { BytesLike } from '@ethersproject/bytes'
-import { Listener, Provider } from '@ethersproject/providers'
-import { FunctionFragment, EventFragment, Result } from '@ethersproject/abi'
-import { TypedEventFilter, TypedEvent, TypedListener } from './commons'
+} from "ethers";
+import { BytesLike } from "@ethersproject/bytes";
+import { Listener, Provider } from "@ethersproject/providers";
+import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
+import { TypedEventFilter, TypedEvent, TypedListener } from "./commons";
 
 interface ERC1155URIStorageInterface extends ethers.utils.Interface {
   functions: {
-    'c_0x64a239c3(bytes32)': FunctionFragment
-  }
+    "c_0xe7af16b7(bytes32)": FunctionFragment;
+  };
 
   encodeFunctionData(
-    functionFragment: 'c_0x64a239c3',
+    functionFragment: "c_0xe7af16b7",
     values: [BytesLike]
-  ): string
+  ): string;
 
   decodeFunctionResult(
-    functionFragment: 'c_0x64a239c3',
+    functionFragment: "c_0xe7af16b7",
     data: BytesLike
-  ): Result
+  ): Result;
 
-  events: {}
+  events: {};
 }
 
 export class ERC1155URIStorage extends BaseContract {
-  connect(signerOrProvider: Signer | Provider | string): this
-  attach(addressOrName: string): this
-  deployed(): Promise<this>
+  connect(signerOrProvider: Signer | Provider | string): this;
+  attach(addressOrName: string): this;
+  deployed(): Promise<this>;
 
   listeners<EventArgsArray extends Array<any>, EventArgsObject>(
     eventFilter?: TypedEventFilter<EventArgsArray, EventArgsObject>
-  ): Array<TypedListener<EventArgsArray, EventArgsObject>>
+  ): Array<TypedListener<EventArgsArray, EventArgsObject>>;
   off<EventArgsArray extends Array<any>, EventArgsObject>(
     eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
     listener: TypedListener<EventArgsArray, EventArgsObject>
-  ): this
+  ): this;
   on<EventArgsArray extends Array<any>, EventArgsObject>(
     eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
     listener: TypedListener<EventArgsArray, EventArgsObject>
-  ): this
+  ): this;
   once<EventArgsArray extends Array<any>, EventArgsObject>(
     eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
     listener: TypedListener<EventArgsArray, EventArgsObject>
-  ): this
+  ): this;
   removeListener<EventArgsArray extends Array<any>, EventArgsObject>(
     eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
     listener: TypedListener<EventArgsArray, EventArgsObject>
-  ): this
+  ): this;
   removeAllListeners<EventArgsArray extends Array<any>, EventArgsObject>(
     eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>
-  ): this
+  ): this;
 
-  listeners(eventName?: string): Array<Listener>
-  off(eventName: string, listener: Listener): this
-  on(eventName: string, listener: Listener): this
-  once(eventName: string, listener: Listener): this
-  removeListener(eventName: string, listener: Listener): this
-  removeAllListeners(eventName?: string): this
+  listeners(eventName?: string): Array<Listener>;
+  off(eventName: string, listener: Listener): this;
+  on(eventName: string, listener: Listener): this;
+  once(eventName: string, listener: Listener): this;
+  removeListener(eventName: string, listener: Listener): this;
+  removeAllListeners(eventName?: string): this;
 
   queryFilter<EventArgsArray extends Array<any>, EventArgsObject>(
     event: TypedEventFilter<EventArgsArray, EventArgsObject>,
     fromBlockOrBlockhash?: string | number | undefined,
     toBlock?: string | number | undefined
-  ): Promise<Array<TypedEvent<EventArgsArray & EventArgsObject>>>
+  ): Promise<Array<TypedEvent<EventArgsArray & EventArgsObject>>>;
 
-  interface: ERC1155URIStorageInterface
+  interface: ERC1155URIStorageInterface;
 
   functions: {
-    c_0x64a239c3(
-      c__0x64a239c3: BytesLike,
+    c_0xe7af16b7(
+      c__0xe7af16b7: BytesLike,
       overrides?: CallOverrides
-    ): Promise<[void]>
-  }
+    ): Promise<[void]>;
+  };
 
-  c_0x64a239c3(
-    c__0x64a239c3: BytesLike,
+  c_0xe7af16b7(
+    c__0xe7af16b7: BytesLike,
     overrides?: CallOverrides
-  ): Promise<void>
+  ): Promise<void>;
 
   callStatic: {
-    c_0x64a239c3(
-      c__0x64a239c3: BytesLike,
+    c_0xe7af16b7(
+      c__0xe7af16b7: BytesLike,
       overrides?: CallOverrides
-    ): Promise<void>
-  }
+    ): Promise<void>;
+  };
 
-  filters: {}
+  filters: {};
 
   estimateGas: {
-    c_0x64a239c3(
-      c__0x64a239c3: BytesLike,
+    c_0xe7af16b7(
+      c__0xe7af16b7: BytesLike,
       overrides?: CallOverrides
-    ): Promise<BigNumber>
-  }
+    ): Promise<BigNumber>;
+  };
 
   populateTransaction: {
-    c_0x64a239c3(
-      c__0x64a239c3: BytesLike,
+    c_0xe7af16b7(
+      c__0xe7af16b7: BytesLike,
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>
-  }
+    ): Promise<PopulatedTransaction>;
+  };
 }

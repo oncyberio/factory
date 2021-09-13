@@ -60,7 +60,7 @@ describe('CyberDestinationUtilityFactory', function () {
     const timeEnd = parseInt((Date.now() / 1000 + 10).toString())
     const price = 100
     const amountCap = 10
-    const shareOncyber = 50
+    const shareCyber = 50
     const nonce = '0'
     const signature = await signMintingUtilityRequest(
       uri,
@@ -68,14 +68,14 @@ describe('CyberDestinationUtilityFactory', function () {
       timeEnd,
       price,
       amountCap,
-      shareOncyber,
+      shareCyber,
       nonce,
       memory.other.address,
       memory.manager
     )
     await memory.contract
       .connect(memory.other)
-      .mint(uri, timeStart, timeEnd, price, amountCap, shareOncyber, signature)
+      .mint(uri, timeStart, timeEnd, price, amountCap, shareCyber, signature)
 
     const tokenId = 0
     expect(
@@ -91,7 +91,7 @@ describe('CyberDestinationUtilityFactory', function () {
     const drop = await memory.contract.getDrop(tokenId)
     expect(drop.timeStart).to.eq(timeStart)
     expect(drop.timeEnd).to.eq(timeEnd)
-    expect(drop.shareOncyber).to.eq(shareOncyber)
+    expect(drop.shareCyber).to.eq(shareCyber)
     expect(drop.price).to.eq(price)
     expect(drop.amountCap).to.eq(amountCap)
     expect(drop.minted).to.eq('0')
@@ -108,7 +108,7 @@ describe('CyberDestinationUtilityFactory', function () {
     const timeEnd = parseInt((Date.now() / 1000 + 10).toString())
     const price = 100
     const amountCap = 10
-    const shareOncyber = 50
+    const shareCyber = 50
     const nonce = '0'
     const signature = await signMintingUtilityRequest(
       uri,
@@ -116,14 +116,14 @@ describe('CyberDestinationUtilityFactory', function () {
       timeEnd,
       price,
       amountCap,
-      shareOncyber,
+      shareCyber,
       nonce,
       memory.other.address,
       memory.manager
     )
     await memory.contract
       .connect(memory.other)
-      .mint(uri, timeStart, timeEnd, price, amountCap, shareOncyber, signature)
+      .mint(uri, timeStart, timeEnd, price, amountCap, shareCyber, signature)
 
     const tokenId = 0
     expect(
@@ -139,7 +139,7 @@ describe('CyberDestinationUtilityFactory', function () {
     const drop = await memory.contract.getDrop(tokenId)
     expect(drop.timeStart).to.eq(timeStart)
     expect(drop.timeEnd).to.eq(timeEnd)
-    expect(drop.shareOncyber).to.eq(shareOncyber)
+    expect(drop.shareCyber).to.eq(shareCyber)
     expect(drop.price).to.eq(price)
     expect(drop.amountCap).to.eq(amountCap)
     expect(drop.minted).to.eq('0')
@@ -154,7 +154,7 @@ describe('CyberDestinationUtilityFactory', function () {
     const timeEnd1 = parseInt((Date.now() / 1000 + 10).toString())
     const price1 = 100
     const amountCap1 = 10
-    const shareOncyber1 = 50
+    const shareCyber1 = 50
     const nonce1 = '1'
     const signature1 = await signMintingUtilityRequest(
       uri1,
@@ -162,7 +162,7 @@ describe('CyberDestinationUtilityFactory', function () {
       timeEnd1,
       price1,
       amountCap1,
-      shareOncyber1,
+      shareCyber1,
       nonce1,
       memory.other.address,
       memory.manager
@@ -175,7 +175,7 @@ describe('CyberDestinationUtilityFactory', function () {
         timeEnd1,
         price1,
         amountCap1,
-        shareOncyber1,
+        shareCyber1,
         signature1
       )
 
@@ -193,7 +193,7 @@ describe('CyberDestinationUtilityFactory', function () {
     const drop1 = await memory.contract.getDrop(tokenId1)
     expect(drop1.timeStart).to.eq(timeStart)
     expect(drop1.timeEnd).to.eq(timeEnd)
-    expect(drop1.shareOncyber).to.eq(shareOncyber)
+    expect(drop1.shareCyber).to.eq(shareCyber)
     expect(drop1.price).to.eq(price)
     expect(drop1.amountCap).to.eq(amountCap)
     expect(drop1.minted).to.eq('0')
@@ -210,7 +210,7 @@ describe('CyberDestinationUtilityFactory', function () {
     const timeEnd = parseInt((Date.now() / 1000 + 10).toString())
     const price = 100
     const amountCap = 10
-    const shareOncyber = 101
+    const shareCyber = 101
     const nonce = '0'
     const signature = await signMintingUtilityRequest(
       uri,
@@ -218,7 +218,7 @@ describe('CyberDestinationUtilityFactory', function () {
       timeEnd,
       price,
       amountCap,
-      shareOncyber,
+      shareCyber,
       nonce,
       memory.other.address,
       memory.manager
@@ -233,7 +233,7 @@ describe('CyberDestinationUtilityFactory', function () {
           timeEnd,
           price,
           amountCap,
-          shareOncyber,
+          shareCyber,
           signature
         )
     ).to.be.revertedWith('ISO')
@@ -245,7 +245,7 @@ describe('CyberDestinationUtilityFactory', function () {
     const timeEnd = 1
     const price = 100
     const amountCap = 10
-    const shareOncyber = 10
+    const shareCyber = 10
     const nonce = '0'
     const signature = await signMintingUtilityRequest(
       uri,
@@ -253,7 +253,7 @@ describe('CyberDestinationUtilityFactory', function () {
       timeEnd,
       price,
       amountCap,
-      shareOncyber,
+      shareCyber,
       nonce,
       memory.other.address,
       memory.manager
@@ -268,7 +268,7 @@ describe('CyberDestinationUtilityFactory', function () {
           timeEnd,
           price,
           amountCap,
-          shareOncyber,
+          shareCyber,
           signature
         )
     ).to.be.revertedWith('IT')
@@ -286,7 +286,7 @@ describe('CyberDestinationUtilityFactory', function () {
     const timeEnd = parseInt((Date.now() / 1000 + 10).toString())
     const price = 100
     const amountCap = 10
-    const shareOncyber = 50
+    const shareCyber = 50
     const nonce = '0'
     const invalidSignerSignature = await signMintingUtilityRequest(
       uri,
@@ -294,7 +294,7 @@ describe('CyberDestinationUtilityFactory', function () {
       timeEnd,
       price,
       amountCap,
-      shareOncyber,
+      shareCyber,
       nonce,
       memory.other.address,
       memory.other
@@ -309,7 +309,7 @@ describe('CyberDestinationUtilityFactory', function () {
           timeEnd,
           price,
           amountCap,
-          shareOncyber,
+          shareCyber,
           invalidSignerSignature
         )
     ).to.be.revertedWith('NM')
@@ -320,7 +320,7 @@ describe('CyberDestinationUtilityFactory', function () {
       timeEnd,
       price,
       amountCap,
-      shareOncyber,
+      shareCyber,
       nonce,
       memory.manager.address,
       memory.manager
@@ -334,7 +334,7 @@ describe('CyberDestinationUtilityFactory', function () {
           timeEnd,
           price,
           amountCap,
-          shareOncyber,
+          shareCyber,
           invalidAccountSignature
         )
     ).to.be.revertedWith('NM')
@@ -345,7 +345,7 @@ describe('CyberDestinationUtilityFactory', function () {
       timeEnd,
       price,
       amountCap,
-      shareOncyber,
+      shareCyber,
       nonce,
       memory.other.address,
       memory.manager
@@ -359,7 +359,7 @@ describe('CyberDestinationUtilityFactory', function () {
           timeEnd,
           price,
           amountCap,
-          shareOncyber,
+          shareCyber,
           invalidUriSignature
         )
     ).to.be.revertedWith('NM')
@@ -370,7 +370,7 @@ describe('CyberDestinationUtilityFactory', function () {
       timeEnd,
       price,
       amountCap,
-      shareOncyber,
+      shareCyber,
       nonce,
       memory.other.address,
       memory.manager
@@ -384,7 +384,7 @@ describe('CyberDestinationUtilityFactory', function () {
           timeEnd,
           price,
           amountCap,
-          shareOncyber,
+          shareCyber,
           invalidTimeStartSignature
         )
     ).to.be.revertedWith('NM')
@@ -395,7 +395,7 @@ describe('CyberDestinationUtilityFactory', function () {
       timeEnd,
       price,
       amountCap,
-      shareOncyber,
+      shareCyber,
       nonce,
       memory.other.address,
       memory.manager
@@ -409,7 +409,7 @@ describe('CyberDestinationUtilityFactory', function () {
           timeStart + 1,
           price,
           amountCap,
-          shareOncyber,
+          shareCyber,
           invalidTimeEndSignature
         )
     ).to.be.revertedWith('NM')
@@ -420,7 +420,7 @@ describe('CyberDestinationUtilityFactory', function () {
       timeEnd,
       price,
       amountCap,
-      shareOncyber,
+      shareCyber,
       nonce,
       memory.other.address,
       memory.manager
@@ -434,7 +434,7 @@ describe('CyberDestinationUtilityFactory', function () {
           timeEnd,
           1,
           amountCap,
-          shareOncyber,
+          shareCyber,
           invalidPriceSignature
         )
     ).to.be.revertedWith('NM')
@@ -445,7 +445,7 @@ describe('CyberDestinationUtilityFactory', function () {
       timeEnd,
       price,
       amountCap,
-      shareOncyber,
+      shareCyber,
       nonce,
       memory.other.address,
       memory.manager
@@ -459,18 +459,18 @@ describe('CyberDestinationUtilityFactory', function () {
           timeEnd,
           price,
           1,
-          shareOncyber,
+          shareCyber,
           invalidAmountCapSignature
         )
     ).to.be.revertedWith('NM')
 
-    const invalidShareOncyberSignature = await signMintingUtilityRequest(
+    const invalidshareCyberSignature = await signMintingUtilityRequest(
       uri,
       timeStart,
       timeEnd,
       price,
       amountCap,
-      shareOncyber,
+      shareCyber,
       nonce,
       memory.other.address,
       memory.manager
@@ -485,7 +485,7 @@ describe('CyberDestinationUtilityFactory', function () {
           price,
           amountCap,
           1,
-          invalidShareOncyberSignature
+          invalidshareCyberSignature
         )
     ).to.be.revertedWith('NM')
   })
@@ -496,7 +496,7 @@ describe('CyberDestinationUtilityFactory', function () {
     const timeEnd = parseInt((Date.now() / 1000 + 10).toString())
     const price = 1000
     const amountCap = 10
-    const shareOncyber = 50
+    const shareCyber = 50
     const nonce = '0'
     const signature = await signMintingUtilityRequest(
       uri,
@@ -504,14 +504,14 @@ describe('CyberDestinationUtilityFactory', function () {
       timeEnd,
       price,
       amountCap,
-      shareOncyber,
+      shareCyber,
       nonce,
       memory.other.address,
       memory.manager
     )
     await memory.contract
       .connect(memory.other)
-      .mint(uri, timeStart, timeEnd, price, amountCap, shareOncyber, signature)
+      .mint(uri, timeStart, timeEnd, price, amountCap, shareCyber, signature)
     const otherBalance = await ethers.provider.getBalance(memory.other.address)
     const oncyberBalance = await ethers.provider.getBalance(
       memory.oncyber.address
@@ -540,7 +540,7 @@ describe('CyberDestinationUtilityFactory', function () {
     const timeEnd = parseInt((Date.now() / 1000 + 10).toString())
     const price = 1000
     const amountCap = 10
-    const shareOncyber = 50
+    const shareCyber = 50
     const nonce = '0'
     const signature = await signMintingUtilityRequest(
       uri,
@@ -548,14 +548,14 @@ describe('CyberDestinationUtilityFactory', function () {
       timeEnd,
       price,
       amountCap,
-      shareOncyber,
+      shareCyber,
       nonce,
       memory.other.address,
       memory.manager
     )
     await memory.contract
       .connect(memory.other)
-      .mint(uri, timeStart, timeEnd, price, amountCap, shareOncyber, signature)
+      .mint(uri, timeStart, timeEnd, price, amountCap, shareCyber, signature)
     const otherBalance = await ethers.provider.getBalance(memory.other.address)
     const oncyberBalance = await ethers.provider.getBalance(
       memory.oncyber.address
@@ -598,7 +598,7 @@ describe('CyberDestinationUtilityFactory', function () {
     const timeEnd = parseInt((Date.now() / 1000 + 10).toString())
     const price = 1000
     const amountCap = 0
-    const shareOncyber = 50
+    const shareCyber = 50
     const nonce = '0'
     const signature = await signMintingUtilityRequest(
       uri,
@@ -606,14 +606,14 @@ describe('CyberDestinationUtilityFactory', function () {
       timeEnd,
       price,
       amountCap,
-      shareOncyber,
+      shareCyber,
       nonce,
       memory.other.address,
       memory.manager
     )
     await memory.contract
       .connect(memory.other)
-      .mint(uri, timeStart, timeEnd, price, amountCap, shareOncyber, signature)
+      .mint(uri, timeStart, timeEnd, price, amountCap, shareCyber, signature)
     const otherBalance = await ethers.provider.getBalance(memory.other.address)
     const oncyberBalance = await ethers.provider.getBalance(
       memory.oncyber.address
@@ -656,7 +656,7 @@ describe('CyberDestinationUtilityFactory', function () {
     const timeEnd = parseInt((Date.now() / 1000 + 10).toString())
     const price = 1000
     const amountCap = 10
-    const shareOncyber = 50
+    const shareCyber = 50
     const nonce = '0'
     const signature = await signMintingUtilityRequest(
       uri,
@@ -664,14 +664,14 @@ describe('CyberDestinationUtilityFactory', function () {
       timeEnd,
       price,
       amountCap,
-      shareOncyber,
+      shareCyber,
       nonce,
       memory.other.address,
       memory.manager
     )
     await memory.contract
       .connect(memory.other)
-      .mint(uri, timeStart, timeEnd, price, amountCap, shareOncyber, signature)
+      .mint(uri, timeStart, timeEnd, price, amountCap, shareCyber, signature)
     const otherBalance = await ethers.provider.getBalance(memory.other.address)
     const oncyberBalance = await ethers.provider.getBalance(
       memory.oncyber.address
@@ -714,7 +714,7 @@ describe('CyberDestinationUtilityFactory', function () {
     const timeEnd = parseInt((Date.now() / 1000 - 10).toString())
     const price = 1000
     const amountCap = 10
-    const shareOncyber = 50
+    const shareCyber = 50
     const nonce = '0'
     const signature = await signMintingUtilityRequest(
       uri,
@@ -722,14 +722,14 @@ describe('CyberDestinationUtilityFactory', function () {
       timeEnd,
       price,
       amountCap,
-      shareOncyber,
+      shareCyber,
       nonce,
       memory.other.address,
       memory.manager
     )
     await memory.contract
       .connect(memory.other)
-      .mint(uri, timeStart, timeEnd, price, amountCap, shareOncyber, signature)
+      .mint(uri, timeStart, timeEnd, price, amountCap, shareCyber, signature)
 
     const tokenId = 0
 
@@ -746,7 +746,7 @@ describe('CyberDestinationUtilityFactory', function () {
     const timeEnd = parseInt((Date.now() / 1000 + 2000).toString())
     const price = 1000
     const amountCap = 10
-    const shareOncyber = 50
+    const shareCyber = 50
     const nonce = '0'
     const signature = await signMintingUtilityRequest(
       uri,
@@ -754,14 +754,14 @@ describe('CyberDestinationUtilityFactory', function () {
       timeEnd,
       price,
       amountCap,
-      shareOncyber,
+      shareCyber,
       nonce,
       memory.other.address,
       memory.manager
     )
     await memory.contract
       .connect(memory.other)
-      .mint(uri, timeStart, timeEnd, price, amountCap, shareOncyber, signature)
+      .mint(uri, timeStart, timeEnd, price, amountCap, shareCyber, signature)
 
     const tokenId = 0
 
@@ -778,7 +778,7 @@ describe('CyberDestinationUtilityFactory', function () {
     const timeEnd = parseInt((Date.now() / 1000 + 10).toString())
     const price = 1000
     const amountCap = 10
-    const shareOncyber = 50
+    const shareCyber = 50
     const nonce = '0'
     const signature = await signMintingUtilityRequest(
       uri,
@@ -786,14 +786,14 @@ describe('CyberDestinationUtilityFactory', function () {
       timeEnd,
       price,
       amountCap,
-      shareOncyber,
+      shareCyber,
       nonce,
       memory.other.address,
       memory.manager
     )
     await memory.contract
       .connect(memory.other)
-      .mint(uri, timeStart, timeEnd, price, amountCap, shareOncyber, signature)
+      .mint(uri, timeStart, timeEnd, price, amountCap, shareCyber, signature)
     const tokenId = 0
     await expect(
       memory.contract.connect(memory.other2).mintEdition(tokenId, {
@@ -808,7 +808,7 @@ describe('CyberDestinationUtilityFactory', function () {
     const timeEnd = parseInt((Date.now() / 1000 + 10).toString())
     const price = 1000
     const amountCap = 1
-    const shareOncyber = 50
+    const shareCyber = 50
     const nonce = '0'
     const signature = await signMintingUtilityRequest(
       uri,
@@ -816,14 +816,14 @@ describe('CyberDestinationUtilityFactory', function () {
       timeEnd,
       price,
       amountCap,
-      shareOncyber,
+      shareCyber,
       nonce,
       memory.other.address,
       memory.manager
     )
     await memory.contract
       .connect(memory.other)
-      .mint(uri, timeStart, timeEnd, price, amountCap, shareOncyber, signature)
+      .mint(uri, timeStart, timeEnd, price, amountCap, shareCyber, signature)
     const otherBalance = await ethers.provider.getBalance(memory.other.address)
     const oncyberBalance = await ethers.provider.getBalance(
       memory.oncyber.address

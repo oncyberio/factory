@@ -34,12 +34,9 @@ const config: HardhatUserConfig = {
     compilers: [
       {
         version: '0.8.7',
-        settings: {
-          optimizer: {
-            enabled: true,
-            runs: 200,
-          },
-        },
+      },
+      {
+        version: '0.7.6',
       },
     ],
   },
@@ -61,18 +58,6 @@ const config: HardhatUserConfig = {
       // accounts: [
       // defaultPrivateKey,
       // ]
-    },
-    // MATIC
-    mumbai: {
-      url: 'https://rpc-mumbai.maticvigil.com',
-      gasPrice: parseUnits('1', 'gwei').toNumber(),
-      accounts: [process.env.MUMBAI_PRIVATE_KEY || defaultPrivateKey],
-    },
-    matic_mainnet: {
-      chainId: 137,
-      url: 'https://rpc-mainnet.matic.network',
-      gasPrice: parseUnits('1', 'gwei').toNumber(),
-      accounts: [process.env.MATIC_MAINNET_PRIVATE_KEY || defaultPrivateKey],
     },
     // ETHEREUM
     rinkeby: {

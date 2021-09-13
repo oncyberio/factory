@@ -2,72 +2,59 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Signer, utils, Contract, ContractFactory, Overrides } from 'ethers'
-import { Provider, TransactionRequest } from '@ethersproject/providers'
-import type { LibDiamond, LibDiamondInterface } from '../LibDiamond'
+import { Signer, utils, Contract, ContractFactory, Overrides } from "ethers";
+import { Provider, TransactionRequest } from "@ethersproject/providers";
+import type { LibDiamond, LibDiamondInterface } from "../LibDiamond";
 
 const _abi = [
   {
     inputs: [],
-    name: 'DIAMOND_STORAGE_POSITION',
+    name: "DIAMOND_STORAGE_POSITION",
     outputs: [
       {
-        internalType: 'bytes32',
-        name: '',
-        type: 'bytes32',
+        internalType: "bytes32",
+        name: "",
+        type: "bytes32",
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
+    stateMutability: "view",
+    type: "function",
   },
-  {
-    inputs: [
-      {
-        internalType: 'bytes32',
-        name: 'c__0x753e461c',
-        type: 'bytes32',
-      },
-    ],
-    name: 'c_0x753e461c',
-    outputs: [],
-    stateMutability: 'pure',
-    type: 'function',
-  },
-]
+];
 
 const _bytecode =
-  '0x61016e610053600b82828239805160001a607314610046577f4e487b7100000000000000000000000000000000000000000000000000000000600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600436106100405760003560e01c8063449d876014610045578063b2bebf5514610061575b600080fd5b61005f600480360381019061005a91906100bb565b61007f565b005b610069610082565b60405161007691906100f7565b60405180910390f35b50565b7fc8fcad8db84d3cc18b4c41d551ea0ee66dd599cde068d998e57d5e09332c131c81565b6000813590506100b581610121565b92915050565b6000602082840312156100d1576100d061011c565b5b60006100df848285016100a6565b91505092915050565b6100f181610112565b82525050565b600060208201905061010c60008301846100e8565b92915050565b6000819050919050565b600080fd5b61012a81610112565b811461013557600080fd5b5056fea2646970667358221220063fbc76bc6e351c36f55d522e46ad32a063c9a35de0ec869fb15b177c34b92764736f6c63430008070033'
+  "0x60a6610038600b82828239805160001a607314602b57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe730000000000000000000000000000000000000000301460806040526004361060335760003560e01c8063b2bebf55146038575b600080fd5b605e7fc8fcad8db84d3cc18b4c41d551ea0ee66dd599cde068d998e57d5e09332c131c81565b60405190815260200160405180910390f3fea264697066735822122001408361233ec43519df6791c47685da1fb6dfb838e34cdaabf1cf50bd8a440864736f6c63430008070033";
 
 export class LibDiamond__factory extends ContractFactory {
   constructor(signer?: Signer) {
-    super(_abi, _bytecode, signer)
+    super(_abi, _bytecode, signer);
   }
 
   deploy(
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<LibDiamond> {
-    return super.deploy(overrides || {}) as Promise<LibDiamond>
+    return super.deploy(overrides || {}) as Promise<LibDiamond>;
   }
   getDeployTransaction(
     overrides?: Overrides & { from?: string | Promise<string> }
   ): TransactionRequest {
-    return super.getDeployTransaction(overrides || {})
+    return super.getDeployTransaction(overrides || {});
   }
   attach(address: string): LibDiamond {
-    return super.attach(address) as LibDiamond
+    return super.attach(address) as LibDiamond;
   }
   connect(signer: Signer): LibDiamond__factory {
-    return super.connect(signer) as LibDiamond__factory
+    return super.connect(signer) as LibDiamond__factory;
   }
-  static readonly bytecode = _bytecode
-  static readonly abi = _abi
+  static readonly bytecode = _bytecode;
+  static readonly abi = _abi;
   static createInterface(): LibDiamondInterface {
-    return new utils.Interface(_abi) as LibDiamondInterface
+    return new utils.Interface(_abi) as LibDiamondInterface;
   }
   static connect(
     address: string,
     signerOrProvider: Signer | Provider
   ): LibDiamond {
-    return new Contract(address, _abi, signerOrProvider) as LibDiamond
+    return new Contract(address, _abi, signerOrProvider) as LibDiamond;
   }
 }

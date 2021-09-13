@@ -13,243 +13,193 @@ import {
   ContractTransaction,
   Overrides,
   CallOverrides,
-} from 'ethers'
-import { BytesLike } from '@ethersproject/bytes'
-import { Listener, Provider } from '@ethersproject/providers'
-import { FunctionFragment, EventFragment, Result } from '@ethersproject/abi'
-import { TypedEventFilter, TypedEvent, TypedListener } from './commons'
+} from "ethers";
+import { BytesLike } from "@ethersproject/bytes";
+import { Listener, Provider } from "@ethersproject/providers";
+import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
+import { TypedEventFilter, TypedEvent, TypedListener } from "./commons";
 
 interface CyberDestinationFactoryFacetInterface extends ethers.utils.Interface {
   functions: {
-    'balanceOf(address,uint256)': FunctionFragment
-    'balanceOfBatch(address[],uint256[])': FunctionFragment
-    'c_0x68791152(bytes32)': FunctionFragment
-    'c_0xd4dc4272(bytes32)': FunctionFragment
-    'c_0xd7d0b979(bytes32)': FunctionFragment
-    'c_0xe78f19ac(bytes32)': FunctionFragment
-    'initialize(string,address,address,address,address)': FunctionFragment
-    'isApprovedForAll(address,address)': FunctionFragment
-    'isTrustedForwarder(address)': FunctionFragment
-    'manager()': FunctionFragment
-    'mint(string,uint256,uint256,bytes)': FunctionFragment
-    'minterNonce(address)': FunctionFragment
-    'oncyber()': FunctionFragment
-    'safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)': FunctionFragment
-    'safeTransferFrom(address,address,uint256,uint256,bytes)': FunctionFragment
-    'setApprovalForAll(address,bool)': FunctionFragment
-    'supportsInterface(bytes4)': FunctionFragment
-    'totalSupply()': FunctionFragment
-    'uri(uint256)': FunctionFragment
-  }
+    "balanceOf(address,uint256)": FunctionFragment;
+    "balanceOfBatch(address[],uint256[])": FunctionFragment;
+    "initialize(string,address,address,address,address)": FunctionFragment;
+    "isApprovedForAll(address,address)": FunctionFragment;
+    "isTrustedForwarder(address)": FunctionFragment;
+    "manager()": FunctionFragment;
+    "mint(string,uint256,uint256,bytes)": FunctionFragment;
+    "minterNonce(address)": FunctionFragment;
+    "oncyber()": FunctionFragment;
+    "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)": FunctionFragment;
+    "safeTransferFrom(address,address,uint256,uint256,bytes)": FunctionFragment;
+    "setApprovalForAll(address,bool)": FunctionFragment;
+    "supportsInterface(bytes4)": FunctionFragment;
+    "totalSupply()": FunctionFragment;
+    "uri(uint256)": FunctionFragment;
+  };
 
   encodeFunctionData(
-    functionFragment: 'balanceOf',
+    functionFragment: "balanceOf",
     values: [string, BigNumberish]
-  ): string
+  ): string;
   encodeFunctionData(
-    functionFragment: 'balanceOfBatch',
+    functionFragment: "balanceOfBatch",
     values: [string[], BigNumberish[]]
-  ): string
+  ): string;
   encodeFunctionData(
-    functionFragment: 'c_0x68791152',
-    values: [BytesLike]
-  ): string
-  encodeFunctionData(
-    functionFragment: 'c_0xd4dc4272',
-    values: [BytesLike]
-  ): string
-  encodeFunctionData(
-    functionFragment: 'c_0xd7d0b979',
-    values: [BytesLike]
-  ): string
-  encodeFunctionData(
-    functionFragment: 'c_0xe78f19ac',
-    values: [BytesLike]
-  ): string
-  encodeFunctionData(
-    functionFragment: 'initialize',
+    functionFragment: "initialize",
     values: [string, string, string, string, string]
-  ): string
+  ): string;
   encodeFunctionData(
-    functionFragment: 'isApprovedForAll',
+    functionFragment: "isApprovedForAll",
     values: [string, string]
-  ): string
+  ): string;
   encodeFunctionData(
-    functionFragment: 'isTrustedForwarder',
+    functionFragment: "isTrustedForwarder",
     values: [string]
-  ): string
-  encodeFunctionData(functionFragment: 'manager', values?: undefined): string
+  ): string;
+  encodeFunctionData(functionFragment: "manager", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: 'mint',
+    functionFragment: "mint",
     values: [string, BigNumberish, BigNumberish, BytesLike]
-  ): string
-  encodeFunctionData(functionFragment: 'minterNonce', values: [string]): string
-  encodeFunctionData(functionFragment: 'oncyber', values?: undefined): string
+  ): string;
+  encodeFunctionData(functionFragment: "minterNonce", values: [string]): string;
+  encodeFunctionData(functionFragment: "oncyber", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: 'safeBatchTransferFrom',
+    functionFragment: "safeBatchTransferFrom",
     values: [string, string, BigNumberish[], BigNumberish[], BytesLike]
-  ): string
+  ): string;
   encodeFunctionData(
-    functionFragment: 'safeTransferFrom',
+    functionFragment: "safeTransferFrom",
     values: [string, string, BigNumberish, BigNumberish, BytesLike]
-  ): string
+  ): string;
   encodeFunctionData(
-    functionFragment: 'setApprovalForAll',
+    functionFragment: "setApprovalForAll",
     values: [string, boolean]
-  ): string
+  ): string;
   encodeFunctionData(
-    functionFragment: 'supportsInterface',
+    functionFragment: "supportsInterface",
     values: [BytesLike]
-  ): string
+  ): string;
   encodeFunctionData(
-    functionFragment: 'totalSupply',
+    functionFragment: "totalSupply",
     values?: undefined
-  ): string
-  encodeFunctionData(functionFragment: 'uri', values: [BigNumberish]): string
+  ): string;
+  encodeFunctionData(functionFragment: "uri", values: [BigNumberish]): string;
 
-  decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: 'balanceOfBatch',
+    functionFragment: "balanceOfBatch",
     data: BytesLike
-  ): Result
+  ): Result;
+  decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: 'c_0x68791152',
+    functionFragment: "isApprovedForAll",
     data: BytesLike
-  ): Result
+  ): Result;
   decodeFunctionResult(
-    functionFragment: 'c_0xd4dc4272',
+    functionFragment: "isTrustedForwarder",
     data: BytesLike
-  ): Result
+  ): Result;
+  decodeFunctionResult(functionFragment: "manager", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: 'c_0xd7d0b979',
+    functionFragment: "minterNonce",
     data: BytesLike
-  ): Result
+  ): Result;
+  decodeFunctionResult(functionFragment: "oncyber", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: 'c_0xe78f19ac',
+    functionFragment: "safeBatchTransferFrom",
     data: BytesLike
-  ): Result
-  decodeFunctionResult(functionFragment: 'initialize', data: BytesLike): Result
+  ): Result;
   decodeFunctionResult(
-    functionFragment: 'isApprovedForAll',
+    functionFragment: "safeTransferFrom",
     data: BytesLike
-  ): Result
+  ): Result;
   decodeFunctionResult(
-    functionFragment: 'isTrustedForwarder',
+    functionFragment: "setApprovalForAll",
     data: BytesLike
-  ): Result
-  decodeFunctionResult(functionFragment: 'manager', data: BytesLike): Result
-  decodeFunctionResult(functionFragment: 'mint', data: BytesLike): Result
-  decodeFunctionResult(functionFragment: 'minterNonce', data: BytesLike): Result
-  decodeFunctionResult(functionFragment: 'oncyber', data: BytesLike): Result
+  ): Result;
   decodeFunctionResult(
-    functionFragment: 'safeBatchTransferFrom',
+    functionFragment: "supportsInterface",
     data: BytesLike
-  ): Result
+  ): Result;
   decodeFunctionResult(
-    functionFragment: 'safeTransferFrom',
+    functionFragment: "totalSupply",
     data: BytesLike
-  ): Result
-  decodeFunctionResult(
-    functionFragment: 'setApprovalForAll',
-    data: BytesLike
-  ): Result
-  decodeFunctionResult(
-    functionFragment: 'supportsInterface',
-    data: BytesLike
-  ): Result
-  decodeFunctionResult(functionFragment: 'totalSupply', data: BytesLike): Result
-  decodeFunctionResult(functionFragment: 'uri', data: BytesLike): Result
+  ): Result;
+  decodeFunctionResult(functionFragment: "uri", data: BytesLike): Result;
 
   events: {
-    'ApprovalForAll(address,address,bool)': EventFragment
-    'Minted(address,uint256,uint256)': EventFragment
-    'TransferBatch(address,address,address,uint256[],uint256[])': EventFragment
-    'TransferSingle(address,address,address,uint256,uint256)': EventFragment
-    'URI(string,uint256)': EventFragment
-  }
+    "ApprovalForAll(address,address,bool)": EventFragment;
+    "Minted(address,uint256,uint256)": EventFragment;
+    "TransferBatch(address,address,address,uint256[],uint256[])": EventFragment;
+    "TransferSingle(address,address,address,uint256,uint256)": EventFragment;
+    "URI(string,uint256)": EventFragment;
+  };
 
-  getEvent(nameOrSignatureOrTopic: 'ApprovalForAll'): EventFragment
-  getEvent(nameOrSignatureOrTopic: 'Minted'): EventFragment
-  getEvent(nameOrSignatureOrTopic: 'TransferBatch'): EventFragment
-  getEvent(nameOrSignatureOrTopic: 'TransferSingle'): EventFragment
-  getEvent(nameOrSignatureOrTopic: 'URI'): EventFragment
+  getEvent(nameOrSignatureOrTopic: "ApprovalForAll"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Minted"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "TransferBatch"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "TransferSingle"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "URI"): EventFragment;
 }
 
 export class CyberDestinationFactoryFacet extends BaseContract {
-  connect(signerOrProvider: Signer | Provider | string): this
-  attach(addressOrName: string): this
-  deployed(): Promise<this>
+  connect(signerOrProvider: Signer | Provider | string): this;
+  attach(addressOrName: string): this;
+  deployed(): Promise<this>;
 
   listeners<EventArgsArray extends Array<any>, EventArgsObject>(
     eventFilter?: TypedEventFilter<EventArgsArray, EventArgsObject>
-  ): Array<TypedListener<EventArgsArray, EventArgsObject>>
+  ): Array<TypedListener<EventArgsArray, EventArgsObject>>;
   off<EventArgsArray extends Array<any>, EventArgsObject>(
     eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
     listener: TypedListener<EventArgsArray, EventArgsObject>
-  ): this
+  ): this;
   on<EventArgsArray extends Array<any>, EventArgsObject>(
     eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
     listener: TypedListener<EventArgsArray, EventArgsObject>
-  ): this
+  ): this;
   once<EventArgsArray extends Array<any>, EventArgsObject>(
     eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
     listener: TypedListener<EventArgsArray, EventArgsObject>
-  ): this
+  ): this;
   removeListener<EventArgsArray extends Array<any>, EventArgsObject>(
     eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>,
     listener: TypedListener<EventArgsArray, EventArgsObject>
-  ): this
+  ): this;
   removeAllListeners<EventArgsArray extends Array<any>, EventArgsObject>(
     eventFilter: TypedEventFilter<EventArgsArray, EventArgsObject>
-  ): this
+  ): this;
 
-  listeners(eventName?: string): Array<Listener>
-  off(eventName: string, listener: Listener): this
-  on(eventName: string, listener: Listener): this
-  once(eventName: string, listener: Listener): this
-  removeListener(eventName: string, listener: Listener): this
-  removeAllListeners(eventName?: string): this
+  listeners(eventName?: string): Array<Listener>;
+  off(eventName: string, listener: Listener): this;
+  on(eventName: string, listener: Listener): this;
+  once(eventName: string, listener: Listener): this;
+  removeListener(eventName: string, listener: Listener): this;
+  removeAllListeners(eventName?: string): this;
 
   queryFilter<EventArgsArray extends Array<any>, EventArgsObject>(
     event: TypedEventFilter<EventArgsArray, EventArgsObject>,
     fromBlockOrBlockhash?: string | number | undefined,
     toBlock?: string | number | undefined
-  ): Promise<Array<TypedEvent<EventArgsArray & EventArgsObject>>>
+  ): Promise<Array<TypedEvent<EventArgsArray & EventArgsObject>>>;
 
-  interface: CyberDestinationFactoryFacetInterface
+  interface: CyberDestinationFactoryFacetInterface;
 
   functions: {
     balanceOf(
       account: string,
       id: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>
+    ): Promise<[BigNumber]>;
 
     balanceOfBatch(
       accounts: string[],
       ids: BigNumberish[],
       overrides?: CallOverrides
-    ): Promise<[BigNumber[]]>
-
-    c_0x68791152(
-      c__0x68791152: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<[void]>
-
-    c_0xd4dc4272(
-      c__0xd4dc4272: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<[void]>
-
-    c_0xd7d0b979(
-      c__0xd7d0b979: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<[void]>
-
-    c_0xe78f19ac(
-      c__0xe78f19ac: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<[void]>
+    ): Promise<[BigNumber[]]>;
 
     initialize(
       _uri: string,
@@ -258,20 +208,20 @@ export class CyberDestinationFactoryFacet extends BaseContract {
       _opensea: string,
       _oncyber: string,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>
+    ): Promise<ContractTransaction>;
 
     isApprovedForAll(
       account: string,
       operator: string,
       overrides?: CallOverrides
-    ): Promise<[boolean]>
+    ): Promise<[boolean]>;
 
     isTrustedForwarder(
       forwarder: string,
       overrides?: CallOverrides
-    ): Promise<[boolean]>
+    ): Promise<[boolean]>;
 
-    manager(overrides?: CallOverrides): Promise<[string]>
+    manager(overrides?: CallOverrides): Promise<[string]>;
 
     mint(
       _uri: string,
@@ -279,14 +229,14 @@ export class CyberDestinationFactoryFacet extends BaseContract {
       _amountOncyber: BigNumberish,
       _signature: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>
+    ): Promise<ContractTransaction>;
 
     minterNonce(
       _minter: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>
+    ): Promise<[BigNumber]>;
 
-    oncyber(overrides?: CallOverrides): Promise<[string]>
+    oncyber(overrides?: CallOverrides): Promise<[string]>;
 
     safeBatchTransferFrom(
       from: string,
@@ -295,7 +245,7 @@ export class CyberDestinationFactoryFacet extends BaseContract {
       amounts: BigNumberish[],
       data: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>
+    ): Promise<ContractTransaction>;
 
     safeTransferFrom(
       from: string,
@@ -304,55 +254,35 @@ export class CyberDestinationFactoryFacet extends BaseContract {
       amount: BigNumberish,
       data: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>
+    ): Promise<ContractTransaction>;
 
     setApprovalForAll(
       operator: string,
       status: boolean,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>
+    ): Promise<ContractTransaction>;
 
     supportsInterface(
       interfaceId: BytesLike,
       overrides?: CallOverrides
-    ): Promise<[boolean]>
+    ): Promise<[boolean]>;
 
-    totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>
+    totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    uri(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<[string]>
-  }
+    uri(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+  };
 
   balanceOf(
     account: string,
     id: BigNumberish,
     overrides?: CallOverrides
-  ): Promise<BigNumber>
+  ): Promise<BigNumber>;
 
   balanceOfBatch(
     accounts: string[],
     ids: BigNumberish[],
     overrides?: CallOverrides
-  ): Promise<BigNumber[]>
-
-  c_0x68791152(
-    c__0x68791152: BytesLike,
-    overrides?: CallOverrides
-  ): Promise<void>
-
-  c_0xd4dc4272(
-    c__0xd4dc4272: BytesLike,
-    overrides?: CallOverrides
-  ): Promise<void>
-
-  c_0xd7d0b979(
-    c__0xd7d0b979: BytesLike,
-    overrides?: CallOverrides
-  ): Promise<void>
-
-  c_0xe78f19ac(
-    c__0xe78f19ac: BytesLike,
-    overrides?: CallOverrides
-  ): Promise<void>
+  ): Promise<BigNumber[]>;
 
   initialize(
     _uri: string,
@@ -361,20 +291,20 @@ export class CyberDestinationFactoryFacet extends BaseContract {
     _opensea: string,
     _oncyber: string,
     overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>
+  ): Promise<ContractTransaction>;
 
   isApprovedForAll(
     account: string,
     operator: string,
     overrides?: CallOverrides
-  ): Promise<boolean>
+  ): Promise<boolean>;
 
   isTrustedForwarder(
     forwarder: string,
     overrides?: CallOverrides
-  ): Promise<boolean>
+  ): Promise<boolean>;
 
-  manager(overrides?: CallOverrides): Promise<string>
+  manager(overrides?: CallOverrides): Promise<string>;
 
   mint(
     _uri: string,
@@ -382,11 +312,11 @@ export class CyberDestinationFactoryFacet extends BaseContract {
     _amountOncyber: BigNumberish,
     _signature: BytesLike,
     overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>
+  ): Promise<ContractTransaction>;
 
-  minterNonce(_minter: string, overrides?: CallOverrides): Promise<BigNumber>
+  minterNonce(_minter: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-  oncyber(overrides?: CallOverrides): Promise<string>
+  oncyber(overrides?: CallOverrides): Promise<string>;
 
   safeBatchTransferFrom(
     from: string,
@@ -395,7 +325,7 @@ export class CyberDestinationFactoryFacet extends BaseContract {
     amounts: BigNumberish[],
     data: BytesLike,
     overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>
+  ): Promise<ContractTransaction>;
 
   safeTransferFrom(
     from: string,
@@ -404,55 +334,35 @@ export class CyberDestinationFactoryFacet extends BaseContract {
     amount: BigNumberish,
     data: BytesLike,
     overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>
+  ): Promise<ContractTransaction>;
 
   setApprovalForAll(
     operator: string,
     status: boolean,
     overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>
+  ): Promise<ContractTransaction>;
 
   supportsInterface(
     interfaceId: BytesLike,
     overrides?: CallOverrides
-  ): Promise<boolean>
+  ): Promise<boolean>;
 
-  totalSupply(overrides?: CallOverrides): Promise<BigNumber>
+  totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-  uri(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>
+  uri(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
     balanceOf(
       account: string,
       id: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<BigNumber>
+    ): Promise<BigNumber>;
 
     balanceOfBatch(
       accounts: string[],
       ids: BigNumberish[],
       overrides?: CallOverrides
-    ): Promise<BigNumber[]>
-
-    c_0x68791152(
-      c__0x68791152: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<void>
-
-    c_0xd4dc4272(
-      c__0xd4dc4272: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<void>
-
-    c_0xd7d0b979(
-      c__0xd7d0b979: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<void>
-
-    c_0xe78f19ac(
-      c__0xe78f19ac: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<void>
+    ): Promise<BigNumber[]>;
 
     initialize(
       _uri: string,
@@ -461,20 +371,20 @@ export class CyberDestinationFactoryFacet extends BaseContract {
       _opensea: string,
       _oncyber: string,
       overrides?: CallOverrides
-    ): Promise<void>
+    ): Promise<void>;
 
     isApprovedForAll(
       account: string,
       operator: string,
       overrides?: CallOverrides
-    ): Promise<boolean>
+    ): Promise<boolean>;
 
     isTrustedForwarder(
       forwarder: string,
       overrides?: CallOverrides
-    ): Promise<boolean>
+    ): Promise<boolean>;
 
-    manager(overrides?: CallOverrides): Promise<string>
+    manager(overrides?: CallOverrides): Promise<string>;
 
     mint(
       _uri: string,
@@ -482,11 +392,11 @@ export class CyberDestinationFactoryFacet extends BaseContract {
       _amountOncyber: BigNumberish,
       _signature: BytesLike,
       overrides?: CallOverrides
-    ): Promise<BigNumber>
+    ): Promise<BigNumber>;
 
-    minterNonce(_minter: string, overrides?: CallOverrides): Promise<BigNumber>
+    minterNonce(_minter: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-    oncyber(overrides?: CallOverrides): Promise<string>
+    oncyber(overrides?: CallOverrides): Promise<string>;
 
     safeBatchTransferFrom(
       from: string,
@@ -495,7 +405,7 @@ export class CyberDestinationFactoryFacet extends BaseContract {
       amounts: BigNumberish[],
       data: BytesLike,
       overrides?: CallOverrides
-    ): Promise<void>
+    ): Promise<void>;
 
     safeTransferFrom(
       from: string,
@@ -504,23 +414,23 @@ export class CyberDestinationFactoryFacet extends BaseContract {
       amount: BigNumberish,
       data: BytesLike,
       overrides?: CallOverrides
-    ): Promise<void>
+    ): Promise<void>;
 
     setApprovalForAll(
       operator: string,
       status: boolean,
       overrides?: CallOverrides
-    ): Promise<void>
+    ): Promise<void>;
 
     supportsInterface(
       interfaceId: BytesLike,
       overrides?: CallOverrides
-    ): Promise<boolean>
+    ): Promise<boolean>;
 
-    totalSupply(overrides?: CallOverrides): Promise<BigNumber>
+    totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    uri(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>
-  }
+    uri(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  };
 
   filters: {
     ApprovalForAll(
@@ -530,7 +440,7 @@ export class CyberDestinationFactoryFacet extends BaseContract {
     ): TypedEventFilter<
       [string, string, boolean],
       { account: string; operator: string; approved: boolean }
-    >
+    >;
 
     Minted(
       account?: string | null,
@@ -539,7 +449,7 @@ export class CyberDestinationFactoryFacet extends BaseContract {
     ): TypedEventFilter<
       [string, BigNumber, BigNumber],
       { account: string; tokenId: BigNumber; amount: BigNumber }
-    >
+    >;
 
     TransferBatch(
       operator?: string | null,
@@ -550,13 +460,13 @@ export class CyberDestinationFactoryFacet extends BaseContract {
     ): TypedEventFilter<
       [string, string, string, BigNumber[], BigNumber[]],
       {
-        operator: string
-        from: string
-        to: string
-        ids: BigNumber[]
-        values: BigNumber[]
+        operator: string;
+        from: string;
+        to: string;
+        ids: BigNumber[];
+        values: BigNumber[];
       }
-    >
+    >;
 
     TransferSingle(
       operator?: string | null,
@@ -567,52 +477,32 @@ export class CyberDestinationFactoryFacet extends BaseContract {
     ): TypedEventFilter<
       [string, string, string, BigNumber, BigNumber],
       {
-        operator: string
-        from: string
-        to: string
-        id: BigNumber
-        value: BigNumber
+        operator: string;
+        from: string;
+        to: string;
+        id: BigNumber;
+        value: BigNumber;
       }
-    >
+    >;
 
     URI(
       value?: null,
       id?: BigNumberish | null
-    ): TypedEventFilter<[string, BigNumber], { value: string; id: BigNumber }>
-  }
+    ): TypedEventFilter<[string, BigNumber], { value: string; id: BigNumber }>;
+  };
 
   estimateGas: {
     balanceOf(
       account: string,
       id: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<BigNumber>
+    ): Promise<BigNumber>;
 
     balanceOfBatch(
       accounts: string[],
       ids: BigNumberish[],
       overrides?: CallOverrides
-    ): Promise<BigNumber>
-
-    c_0x68791152(
-      c__0x68791152: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>
-
-    c_0xd4dc4272(
-      c__0xd4dc4272: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>
-
-    c_0xd7d0b979(
-      c__0xd7d0b979: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>
-
-    c_0xe78f19ac(
-      c__0xe78f19ac: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>
+    ): Promise<BigNumber>;
 
     initialize(
       _uri: string,
@@ -621,20 +511,20 @@ export class CyberDestinationFactoryFacet extends BaseContract {
       _opensea: string,
       _oncyber: string,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>
+    ): Promise<BigNumber>;
 
     isApprovedForAll(
       account: string,
       operator: string,
       overrides?: CallOverrides
-    ): Promise<BigNumber>
+    ): Promise<BigNumber>;
 
     isTrustedForwarder(
       forwarder: string,
       overrides?: CallOverrides
-    ): Promise<BigNumber>
+    ): Promise<BigNumber>;
 
-    manager(overrides?: CallOverrides): Promise<BigNumber>
+    manager(overrides?: CallOverrides): Promise<BigNumber>;
 
     mint(
       _uri: string,
@@ -642,11 +532,11 @@ export class CyberDestinationFactoryFacet extends BaseContract {
       _amountOncyber: BigNumberish,
       _signature: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>
+    ): Promise<BigNumber>;
 
-    minterNonce(_minter: string, overrides?: CallOverrides): Promise<BigNumber>
+    minterNonce(_minter: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-    oncyber(overrides?: CallOverrides): Promise<BigNumber>
+    oncyber(overrides?: CallOverrides): Promise<BigNumber>;
 
     safeBatchTransferFrom(
       from: string,
@@ -655,7 +545,7 @@ export class CyberDestinationFactoryFacet extends BaseContract {
       amounts: BigNumberish[],
       data: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>
+    ): Promise<BigNumber>;
 
     safeTransferFrom(
       from: string,
@@ -664,56 +554,36 @@ export class CyberDestinationFactoryFacet extends BaseContract {
       amount: BigNumberish,
       data: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>
+    ): Promise<BigNumber>;
 
     setApprovalForAll(
       operator: string,
       status: boolean,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>
+    ): Promise<BigNumber>;
 
     supportsInterface(
       interfaceId: BytesLike,
       overrides?: CallOverrides
-    ): Promise<BigNumber>
+    ): Promise<BigNumber>;
 
-    totalSupply(overrides?: CallOverrides): Promise<BigNumber>
+    totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    uri(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>
-  }
+    uri(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  };
 
   populateTransaction: {
     balanceOf(
       account: string,
       id: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>
+    ): Promise<PopulatedTransaction>;
 
     balanceOfBatch(
       accounts: string[],
       ids: BigNumberish[],
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>
-
-    c_0x68791152(
-      c__0x68791152: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>
-
-    c_0xd4dc4272(
-      c__0xd4dc4272: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>
-
-    c_0xd7d0b979(
-      c__0xd7d0b979: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>
-
-    c_0xe78f19ac(
-      c__0xe78f19ac: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>
+    ): Promise<PopulatedTransaction>;
 
     initialize(
       _uri: string,
@@ -722,20 +592,20 @@ export class CyberDestinationFactoryFacet extends BaseContract {
       _opensea: string,
       _oncyber: string,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>
+    ): Promise<PopulatedTransaction>;
 
     isApprovedForAll(
       account: string,
       operator: string,
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>
+    ): Promise<PopulatedTransaction>;
 
     isTrustedForwarder(
       forwarder: string,
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>
+    ): Promise<PopulatedTransaction>;
 
-    manager(overrides?: CallOverrides): Promise<PopulatedTransaction>
+    manager(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     mint(
       _uri: string,
@@ -743,14 +613,14 @@ export class CyberDestinationFactoryFacet extends BaseContract {
       _amountOncyber: BigNumberish,
       _signature: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>
+    ): Promise<PopulatedTransaction>;
 
     minterNonce(
       _minter: string,
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>
+    ): Promise<PopulatedTransaction>;
 
-    oncyber(overrides?: CallOverrides): Promise<PopulatedTransaction>
+    oncyber(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     safeBatchTransferFrom(
       from: string,
@@ -759,7 +629,7 @@ export class CyberDestinationFactoryFacet extends BaseContract {
       amounts: BigNumberish[],
       data: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>
+    ): Promise<PopulatedTransaction>;
 
     safeTransferFrom(
       from: string,
@@ -768,24 +638,24 @@ export class CyberDestinationFactoryFacet extends BaseContract {
       amount: BigNumberish,
       data: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>
+    ): Promise<PopulatedTransaction>;
 
     setApprovalForAll(
       operator: string,
       status: boolean,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>
+    ): Promise<PopulatedTransaction>;
 
     supportsInterface(
       interfaceId: BytesLike,
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>
+    ): Promise<PopulatedTransaction>;
 
-    totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>
+    totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     uri(
       _tokenId: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>
-  }
+    ): Promise<PopulatedTransaction>;
+  };
 }

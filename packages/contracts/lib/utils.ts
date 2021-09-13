@@ -31,7 +31,7 @@ export async function signMintingUtilityRequest(
   timeEnd: number,
   price: number,
   amountCap: number,
-  shareOncyber: number,
+  shareCyber: number,
   nonce: string,
   minter: string,
   signer: Signer
@@ -47,8 +47,8 @@ export async function signMintingUtilityRequest(
     BigNumber.from(amountCap).toHexString(),
     32
   )
-  const aShareOncyber = utils.hexZeroPad(
-    BigNumber.from(shareOncyber).toHexString(),
+  const ashareCyber = utils.hexZeroPad(
+    BigNumber.from(shareCyber).toHexString(),
     32
   )
   const aNonce = utils.hexZeroPad(BigNumber.from(nonce).toHexString(), 32)
@@ -59,7 +59,7 @@ export async function signMintingUtilityRequest(
     aTimeEnd,
     aPrice,
     aAmountCap,
-    aShareOncyber,
+    ashareCyber,
     aNonce,
     aMinter,
   ])

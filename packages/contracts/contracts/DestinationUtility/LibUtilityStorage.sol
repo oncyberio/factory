@@ -9,7 +9,7 @@ library LibUtilityStorage {
   struct Drop {
     uint256 timeStart;
     uint256 timeEnd;
-    uint256 shareOncyber;
+    uint256 shareCyber;
     uint256 price;
     uint256 amountCap;
     uint256 minted;

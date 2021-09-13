@@ -2,72 +2,59 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Signer, utils, Contract, ContractFactory, Overrides } from 'ethers'
-import { Provider, TransactionRequest } from '@ethersproject/providers'
-import type { LibAppStorage, LibAppStorageInterface } from '../LibAppStorage'
+import { Signer, utils, Contract, ContractFactory, Overrides } from "ethers";
+import { Provider, TransactionRequest } from "@ethersproject/providers";
+import type { LibAppStorage, LibAppStorageInterface } from "../LibAppStorage";
 
 const _abi = [
   {
     inputs: [],
-    name: 'STORAGE_SLOT',
+    name: "STORAGE_SLOT",
     outputs: [
       {
-        internalType: 'bytes32',
-        name: '',
-        type: 'bytes32',
+        internalType: "bytes32",
+        name: "",
+        type: "bytes32",
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
+    stateMutability: "view",
+    type: "function",
   },
-  {
-    inputs: [
-      {
-        internalType: 'bytes32',
-        name: 'c__0x6adf39b3',
-        type: 'bytes32',
-      },
-    ],
-    name: 'c_0x6adf39b3',
-    outputs: [],
-    stateMutability: 'pure',
-    type: 'function',
-  },
-]
+];
 
 const _bytecode =
-  '0x61016e610053600b82828239805160001a607314610046577f4e487b7100000000000000000000000000000000000000000000000000000000600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600436106100405760003560e01c80631223220514610045578063517d217e14610061575b600080fd5b61005f600480360381019061005a91906100bb565b61007f565b005b610069610082565b60405161007691906100f7565b60405180910390f35b50565b7f47dc25f21c7793543edaeb1ef19d41726ddbada967ae9a7980b9bd8a45228a5e81565b6000813590506100b581610121565b92915050565b6000602082840312156100d1576100d061011c565b5b60006100df848285016100a6565b91505092915050565b6100f181610112565b82525050565b600060208201905061010c60008301846100e8565b92915050565b6000819050919050565b600080fd5b61012a81610112565b811461013557600080fd5b5056fea2646970667358221220bbd3b34ade39d4e5327eab319123e5387386b5e91122a6e25baf72fa53ef3c5464736f6c63430008070033'
+  "0x60a6610038600b82828239805160001a607314602b57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe730000000000000000000000000000000000000000301460806040526004361060335760003560e01c8063517d217e146038575b600080fd5b605e7f47dc25f21c7793543edaeb1ef19d41726ddbada967ae9a7980b9bd8a45228a5e81565b60405190815260200160405180910390f3fea26469706673582212206b60614455bc1bb7193e74460f55be9a3fcef6ccff18ac5da2378befe1a2381664736f6c63430008070033";
 
 export class LibAppStorage__factory extends ContractFactory {
   constructor(signer?: Signer) {
-    super(_abi, _bytecode, signer)
+    super(_abi, _bytecode, signer);
   }
 
   deploy(
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<LibAppStorage> {
-    return super.deploy(overrides || {}) as Promise<LibAppStorage>
+    return super.deploy(overrides || {}) as Promise<LibAppStorage>;
   }
   getDeployTransaction(
     overrides?: Overrides & { from?: string | Promise<string> }
   ): TransactionRequest {
-    return super.getDeployTransaction(overrides || {})
+    return super.getDeployTransaction(overrides || {});
   }
   attach(address: string): LibAppStorage {
-    return super.attach(address) as LibAppStorage
+    return super.attach(address) as LibAppStorage;
   }
   connect(signer: Signer): LibAppStorage__factory {
-    return super.connect(signer) as LibAppStorage__factory
+    return super.connect(signer) as LibAppStorage__factory;
   }
-  static readonly bytecode = _bytecode
-  static readonly abi = _abi
+  static readonly bytecode = _bytecode;
+  static readonly abi = _abi;
   static createInterface(): LibAppStorageInterface {
-    return new utils.Interface(_abi) as LibAppStorageInterface
+    return new utils.Interface(_abi) as LibAppStorageInterface;
   }
   static connect(
     address: string,
     signerOrProvider: Signer | Provider
   ): LibAppStorage {
-    return new Contract(address, _abi, signerOrProvider) as LibAppStorage
+    return new Contract(address, _abi, signerOrProvider) as LibAppStorage;
   }
 }

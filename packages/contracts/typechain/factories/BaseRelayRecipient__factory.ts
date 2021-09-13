@@ -2,57 +2,44 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Contract, Signer, utils } from 'ethers'
-import { Provider } from '@ethersproject/providers'
+import { Contract, Signer, utils } from "ethers";
+import { Provider } from "@ethersproject/providers";
 import type {
   BaseRelayRecipient,
   BaseRelayRecipientInterface,
-} from '../BaseRelayRecipient'
+} from "../BaseRelayRecipient";
 
 const _abi = [
   {
     inputs: [
       {
-        internalType: 'bytes32',
-        name: 'c__0xd4dc4272',
-        type: 'bytes32',
+        internalType: "address",
+        name: "forwarder",
+        type: "address",
       },
     ],
-    name: 'c_0xd4dc4272',
-    outputs: [],
-    stateMutability: 'pure',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'forwarder',
-        type: 'address',
-      },
-    ],
-    name: 'isTrustedForwarder',
+    name: "isTrustedForwarder",
     outputs: [
       {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
+        internalType: "bool",
+        name: "",
+        type: "bool",
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
+    stateMutability: "view",
+    type: "function",
   },
-]
+];
 
 export class BaseRelayRecipient__factory {
-  static readonly abi = _abi
+  static readonly abi = _abi;
   static createInterface(): BaseRelayRecipientInterface {
-    return new utils.Interface(_abi) as BaseRelayRecipientInterface
+    return new utils.Interface(_abi) as BaseRelayRecipientInterface;
   }
   static connect(
     address: string,
     signerOrProvider: Signer | Provider
   ): BaseRelayRecipient {
-    return new Contract(address, _abi, signerOrProvider) as BaseRelayRecipient
+    return new Contract(address, _abi, signerOrProvider) as BaseRelayRecipient;
   }
 }

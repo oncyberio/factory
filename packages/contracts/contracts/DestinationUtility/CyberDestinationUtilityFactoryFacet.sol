@@ -35,12 +35,12 @@ contract CyberDestinationUtilityFactoryFacet is CyberDestinationFactoryBase {
     uint256 _timeEnd,
     uint256 _price,
     uint256 _amountCap,
-    uint256 _shareOncyber,
+    uint256 _shareCyber,
     bytes memory _signature
   ) public returns (uint256 _tokenId) {
     address sender = _msgSender();
     uint256 nonce = minterNonce(sender);
-    require(_shareOncyber <= 100, 'ISO');
+    require(_shareCyber <= 100, 'ISO');
     require(_timeStart < _timeEnd, 'IT');
 
     bytes memory _message = abi.encodePacked(
@@ -49,7 +49,7 @@ contract CyberDestinationUtilityFactoryFacet is CyberDestinationFactoryBase {
       _timeEnd,
       _price,
       _amountCap,
-      _shareOncyber,
+      _shareCyber,
       nonce,
       sender
     );
@@ -67,7 +67,7 @@ contract CyberDestinationUtilityFactoryFacet is CyberDestinationFactoryBase {
       timeStart: _timeStart,
       timeEnd: _timeEnd,
       amountCap: _amountCap,
-      shareOncyber: _shareOncyber,
+      shareCyber: _shareCyber,
       creator: payable(sender),
       price: _price,
       minted: 0
@@ -85,19 +85,23 @@ contract CyberDestinationUtilityFactoryFacet is CyberDestinationFactoryBase {
     LibUtilityStorage.Drop storage drop = LibUtilityStorage.layout().drops[
       _tokenId
     ];
+    
     require(
       block.timestamp >= drop.timeStart && block.timestamp <= drop.timeEnd,
       'OOT'
     );
+
     require(msg.value == drop.price, 'IA');
+    
     if (drop.amountCap != 0) {
       require(drop.minted < drop.amountCap, 'CR');
     }
-    drop.minted += 1;
+
     _safeMint(sender, _tokenId, 1, '');
+    drop.minted += 1;
     emit Minted(sender, _tokenId, 1);
 
-    uint256 amountOnCyber = (msg.value * drop.shareOncyber) / 100;
+    uint256 amountOnCyber = (msg.value * drop.shareCyber) / 100;
     uint256 amountCreator = msg.value - amountOnCyber;
 
     drop.creator.transfer(amountCreator);
