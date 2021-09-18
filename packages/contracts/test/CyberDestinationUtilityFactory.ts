@@ -137,8 +137,8 @@ describe('CyberDestinationUtilityFactory', function () {
     expect(await memory.contract.totalSupply()).to.eq('1')
 
     const drop = await memory.contract.getDrop(tokenId)
-    expect(drop.timeStart).to.eq(timeStart)
-    expect(drop.timeEnd).to.eq(timeEnd)
+    expect(drop.timeStart).to.eq(timeStart.toString())
+    expect(drop.timeEnd).to.eq(timeEnd.toString())
     expect(drop.shareCyber).to.eq(shareCyber)
     expect(drop.price).to.eq(price)
     expect(drop.amountCap).to.eq(amountCap)
