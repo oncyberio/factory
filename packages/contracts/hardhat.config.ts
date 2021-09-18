@@ -13,6 +13,7 @@ import { parseUnits } from 'ethers/lib/utils'
 
 const defaultPrivateKey =
   '0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80' // hardhat 0
+console.log("GWEI, " + parseUnits('65', 'gwei').toNumber());
 
 const config: HardhatUserConfig = {
   preprocess: {
@@ -71,8 +72,8 @@ const config: HardhatUserConfig = {
       url:
         process.env.ALCHEMY_URL ||
         'https://mainnet.infura.io/v3/b89e58ca51184cb783845c58340629c4',
-      gasPrice: parseUnits('24', 'gwei').toNumber(),
-      accounts: [process.env.MAINNET_PRIVATE_KEY || defaultPrivateKey],
+      gasPrice: parseUnits('59', 'gwei').toNumber(),
+      accounts: [process.env.MAINNET_FACTORY_PRIVATE_KEY || defaultPrivateKey],
     },
   },
 }

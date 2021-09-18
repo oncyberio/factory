@@ -25,10 +25,6 @@ interface CyberDestinationUtilityFactoryFacetInterface
   functions: {
     "balanceOf(address,uint256)": FunctionFragment;
     "balanceOfBatch(address[],uint256[])": FunctionFragment;
-    "c_0x14e9484a(bytes32)": FunctionFragment;
-    "c_0x2bf71fc6(bytes32)": FunctionFragment;
-    "c_0xcb4a5216(bytes32)": FunctionFragment;
-    "c_0xe504ae9e(bytes32)": FunctionFragment;
     "getDrop(uint256)": FunctionFragment;
     "initialize(string,address,address,address,address)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
@@ -53,22 +49,6 @@ interface CyberDestinationUtilityFactoryFacetInterface
   encodeFunctionData(
     functionFragment: "balanceOfBatch",
     values: [string[], BigNumberish[]]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "c_0x14e9484a",
-    values: [BytesLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "c_0x2bf71fc6",
-    values: [BytesLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "c_0xcb4a5216",
-    values: [BytesLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "c_0xe504ae9e",
-    values: [BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "getDrop",
@@ -130,22 +110,6 @@ interface CyberDestinationUtilityFactoryFacetInterface
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "balanceOfBatch",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "c_0x14e9484a",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "c_0x2bf71fc6",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "c_0xcb4a5216",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "c_0xe504ae9e",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "getDrop", data: BytesLike): Result;
@@ -264,26 +228,6 @@ export class CyberDestinationUtilityFactoryFacet extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber[]]>;
 
-    c_0x14e9484a(
-      c__0x14e9484a: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<[void]>;
-
-    c_0x2bf71fc6(
-      c__0x2bf71fc6: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<[void]>;
-
-    c_0xcb4a5216(
-      c__0xcb4a5216: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<[void]>;
-
-    c_0xe504ae9e(
-      c__0xe504ae9e: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<[void]>;
-
     getDrop(
       _tokenId: BigNumberish,
       overrides?: CallOverrides
@@ -400,26 +344,6 @@ export class CyberDestinationUtilityFactoryFacet extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber[]>;
 
-  c_0x14e9484a(
-    c__0x14e9484a: BytesLike,
-    overrides?: CallOverrides
-  ): Promise<void>;
-
-  c_0x2bf71fc6(
-    c__0x2bf71fc6: BytesLike,
-    overrides?: CallOverrides
-  ): Promise<void>;
-
-  c_0xcb4a5216(
-    c__0xcb4a5216: BytesLike,
-    overrides?: CallOverrides
-  ): Promise<void>;
-
-  c_0xe504ae9e(
-    c__0xe504ae9e: BytesLike,
-    overrides?: CallOverrides
-  ): Promise<void>;
-
   getDrop(
     _tokenId: BigNumberish,
     overrides?: CallOverrides
@@ -530,26 +454,6 @@ export class CyberDestinationUtilityFactoryFacet extends BaseContract {
       ids: BigNumberish[],
       overrides?: CallOverrides
     ): Promise<BigNumber[]>;
-
-    c_0x14e9484a(
-      c__0x14e9484a: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    c_0x2bf71fc6(
-      c__0x2bf71fc6: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    c_0xcb4a5216(
-      c__0xcb4a5216: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    c_0xe504ae9e(
-      c__0xe504ae9e: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<void>;
 
     getDrop(
       _tokenId: BigNumberish,
@@ -730,26 +634,6 @@ export class CyberDestinationUtilityFactoryFacet extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    c_0x14e9484a(
-      c__0x14e9484a: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    c_0x2bf71fc6(
-      c__0x2bf71fc6: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    c_0xcb4a5216(
-      c__0xcb4a5216: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    c_0xe504ae9e(
-      c__0xe504ae9e: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     getDrop(
       _tokenId: BigNumberish,
       overrides?: CallOverrides
@@ -841,26 +725,6 @@ export class CyberDestinationUtilityFactoryFacet extends BaseContract {
     balanceOfBatch(
       accounts: string[],
       ids: BigNumberish[],
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    c_0x14e9484a(
-      c__0x14e9484a: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    c_0x2bf71fc6(
-      c__0x2bf71fc6: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    c_0xcb4a5216(
-      c__0xcb4a5216: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    c_0xe504ae9e(
-      c__0xe504ae9e: BytesLike,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
