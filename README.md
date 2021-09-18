@@ -17,9 +17,9 @@ Diamond Implementation Token Facet 0xAEDEF724E38522c67983C04DE25Df812F9A87781
 ### Ethereum Addresses
 
 Diamond Cyber Destination Factory address
-not deployed yet <br />
+0x226Bf5293692610692E2C996C9875C914d2A7f73 <br />
 Diamond Implementation Token Facet
-not deployed yet
+0xf90fd2bF6E375f9B9528C67329e3cA103Bca2C72
 
 ### Rinkeby Addresses
 
