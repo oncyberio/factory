@@ -20,16 +20,25 @@ import { TypedEventFilter, TypedEvent, TypedListener } from "./commons";
 
 interface LibAppStorageInterface extends ethers.utils.Interface {
   functions: {
-    "c_0x9caa6bf8(bytes32)": FunctionFragment;
+    "STORAGE_SLOT()": FunctionFragment;
+    "c_0x0ff4911f(bytes32)": FunctionFragment;
   };
 
   encodeFunctionData(
-    functionFragment: "c_0x9caa6bf8",
+    functionFragment: "STORAGE_SLOT",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "c_0x0ff4911f",
     values: [BytesLike]
   ): string;
 
   decodeFunctionResult(
-    functionFragment: "c_0x9caa6bf8",
+    functionFragment: "STORAGE_SLOT",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "c_0x0ff4911f",
     data: BytesLike
   ): Result;
 
@@ -80,20 +89,26 @@ export class LibAppStorage extends BaseContract {
   interface: LibAppStorageInterface;
 
   functions: {
-    c_0x9caa6bf8(
-      c__0x9caa6bf8: BytesLike,
+    STORAGE_SLOT(overrides?: CallOverrides): Promise<[string]>;
+
+    c_0x0ff4911f(
+      c__0x0ff4911f: BytesLike,
       overrides?: CallOverrides
     ): Promise<[void]>;
   };
 
-  c_0x9caa6bf8(
-    c__0x9caa6bf8: BytesLike,
+  STORAGE_SLOT(overrides?: CallOverrides): Promise<string>;
+
+  c_0x0ff4911f(
+    c__0x0ff4911f: BytesLike,
     overrides?: CallOverrides
   ): Promise<void>;
 
   callStatic: {
-    c_0x9caa6bf8(
-      c__0x9caa6bf8: BytesLike,
+    STORAGE_SLOT(overrides?: CallOverrides): Promise<string>;
+
+    c_0x0ff4911f(
+      c__0x0ff4911f: BytesLike,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -101,15 +116,19 @@ export class LibAppStorage extends BaseContract {
   filters: {};
 
   estimateGas: {
-    c_0x9caa6bf8(
-      c__0x9caa6bf8: BytesLike,
+    STORAGE_SLOT(overrides?: CallOverrides): Promise<BigNumber>;
+
+    c_0x0ff4911f(
+      c__0x0ff4911f: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    c_0x9caa6bf8(
-      c__0x9caa6bf8: BytesLike,
+    STORAGE_SLOT(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    c_0x0ff4911f(
+      c__0x0ff4911f: BytesLike,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };

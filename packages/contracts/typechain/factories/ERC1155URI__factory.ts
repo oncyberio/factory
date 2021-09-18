@@ -176,6 +176,19 @@ const _abi = [
   {
     inputs: [
       {
+        internalType: "bytes32",
+        name: "c__0x2bf71fc6",
+        type: "bytes32",
+      },
+    ],
+    name: "c_0x2bf71fc6",
+    outputs: [],
+    stateMutability: "pure",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
         internalType: "address",
         name: "account",
         type: "address",

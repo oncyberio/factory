@@ -1,9 +1,4 @@
 /node_modules
 .idea
 .vercel
-public
-artifacts
-cache
-.next
-coverage/
-deployments/
+packages

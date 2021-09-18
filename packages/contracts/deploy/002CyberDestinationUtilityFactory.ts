@@ -17,7 +17,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
         namedAccounts.managerDestinationUtility,
         namedAccounts.biconomyForwarder,
         namedAccounts.opensea,
-        namedAccounts.oncyber
+        namedAccounts.oncyber,
       ],
     },
     log: true,

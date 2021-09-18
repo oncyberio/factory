@@ -1,1 +1,1 @@
-declare module '@biconomy/mexa';
+declare module '@biconomy/mexa'

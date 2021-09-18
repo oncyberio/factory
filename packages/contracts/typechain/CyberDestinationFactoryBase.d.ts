@@ -23,11 +23,13 @@ interface CyberDestinationFactoryBaseInterface extends ethers.utils.Interface {
   functions: {
     "balanceOf(address,uint256)": FunctionFragment;
     "balanceOfBatch(address[],uint256[])": FunctionFragment;
+    "c_0x14e9484a(bytes32)": FunctionFragment;
+    "c_0x2bf71fc6(bytes32)": FunctionFragment;
+    "c_0xe504ae9e(bytes32)": FunctionFragment;
     "initialize(string,address,address,address,address)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
     "isTrustedForwarder(address)": FunctionFragment;
     "manager()": FunctionFragment;
-    "mint(string,uint256,uint256,bytes)": FunctionFragment;
     "minterNonce(address)": FunctionFragment;
     "oncyber()": FunctionFragment;
     "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)": FunctionFragment;
@@ -47,6 +49,18 @@ interface CyberDestinationFactoryBaseInterface extends ethers.utils.Interface {
     values: [string[], BigNumberish[]]
   ): string;
   encodeFunctionData(
+    functionFragment: "c_0x14e9484a",
+    values: [BytesLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "c_0x2bf71fc6",
+    values: [BytesLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "c_0xe504ae9e",
+    values: [BytesLike]
+  ): string;
+  encodeFunctionData(
     functionFragment: "initialize",
     values: [string, string, string, string, string]
   ): string;
@@ -59,10 +73,6 @@ interface CyberDestinationFactoryBaseInterface extends ethers.utils.Interface {
     values: [string]
   ): string;
   encodeFunctionData(functionFragment: "manager", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "mint",
-    values: [string, BigNumberish, BigNumberish, BytesLike]
-  ): string;
   encodeFunctionData(functionFragment: "minterNonce", values: [string]): string;
   encodeFunctionData(functionFragment: "oncyber", values?: undefined): string;
   encodeFunctionData(
@@ -92,6 +102,18 @@ interface CyberDestinationFactoryBaseInterface extends ethers.utils.Interface {
     functionFragment: "balanceOfBatch",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "c_0x14e9484a",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "c_0x2bf71fc6",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "c_0xe504ae9e",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "isApprovedForAll",
@@ -102,7 +124,6 @@ interface CyberDestinationFactoryBaseInterface extends ethers.utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "manager", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "minterNonce",
     data: BytesLike
@@ -201,6 +222,21 @@ export class CyberDestinationFactoryBase extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber[]]>;
 
+    c_0x14e9484a(
+      c__0x14e9484a: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<[void]>;
+
+    c_0x2bf71fc6(
+      c__0x2bf71fc6: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<[void]>;
+
+    c_0xe504ae9e(
+      c__0xe504ae9e: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<[void]>;
+
     initialize(
       _uri: string,
       _manager: string,
@@ -222,14 +258,6 @@ export class CyberDestinationFactoryBase extends BaseContract {
     ): Promise<[boolean]>;
 
     manager(overrides?: CallOverrides): Promise<[string]>;
-
-    mint(
-      _uri: string,
-      _amount: BigNumberish,
-      _amount_oncyber: BigNumberish,
-      _signature: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
 
     minterNonce(
       _minter: string,
@@ -284,6 +312,21 @@ export class CyberDestinationFactoryBase extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber[]>;
 
+  c_0x14e9484a(
+    c__0x14e9484a: BytesLike,
+    overrides?: CallOverrides
+  ): Promise<void>;
+
+  c_0x2bf71fc6(
+    c__0x2bf71fc6: BytesLike,
+    overrides?: CallOverrides
+  ): Promise<void>;
+
+  c_0xe504ae9e(
+    c__0xe504ae9e: BytesLike,
+    overrides?: CallOverrides
+  ): Promise<void>;
+
   initialize(
     _uri: string,
     _manager: string,
@@ -305,14 +348,6 @@ export class CyberDestinationFactoryBase extends BaseContract {
   ): Promise<boolean>;
 
   manager(overrides?: CallOverrides): Promise<string>;
-
-  mint(
-    _uri: string,
-    _amount: BigNumberish,
-    _amount_oncyber: BigNumberish,
-    _signature: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
 
   minterNonce(_minter: string, overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -364,6 +399,21 @@ export class CyberDestinationFactoryBase extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber[]>;
 
+    c_0x14e9484a(
+      c__0x14e9484a: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    c_0x2bf71fc6(
+      c__0x2bf71fc6: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    c_0xe504ae9e(
+      c__0xe504ae9e: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     initialize(
       _uri: string,
       _manager: string,
@@ -385,14 +435,6 @@ export class CyberDestinationFactoryBase extends BaseContract {
     ): Promise<boolean>;
 
     manager(overrides?: CallOverrides): Promise<string>;
-
-    mint(
-      _uri: string,
-      _amount: BigNumberish,
-      _amount_oncyber: BigNumberish,
-      _signature: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
 
     minterNonce(_minter: string, overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -504,6 +546,21 @@ export class CyberDestinationFactoryBase extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    c_0x14e9484a(
+      c__0x14e9484a: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    c_0x2bf71fc6(
+      c__0x2bf71fc6: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    c_0xe504ae9e(
+      c__0xe504ae9e: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     initialize(
       _uri: string,
       _manager: string,
@@ -525,14 +582,6 @@ export class CyberDestinationFactoryBase extends BaseContract {
     ): Promise<BigNumber>;
 
     manager(overrides?: CallOverrides): Promise<BigNumber>;
-
-    mint(
-      _uri: string,
-      _amount: BigNumberish,
-      _amount_oncyber: BigNumberish,
-      _signature: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
 
     minterNonce(_minter: string, overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -585,6 +634,21 @@ export class CyberDestinationFactoryBase extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    c_0x14e9484a(
+      c__0x14e9484a: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    c_0x2bf71fc6(
+      c__0x2bf71fc6: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    c_0xe504ae9e(
+      c__0xe504ae9e: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     initialize(
       _uri: string,
       _manager: string,
@@ -606,14 +670,6 @@ export class CyberDestinationFactoryBase extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     manager(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    mint(
-      _uri: string,
-      _amount: BigNumberish,
-      _amount_oncyber: BigNumberish,
-      _signature: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
 
     minterNonce(
       _minter: string,

@@ -1,0 +1,65 @@
+name: Oncyber tests
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 12.x
+      - uses: actions/cache@v2
+        with:
+          path: '**/node_modules'
+          key: nodeModules-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+      - name: Install packages
+        run: npm i
+        env:
+          CI: true
+      - name: Fix deps
+        run: cd packages/contracts && npm run fix:deps
+        env:
+          CI: true
+      - name: Testing
+        run: npm test
+        env:
+          CI: true
+  lint:
+    name: Run Linter
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 12.x
+      - uses: actions/cache@v2
+        with:
+          path: '**/node_modules'
+          key: nodeModules-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+      - name: Install packages
+        run: npm i
+        env:
+          CI: true
+      - name: Fix deps
+        run: cd packages/contracts && npm run fix:deps
+        env:
+          CI: true
+      - name: Linter
+        run: npm run lint
+        env:
+          CI: true
+      - name: Prettier
+        run: npm run prettier
+        env:
+          CI: true
