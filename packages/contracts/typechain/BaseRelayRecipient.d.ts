@@ -20,14 +20,23 @@ import { TypedEventFilter, TypedEvent, TypedListener } from "./commons";
 
 interface BaseRelayRecipientInterface extends ethers.utils.Interface {
   functions: {
+    "c_0xe504ae9e(bytes32)": FunctionFragment;
     "isTrustedForwarder(address)": FunctionFragment;
   };
 
+  encodeFunctionData(
+    functionFragment: "c_0xe504ae9e",
+    values: [BytesLike]
+  ): string;
   encodeFunctionData(
     functionFragment: "isTrustedForwarder",
     values: [string]
   ): string;
 
+  decodeFunctionResult(
+    functionFragment: "c_0xe504ae9e",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "isTrustedForwarder",
     data: BytesLike
@@ -80,11 +89,21 @@ export class BaseRelayRecipient extends BaseContract {
   interface: BaseRelayRecipientInterface;
 
   functions: {
+    c_0xe504ae9e(
+      c__0xe504ae9e: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<[void]>;
+
     isTrustedForwarder(
       forwarder: string,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
   };
+
+  c_0xe504ae9e(
+    c__0xe504ae9e: BytesLike,
+    overrides?: CallOverrides
+  ): Promise<void>;
 
   isTrustedForwarder(
     forwarder: string,
@@ -92,6 +111,11 @@ export class BaseRelayRecipient extends BaseContract {
   ): Promise<boolean>;
 
   callStatic: {
+    c_0xe504ae9e(
+      c__0xe504ae9e: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     isTrustedForwarder(
       forwarder: string,
       overrides?: CallOverrides
@@ -101,6 +125,11 @@ export class BaseRelayRecipient extends BaseContract {
   filters: {};
 
   estimateGas: {
+    c_0xe504ae9e(
+      c__0xe504ae9e: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     isTrustedForwarder(
       forwarder: string,
       overrides?: CallOverrides
@@ -108,6 +137,11 @@ export class BaseRelayRecipient extends BaseContract {
   };
 
   populateTransaction: {
+    c_0xe504ae9e(
+      c__0xe504ae9e: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     isTrustedForwarder(
       forwarder: string,
       overrides?: CallOverrides
