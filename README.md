@@ -1,5 +1,9 @@
 # Cyber Destination Diamonds
 
+It’s no secret that our involvement in the space doesn’t stop at galleries and we found that the best way to keep adding utility to existing tokens is to deploy Diamond Smart Contracts. While it can appear to be less centralized (we can upgrade contracts), it allows us to keep improving our logic; drop mechanisms, data that can be stored on chain and the way different tokens can be played with. In time, the contracts will be made trustless. In the meantime though, we’re constantly thinking about ways to improve our platform, and our smart contracts logic with it.  
+
+The general idea is that you interact with a Proxy contract that contains tokens, but the methods used are delegated to another contract that can be upgraded over time. In our case, the actual contract that is used through the proxy is here (link to contract). The main contract isn’t verified for an issue known to the hardhat-deploy team and we are extremely grateful that Ronan, the creator, has made this issue one of his main priorities for the coming days. We also want to give a huge shoutout to Nick Mudge (creator of the Diamond EIP-2535 standard).
+
 ## Destination is for our curated collection
 
 ### Ethereum Addresses
