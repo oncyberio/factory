@@ -19,7 +19,8 @@
     "deploy:ethereum": "hardhat --network ethereum deploy",
     "flatten": "npm run flatten:CyberDestinationFactoryFacet && npm run flatten:CyberDestinationUtilityFactoryFacet",
     "flatten:CyberDestinationFactoryFacet": "hardhat flatten contracts/Destination/CyberDestinationFactoryFacet.sol > deployments/CyberDestinationFactoryFacet.flatten.sol",
-    "flatten:CyberDestinationUtilityFactoryFacet": "hardhat flatten contracts/Destination/CyberDestinationUtilityFactoryFacet.sol > deployments/CyberDestinationUtilityFactoryFacet.flatten.sol"
+    "flatten:CyberDestinationUtilityFactoryFacet": "hardhat flatten contracts/Destination/CyberDestinationUtilityFactoryFacet.sol > deployments/CyberDestinationUtilityFactoryFacet.flatten.sol",
+    "verify": "hardhat etherscan-verify --network ethereum --solc-input"
   },
   "author": "",
   "license": "MIT",
