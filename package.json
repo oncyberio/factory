@@ -1,7 +1,6 @@
 {
   "private": true,
   "scripts": {
-    "server:dev": "vercel dev",
     "install": "lerna bootstrap",
     "build": "lerna run build",
     "test": "lerna run test",
