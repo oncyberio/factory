@@ -32,7 +32,7 @@ describe('CyberDestinationFactory', function () {
   })
 
   it('sets up the contract', async () => {
-    expect(await memory.contract.totalSupply()).to.eq('0')
+    expect(await memory.contract['totalSupply()']()).to.eq('0')
     expect(await memory.contract.manager()).to.be.eq(memory.manager.address)
     expect(await memory.contract.oncyber()).to.be.eq(memory.oncyber.address)
     expect(
@@ -69,7 +69,7 @@ describe('CyberDestinationFactory', function () {
     ).to.eq('1')
     expect(await memory.contract.minterNonce(memory.other.address)).to.eq('1')
     expect(await memory.contract.uri(tokenId)).to.eq(tokenURI(uri))
-    expect(await memory.contract.totalSupply()).to.eq('1')
+    expect(await memory.contract['totalSupply()']()).to.eq('1')
     expect(
       await memory.contract.isApprovedForAll(
         memory.other.address,
@@ -103,7 +103,7 @@ describe('CyberDestinationFactory', function () {
       await memory.contract.balanceOf(memory.oncyber.address, tokenId)
     ).to.eq('3')
     expect(await memory.contract.uri(tokenId)).to.eq(tokenURI(uri))
-    expect(await memory.contract.totalSupply()).to.eq('1')
+    expect(await memory.contract['totalSupply()']()).to.eq('1')
     expect(
       await memory.contract.isApprovedForAll(
         memory.other.address,
@@ -136,7 +136,7 @@ describe('CyberDestinationFactory', function () {
     ).to.eq('6')
     expect(await memory.contract.minterNonce(memory.other.address)).to.eq('2')
     expect(await memory.contract.uri(tokenId1)).to.eq(tokenURI(uri1))
-    expect(await memory.contract.totalSupply()).to.eq('2')
+    expect(await memory.contract['totalSupply()']()).to.eq('2')
     expect(
       await memory.contract.isApprovedForAll(
         memory.other.address,
@@ -191,7 +191,7 @@ describe('CyberDestinationFactory', function () {
     ).to.eq('0')
     expect(await memory.contract.minterNonce(memory.other.address)).to.eq('1')
     expect(await memory.contract.uri(tokenId)).to.eq(tokenURI(uri))
-    expect(await memory.contract.totalSupply()).to.eq('1')
+    expect(await memory.contract['totalSupply()']()).to.eq('1')
     expect(
       await memory.contract.isApprovedForAll(
         memory.other.address,

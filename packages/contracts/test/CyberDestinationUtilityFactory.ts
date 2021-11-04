@@ -34,7 +34,7 @@ describe('CyberDestinationUtilityFactory', function () {
   })
 
   it('sets up the contract', async () => {
-    expect(await memory.contract.totalSupply()).to.eq('0')
+    expect(await memory.contract['totalSupply()']()).to.eq('0')
     expect(await memory.contract.manager()).to.be.eq(memory.manager.address)
     expect(await memory.contract.oncyber()).to.be.eq(memory.oncyber.address)
     expect(
@@ -86,7 +86,7 @@ describe('CyberDestinationUtilityFactory', function () {
     ).to.eq('0')
     expect(await memory.contract.minterNonce(memory.other.address)).to.eq('1')
     expect(await memory.contract.uri(tokenId)).to.eq(tokenURI(uri))
-    expect(await memory.contract.totalSupply()).to.eq('1')
+    expect(await memory.contract['totalSupply()']()).to.eq('1')
 
     const drop = await memory.contract.getDrop(tokenId)
     expect(drop.timeStart).to.eq(timeStart)
@@ -134,7 +134,7 @@ describe('CyberDestinationUtilityFactory', function () {
     ).to.eq('0')
     expect(await memory.contract.minterNonce(memory.other.address)).to.eq('1')
     expect(await memory.contract.uri(tokenId)).to.eq(tokenURI(uri))
-    expect(await memory.contract.totalSupply()).to.eq('1')
+    expect(await memory.contract['totalSupply()']()).to.eq('1')
 
     const drop = await memory.contract.getDrop(tokenId)
     expect(drop.timeStart).to.eq(timeStart.toString())
@@ -188,7 +188,7 @@ describe('CyberDestinationUtilityFactory', function () {
     ).to.eq('0')
     expect(await memory.contract.minterNonce(memory.other.address)).to.eq('2')
     expect(await memory.contract.uri(tokenId1)).to.eq(tokenURI(uri1))
-    expect(await memory.contract.totalSupply()).to.eq('2')
+    expect(await memory.contract['totalSupply()']()).to.eq('2')
 
     const drop1 = await memory.contract.getDrop(tokenId1)
     expect(drop1.timeStart).to.eq(timeStart)
