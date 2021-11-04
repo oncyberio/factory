@@ -23,39 +23,30 @@ import type {
   OnEvent,
 } from './common'
 
-export interface LibUtilityStorageInterface extends ethers.utils.Interface {
+export interface LibDropStorageInterface extends ethers.utils.Interface {
   functions: {
     'STORAGE_SLOT()': FunctionFragment
-    'c_0xa7c4ff02(bytes32)': FunctionFragment
   }
 
   encodeFunctionData(
     functionFragment: 'STORAGE_SLOT',
     values?: undefined
   ): string
-  encodeFunctionData(
-    functionFragment: 'c_0xa7c4ff02',
-    values: [BytesLike]
-  ): string
 
   decodeFunctionResult(
     functionFragment: 'STORAGE_SLOT',
-    data: BytesLike
-  ): Result
-  decodeFunctionResult(
-    functionFragment: 'c_0xa7c4ff02',
     data: BytesLike
   ): Result
 
   events: {}
 }
 
-export interface LibUtilityStorage extends BaseContract {
+export interface LibDropStorage extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this
   attach(addressOrName: string): this
   deployed(): Promise<this>
 
-  interface: LibUtilityStorageInterface
+  interface: LibDropStorageInterface
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -78,46 +69,21 @@ export interface LibUtilityStorage extends BaseContract {
 
   functions: {
     STORAGE_SLOT(overrides?: CallOverrides): Promise<[string]>
-
-    c_0xa7c4ff02(
-      c__0xa7c4ff02: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<[void]>
   }
 
   STORAGE_SLOT(overrides?: CallOverrides): Promise<string>
 
-  c_0xa7c4ff02(
-    c__0xa7c4ff02: BytesLike,
-    overrides?: CallOverrides
-  ): Promise<void>
-
   callStatic: {
     STORAGE_SLOT(overrides?: CallOverrides): Promise<string>
-
-    c_0xa7c4ff02(
-      c__0xa7c4ff02: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<void>
   }
 
   filters: {}
 
   estimateGas: {
     STORAGE_SLOT(overrides?: CallOverrides): Promise<BigNumber>
-
-    c_0xa7c4ff02(
-      c__0xa7c4ff02: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>
   }
 
   populateTransaction: {
     STORAGE_SLOT(overrides?: CallOverrides): Promise<PopulatedTransaction>
-
-    c_0xa7c4ff02(
-      c__0xa7c4ff02: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>
   }
 }

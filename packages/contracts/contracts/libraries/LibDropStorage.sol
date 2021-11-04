@@ -2,10 +2,10 @@
 
 pragma solidity 0.8.9;
 
-// import "hardhat/console.sol";
+//import 'hardhat/console.sol';
 
-library LibUtilityStorage {
-  bytes32 public constant STORAGE_SLOT = keccak256('utility.app.storage');
+library LibDropStorage {
+  bytes32 public constant STORAGE_SLOT = keccak256('drop.app.storage');
   struct Drop {
     uint256 timeStart;
     uint256 timeEnd;
