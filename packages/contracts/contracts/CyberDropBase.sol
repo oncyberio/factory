@@ -26,29 +26,35 @@ contract CyberDropBase is CyberDestinationFactoryBase {
     return drop;
   }
 
-  function mint(
+  function createDrop(
     string memory _uri,
     uint256 _timeStart,
     uint256 _timeEnd,
-    uint256 _price,
+    uint256 _priceStart,
+    uint256 _priceEnd,
+    uint256 _stepDuration,
     uint256 _amountCap,
     uint256 _shareCyber,
     bytes memory _signature
   ) public returns (uint256 _tokenId) {
+    require(_timeEnd > _timeStart, 'IT');
+    require(_timeEnd - _timeStart > _stepDuration, 'IS');
+    require(_priceStart > _priceEnd, 'IP');
+    require(_shareCyber <= 100, 'ISO');
+
     address sender = _msgSender();
     uint256 nonce = minterNonce(sender);
-    require(_shareCyber <= 100, 'ISO');
-    require(_timeStart < _timeEnd, 'IT');
-
     bytes memory _message = abi.encodePacked(
       _uri,
       _timeStart,
       _timeEnd,
-      _price,
+      _priceStart,
+      _priceEnd,
+      _stepDuration,
       _amountCap,
       _shareCyber,
-      nonce,
-      sender
+      sender,
+      nonce
     );
     address recoveredAddress = keccak256(_message)
       .toEthSignedMessageHash()
@@ -63,10 +69,12 @@ contract CyberDropBase is CyberDestinationFactoryBase {
     LibDropStorage.Drop memory drop = LibDropStorage.Drop({
       timeStart: _timeStart,
       timeEnd: _timeEnd,
+      priceStart: _priceStart,
+      priceEnd: _priceEnd,
+      stepDuration: _stepDuration,
       amountCap: _amountCap,
       shareCyber: _shareCyber,
       creator: payable(sender),
-      price: _price,
       minted: 0
     });
     LibDropStorage.layout().drops[_tokenId] = drop;
@@ -74,5 +82,86 @@ contract CyberDropBase is CyberDestinationFactoryBase {
     emit DestinationMinted(sender, _tokenId);
 
     return _tokenId;
+  }
+
+  function mint(uint256 _tokenId) public payable returns (bool) {
+    address sender = _msgSender();
+    LibDropStorage.Drop storage drop = LibDropStorage.layout().drops[_tokenId];
+
+    require(
+      block.timestamp > drop.timeStart && block.timestamp <= drop.timeEnd,
+      'OOT'
+    );
+
+    if (drop.amountCap != 0) {
+      require(drop.minted < drop.amountCap, 'CR');
+    }
+
+    uint256 price = getMintPrice(drop);
+    require(msg.value >= price, 'IA');
+
+    _safeMint(sender, _tokenId, 1, '');
+    drop.minted += 1;
+    emit Minted(sender, _tokenId, 1);
+
+    uint256 amountOnCyber = (msg.value * drop.shareCyber) / 100;
+    uint256 amountCreator = msg.value - amountOnCyber;
+
+    drop.creator.transfer(amountCreator);
+    payable(LibAppStorage.layout().oncyber).transfer(amountOnCyber);
+    return true;
+  }
+
+  function getMintPriceForToken(uint256 _tokenId)
+    public
+    view
+    returns (uint256)
+  {
+    LibDropStorage.Drop storage drop = LibDropStorage.layout().drops[_tokenId];
+
+    require(
+      block.timestamp > drop.timeStart && block.timestamp <= drop.timeEnd,
+      'OOT'
+    );
+    if (drop.amountCap != 0) {
+      require(drop.minted < drop.amountCap, 'CR');
+    }
+    return getMintPrice(drop);
+  }
+
+  function getMintPrice(LibDropStorage.Drop memory drop)
+    public
+    view
+    returns (uint256)
+  {
+    uint256 timeSpent = block.timestamp - drop.timeStart;
+    uint256 duration = drop.timeEnd - drop.timeStart;
+    return
+      getPriceFor(
+        timeSpent,
+        duration,
+        drop.priceStart,
+        drop.priceEnd,
+        drop.stepDuration
+      );
+  }
+
+  function getPriceFor(
+    uint256 _timeSpent,
+    uint256 _duration,
+    uint256 _priceStart,
+    uint256 _priceEnd,
+    uint256 _stepDuration
+  ) public pure returns (uint256) {
+    // https://www.desmos.com/calculator/ipv4mm7hrh
+    // f\left(x\right)=\frac{s\ \cdot d\ +\ \operatorname{mod}\left(x,\ g\right)\ \cdot\ \left(s\ -\ l\right)\ -\ x\ \cdot\ \left(s\ -\ l\right)\ \ }{d}
+    // (s * d + (x % g) * (s - l) - x * (s - l) / d
+    return
+      (_duration *
+        _priceStart +
+        (_timeSpent % _stepDuration) *
+        (_priceStart - _priceEnd) -
+        _timeSpent *
+        (_priceStart - _priceEnd)) / _duration;
   }
 }

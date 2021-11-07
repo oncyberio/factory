@@ -1,7 +1,7 @@
 // @ts-ignore-next-line
 import { ethers, deployments } from 'hardhat'
 import { Biconomy } from '@biconomy/mexa'
-import { signMintingRequest } from '../lib/utils'
+import { signCreateDropRequest } from '../lib/utils'
 
 const ethersProvider = new ethers.providers.JsonRpcProvider(
   'https://rpc-mumbai.maticvigil.com'
@@ -28,22 +28,39 @@ async function main() {
   const contractInterface = new ethers.utils.Interface(Contract.abi)
 
   const uri = 'QmQwfto3zFsasHnvNpyKW7jZVVkAgxpLAKfxQhTbnykHh8'
-  const amount = '11'
-  const amountOncyber = '1'
+  const timeStart = parseInt((Date.now() / 1000).toString())
+  const timeEnd = parseInt((Date.now() / 1000 + 100000000).toString())
+  const priceStart = 100
+  const priceEnd = 10
+  const stepDuration = 2
+  const amountCap = 10
+  const shareCyber = 50
   const nonce = await contract.minterNonce(minter.address)
-  const signatureManager = await signMintingRequest(
+  const signatureManager = await signCreateDropRequest(
     uri,
-    amount,
-    amountOncyber,
-    nonce.toString(),
+    timeStart,
+    timeEnd,
+    priceStart,
+    priceEnd,
+    stepDuration,
+    amountCap,
+    shareCyber,
     minter.address,
+    nonce,
     manager
   )
 
   const functionSignature = contractInterface.encodeFunctionData('mint', [
     uri,
-    amount,
-    amountOncyber,
+    timeStart,
+    timeEnd,
+    priceStart,
+    priceEnd,
+    stepDuration,
+    amountCap,
+    shareCyber,
+    minter.address,
+    nonce,
     signatureManager,
   ])
 
