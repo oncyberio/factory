@@ -11,7 +11,6 @@ import {
   PopulatedTransaction,
   BaseContract,
   ContractTransaction,
-  CallOverrides,
 } from "ethers";
 import { BytesLike } from "@ethersproject/bytes";
 import { Listener, Provider } from "@ethersproject/providers";
@@ -23,30 +22,30 @@ import type {
   OnEvent,
 } from "./common";
 
-export interface LibDropStorageInterface extends ethers.utils.Interface {
-  functions: {
-    "STORAGE_SLOT()": FunctionFragment;
+export interface IERC1155MetadataInternalInterface
+  extends ethers.utils.Interface {
+  functions: {};
+
+  events: {
+    "URI(string,uint256)": EventFragment;
   };
 
-  encodeFunctionData(
-    functionFragment: "STORAGE_SLOT",
-    values?: undefined
-  ): string;
-
-  decodeFunctionResult(
-    functionFragment: "STORAGE_SLOT",
-    data: BytesLike
-  ): Result;
-
-  events: {};
+  getEvent(nameOrSignatureOrTopic: "URI"): EventFragment;
 }
 
-export interface LibDropStorage extends BaseContract {
+export type URIEvent = TypedEvent<
+  [string, BigNumber],
+  { value: string; tokenId: BigNumber }
+>;
+
+export type URIEventFilter = TypedEventFilter<URIEvent>;
+
+export interface IERC1155MetadataInternal extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: LibDropStorageInterface;
+  interface: IERC1155MetadataInternalInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -67,23 +66,19 @@ export interface LibDropStorage extends BaseContract {
   once: OnEvent<this>;
   removeListener: OnEvent<this>;
 
-  functions: {
-    STORAGE_SLOT(overrides?: CallOverrides): Promise<[string]>;
+  functions: {};
+
+  callStatic: {};
+
+  filters: {
+    "URI(string,uint256)"(
+      value?: null,
+      tokenId?: BigNumberish | null
+    ): URIEventFilter;
+    URI(value?: null, tokenId?: BigNumberish | null): URIEventFilter;
   };
 
-  STORAGE_SLOT(overrides?: CallOverrides): Promise<string>;
+  estimateGas: {};
 
-  callStatic: {
-    STORAGE_SLOT(overrides?: CallOverrides): Promise<string>;
-  };
-
-  filters: {};
-
-  estimateGas: {
-    STORAGE_SLOT(overrides?: CallOverrides): Promise<BigNumber>;
-  };
-
-  populateTransaction: {
-    STORAGE_SLOT(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-  };
+  populateTransaction: {};
 }

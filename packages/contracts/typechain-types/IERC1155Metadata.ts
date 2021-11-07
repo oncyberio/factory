@@ -23,30 +23,24 @@ import type {
   OnEvent,
 } from "./common";
 
-export interface LibDropStorageInterface extends ethers.utils.Interface {
+export interface IERC1155MetadataInterface extends ethers.utils.Interface {
   functions: {
-    "STORAGE_SLOT()": FunctionFragment;
+    "uri(uint256)": FunctionFragment;
   };
 
-  encodeFunctionData(
-    functionFragment: "STORAGE_SLOT",
-    values?: undefined
-  ): string;
+  encodeFunctionData(functionFragment: "uri", values: [BigNumberish]): string;
 
-  decodeFunctionResult(
-    functionFragment: "STORAGE_SLOT",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: "uri", data: BytesLike): Result;
 
   events: {};
 }
 
-export interface LibDropStorage extends BaseContract {
+export interface IERC1155Metadata extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: LibDropStorageInterface;
+  interface: IERC1155MetadataInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -68,22 +62,25 @@ export interface LibDropStorage extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    STORAGE_SLOT(overrides?: CallOverrides): Promise<[string]>;
+    uri(tokenId: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
   };
 
-  STORAGE_SLOT(overrides?: CallOverrides): Promise<string>;
+  uri(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
-    STORAGE_SLOT(overrides?: CallOverrides): Promise<string>;
+    uri(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {};
 
   estimateGas: {
-    STORAGE_SLOT(overrides?: CallOverrides): Promise<BigNumber>;
+    uri(tokenId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    STORAGE_SLOT(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    uri(
+      tokenId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
   };
 }

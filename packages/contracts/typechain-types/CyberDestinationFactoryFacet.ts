@@ -14,28 +14,28 @@ import {
   Overrides,
   PayableOverrides,
   CallOverrides,
-} from 'ethers'
-import { BytesLike } from '@ethersproject/bytes'
-import { Listener, Provider } from '@ethersproject/providers'
-import { FunctionFragment, EventFragment, Result } from '@ethersproject/abi'
+} from "ethers";
+import { BytesLike } from "@ethersproject/bytes";
+import { Listener, Provider } from "@ethersproject/providers";
+import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
-} from './common'
+} from "./common";
 
 export type DropStruct = {
-  timeStart: BigNumberish
-  timeEnd: BigNumberish
-  priceStart: BigNumberish
-  priceEnd: BigNumberish
-  stepDuration: BigNumberish
-  amountCap: BigNumberish
-  shareCyber: BigNumberish
-  creator: string
-  minted: BigNumberish
-}
+  timeStart: BigNumberish;
+  timeEnd: BigNumberish;
+  priceStart: BigNumberish;
+  priceEnd: BigNumberish;
+  stepDuration: BigNumberish;
+  amountCap: BigNumberish;
+  shareCyber: BigNumberish;
+  creator: string;
+  minted: BigNumberish;
+};
 
 export type DropStructOutput = [
   BigNumber,
@@ -48,59 +48,59 @@ export type DropStructOutput = [
   string,
   BigNumber
 ] & {
-  timeStart: BigNumber
-  timeEnd: BigNumber
-  priceStart: BigNumber
-  priceEnd: BigNumber
-  stepDuration: BigNumber
-  amountCap: BigNumber
-  shareCyber: BigNumber
-  creator: string
-  minted: BigNumber
-}
+  timeStart: BigNumber;
+  timeEnd: BigNumber;
+  priceStart: BigNumber;
+  priceEnd: BigNumber;
+  stepDuration: BigNumber;
+  amountCap: BigNumber;
+  shareCyber: BigNumber;
+  creator: string;
+  minted: BigNumber;
+};
 
 export interface CyberDestinationFactoryFacetInterface
   extends ethers.utils.Interface {
   functions: {
-    'accountsByToken(uint256)': FunctionFragment
-    'balanceOf(address,uint256)': FunctionFragment
-    'balanceOfBatch(address[],uint256[])': FunctionFragment
-    'createDrop(string,uint256,uint256,uint256,uint256,uint256,uint256,uint256,bytes)': FunctionFragment
-    'getDrop(uint256)': FunctionFragment
-    'getMintPriceForDrop((uint256,uint256,uint256,uint256,uint256,uint256,uint256,address,uint256))': FunctionFragment
-    'getMintPriceForToken(uint256)': FunctionFragment
-    'getPriceFor(uint256,uint256,uint256,uint256,uint256)': FunctionFragment
-    'initialize(string,address,address,address,address)': FunctionFragment
-    'isApprovedForAll(address,address)': FunctionFragment
-    'isTrustedForwarder(address)': FunctionFragment
-    'manager()': FunctionFragment
-    'mint(uint256)': FunctionFragment
-    'minterNonce(address)': FunctionFragment
-    'oncyber()': FunctionFragment
-    'safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)': FunctionFragment
-    'safeTransferFrom(address,address,uint256,uint256,bytes)': FunctionFragment
-    'setApprovalForAll(address,bool)': FunctionFragment
-    'supportsInterface(bytes4)': FunctionFragment
-    'tokensByAccount(address)': FunctionFragment
-    'totalHolders(uint256)': FunctionFragment
-    'totalSupply()': FunctionFragment
-    'uri(uint256)': FunctionFragment
-  }
+    "accountsByToken(uint256)": FunctionFragment;
+    "balanceOf(address,uint256)": FunctionFragment;
+    "balanceOfBatch(address[],uint256[])": FunctionFragment;
+    "createDrop(string,uint256,uint256,uint256,uint256,uint256,uint256,uint256,bytes)": FunctionFragment;
+    "getDrop(uint256)": FunctionFragment;
+    "getMintPriceForDrop((uint256,uint256,uint256,uint256,uint256,uint256,uint256,address,uint256))": FunctionFragment;
+    "getMintPriceForToken(uint256)": FunctionFragment;
+    "getPriceFor(uint256,uint256,uint256,uint256,uint256)": FunctionFragment;
+    "initialize(string,address,address,address,address)": FunctionFragment;
+    "isApprovedForAll(address,address)": FunctionFragment;
+    "isTrustedForwarder(address)": FunctionFragment;
+    "manager()": FunctionFragment;
+    "mint(uint256)": FunctionFragment;
+    "minterNonce(address)": FunctionFragment;
+    "oncyber()": FunctionFragment;
+    "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)": FunctionFragment;
+    "safeTransferFrom(address,address,uint256,uint256,bytes)": FunctionFragment;
+    "setApprovalForAll(address,bool)": FunctionFragment;
+    "supportsInterface(bytes4)": FunctionFragment;
+    "tokensByAccount(address)": FunctionFragment;
+    "totalHolders(uint256)": FunctionFragment;
+    "totalSupply()": FunctionFragment;
+    "uri(uint256)": FunctionFragment;
+  };
 
   encodeFunctionData(
-    functionFragment: 'accountsByToken',
+    functionFragment: "accountsByToken",
     values: [BigNumberish]
-  ): string
+  ): string;
   encodeFunctionData(
-    functionFragment: 'balanceOf',
+    functionFragment: "balanceOf",
     values: [string, BigNumberish]
-  ): string
+  ): string;
   encodeFunctionData(
-    functionFragment: 'balanceOfBatch',
+    functionFragment: "balanceOfBatch",
     values: [string[], BigNumberish[]]
-  ): string
+  ): string;
   encodeFunctionData(
-    functionFragment: 'createDrop',
+    functionFragment: "createDrop",
     values: [
       string,
       BigNumberish,
@@ -112,21 +112,21 @@ export interface CyberDestinationFactoryFacetInterface
       BigNumberish,
       BytesLike
     ]
-  ): string
+  ): string;
   encodeFunctionData(
-    functionFragment: 'getDrop',
+    functionFragment: "getDrop",
     values: [BigNumberish]
-  ): string
+  ): string;
   encodeFunctionData(
-    functionFragment: 'getMintPriceForDrop',
+    functionFragment: "getMintPriceForDrop",
     values: [DropStruct]
-  ): string
+  ): string;
   encodeFunctionData(
-    functionFragment: 'getMintPriceForToken',
+    functionFragment: "getMintPriceForToken",
     values: [BigNumberish]
-  ): string
+  ): string;
   encodeFunctionData(
-    functionFragment: 'getPriceFor',
+    functionFragment: "getPriceFor",
     values: [
       BigNumberish,
       BigNumberish,
@@ -134,228 +134,237 @@ export interface CyberDestinationFactoryFacetInterface
       BigNumberish,
       BigNumberish
     ]
-  ): string
+  ): string;
   encodeFunctionData(
-    functionFragment: 'initialize',
+    functionFragment: "initialize",
     values: [string, string, string, string, string]
-  ): string
+  ): string;
   encodeFunctionData(
-    functionFragment: 'isApprovedForAll',
+    functionFragment: "isApprovedForAll",
     values: [string, string]
-  ): string
+  ): string;
   encodeFunctionData(
-    functionFragment: 'isTrustedForwarder',
+    functionFragment: "isTrustedForwarder",
     values: [string]
-  ): string
-  encodeFunctionData(functionFragment: 'manager', values?: undefined): string
-  encodeFunctionData(functionFragment: 'mint', values: [BigNumberish]): string
-  encodeFunctionData(functionFragment: 'minterNonce', values: [string]): string
-  encodeFunctionData(functionFragment: 'oncyber', values?: undefined): string
+  ): string;
+  encodeFunctionData(functionFragment: "manager", values?: undefined): string;
+  encodeFunctionData(functionFragment: "mint", values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: "minterNonce", values: [string]): string;
+  encodeFunctionData(functionFragment: "oncyber", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: 'safeBatchTransferFrom',
+    functionFragment: "safeBatchTransferFrom",
     values: [string, string, BigNumberish[], BigNumberish[], BytesLike]
-  ): string
+  ): string;
   encodeFunctionData(
-    functionFragment: 'safeTransferFrom',
+    functionFragment: "safeTransferFrom",
     values: [string, string, BigNumberish, BigNumberish, BytesLike]
-  ): string
+  ): string;
   encodeFunctionData(
-    functionFragment: 'setApprovalForAll',
+    functionFragment: "setApprovalForAll",
     values: [string, boolean]
-  ): string
+  ): string;
   encodeFunctionData(
-    functionFragment: 'supportsInterface',
+    functionFragment: "supportsInterface",
     values: [BytesLike]
-  ): string
+  ): string;
   encodeFunctionData(
-    functionFragment: 'tokensByAccount',
+    functionFragment: "tokensByAccount",
     values: [string]
-  ): string
+  ): string;
   encodeFunctionData(
-    functionFragment: 'totalHolders',
+    functionFragment: "totalHolders",
     values: [BigNumberish]
-  ): string
+  ): string;
   encodeFunctionData(
-    functionFragment: 'totalSupply',
+    functionFragment: "totalSupply",
     values?: undefined
-  ): string
-  encodeFunctionData(functionFragment: 'uri', values: [BigNumberish]): string
+  ): string;
+  encodeFunctionData(functionFragment: "uri", values: [BigNumberish]): string;
 
   decodeFunctionResult(
-    functionFragment: 'accountsByToken',
+    functionFragment: "accountsByToken",
     data: BytesLike
-  ): Result
-  decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result
+  ): Result;
+  decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: 'balanceOfBatch',
+    functionFragment: "balanceOfBatch",
     data: BytesLike
-  ): Result
-  decodeFunctionResult(functionFragment: 'createDrop', data: BytesLike): Result
-  decodeFunctionResult(functionFragment: 'getDrop', data: BytesLike): Result
+  ): Result;
+  decodeFunctionResult(functionFragment: "createDrop", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "getDrop", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: 'getMintPriceForDrop',
+    functionFragment: "getMintPriceForDrop",
     data: BytesLike
-  ): Result
+  ): Result;
   decodeFunctionResult(
-    functionFragment: 'getMintPriceForToken',
+    functionFragment: "getMintPriceForToken",
     data: BytesLike
-  ): Result
-  decodeFunctionResult(functionFragment: 'getPriceFor', data: BytesLike): Result
-  decodeFunctionResult(functionFragment: 'initialize', data: BytesLike): Result
+  ): Result;
   decodeFunctionResult(
-    functionFragment: 'isApprovedForAll',
+    functionFragment: "getPriceFor",
     data: BytesLike
-  ): Result
+  ): Result;
+  decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: 'isTrustedForwarder',
+    functionFragment: "isApprovedForAll",
     data: BytesLike
-  ): Result
-  decodeFunctionResult(functionFragment: 'manager', data: BytesLike): Result
-  decodeFunctionResult(functionFragment: 'mint', data: BytesLike): Result
-  decodeFunctionResult(functionFragment: 'minterNonce', data: BytesLike): Result
-  decodeFunctionResult(functionFragment: 'oncyber', data: BytesLike): Result
+  ): Result;
   decodeFunctionResult(
-    functionFragment: 'safeBatchTransferFrom',
+    functionFragment: "isTrustedForwarder",
     data: BytesLike
-  ): Result
+  ): Result;
+  decodeFunctionResult(functionFragment: "manager", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: 'safeTransferFrom',
+    functionFragment: "minterNonce",
     data: BytesLike
-  ): Result
+  ): Result;
+  decodeFunctionResult(functionFragment: "oncyber", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: 'setApprovalForAll',
+    functionFragment: "safeBatchTransferFrom",
     data: BytesLike
-  ): Result
+  ): Result;
   decodeFunctionResult(
-    functionFragment: 'supportsInterface',
+    functionFragment: "safeTransferFrom",
     data: BytesLike
-  ): Result
+  ): Result;
   decodeFunctionResult(
-    functionFragment: 'tokensByAccount',
+    functionFragment: "setApprovalForAll",
     data: BytesLike
-  ): Result
+  ): Result;
   decodeFunctionResult(
-    functionFragment: 'totalHolders',
+    functionFragment: "supportsInterface",
     data: BytesLike
-  ): Result
-  decodeFunctionResult(functionFragment: 'totalSupply', data: BytesLike): Result
-  decodeFunctionResult(functionFragment: 'uri', data: BytesLike): Result
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "tokensByAccount",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "totalHolders",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "totalSupply",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "uri", data: BytesLike): Result;
 
   events: {
-    'ApprovalForAll(address,address,bool)': EventFragment
-    'DestinationMinted(address,uint256)': EventFragment
-    'Minted(address,uint256,uint256)': EventFragment
-    'TransferBatch(address,address,address,uint256[],uint256[])': EventFragment
-    'TransferSingle(address,address,address,uint256,uint256)': EventFragment
-    'URI(string,uint256)': EventFragment
-  }
+    "ApprovalForAll(address,address,bool)": EventFragment;
+    "DestinationMinted(address,uint256)": EventFragment;
+    "Minted(address,uint256,uint256)": EventFragment;
+    "TransferBatch(address,address,address,uint256[],uint256[])": EventFragment;
+    "TransferSingle(address,address,address,uint256,uint256)": EventFragment;
+    "URI(string,uint256)": EventFragment;
+  };
 
-  getEvent(nameOrSignatureOrTopic: 'ApprovalForAll'): EventFragment
-  getEvent(nameOrSignatureOrTopic: 'DestinationMinted'): EventFragment
-  getEvent(nameOrSignatureOrTopic: 'Minted'): EventFragment
-  getEvent(nameOrSignatureOrTopic: 'TransferBatch'): EventFragment
-  getEvent(nameOrSignatureOrTopic: 'TransferSingle'): EventFragment
-  getEvent(nameOrSignatureOrTopic: 'URI'): EventFragment
+  getEvent(nameOrSignatureOrTopic: "ApprovalForAll"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "DestinationMinted"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Minted"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "TransferBatch"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "TransferSingle"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "URI"): EventFragment;
 }
 
 export type ApprovalForAllEvent = TypedEvent<
   [string, string, boolean],
   { account: string; operator: string; approved: boolean }
->
+>;
 
-export type ApprovalForAllEventFilter = TypedEventFilter<ApprovalForAllEvent>
+export type ApprovalForAllEventFilter = TypedEventFilter<ApprovalForAllEvent>;
 
 export type DestinationMintedEvent = TypedEvent<
   [string, BigNumber],
   { account: string; tokenId: BigNumber }
->
+>;
 
 export type DestinationMintedEventFilter =
-  TypedEventFilter<DestinationMintedEvent>
+  TypedEventFilter<DestinationMintedEvent>;
 
 export type MintedEvent = TypedEvent<
   [string, BigNumber, BigNumber],
   { account: string; tokenId: BigNumber; amount: BigNumber }
->
+>;
 
-export type MintedEventFilter = TypedEventFilter<MintedEvent>
+export type MintedEventFilter = TypedEventFilter<MintedEvent>;
 
 export type TransferBatchEvent = TypedEvent<
   [string, string, string, BigNumber[], BigNumber[]],
   {
-    operator: string
-    from: string
-    to: string
-    ids: BigNumber[]
-    values: BigNumber[]
+    operator: string;
+    from: string;
+    to: string;
+    ids: BigNumber[];
+    values: BigNumber[];
   }
->
+>;
 
-export type TransferBatchEventFilter = TypedEventFilter<TransferBatchEvent>
+export type TransferBatchEventFilter = TypedEventFilter<TransferBatchEvent>;
 
 export type TransferSingleEvent = TypedEvent<
   [string, string, string, BigNumber, BigNumber],
   {
-    operator: string
-    from: string
-    to: string
-    id: BigNumber
-    value: BigNumber
+    operator: string;
+    from: string;
+    to: string;
+    id: BigNumber;
+    value: BigNumber;
   }
->
+>;
 
-export type TransferSingleEventFilter = TypedEventFilter<TransferSingleEvent>
+export type TransferSingleEventFilter = TypedEventFilter<TransferSingleEvent>;
 
 export type URIEvent = TypedEvent<
   [string, BigNumber],
   { value: string; tokenId: BigNumber }
->
+>;
 
-export type URIEventFilter = TypedEventFilter<URIEvent>
+export type URIEventFilter = TypedEventFilter<URIEvent>;
 
 export interface CyberDestinationFactoryFacet extends BaseContract {
-  connect(signerOrProvider: Signer | Provider | string): this
-  attach(addressOrName: string): this
-  deployed(): Promise<this>
+  connect(signerOrProvider: Signer | Provider | string): this;
+  attach(addressOrName: string): this;
+  deployed(): Promise<this>;
 
-  interface: CyberDestinationFactoryFacetInterface
+  interface: CyberDestinationFactoryFacetInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
     toBlock?: string | number | undefined
-  ): Promise<Array<TEvent>>
+  ): Promise<Array<TEvent>>;
 
   listeners<TEvent extends TypedEvent>(
     eventFilter?: TypedEventFilter<TEvent>
-  ): Array<TypedListener<TEvent>>
-  listeners(eventName?: string): Array<Listener>
+  ): Array<TypedListener<TEvent>>;
+  listeners(eventName?: string): Array<Listener>;
   removeAllListeners<TEvent extends TypedEvent>(
     eventFilter: TypedEventFilter<TEvent>
-  ): this
-  removeAllListeners(eventName?: string): this
-  off: OnEvent<this>
-  on: OnEvent<this>
-  once: OnEvent<this>
-  removeListener: OnEvent<this>
+  ): this;
+  removeAllListeners(eventName?: string): this;
+  off: OnEvent<this>;
+  on: OnEvent<this>;
+  once: OnEvent<this>;
+  removeListener: OnEvent<this>;
 
   functions: {
     accountsByToken(
       id: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[string[]]>
+    ): Promise<[string[]]>;
 
     balanceOf(
       account: string,
       id: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>
+    ): Promise<[BigNumber]>;
 
     balanceOfBatch(
       accounts: string[],
       ids: BigNumberish[],
       overrides?: CallOverrides
-    ): Promise<[BigNumber[]]>
+    ): Promise<[BigNumber[]]>;
 
     createDrop(
       _uri: string,
@@ -368,22 +377,22 @@ export interface CyberDestinationFactoryFacet extends BaseContract {
       _shareCyber: BigNumberish,
       _signature: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>
+    ): Promise<ContractTransaction>;
 
     getDrop(
       _tokenId: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[DropStructOutput]>
+    ): Promise<[DropStructOutput]>;
 
     getMintPriceForDrop(
       drop: DropStruct,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>
+    ): Promise<[BigNumber]>;
 
     getMintPriceForToken(
       _tokenId: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>
+    ): Promise<[BigNumber]>;
 
     getPriceFor(
       _timeSpent: BigNumberish,
@@ -392,7 +401,7 @@ export interface CyberDestinationFactoryFacet extends BaseContract {
       _priceEnd: BigNumberish,
       _stepDuration: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>
+    ): Promise<[BigNumber]>;
 
     initialize(
       _uri: string,
@@ -401,32 +410,32 @@ export interface CyberDestinationFactoryFacet extends BaseContract {
       _opensea: string,
       _oncyber: string,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>
+    ): Promise<ContractTransaction>;
 
     isApprovedForAll(
       account: string,
       operator: string,
       overrides?: CallOverrides
-    ): Promise<[boolean]>
+    ): Promise<[boolean]>;
 
     isTrustedForwarder(
       forwarder: string,
       overrides?: CallOverrides
-    ): Promise<[boolean]>
+    ): Promise<[boolean]>;
 
-    manager(overrides?: CallOverrides): Promise<[string]>
+    manager(overrides?: CallOverrides): Promise<[string]>;
 
     mint(
       _tokenId: BigNumberish,
       overrides?: PayableOverrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>
+    ): Promise<ContractTransaction>;
 
     minterNonce(
       _minter: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>
+    ): Promise<[BigNumber]>;
 
-    oncyber(overrides?: CallOverrides): Promise<[string]>
+    oncyber(overrides?: CallOverrides): Promise<[string]>;
 
     safeBatchTransferFrom(
       from: string,
@@ -435,7 +444,7 @@ export interface CyberDestinationFactoryFacet extends BaseContract {
       amounts: BigNumberish[],
       data: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>
+    ): Promise<ContractTransaction>;
 
     safeTransferFrom(
       from: string,
@@ -444,55 +453,55 @@ export interface CyberDestinationFactoryFacet extends BaseContract {
       amount: BigNumberish,
       data: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>
+    ): Promise<ContractTransaction>;
 
     setApprovalForAll(
       operator: string,
       status: boolean,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>
+    ): Promise<ContractTransaction>;
 
     supportsInterface(
       interfaceId: BytesLike,
       overrides?: CallOverrides
-    ): Promise<[boolean]>
+    ): Promise<[boolean]>;
 
     tokensByAccount(
       account: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber[]]>
+    ): Promise<[BigNumber[]]>;
 
     totalHolders(
       id: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>
+    ): Promise<[BigNumber]>;
 
-    'totalSupply()'(overrides?: CallOverrides): Promise<[BigNumber]>
+    "totalSupply()"(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    'totalSupply(uint256)'(
+    "totalSupply(uint256)"(
       id: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>
+    ): Promise<[BigNumber]>;
 
-    uri(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<[string]>
-  }
+    uri(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+  };
 
   accountsByToken(
     id: BigNumberish,
     overrides?: CallOverrides
-  ): Promise<string[]>
+  ): Promise<string[]>;
 
   balanceOf(
     account: string,
     id: BigNumberish,
     overrides?: CallOverrides
-  ): Promise<BigNumber>
+  ): Promise<BigNumber>;
 
   balanceOfBatch(
     accounts: string[],
     ids: BigNumberish[],
     overrides?: CallOverrides
-  ): Promise<BigNumber[]>
+  ): Promise<BigNumber[]>;
 
   createDrop(
     _uri: string,
@@ -505,22 +514,22 @@ export interface CyberDestinationFactoryFacet extends BaseContract {
     _shareCyber: BigNumberish,
     _signature: BytesLike,
     overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>
+  ): Promise<ContractTransaction>;
 
   getDrop(
     _tokenId: BigNumberish,
     overrides?: CallOverrides
-  ): Promise<DropStructOutput>
+  ): Promise<DropStructOutput>;
 
   getMintPriceForDrop(
     drop: DropStruct,
     overrides?: CallOverrides
-  ): Promise<BigNumber>
+  ): Promise<BigNumber>;
 
   getMintPriceForToken(
     _tokenId: BigNumberish,
     overrides?: CallOverrides
-  ): Promise<BigNumber>
+  ): Promise<BigNumber>;
 
   getPriceFor(
     _timeSpent: BigNumberish,
@@ -529,7 +538,7 @@ export interface CyberDestinationFactoryFacet extends BaseContract {
     _priceEnd: BigNumberish,
     _stepDuration: BigNumberish,
     overrides?: CallOverrides
-  ): Promise<BigNumber>
+  ): Promise<BigNumber>;
 
   initialize(
     _uri: string,
@@ -538,29 +547,29 @@ export interface CyberDestinationFactoryFacet extends BaseContract {
     _opensea: string,
     _oncyber: string,
     overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>
+  ): Promise<ContractTransaction>;
 
   isApprovedForAll(
     account: string,
     operator: string,
     overrides?: CallOverrides
-  ): Promise<boolean>
+  ): Promise<boolean>;
 
   isTrustedForwarder(
     forwarder: string,
     overrides?: CallOverrides
-  ): Promise<boolean>
+  ): Promise<boolean>;
 
-  manager(overrides?: CallOverrides): Promise<string>
+  manager(overrides?: CallOverrides): Promise<string>;
 
   mint(
     _tokenId: BigNumberish,
     overrides?: PayableOverrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>
+  ): Promise<ContractTransaction>;
 
-  minterNonce(_minter: string, overrides?: CallOverrides): Promise<BigNumber>
+  minterNonce(_minter: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-  oncyber(overrides?: CallOverrides): Promise<string>
+  oncyber(overrides?: CallOverrides): Promise<string>;
 
   safeBatchTransferFrom(
     from: string,
@@ -569,7 +578,7 @@ export interface CyberDestinationFactoryFacet extends BaseContract {
     amounts: BigNumberish[],
     data: BytesLike,
     overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>
+  ): Promise<ContractTransaction>;
 
   safeTransferFrom(
     from: string,
@@ -578,52 +587,52 @@ export interface CyberDestinationFactoryFacet extends BaseContract {
     amount: BigNumberish,
     data: BytesLike,
     overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>
+  ): Promise<ContractTransaction>;
 
   setApprovalForAll(
     operator: string,
     status: boolean,
     overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>
+  ): Promise<ContractTransaction>;
 
   supportsInterface(
     interfaceId: BytesLike,
     overrides?: CallOverrides
-  ): Promise<boolean>
+  ): Promise<boolean>;
 
   tokensByAccount(
     account: string,
     overrides?: CallOverrides
-  ): Promise<BigNumber[]>
+  ): Promise<BigNumber[]>;
 
-  totalHolders(id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>
+  totalHolders(id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
-  'totalSupply()'(overrides?: CallOverrides): Promise<BigNumber>
+  "totalSupply()"(overrides?: CallOverrides): Promise<BigNumber>;
 
-  'totalSupply(uint256)'(
+  "totalSupply(uint256)"(
     id: BigNumberish,
     overrides?: CallOverrides
-  ): Promise<BigNumber>
+  ): Promise<BigNumber>;
 
-  uri(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>
+  uri(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
     accountsByToken(
       id: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<string[]>
+    ): Promise<string[]>;
 
     balanceOf(
       account: string,
       id: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<BigNumber>
+    ): Promise<BigNumber>;
 
     balanceOfBatch(
       accounts: string[],
       ids: BigNumberish[],
       overrides?: CallOverrides
-    ): Promise<BigNumber[]>
+    ): Promise<BigNumber[]>;
 
     createDrop(
       _uri: string,
@@ -636,22 +645,22 @@ export interface CyberDestinationFactoryFacet extends BaseContract {
       _shareCyber: BigNumberish,
       _signature: BytesLike,
       overrides?: CallOverrides
-    ): Promise<BigNumber>
+    ): Promise<BigNumber>;
 
     getDrop(
       _tokenId: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<DropStructOutput>
+    ): Promise<DropStructOutput>;
 
     getMintPriceForDrop(
       drop: DropStruct,
       overrides?: CallOverrides
-    ): Promise<BigNumber>
+    ): Promise<BigNumber>;
 
     getMintPriceForToken(
       _tokenId: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<BigNumber>
+    ): Promise<BigNumber>;
 
     getPriceFor(
       _timeSpent: BigNumberish,
@@ -660,7 +669,7 @@ export interface CyberDestinationFactoryFacet extends BaseContract {
       _priceEnd: BigNumberish,
       _stepDuration: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<BigNumber>
+    ): Promise<BigNumber>;
 
     initialize(
       _uri: string,
@@ -669,26 +678,26 @@ export interface CyberDestinationFactoryFacet extends BaseContract {
       _opensea: string,
       _oncyber: string,
       overrides?: CallOverrides
-    ): Promise<void>
+    ): Promise<void>;
 
     isApprovedForAll(
       account: string,
       operator: string,
       overrides?: CallOverrides
-    ): Promise<boolean>
+    ): Promise<boolean>;
 
     isTrustedForwarder(
       forwarder: string,
       overrides?: CallOverrides
-    ): Promise<boolean>
+    ): Promise<boolean>;
 
-    manager(overrides?: CallOverrides): Promise<string>
+    manager(overrides?: CallOverrides): Promise<string>;
 
-    mint(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<boolean>
+    mint(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
 
-    minterNonce(_minter: string, overrides?: CallOverrides): Promise<BigNumber>
+    minterNonce(_minter: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-    oncyber(overrides?: CallOverrides): Promise<string>
+    oncyber(overrides?: CallOverrides): Promise<string>;
 
     safeBatchTransferFrom(
       from: string,
@@ -697,7 +706,7 @@ export interface CyberDestinationFactoryFacet extends BaseContract {
       amounts: BigNumberish[],
       data: BytesLike,
       overrides?: CallOverrides
-    ): Promise<void>
+    ): Promise<void>;
 
     safeTransferFrom(
       from: string,
@@ -706,125 +715,125 @@ export interface CyberDestinationFactoryFacet extends BaseContract {
       amount: BigNumberish,
       data: BytesLike,
       overrides?: CallOverrides
-    ): Promise<void>
+    ): Promise<void>;
 
     setApprovalForAll(
       operator: string,
       status: boolean,
       overrides?: CallOverrides
-    ): Promise<void>
+    ): Promise<void>;
 
     supportsInterface(
       interfaceId: BytesLike,
       overrides?: CallOverrides
-    ): Promise<boolean>
+    ): Promise<boolean>;
 
     tokensByAccount(
       account: string,
       overrides?: CallOverrides
-    ): Promise<BigNumber[]>
+    ): Promise<BigNumber[]>;
 
     totalHolders(
       id: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<BigNumber>
+    ): Promise<BigNumber>;
 
-    'totalSupply()'(overrides?: CallOverrides): Promise<BigNumber>
+    "totalSupply()"(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'totalSupply(uint256)'(
+    "totalSupply(uint256)"(
       id: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<BigNumber>
+    ): Promise<BigNumber>;
 
-    uri(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>
-  }
+    uri(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  };
 
   filters: {
-    'ApprovalForAll(address,address,bool)'(
+    "ApprovalForAll(address,address,bool)"(
       account?: string | null,
       operator?: string | null,
       approved?: null
-    ): ApprovalForAllEventFilter
+    ): ApprovalForAllEventFilter;
     ApprovalForAll(
       account?: string | null,
       operator?: string | null,
       approved?: null
-    ): ApprovalForAllEventFilter
+    ): ApprovalForAllEventFilter;
 
-    'DestinationMinted(address,uint256)'(
+    "DestinationMinted(address,uint256)"(
       account?: string | null,
       tokenId?: BigNumberish | null
-    ): DestinationMintedEventFilter
+    ): DestinationMintedEventFilter;
     DestinationMinted(
       account?: string | null,
       tokenId?: BigNumberish | null
-    ): DestinationMintedEventFilter
+    ): DestinationMintedEventFilter;
 
-    'Minted(address,uint256,uint256)'(
+    "Minted(address,uint256,uint256)"(
       account?: string | null,
       tokenId?: BigNumberish | null,
       amount?: BigNumberish | null
-    ): MintedEventFilter
+    ): MintedEventFilter;
     Minted(
       account?: string | null,
       tokenId?: BigNumberish | null,
       amount?: BigNumberish | null
-    ): MintedEventFilter
+    ): MintedEventFilter;
 
-    'TransferBatch(address,address,address,uint256[],uint256[])'(
+    "TransferBatch(address,address,address,uint256[],uint256[])"(
       operator?: string | null,
       from?: string | null,
       to?: string | null,
       ids?: null,
       values?: null
-    ): TransferBatchEventFilter
+    ): TransferBatchEventFilter;
     TransferBatch(
       operator?: string | null,
       from?: string | null,
       to?: string | null,
       ids?: null,
       values?: null
-    ): TransferBatchEventFilter
+    ): TransferBatchEventFilter;
 
-    'TransferSingle(address,address,address,uint256,uint256)'(
+    "TransferSingle(address,address,address,uint256,uint256)"(
       operator?: string | null,
       from?: string | null,
       to?: string | null,
       id?: null,
       value?: null
-    ): TransferSingleEventFilter
+    ): TransferSingleEventFilter;
     TransferSingle(
       operator?: string | null,
       from?: string | null,
       to?: string | null,
       id?: null,
       value?: null
-    ): TransferSingleEventFilter
+    ): TransferSingleEventFilter;
 
-    'URI(string,uint256)'(
+    "URI(string,uint256)"(
       value?: null,
       tokenId?: BigNumberish | null
-    ): URIEventFilter
-    URI(value?: null, tokenId?: BigNumberish | null): URIEventFilter
-  }
+    ): URIEventFilter;
+    URI(value?: null, tokenId?: BigNumberish | null): URIEventFilter;
+  };
 
   estimateGas: {
     accountsByToken(
       id: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<BigNumber>
+    ): Promise<BigNumber>;
 
     balanceOf(
       account: string,
       id: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<BigNumber>
+    ): Promise<BigNumber>;
 
     balanceOfBatch(
       accounts: string[],
       ids: BigNumberish[],
       overrides?: CallOverrides
-    ): Promise<BigNumber>
+    ): Promise<BigNumber>;
 
     createDrop(
       _uri: string,
@@ -837,22 +846,22 @@ export interface CyberDestinationFactoryFacet extends BaseContract {
       _shareCyber: BigNumberish,
       _signature: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>
+    ): Promise<BigNumber>;
 
     getDrop(
       _tokenId: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<BigNumber>
+    ): Promise<BigNumber>;
 
     getMintPriceForDrop(
       drop: DropStruct,
       overrides?: CallOverrides
-    ): Promise<BigNumber>
+    ): Promise<BigNumber>;
 
     getMintPriceForToken(
       _tokenId: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<BigNumber>
+    ): Promise<BigNumber>;
 
     getPriceFor(
       _timeSpent: BigNumberish,
@@ -861,7 +870,7 @@ export interface CyberDestinationFactoryFacet extends BaseContract {
       _priceEnd: BigNumberish,
       _stepDuration: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<BigNumber>
+    ): Promise<BigNumber>;
 
     initialize(
       _uri: string,
@@ -870,29 +879,29 @@ export interface CyberDestinationFactoryFacet extends BaseContract {
       _opensea: string,
       _oncyber: string,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>
+    ): Promise<BigNumber>;
 
     isApprovedForAll(
       account: string,
       operator: string,
       overrides?: CallOverrides
-    ): Promise<BigNumber>
+    ): Promise<BigNumber>;
 
     isTrustedForwarder(
       forwarder: string,
       overrides?: CallOverrides
-    ): Promise<BigNumber>
+    ): Promise<BigNumber>;
 
-    manager(overrides?: CallOverrides): Promise<BigNumber>
+    manager(overrides?: CallOverrides): Promise<BigNumber>;
 
     mint(
       _tokenId: BigNumberish,
       overrides?: PayableOverrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>
+    ): Promise<BigNumber>;
 
-    minterNonce(_minter: string, overrides?: CallOverrides): Promise<BigNumber>
+    minterNonce(_minter: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-    oncyber(overrides?: CallOverrides): Promise<BigNumber>
+    oncyber(overrides?: CallOverrides): Promise<BigNumber>;
 
     safeBatchTransferFrom(
       from: string,
@@ -901,7 +910,7 @@ export interface CyberDestinationFactoryFacet extends BaseContract {
       amounts: BigNumberish[],
       data: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>
+    ): Promise<BigNumber>;
 
     safeTransferFrom(
       from: string,
@@ -910,56 +919,56 @@ export interface CyberDestinationFactoryFacet extends BaseContract {
       amount: BigNumberish,
       data: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>
+    ): Promise<BigNumber>;
 
     setApprovalForAll(
       operator: string,
       status: boolean,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>
+    ): Promise<BigNumber>;
 
     supportsInterface(
       interfaceId: BytesLike,
       overrides?: CallOverrides
-    ): Promise<BigNumber>
+    ): Promise<BigNumber>;
 
     tokensByAccount(
       account: string,
       overrides?: CallOverrides
-    ): Promise<BigNumber>
+    ): Promise<BigNumber>;
 
     totalHolders(
       id: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<BigNumber>
+    ): Promise<BigNumber>;
 
-    'totalSupply()'(overrides?: CallOverrides): Promise<BigNumber>
+    "totalSupply()"(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'totalSupply(uint256)'(
+    "totalSupply(uint256)"(
       id: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<BigNumber>
+    ): Promise<BigNumber>;
 
-    uri(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>
-  }
+    uri(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  };
 
   populateTransaction: {
     accountsByToken(
       id: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>
+    ): Promise<PopulatedTransaction>;
 
     balanceOf(
       account: string,
       id: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>
+    ): Promise<PopulatedTransaction>;
 
     balanceOfBatch(
       accounts: string[],
       ids: BigNumberish[],
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>
+    ): Promise<PopulatedTransaction>;
 
     createDrop(
       _uri: string,
@@ -972,22 +981,22 @@ export interface CyberDestinationFactoryFacet extends BaseContract {
       _shareCyber: BigNumberish,
       _signature: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>
+    ): Promise<PopulatedTransaction>;
 
     getDrop(
       _tokenId: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>
+    ): Promise<PopulatedTransaction>;
 
     getMintPriceForDrop(
       drop: DropStruct,
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>
+    ): Promise<PopulatedTransaction>;
 
     getMintPriceForToken(
       _tokenId: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>
+    ): Promise<PopulatedTransaction>;
 
     getPriceFor(
       _timeSpent: BigNumberish,
@@ -996,7 +1005,7 @@ export interface CyberDestinationFactoryFacet extends BaseContract {
       _priceEnd: BigNumberish,
       _stepDuration: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>
+    ): Promise<PopulatedTransaction>;
 
     initialize(
       _uri: string,
@@ -1005,32 +1014,32 @@ export interface CyberDestinationFactoryFacet extends BaseContract {
       _opensea: string,
       _oncyber: string,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>
+    ): Promise<PopulatedTransaction>;
 
     isApprovedForAll(
       account: string,
       operator: string,
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>
+    ): Promise<PopulatedTransaction>;
 
     isTrustedForwarder(
       forwarder: string,
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>
+    ): Promise<PopulatedTransaction>;
 
-    manager(overrides?: CallOverrides): Promise<PopulatedTransaction>
+    manager(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     mint(
       _tokenId: BigNumberish,
       overrides?: PayableOverrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>
+    ): Promise<PopulatedTransaction>;
 
     minterNonce(
       _minter: string,
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>
+    ): Promise<PopulatedTransaction>;
 
-    oncyber(overrides?: CallOverrides): Promise<PopulatedTransaction>
+    oncyber(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     safeBatchTransferFrom(
       from: string,
@@ -1039,7 +1048,7 @@ export interface CyberDestinationFactoryFacet extends BaseContract {
       amounts: BigNumberish[],
       data: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>
+    ): Promise<PopulatedTransaction>;
 
     safeTransferFrom(
       from: string,
@@ -1048,39 +1057,39 @@ export interface CyberDestinationFactoryFacet extends BaseContract {
       amount: BigNumberish,
       data: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>
+    ): Promise<PopulatedTransaction>;
 
     setApprovalForAll(
       operator: string,
       status: boolean,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>
+    ): Promise<PopulatedTransaction>;
 
     supportsInterface(
       interfaceId: BytesLike,
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>
+    ): Promise<PopulatedTransaction>;
 
     tokensByAccount(
       account: string,
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>
+    ): Promise<PopulatedTransaction>;
 
     totalHolders(
       id: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>
+    ): Promise<PopulatedTransaction>;
 
-    'totalSupply()'(overrides?: CallOverrides): Promise<PopulatedTransaction>
+    "totalSupply()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    'totalSupply(uint256)'(
+    "totalSupply(uint256)"(
       id: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>
+    ): Promise<PopulatedTransaction>;
 
     uri(
       _tokenId: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>
-  }
+    ): Promise<PopulatedTransaction>;
+  };
 }

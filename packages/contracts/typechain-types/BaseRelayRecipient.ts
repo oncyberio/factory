@@ -23,30 +23,30 @@ import type {
   OnEvent,
 } from "./common";
 
-export interface LibDropStorageInterface extends ethers.utils.Interface {
+export interface BaseRelayRecipientInterface extends ethers.utils.Interface {
   functions: {
-    "STORAGE_SLOT()": FunctionFragment;
+    "isTrustedForwarder(address)": FunctionFragment;
   };
 
   encodeFunctionData(
-    functionFragment: "STORAGE_SLOT",
-    values?: undefined
+    functionFragment: "isTrustedForwarder",
+    values: [string]
   ): string;
 
   decodeFunctionResult(
-    functionFragment: "STORAGE_SLOT",
+    functionFragment: "isTrustedForwarder",
     data: BytesLike
   ): Result;
 
   events: {};
 }
 
-export interface LibDropStorage extends BaseContract {
+export interface BaseRelayRecipient extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: LibDropStorageInterface;
+  interface: BaseRelayRecipientInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -68,22 +68,37 @@ export interface LibDropStorage extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    STORAGE_SLOT(overrides?: CallOverrides): Promise<[string]>;
+    isTrustedForwarder(
+      forwarder: string,
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
   };
 
-  STORAGE_SLOT(overrides?: CallOverrides): Promise<string>;
+  isTrustedForwarder(
+    forwarder: string,
+    overrides?: CallOverrides
+  ): Promise<boolean>;
 
   callStatic: {
-    STORAGE_SLOT(overrides?: CallOverrides): Promise<string>;
+    isTrustedForwarder(
+      forwarder: string,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
   };
 
   filters: {};
 
   estimateGas: {
-    STORAGE_SLOT(overrides?: CallOverrides): Promise<BigNumber>;
+    isTrustedForwarder(
+      forwarder: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    STORAGE_SLOT(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    isTrustedForwarder(
+      forwarder: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
   };
 }

@@ -23,30 +23,30 @@ import type {
   OnEvent,
 } from "./common";
 
-export interface LibDropStorageInterface extends ethers.utils.Interface {
+export interface LibDiamondInterface extends ethers.utils.Interface {
   functions: {
-    "STORAGE_SLOT()": FunctionFragment;
+    "DIAMOND_STORAGE_POSITION()": FunctionFragment;
   };
 
   encodeFunctionData(
-    functionFragment: "STORAGE_SLOT",
+    functionFragment: "DIAMOND_STORAGE_POSITION",
     values?: undefined
   ): string;
 
   decodeFunctionResult(
-    functionFragment: "STORAGE_SLOT",
+    functionFragment: "DIAMOND_STORAGE_POSITION",
     data: BytesLike
   ): Result;
 
   events: {};
 }
 
-export interface LibDropStorage extends BaseContract {
+export interface LibDiamond extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: LibDropStorageInterface;
+  interface: LibDiamondInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -68,22 +68,24 @@ export interface LibDropStorage extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    STORAGE_SLOT(overrides?: CallOverrides): Promise<[string]>;
+    DIAMOND_STORAGE_POSITION(overrides?: CallOverrides): Promise<[string]>;
   };
 
-  STORAGE_SLOT(overrides?: CallOverrides): Promise<string>;
+  DIAMOND_STORAGE_POSITION(overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
-    STORAGE_SLOT(overrides?: CallOverrides): Promise<string>;
+    DIAMOND_STORAGE_POSITION(overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {};
 
   estimateGas: {
-    STORAGE_SLOT(overrides?: CallOverrides): Promise<BigNumber>;
+    DIAMOND_STORAGE_POSITION(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    STORAGE_SLOT(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    DIAMOND_STORAGE_POSITION(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
   };
 }

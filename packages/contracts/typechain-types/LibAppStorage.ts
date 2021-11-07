@@ -23,7 +23,7 @@ import type {
   OnEvent,
 } from "./common";
 
-export interface LibDropStorageInterface extends ethers.utils.Interface {
+export interface LibAppStorageInterface extends ethers.utils.Interface {
   functions: {
     "STORAGE_SLOT()": FunctionFragment;
   };
@@ -41,12 +41,12 @@ export interface LibDropStorageInterface extends ethers.utils.Interface {
   events: {};
 }
 
-export interface LibDropStorage extends BaseContract {
+export interface LibAppStorage extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: LibDropStorageInterface;
+  interface: LibAppStorageInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

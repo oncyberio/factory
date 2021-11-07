@@ -23,30 +23,30 @@ import type {
   OnEvent,
 } from "./common";
 
-export interface LibDropStorageInterface extends ethers.utils.Interface {
+export interface ERC165Interface extends ethers.utils.Interface {
   functions: {
-    "STORAGE_SLOT()": FunctionFragment;
+    "supportsInterface(bytes4)": FunctionFragment;
   };
 
   encodeFunctionData(
-    functionFragment: "STORAGE_SLOT",
-    values?: undefined
+    functionFragment: "supportsInterface",
+    values: [BytesLike]
   ): string;
 
   decodeFunctionResult(
-    functionFragment: "STORAGE_SLOT",
+    functionFragment: "supportsInterface",
     data: BytesLike
   ): Result;
 
   events: {};
 }
 
-export interface LibDropStorage extends BaseContract {
+export interface ERC165 extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: LibDropStorageInterface;
+  interface: ERC165Interface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -68,22 +68,37 @@ export interface LibDropStorage extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    STORAGE_SLOT(overrides?: CallOverrides): Promise<[string]>;
+    supportsInterface(
+      interfaceId: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
   };
 
-  STORAGE_SLOT(overrides?: CallOverrides): Promise<string>;
+  supportsInterface(
+    interfaceId: BytesLike,
+    overrides?: CallOverrides
+  ): Promise<boolean>;
 
   callStatic: {
-    STORAGE_SLOT(overrides?: CallOverrides): Promise<string>;
+    supportsInterface(
+      interfaceId: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
   };
 
   filters: {};
 
   estimateGas: {
-    STORAGE_SLOT(overrides?: CallOverrides): Promise<BigNumber>;
+    supportsInterface(
+      interfaceId: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    STORAGE_SLOT(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    supportsInterface(
+      interfaceId: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
   };
 }
