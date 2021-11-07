@@ -5,16 +5,25 @@ import { signCreateDropRequest } from '../lib/utils'
 
 async function main() {
   const contractName = 'DiamondCyberDestinationFactory'
-  const accounts = await ethers.getSigners()
-  const manager = accounts[1]
-  const minter = accounts[0]
-
-  // for testnet
-  // const provider = new ethers.providers.JsonRpcProvider('https://rpc-mumbai.maticvigil.com')
-  // const minter = new ethers.Wallet(process.env.MUMBAI_ACCOUNT_1_PRIVATE_KEY as string, provider)
-  // const manager = new ethers.Wallet(process.env.MUMBAI_MANAGER_DESTINATION_PRIVATE_KEY as string, provider)
 
   // for local
+  // const accounts = await ethers.getSigners()
+  // const manager = accounts[1]
+  // const minter = accounts[0]
+
+  // for testnet
+  const provider = new ethers.providers.JsonRpcProvider(
+    'https://rinkeby.infura.io/v3/b89e58ca51184cb783845c58340629c4'
+  )
+  const minter = new ethers.Wallet(
+    process.env.RINKEBY_ACCOUNT_1_PRIVATE_KEY as string,
+    provider
+  )
+  const manager = new ethers.Wallet(
+    process.env.RINKEBY_MANAGER_DESTINATION_PRIVATE_KEY as string,
+    provider
+  )
+
   const Contract = await deployments.get(contractName)
   const contract = await ethers.getContractAt(
     Contract.abi,
@@ -25,10 +34,10 @@ async function main() {
   const uri = 'QmQwfto3zFsasHnvNpyKW7jZVVkAgxpLAKfxQhTbnykHh8'
   const timeStart = parseInt((Date.now() / 1000).toString())
   const timeEnd = parseInt((Date.now() / 1000 + 100000000).toString())
-  const priceStart = 100
-  const priceEnd = 10
-  const stepDuration = 2
-  const amountCap = 10
+  const priceStart = 1000000000
+  const priceEnd = 1000
+  const stepDuration = 300
+  const amountCap = 100
   const shareCyber = 50
   const nonce = await contract.minterNonce(minter.address)
   const signature = await signCreateDropRequest(
@@ -61,7 +70,7 @@ async function main() {
 
   txReceipt.logs.forEach((log: Log) => {
     const logParsed = iFace.parseLog(log)
-    if (logParsed.name === 'Minted') {
+    if (logParsed.name === 'DestinationMinted') {
       tokenId = logParsed.args[1].toString()
       console.log('tokenId', tokenId)
     }

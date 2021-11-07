@@ -23,39 +23,30 @@ import type {
   OnEvent,
 } from './common'
 
-export interface BaseRelayRecipientInterface extends ethers.utils.Interface {
+export interface ERC1155URIStorageInterface extends ethers.utils.Interface {
   functions: {
-    'c_0xd4dc4272(bytes32)': FunctionFragment
-    'isTrustedForwarder(address)': FunctionFragment
+    'c_0x64a239c3(bytes32)': FunctionFragment
   }
 
   encodeFunctionData(
-    functionFragment: 'c_0xd4dc4272',
+    functionFragment: 'c_0x64a239c3',
     values: [BytesLike]
-  ): string
-  encodeFunctionData(
-    functionFragment: 'isTrustedForwarder',
-    values: [string]
   ): string
 
   decodeFunctionResult(
-    functionFragment: 'c_0xd4dc4272',
-    data: BytesLike
-  ): Result
-  decodeFunctionResult(
-    functionFragment: 'isTrustedForwarder',
+    functionFragment: 'c_0x64a239c3',
     data: BytesLike
   ): Result
 
   events: {}
 }
 
-export interface BaseRelayRecipient extends BaseContract {
+export interface ERC1155URIStorage extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this
   attach(addressOrName: string): this
   deployed(): Promise<this>
 
-  interface: BaseRelayRecipientInterface
+  interface: ERC1155URIStorageInterface
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -77,61 +68,36 @@ export interface BaseRelayRecipient extends BaseContract {
   removeListener: OnEvent<this>
 
   functions: {
-    c_0xd4dc4272(
-      c__0xd4dc4272: BytesLike,
+    c_0x64a239c3(
+      c__0x64a239c3: BytesLike,
       overrides?: CallOverrides
     ): Promise<[void]>
-
-    isTrustedForwarder(
-      forwarder: string,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>
   }
 
-  c_0xd4dc4272(
-    c__0xd4dc4272: BytesLike,
+  c_0x64a239c3(
+    c__0x64a239c3: BytesLike,
     overrides?: CallOverrides
   ): Promise<void>
 
-  isTrustedForwarder(
-    forwarder: string,
-    overrides?: CallOverrides
-  ): Promise<boolean>
-
   callStatic: {
-    c_0xd4dc4272(
-      c__0xd4dc4272: BytesLike,
+    c_0x64a239c3(
+      c__0x64a239c3: BytesLike,
       overrides?: CallOverrides
     ): Promise<void>
-
-    isTrustedForwarder(
-      forwarder: string,
-      overrides?: CallOverrides
-    ): Promise<boolean>
   }
 
   filters: {}
 
   estimateGas: {
-    c_0xd4dc4272(
-      c__0xd4dc4272: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>
-
-    isTrustedForwarder(
-      forwarder: string,
+    c_0x64a239c3(
+      c__0x64a239c3: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>
   }
 
   populateTransaction: {
-    c_0xd4dc4272(
-      c__0xd4dc4272: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>
-
-    isTrustedForwarder(
-      forwarder: string,
+    c_0x64a239c3(
+      c__0x64a239c3: BytesLike,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>
   }

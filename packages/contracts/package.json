@@ -27,14 +27,12 @@
     "deploy:mainnet": "hardhat --network mainnet deploy",
     "deploy:rinkeby": "hardhat --network rinkeby deploy",
     "deploy:ethereum": "hardhat --network ethereum deploy",
-    "verify:rinkeby": "hardhat etherscan-verify --network rinkeby",
+    "verify:rinkeby": "hardhat etherscan-verify --network rinkeby --solc-input",
     "verify:ethereum": "hardhat etherscan-verify --network ethereum",
-    "verify:CyberDestinationUtilityFactoryFacet:rinkeby": "hardhat verify --network rinkeby 0xAEf4E2F292eBEBA4996a4B011977C5444b3281FD",
-    "verify:CyberDestinationUtilityFactoryProxy:rinkeby": "hardhat verify --network rinkeby 0xDeFB45F660166B3FE43Ec110AcaFEBcFC5185b33",
-    "verify:CyberDestinationUtilityFactoryFacet:ethereum": "hardhat verify --network ethereum 0xf90fd2bF6E375f9B9528C67329e3cA103Bca2C72",
-    "verify:CyberDestinationUtilityFactoryProxy:ethereum": "hardhat verify --network ethereum 0x226Bf5293692610692E2C996C9875C914d2A7f73"
+    "scripts:createDrop:rinkeby": "hardhat run scripts/createDrop.ts --network rinkeby",
+    "scripts:mint:rinkeby": "hardhat run scripts/mint.ts --network rinkeby"
   },
-  "author": "",
+  "author": "oncyber",
   "license": "MIT",
   "devDependencies": {
     "@biconomy/mexa": "^2.0.21",
