@@ -66,7 +66,7 @@ export interface CyberDropBaseInterface extends ethers.utils.Interface {
     'balanceOfBatch(address[],uint256[])': FunctionFragment
     'createDrop(string,uint256,uint256,uint256,uint256,uint256,uint256,uint256,bytes)': FunctionFragment
     'getDrop(uint256)': FunctionFragment
-    'getMintPrice((uint256,uint256,uint256,uint256,uint256,uint256,uint256,address,uint256))': FunctionFragment
+    'getMintPriceForDrop((uint256,uint256,uint256,uint256,uint256,uint256,uint256,address,uint256))': FunctionFragment
     'getMintPriceForToken(uint256)': FunctionFragment
     'getPriceFor(uint256,uint256,uint256,uint256,uint256)': FunctionFragment
     'initialize(string,address,address,address,address)': FunctionFragment
@@ -117,7 +117,7 @@ export interface CyberDropBaseInterface extends ethers.utils.Interface {
     values: [BigNumberish]
   ): string
   encodeFunctionData(
-    functionFragment: 'getMintPrice',
+    functionFragment: 'getMintPriceForDrop',
     values: [DropStruct]
   ): string
   encodeFunctionData(
@@ -192,7 +192,7 @@ export interface CyberDropBaseInterface extends ethers.utils.Interface {
   decodeFunctionResult(functionFragment: 'createDrop', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'getDrop', data: BytesLike): Result
   decodeFunctionResult(
-    functionFragment: 'getMintPrice',
+    functionFragment: 'getMintPriceForDrop',
     data: BytesLike
   ): Result
   decodeFunctionResult(
@@ -374,7 +374,7 @@ export interface CyberDropBase extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[DropStructOutput]>
 
-    getMintPrice(
+    getMintPriceForDrop(
       drop: DropStruct,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>
@@ -511,7 +511,10 @@ export interface CyberDropBase extends BaseContract {
     overrides?: CallOverrides
   ): Promise<DropStructOutput>
 
-  getMintPrice(drop: DropStruct, overrides?: CallOverrides): Promise<BigNumber>
+  getMintPriceForDrop(
+    drop: DropStruct,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>
 
   getMintPriceForToken(
     _tokenId: BigNumberish,
@@ -639,7 +642,7 @@ export interface CyberDropBase extends BaseContract {
       overrides?: CallOverrides
     ): Promise<DropStructOutput>
 
-    getMintPrice(
+    getMintPriceForDrop(
       drop: DropStruct,
       overrides?: CallOverrides
     ): Promise<BigNumber>
@@ -840,7 +843,7 @@ export interface CyberDropBase extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>
 
-    getMintPrice(
+    getMintPriceForDrop(
       drop: DropStruct,
       overrides?: CallOverrides
     ): Promise<BigNumber>
@@ -975,7 +978,7 @@ export interface CyberDropBase extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>
 
-    getMintPrice(
+    getMintPriceForDrop(
       drop: DropStruct,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>

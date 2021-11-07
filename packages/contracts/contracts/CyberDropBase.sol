@@ -97,7 +97,7 @@ contract CyberDropBase is CyberDestinationFactoryBase {
       require(drop.minted < drop.amountCap, 'CR');
     }
 
-    uint256 price = getMintPrice(drop);
+    uint256 price = getMintPriceForDrop(drop);
     require(msg.value >= price, 'IA');
 
     _safeMint(sender, _tokenId, 1, '');
@@ -126,10 +126,10 @@ contract CyberDropBase is CyberDestinationFactoryBase {
     if (drop.amountCap != 0) {
       require(drop.minted < drop.amountCap, 'CR');
     }
-    return getMintPrice(drop);
+    return getMintPriceForDrop(drop);
   }
 
-  function getMintPrice(LibDropStorage.Drop memory drop)
+  function getMintPriceForDrop(LibDropStorage.Drop memory drop)
     public
     view
     returns (uint256)
@@ -153,7 +153,7 @@ contract CyberDropBase is CyberDestinationFactoryBase {
     uint256 _priceEnd,
     uint256 _stepDuration
   ) public pure returns (uint256) {
-    // https://www.desmos.com/calculator/ipv4mm7hrh
+    // https://www.desmos.com/calculator/oajpdvew5q
     // f\left(x\right)=\frac{s\ \cdot d\ +\ \operatorname{mod}\left(x,\ g\right)\ \cdot\ \left(s\ -\ l\right)\ -\ x\ \cdot\ \left(s\ -\ l\right)\ \ }{d}
     // (s * d + (x % g) * (s - l) - x * (s - l) / d
     return

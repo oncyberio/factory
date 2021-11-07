@@ -7,7 +7,7 @@ const memory: any = {}
 
 const tokenURI = (uri: string) => `ipfs://${uri}`
 
-describe.only('CyberDestinationFactories', function () {
+describe('CyberDestinationFactories', function () {
   before(async () => {
     memory.signers = await ethers.getSigners()
   })
@@ -808,6 +808,324 @@ describe.only('CyberDestinationFactories', function () {
     })
   })
 
+  describe('getMintPriceForDrop', () => {
+    it('Should get mint price for drop', async () => {
+      const now = Date.now()
+      await ethers.provider.send('evm_setNextBlockTimestamp', [now])
+      await ethers.provider.send('evm_mine', [])
+      expect(
+        await memory.contract.getMintPriceForDrop({
+          timeStart: now,
+          timeEnd: now + 1800,
+          priceStart: 50,
+          priceEnd: 5,
+          stepDuration: 300,
+          amountCap: 1,
+          shareCyber: 50,
+          creator: memory.other.address,
+          minted: 0,
+        })
+      ).to.be.eq('50')
+      await ethers.provider.send('evm_increaseTime', [600])
+      await ethers.provider.send('evm_mine', [])
+      expect(
+        await memory.contract.getMintPriceForDrop({
+          timeStart: now,
+          timeEnd: now + 1800,
+          priceStart: 50,
+          priceEnd: 5,
+          stepDuration: 300,
+          amountCap: 1,
+          shareCyber: 50,
+          creator: memory.other.address,
+          minted: 0,
+        })
+      ).to.be.eq('35')
+      await ethers.provider.send('evm_increaseTime', [1200])
+      await ethers.provider.send('evm_mine', [])
+      expect(
+        await memory.contract.getMintPriceForDrop({
+          timeStart: now,
+          timeEnd: now + 1800,
+          priceStart: 50,
+          priceEnd: 5,
+          stepDuration: 300,
+          amountCap: 1,
+          shareCyber: 50,
+          creator: memory.other.address,
+          minted: 0,
+        })
+      ).to.be.eq('5')
+    })
+  })
+
+  describe('GetMintPriceForToken', () => {
+    it('Should get mint price for token', async () => {
+      const uri = 'Qmsfzefi221ifjzifj'
+      const timeStart = parseInt((Date.now() / 1000 - 100).toString())
+      const timeEnd = parseInt((Date.now() / 1000 + 100).toString())
+      const priceStart = 100
+      const priceEnd = 10
+      const stepDuration = 20
+      const amountCap = 10
+      const shareCyber = 50
+      const nonce = 0
+      const signature = await signCreateDropRequest(
+        uri,
+        timeStart,
+        timeEnd,
+        priceStart,
+        priceEnd,
+        stepDuration,
+        amountCap,
+        shareCyber,
+        memory.other.address,
+        nonce,
+        memory.manager
+      )
+      await memory.contract
+        .connect(memory.other)
+        .createDrop(
+          uri,
+          timeStart,
+          timeEnd,
+          priceStart,
+          priceEnd,
+          stepDuration,
+          amountCap,
+          shareCyber,
+          signature
+        )
+      const tokenId = 0
+      const mintPrice = await memory.contract.getMintPriceForToken(tokenId)
+      expect(mintPrice).to.be.eq('55')
+    })
+
+    it('Should get mint price for token throw out of time before', async () => {
+      const uri = 'Qmsfzefi221ifjzifj'
+      const timeStart = parseInt((Date.now() / 1000 + 100).toString())
+      const timeEnd = parseInt((Date.now() / 1000 + 500).toString())
+      const priceStart = 100
+      const priceEnd = 10
+      const stepDuration = 20
+      const amountCap = 10
+      const shareCyber = 50
+      const nonce = 0
+      const signature = await signCreateDropRequest(
+        uri,
+        timeStart,
+        timeEnd,
+        priceStart,
+        priceEnd,
+        stepDuration,
+        amountCap,
+        shareCyber,
+        memory.other.address,
+        nonce,
+        memory.manager
+      )
+      await memory.contract
+        .connect(memory.other)
+        .createDrop(
+          uri,
+          timeStart,
+          timeEnd,
+          priceStart,
+          priceEnd,
+          stepDuration,
+          amountCap,
+          shareCyber,
+          signature
+        )
+      const tokenId = 0
+      await expect(
+        memory.contract.getMintPriceForToken(tokenId)
+      ).to.be.revertedWith('OOT')
+    })
+
+    it('Should get mint price for token throw out of time after', async () => {
+      const uri = 'Qmsfzefi221ifjzifj'
+      const timeStart = parseInt((Date.now() / 1000 - 500).toString())
+      const timeEnd = parseInt((Date.now() / 1000 - 100).toString())
+      const priceStart = 100
+      const priceEnd = 10
+      const stepDuration = 20
+      const amountCap = 10
+      const shareCyber = 50
+      const nonce = 0
+      const signature = await signCreateDropRequest(
+        uri,
+        timeStart,
+        timeEnd,
+        priceStart,
+        priceEnd,
+        stepDuration,
+        amountCap,
+        shareCyber,
+        memory.other.address,
+        nonce,
+        memory.manager
+      )
+      await memory.contract
+        .connect(memory.other)
+        .createDrop(
+          uri,
+          timeStart,
+          timeEnd,
+          priceStart,
+          priceEnd,
+          stepDuration,
+          amountCap,
+          shareCyber,
+          signature
+        )
+      const tokenId = 0
+      await expect(
+        memory.contract.getMintPriceForToken(tokenId)
+      ).to.be.revertedWith('OOT')
+    })
+
+    it('Should get mint price for token without cap', async () => {
+      const uri = 'Qmsfzefi221ifjzifj'
+      const timeStart = parseInt((Date.now() / 1000 - 100).toString())
+      const timeEnd = parseInt((Date.now() / 1000 + 100).toString())
+      const priceStart = 100
+      const priceEnd = 10
+      const stepDuration = 20
+      const amountCap = 0
+      const shareCyber = 50
+      const nonce = 0
+      const signature = await signCreateDropRequest(
+        uri,
+        timeStart,
+        timeEnd,
+        priceStart,
+        priceEnd,
+        stepDuration,
+        amountCap,
+        shareCyber,
+        memory.other.address,
+        nonce,
+        memory.manager
+      )
+      await memory.contract
+        .connect(memory.other)
+        .createDrop(
+          uri,
+          timeStart,
+          timeEnd,
+          priceStart,
+          priceEnd,
+          stepDuration,
+          amountCap,
+          shareCyber,
+          signature
+        )
+      const tokenId = 0
+      const mintPrice = await memory.contract.getMintPriceForToken(tokenId)
+      expect(mintPrice).to.be.eq('55')
+    })
+
+    it('Should get mint price for token throw when cap reach', async () => {
+      const uri = 'Qmsfzefi221ifjzifj'
+      const timeStart = parseInt((Date.now() / 1000 - 100).toString())
+      const timeEnd = parseInt((Date.now() / 1000 + 100).toString())
+      const priceStart = 100
+      const priceEnd = 10
+      const stepDuration = 20
+      const amountCap = 1
+      const shareCyber = 50
+      const nonce = 0
+      const signature = await signCreateDropRequest(
+        uri,
+        timeStart,
+        timeEnd,
+        priceStart,
+        priceEnd,
+        stepDuration,
+        amountCap,
+        shareCyber,
+        memory.other.address,
+        nonce,
+        memory.manager
+      )
+      await memory.contract
+        .connect(memory.other)
+        .createDrop(
+          uri,
+          timeStart,
+          timeEnd,
+          priceStart,
+          priceEnd,
+          stepDuration,
+          amountCap,
+          shareCyber,
+          signature
+        )
+      const tokenId = 0
+      const mintPrice = await memory.contract.getMintPriceForToken(tokenId)
+      expect(mintPrice).to.be.eq('55')
+      await memory.contract.connect(memory.other2).mint(tokenId, {
+        value: mintPrice,
+      })
+      await expect(
+        memory.contract.getMintPriceForToken(tokenId)
+      ).to.be.revertedWith('CR')
+    })
+
+    it('Should get mint price for with time spent', async () => {
+      const now = Date.now()
+      const uri = 'Qmsfzefi221ifjzifj'
+      const timeStart = parseInt((now / 1000).toString())
+      const timeEnd = parseInt((now / 1000 + 1800).toString())
+      const priceStart = 50
+      const priceEnd = 5
+      const stepDuration = 300
+      const amountCap = 10
+      const shareCyber = 50
+      const nonce = 0
+      const signature = await signCreateDropRequest(
+        uri,
+        timeStart,
+        timeEnd,
+        priceStart,
+        priceEnd,
+        stepDuration,
+        amountCap,
+        shareCyber,
+        memory.other.address,
+        nonce,
+        memory.manager
+      )
+      await memory.contract
+        .connect(memory.other)
+        .createDrop(
+          uri,
+          timeStart,
+          timeEnd,
+          priceStart,
+          priceEnd,
+          stepDuration,
+          amountCap,
+          shareCyber,
+          signature
+        )
+      const tokenId = 0
+      await ethers.provider.send('evm_increaseTime', [100])
+      await ethers.provider.send('evm_mine', [])
+      expect(await memory.contract.getMintPriceForToken(tokenId)).to.be.eq('50')
+      await ethers.provider.send('evm_increaseTime', [300])
+      await ethers.provider.send('evm_mine', [])
+      expect(await memory.contract.getMintPriceForToken(tokenId)).to.be.eq('42')
+      await ethers.provider.send('evm_increaseTime', [600])
+      await ethers.provider.send('evm_mine', [])
+      expect(await memory.contract.getMintPriceForToken(tokenId)).to.be.eq('27')
+      await ethers.provider.send('evm_increaseTime', [700])
+      await ethers.provider.send('evm_mine', [])
+      expect(await memory.contract.getMintPriceForToken(tokenId)).to.be.eq('12')
+    })
+  })
+
   describe('Mint', () => {
     it('Should mint ', async () => {
       const uri = 'Qmsfzefi221ifjzifj'
@@ -1198,7 +1516,7 @@ describe.only('CyberDestinationFactories', function () {
       expect(drop.minted).to.eq('2')
     })
 
-    it('MintEdition throw cap reach', async () => {
+    it('Should mint throw cap reach', async () => {
       const uri = 'Qmsfzefi221ifjzifj'
       const timeStart = parseInt((Date.now() / 1000 - 100).toString())
       const timeEnd = parseInt((Date.now() / 1000 + 10).toString())
