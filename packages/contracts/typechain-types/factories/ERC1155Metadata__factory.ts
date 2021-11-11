@@ -2,12 +2,12 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Contract, Signer, utils } from 'ethers'
-import { Provider } from '@ethersproject/providers'
+import { Contract, Signer, utils } from "ethers";
+import { Provider } from "@ethersproject/providers";
 import type {
   ERC1155Metadata,
   ERC1155MetadataInterface,
-} from '../ERC1155Metadata'
+} from "../ERC1155Metadata";
 
 const _abi = [
   {
@@ -15,50 +15,50 @@ const _abi = [
     inputs: [
       {
         indexed: false,
-        internalType: 'string',
-        name: 'value',
-        type: 'string',
+        internalType: "string",
+        name: "value",
+        type: "string",
       },
       {
         indexed: true,
-        internalType: 'uint256',
-        name: 'tokenId',
-        type: 'uint256',
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
       },
     ],
-    name: 'URI',
-    type: 'event',
+    name: "URI",
+    type: "event",
   },
   {
     inputs: [
       {
-        internalType: 'uint256',
-        name: 'tokenId',
-        type: 'uint256',
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
       },
     ],
-    name: 'uri',
+    name: "uri",
     outputs: [
       {
-        internalType: 'string',
-        name: '',
-        type: 'string',
+        internalType: "string",
+        name: "",
+        type: "string",
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
+    stateMutability: "view",
+    type: "function",
   },
-]
+];
 
 export class ERC1155Metadata__factory {
-  static readonly abi = _abi
+  static readonly abi = _abi;
   static createInterface(): ERC1155MetadataInterface {
-    return new utils.Interface(_abi) as ERC1155MetadataInterface
+    return new utils.Interface(_abi) as ERC1155MetadataInterface;
   }
   static connect(
     address: string,
     signerOrProvider: Signer | Provider
   ): ERC1155Metadata {
-    return new Contract(address, _abi, signerOrProvider) as ERC1155Metadata
+    return new Contract(address, _abi, signerOrProvider) as ERC1155Metadata;
   }
 }

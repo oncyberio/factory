@@ -12,92 +12,92 @@ import {
   BaseContract,
   ContractTransaction,
   CallOverrides,
-} from 'ethers'
-import { BytesLike } from '@ethersproject/bytes'
-import { Listener, Provider } from '@ethersproject/providers'
-import { FunctionFragment, EventFragment, Result } from '@ethersproject/abi'
+} from "ethers";
+import { BytesLike } from "@ethersproject/bytes";
+import { Listener, Provider } from "@ethersproject/providers";
+import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
-} from './common'
+} from "./common";
 
 export interface ERC1155MetadataInterface extends ethers.utils.Interface {
   functions: {
-    'uri(uint256)': FunctionFragment
-  }
+    "uri(uint256)": FunctionFragment;
+  };
 
-  encodeFunctionData(functionFragment: 'uri', values: [BigNumberish]): string
+  encodeFunctionData(functionFragment: "uri", values: [BigNumberish]): string;
 
-  decodeFunctionResult(functionFragment: 'uri', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: "uri", data: BytesLike): Result;
 
   events: {
-    'URI(string,uint256)': EventFragment
-  }
+    "URI(string,uint256)": EventFragment;
+  };
 
-  getEvent(nameOrSignatureOrTopic: 'URI'): EventFragment
+  getEvent(nameOrSignatureOrTopic: "URI"): EventFragment;
 }
 
 export type URIEvent = TypedEvent<
   [string, BigNumber],
   { value: string; tokenId: BigNumber }
->
+>;
 
-export type URIEventFilter = TypedEventFilter<URIEvent>
+export type URIEventFilter = TypedEventFilter<URIEvent>;
 
 export interface ERC1155Metadata extends BaseContract {
-  connect(signerOrProvider: Signer | Provider | string): this
-  attach(addressOrName: string): this
-  deployed(): Promise<this>
+  connect(signerOrProvider: Signer | Provider | string): this;
+  attach(addressOrName: string): this;
+  deployed(): Promise<this>;
 
-  interface: ERC1155MetadataInterface
+  interface: ERC1155MetadataInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
     toBlock?: string | number | undefined
-  ): Promise<Array<TEvent>>
+  ): Promise<Array<TEvent>>;
 
   listeners<TEvent extends TypedEvent>(
     eventFilter?: TypedEventFilter<TEvent>
-  ): Array<TypedListener<TEvent>>
-  listeners(eventName?: string): Array<Listener>
+  ): Array<TypedListener<TEvent>>;
+  listeners(eventName?: string): Array<Listener>;
   removeAllListeners<TEvent extends TypedEvent>(
     eventFilter: TypedEventFilter<TEvent>
-  ): this
-  removeAllListeners(eventName?: string): this
-  off: OnEvent<this>
-  on: OnEvent<this>
-  once: OnEvent<this>
-  removeListener: OnEvent<this>
+  ): this;
+  removeAllListeners(eventName?: string): this;
+  off: OnEvent<this>;
+  on: OnEvent<this>;
+  once: OnEvent<this>;
+  removeListener: OnEvent<this>;
 
   functions: {
-    uri(tokenId: BigNumberish, overrides?: CallOverrides): Promise<[string]>
-  }
+    uri(tokenId: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+  };
 
-  uri(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>
+  uri(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
-    uri(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>
-  }
+    uri(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  };
 
   filters: {
-    'URI(string,uint256)'(
+    "URI(string,uint256)"(
       value?: null,
       tokenId?: BigNumberish | null
-    ): URIEventFilter
-    URI(value?: null, tokenId?: BigNumberish | null): URIEventFilter
-  }
+    ): URIEventFilter;
+    URI(value?: null, tokenId?: BigNumberish | null): URIEventFilter;
+  };
 
   estimateGas: {
-    uri(tokenId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>
-  }
+    uri(tokenId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  };
 
   populateTransaction: {
     uri(
       tokenId: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>
-  }
+    ): Promise<PopulatedTransaction>;
+  };
 }

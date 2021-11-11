@@ -12,93 +12,127 @@ import {
   BaseContract,
   ContractTransaction,
   CallOverrides,
-} from 'ethers'
-import { BytesLike } from '@ethersproject/bytes'
-import { Listener, Provider } from '@ethersproject/providers'
-import { FunctionFragment, EventFragment, Result } from '@ethersproject/abi'
+} from "ethers";
+import { BytesLike } from "@ethersproject/bytes";
+import { Listener, Provider } from "@ethersproject/providers";
+import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
-} from './common'
+} from "./common";
 
 export interface BaseRelayRecipientInterface extends ethers.utils.Interface {
   functions: {
-    'isTrustedForwarder(address)': FunctionFragment
-  }
+    "c_0xd4dc4272(bytes32)": FunctionFragment;
+    "isTrustedForwarder(address)": FunctionFragment;
+  };
 
   encodeFunctionData(
-    functionFragment: 'isTrustedForwarder',
+    functionFragment: "c_0xd4dc4272",
+    values: [BytesLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "isTrustedForwarder",
     values: [string]
-  ): string
+  ): string;
 
   decodeFunctionResult(
-    functionFragment: 'isTrustedForwarder',
+    functionFragment: "c_0xd4dc4272",
     data: BytesLike
-  ): Result
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "isTrustedForwarder",
+    data: BytesLike
+  ): Result;
 
-  events: {}
+  events: {};
 }
 
 export interface BaseRelayRecipient extends BaseContract {
-  connect(signerOrProvider: Signer | Provider | string): this
-  attach(addressOrName: string): this
-  deployed(): Promise<this>
+  connect(signerOrProvider: Signer | Provider | string): this;
+  attach(addressOrName: string): this;
+  deployed(): Promise<this>;
 
-  interface: BaseRelayRecipientInterface
+  interface: BaseRelayRecipientInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
     toBlock?: string | number | undefined
-  ): Promise<Array<TEvent>>
+  ): Promise<Array<TEvent>>;
 
   listeners<TEvent extends TypedEvent>(
     eventFilter?: TypedEventFilter<TEvent>
-  ): Array<TypedListener<TEvent>>
-  listeners(eventName?: string): Array<Listener>
+  ): Array<TypedListener<TEvent>>;
+  listeners(eventName?: string): Array<Listener>;
   removeAllListeners<TEvent extends TypedEvent>(
     eventFilter: TypedEventFilter<TEvent>
-  ): this
-  removeAllListeners(eventName?: string): this
-  off: OnEvent<this>
-  on: OnEvent<this>
-  once: OnEvent<this>
-  removeListener: OnEvent<this>
+  ): this;
+  removeAllListeners(eventName?: string): this;
+  off: OnEvent<this>;
+  on: OnEvent<this>;
+  once: OnEvent<this>;
+  removeListener: OnEvent<this>;
 
   functions: {
+    c_0xd4dc4272(
+      c__0xd4dc4272: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<[void]>;
+
     isTrustedForwarder(
       forwarder: string,
       overrides?: CallOverrides
-    ): Promise<[boolean]>
-  }
+    ): Promise<[boolean]>;
+  };
+
+  c_0xd4dc4272(
+    c__0xd4dc4272: BytesLike,
+    overrides?: CallOverrides
+  ): Promise<void>;
 
   isTrustedForwarder(
     forwarder: string,
     overrides?: CallOverrides
-  ): Promise<boolean>
+  ): Promise<boolean>;
 
   callStatic: {
+    c_0xd4dc4272(
+      c__0xd4dc4272: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     isTrustedForwarder(
       forwarder: string,
       overrides?: CallOverrides
-    ): Promise<boolean>
-  }
+    ): Promise<boolean>;
+  };
 
-  filters: {}
+  filters: {};
 
   estimateGas: {
+    c_0xd4dc4272(
+      c__0xd4dc4272: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     isTrustedForwarder(
       forwarder: string,
       overrides?: CallOverrides
-    ): Promise<BigNumber>
-  }
+    ): Promise<BigNumber>;
+  };
 
   populateTransaction: {
+    c_0xd4dc4272(
+      c__0xd4dc4272: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     isTrustedForwarder(
       forwarder: string,
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>
-  }
+    ): Promise<PopulatedTransaction>;
+  };
 }

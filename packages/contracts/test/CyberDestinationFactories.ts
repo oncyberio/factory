@@ -991,7 +991,7 @@ describe('CyberDestinationFactories', function () {
       const timeEnd = parseInt((Date.now() / 1000 + 1000).toString())
       const priceStart = 100
       const priceEnd = 10
-      const stepDuration = 20
+      const stepDuration = 200
       const amountCap = 10
       const shareCyber = 50
       const nonce = 0
@@ -1023,7 +1023,7 @@ describe('CyberDestinationFactories', function () {
         )
       const tokenId = 0
       const mintPrice = await memory.contract.getMintPriceForToken(tokenId)
-      expect(mintPrice).to.be.eq('91')
+      expect(mintPrice).to.be.eq('100')
     })
 
     it('Should get mint price for token fixed price', async () => {
@@ -1154,10 +1154,10 @@ describe('CyberDestinationFactories', function () {
     it('Should get mint price for token without cap', async () => {
       const uri = 'Qmsfzefi221ifjzifj'
       const timeStart = parseInt((Date.now() / 1000 - 100).toString())
-      const timeEnd = parseInt((Date.now() / 1000 + 100).toString())
+      const timeEnd = parseInt((Date.now() / 1000 + 1000).toString())
       const priceStart = 100
       const priceEnd = 10
-      const stepDuration = 20
+      const stepDuration = 200
       const amountCap = 0
       const shareCyber = 50
       const nonce = 0
@@ -1189,7 +1189,7 @@ describe('CyberDestinationFactories', function () {
         )
       const tokenId = 0
       const mintPrice = await memory.contract.getMintPriceForToken(tokenId)
-      expect(mintPrice).to.be.eq('55')
+      expect(mintPrice).to.be.eq('100')
     })
 
     it('Should get mint price for token throw when cap reach', async () => {
@@ -1198,7 +1198,7 @@ describe('CyberDestinationFactories', function () {
       const timeEnd = parseInt((Date.now() / 1000 + 1000).toString())
       const priceStart = 100
       const priceEnd = 10
-      const stepDuration = 20
+      const stepDuration = 200
       const amountCap = 1
       const shareCyber = 50
       const nonce = 0
@@ -1230,7 +1230,7 @@ describe('CyberDestinationFactories', function () {
         )
       const tokenId = 0
       const mintPrice = await memory.contract.getMintPriceForToken(tokenId)
-      expect(mintPrice).to.be.eq('91')
+      expect(mintPrice).to.be.eq('100')
       await memory.contract.connect(memory.other2).mint(tokenId, {
         value: mintPrice,
       })

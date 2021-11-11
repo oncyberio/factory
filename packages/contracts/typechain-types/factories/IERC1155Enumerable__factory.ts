@@ -2,101 +2,101 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Contract, Signer, utils } from 'ethers'
-import { Provider } from '@ethersproject/providers'
+import { Contract, Signer, utils } from "ethers";
+import { Provider } from "@ethersproject/providers";
 import type {
   IERC1155Enumerable,
   IERC1155EnumerableInterface,
-} from '../IERC1155Enumerable'
+} from "../IERC1155Enumerable";
 
 const _abi = [
   {
     inputs: [
       {
-        internalType: 'uint256',
-        name: 'id',
-        type: 'uint256',
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
       },
     ],
-    name: 'accountsByToken',
+    name: "accountsByToken",
     outputs: [
       {
-        internalType: 'address[]',
-        name: '',
-        type: 'address[]',
+        internalType: "address[]",
+        name: "",
+        type: "address[]",
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
+    stateMutability: "view",
+    type: "function",
   },
   {
     inputs: [
       {
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
+        internalType: "address",
+        name: "account",
+        type: "address",
       },
     ],
-    name: 'tokensByAccount',
+    name: "tokensByAccount",
     outputs: [
       {
-        internalType: 'uint256[]',
-        name: '',
-        type: 'uint256[]',
+        internalType: "uint256[]",
+        name: "",
+        type: "uint256[]",
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
+    stateMutability: "view",
+    type: "function",
   },
   {
     inputs: [
       {
-        internalType: 'uint256',
-        name: 'id',
-        type: 'uint256',
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
       },
     ],
-    name: 'totalHolders',
+    name: "totalHolders",
     outputs: [
       {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
+    stateMutability: "view",
+    type: "function",
   },
   {
     inputs: [
       {
-        internalType: 'uint256',
-        name: 'id',
-        type: 'uint256',
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
       },
     ],
-    name: 'totalSupply',
+    name: "totalSupply",
     outputs: [
       {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
+    stateMutability: "view",
+    type: "function",
   },
-]
+];
 
 export class IERC1155Enumerable__factory {
-  static readonly abi = _abi
+  static readonly abi = _abi;
   static createInterface(): IERC1155EnumerableInterface {
-    return new utils.Interface(_abi) as IERC1155EnumerableInterface
+    return new utils.Interface(_abi) as IERC1155EnumerableInterface;
   }
   static connect(
     address: string,
     signerOrProvider: Signer | Provider
   ): IERC1155Enumerable {
-    return new Contract(address, _abi, signerOrProvider) as IERC1155Enumerable
+    return new Contract(address, _abi, signerOrProvider) as IERC1155Enumerable;
   }
 }
