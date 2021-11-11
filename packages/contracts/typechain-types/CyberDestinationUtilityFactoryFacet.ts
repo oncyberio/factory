@@ -65,11 +65,6 @@ export interface CyberDestinationUtilityFactoryFacetInterface
     'accountsByToken(uint256)': FunctionFragment
     'balanceOf(address,uint256)': FunctionFragment
     'balanceOfBatch(address[],uint256[])': FunctionFragment
-    'c_0x0cb09206(bytes32)': FunctionFragment
-    'c_0x68791152(bytes32)': FunctionFragment
-    'c_0xab3f9fbd(bytes32)': FunctionFragment
-    'c_0xd4dc4272(bytes32)': FunctionFragment
-    'c_0xd7d0b979(bytes32)': FunctionFragment
     'createDrop(string,uint256,uint256,uint256,uint256,uint256,uint256,uint256,bytes)': FunctionFragment
     'getDrop(uint256)': FunctionFragment
     'getMintPriceForDrop((uint256,uint256,uint256,uint256,uint256,uint256,uint256,address,uint256))': FunctionFragment
@@ -103,26 +98,6 @@ export interface CyberDestinationUtilityFactoryFacetInterface
   encodeFunctionData(
     functionFragment: 'balanceOfBatch',
     values: [string[], BigNumberish[]]
-  ): string
-  encodeFunctionData(
-    functionFragment: 'c_0x0cb09206',
-    values: [BytesLike]
-  ): string
-  encodeFunctionData(
-    functionFragment: 'c_0x68791152',
-    values: [BytesLike]
-  ): string
-  encodeFunctionData(
-    functionFragment: 'c_0xab3f9fbd',
-    values: [BytesLike]
-  ): string
-  encodeFunctionData(
-    functionFragment: 'c_0xd4dc4272',
-    values: [BytesLike]
-  ): string
-  encodeFunctionData(
-    functionFragment: 'c_0xd7d0b979',
-    values: [BytesLike]
   ): string
   encodeFunctionData(
     functionFragment: 'createDrop',
@@ -213,26 +188,6 @@ export interface CyberDestinationUtilityFactoryFacetInterface
   decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result
   decodeFunctionResult(
     functionFragment: 'balanceOfBatch',
-    data: BytesLike
-  ): Result
-  decodeFunctionResult(
-    functionFragment: 'c_0x0cb09206',
-    data: BytesLike
-  ): Result
-  decodeFunctionResult(
-    functionFragment: 'c_0x68791152',
-    data: BytesLike
-  ): Result
-  decodeFunctionResult(
-    functionFragment: 'c_0xab3f9fbd',
-    data: BytesLike
-  ): Result
-  decodeFunctionResult(
-    functionFragment: 'c_0xd4dc4272',
-    data: BytesLike
-  ): Result
-  decodeFunctionResult(
-    functionFragment: 'c_0xd7d0b979',
     data: BytesLike
   ): Result
   decodeFunctionResult(functionFragment: 'createDrop', data: BytesLike): Result
@@ -402,31 +357,6 @@ export interface CyberDestinationUtilityFactoryFacet extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber[]]>
 
-    c_0x0cb09206(
-      c__0x0cb09206: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<[void]>
-
-    c_0x68791152(
-      c__0x68791152: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<[void]>
-
-    c_0xab3f9fbd(
-      c__0xab3f9fbd: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<[void]>
-
-    c_0xd4dc4272(
-      c__0xd4dc4272: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<[void]>
-
-    c_0xd7d0b979(
-      c__0xd7d0b979: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<[void]>
-
     createDrop(
       _uri: string,
       _timeStart: BigNumberish,
@@ -564,31 +494,6 @@ export interface CyberDestinationUtilityFactoryFacet extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber[]>
 
-  c_0x0cb09206(
-    c__0x0cb09206: BytesLike,
-    overrides?: CallOverrides
-  ): Promise<void>
-
-  c_0x68791152(
-    c__0x68791152: BytesLike,
-    overrides?: CallOverrides
-  ): Promise<void>
-
-  c_0xab3f9fbd(
-    c__0xab3f9fbd: BytesLike,
-    overrides?: CallOverrides
-  ): Promise<void>
-
-  c_0xd4dc4272(
-    c__0xd4dc4272: BytesLike,
-    overrides?: CallOverrides
-  ): Promise<void>
-
-  c_0xd7d0b979(
-    c__0xd7d0b979: BytesLike,
-    overrides?: CallOverrides
-  ): Promise<void>
-
   createDrop(
     _uri: string,
     _timeStart: BigNumberish,
@@ -719,31 +624,6 @@ export interface CyberDestinationUtilityFactoryFacet extends BaseContract {
       ids: BigNumberish[],
       overrides?: CallOverrides
     ): Promise<BigNumber[]>
-
-    c_0x0cb09206(
-      c__0x0cb09206: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<void>
-
-    c_0x68791152(
-      c__0x68791152: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<void>
-
-    c_0xab3f9fbd(
-      c__0xab3f9fbd: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<void>
-
-    c_0xd4dc4272(
-      c__0xd4dc4272: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<void>
-
-    c_0xd7d0b979(
-      c__0xd7d0b979: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<void>
 
     createDrop(
       _uri: string,
@@ -946,31 +826,6 @@ export interface CyberDestinationUtilityFactoryFacet extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>
 
-    c_0x0cb09206(
-      c__0x0cb09206: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>
-
-    c_0x68791152(
-      c__0x68791152: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>
-
-    c_0xab3f9fbd(
-      c__0xab3f9fbd: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>
-
-    c_0xd4dc4272(
-      c__0xd4dc4272: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>
-
-    c_0xd7d0b979(
-      c__0xd7d0b979: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>
-
     createDrop(
       _uri: string,
       _timeStart: BigNumberish,
@@ -1103,31 +958,6 @@ export interface CyberDestinationUtilityFactoryFacet extends BaseContract {
     balanceOfBatch(
       accounts: string[],
       ids: BigNumberish[],
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>
-
-    c_0x0cb09206(
-      c__0x0cb09206: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>
-
-    c_0x68791152(
-      c__0x68791152: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>
-
-    c_0xab3f9fbd(
-      c__0xab3f9fbd: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>
-
-    c_0xd4dc4272(
-      c__0xd4dc4272: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>
-
-    c_0xd7d0b979(
-      c__0xd7d0b979: BytesLike,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>
 

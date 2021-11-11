@@ -154,6 +154,69 @@ describe('CyberDestinationFactories', function () {
       ).to.be.revertedWith('DNE')
     })
 
+    it('Should create drop fixed price', async () => {
+      const uri = 'Qmsfzefi221ifjzifj'
+      const timeStart = parseInt((Date.now() / 1000).toString())
+      const timeEnd = parseInt((Date.now() / 1000 + 10).toString())
+      const price = 100
+      const stepDuration = 1
+      const amountCap = 10
+      const shareCyber = 50
+      const nonce = 0
+      const signature = await signCreateDropRequest(
+        uri,
+        timeStart,
+        timeEnd,
+        price,
+        price,
+        stepDuration,
+        amountCap,
+        shareCyber,
+        memory.other.address,
+        nonce,
+        memory.manager
+      )
+      await memory.contract
+        .connect(memory.other)
+        .createDrop(
+          uri,
+          timeStart,
+          timeEnd,
+          price,
+          price,
+          stepDuration,
+          amountCap,
+          shareCyber,
+          signature
+        )
+
+      const tokenId = 0
+      expect(
+        await memory.contract.balanceOf(memory.other.address, tokenId)
+      ).to.eq('0')
+      expect(
+        await memory.contract.balanceOf(memory.oncyber.address, tokenId)
+      ).to.eq('0')
+      expect(await memory.contract.minterNonce(memory.other.address)).to.eq('1')
+      expect(await memory.contract.uri(tokenId)).to.eq(tokenURI(uri))
+      expect(await memory.contract['totalSupply()']()).to.eq('1')
+
+      const drop = await memory.contract.getDrop(tokenId)
+      expect(drop.timeStart).to.eq(timeStart)
+      expect(drop.timeEnd).to.eq(timeEnd)
+      expect(drop.priceStart).to.eq(price)
+      expect(drop.priceEnd).to.eq(price)
+      expect(drop.stepDuration).to.eq(stepDuration)
+      expect(drop.amountCap).to.eq(amountCap)
+      expect(drop.shareCyber).to.eq(shareCyber)
+      expect(drop.creator).to.eq(memory.other.address)
+      expect(drop.minted).to.eq('0')
+
+      await expect(
+        memory.contract.connect(memory.other).getDrop(1)
+      ).to.be.revertedWith('DNE')
+    })
+
     it('Should create drop more than one time', async () => {
       const uri = 'Qmsfzefi221ifjzifj'
       const timeStart = parseInt((Date.now() / 1000).toString())
@@ -318,7 +381,9 @@ describe('CyberDestinationFactories', function () {
             shareCyber,
             signature
           )
-      ).to.be.revertedWith('IT')
+      ).to.be.revertedWith(
+        'reverted with panic code 0x11 (Arithmetic operation underflowed or overflowed outside of an unchecked block'
+      )
     })
 
     it("Can't create drop invalid step duration", async () => {
@@ -359,7 +424,48 @@ describe('CyberDestinationFactories', function () {
             shareCyber,
             signature
           )
-      ).to.be.revertedWith('IS')
+      ).to.be.revertedWith('IT')
+    })
+
+    it("Can't create drop invalid step duration zero", async () => {
+      const uri = 'Qmsfzefi221ifjzifj'
+      const timeStart = 80
+      const timeEnd = 100
+      const priceStart = 1
+      const priceEnd = 2
+      const stepDuration = 0
+      const amountCap = 10
+      const shareCyber = 10
+      const nonce = 0
+      const signature = await signCreateDropRequest(
+        uri,
+        timeStart,
+        timeEnd,
+        priceStart,
+        priceEnd,
+        stepDuration,
+        amountCap,
+        shareCyber,
+        memory.other.address,
+        nonce,
+        memory.manager
+      )
+
+      await expect(
+        memory.contract
+          .connect(memory.other)
+          .createDrop(
+            uri,
+            timeStart,
+            timeEnd,
+            priceStart,
+            priceEnd,
+            stepDuration,
+            amountCap,
+            shareCyber,
+            signature
+          )
+      ).to.be.revertedWith('IT')
     })
 
     it("Can't create drop invalid price start/end", async () => {
@@ -805,6 +911,12 @@ describe('CyberDestinationFactories', function () {
       expect(
         await memory.contract.getPriceFor(1800, 1800, 50, 5, 300)
       ).to.be.eq('5')
+      expect(await memory.contract.getPriceFor(200, 1800, 5, 5, 1)).to.be.eq(
+        '5'
+      )
+      expect(await memory.contract.getPriceFor(900, 1800, 5, 5, 1)).to.be.eq(
+        '5'
+      )
     })
   })
 
@@ -856,6 +968,19 @@ describe('CyberDestinationFactories', function () {
           minted: 0,
         })
       ).to.be.eq('5')
+      expect(
+        await memory.contract.getMintPriceForDrop({
+          timeStart: now,
+          timeEnd: now + 600,
+          priceStart: 5,
+          priceEnd: 5,
+          stepDuration: 1,
+          amountCap: 1,
+          shareCyber: 50,
+          creator: memory.other.address,
+          minted: 0,
+        })
+      ).to.be.eq('5')
     })
   })
 
@@ -899,6 +1024,47 @@ describe('CyberDestinationFactories', function () {
       const tokenId = 0
       const mintPrice = await memory.contract.getMintPriceForToken(tokenId)
       expect(mintPrice).to.be.eq('91')
+    })
+
+    it('Should get mint price for token fixed price', async () => {
+      const uri = 'Qmsfzefi221ifjzifj'
+      const timeStart = parseInt((Date.now() / 1000 - 100).toString())
+      const timeEnd = parseInt((Date.now() / 1000 + 1000).toString())
+      const priceStart = 100
+      const priceEnd = 100
+      const stepDuration = 1
+      const amountCap = 10
+      const shareCyber = 50
+      const nonce = 0
+      const signature = await signCreateDropRequest(
+        uri,
+        timeStart,
+        timeEnd,
+        priceStart,
+        priceEnd,
+        stepDuration,
+        amountCap,
+        shareCyber,
+        memory.other.address,
+        nonce,
+        memory.manager
+      )
+      await memory.contract
+        .connect(memory.other)
+        .createDrop(
+          uri,
+          timeStart,
+          timeEnd,
+          priceStart,
+          priceEnd,
+          stepDuration,
+          amountCap,
+          shareCyber,
+          signature
+        )
+      const tokenId = 0
+      const mintPrice = await memory.contract.getMintPriceForToken(tokenId)
+      expect(mintPrice).to.be.eq('100')
     })
 
     it('Should get mint price for token throw out of time before', async () => {

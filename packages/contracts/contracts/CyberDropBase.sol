@@ -37,9 +37,8 @@ contract CyberDropBase is CyberDestinationFactoryBase {
     uint256 _shareCyber,
     bytes memory _signature
   ) public returns (uint256 _tokenId) {
-    require(_timeEnd > _timeStart, 'IT');
-    require(_timeEnd - _timeStart > _stepDuration, 'IS');
-    require(_priceStart > _priceEnd, 'IP');
+    require(_timeEnd - _timeStart >= _stepDuration && _stepDuration > 0, 'IT');
+    require(_priceStart >= _priceEnd, 'IP');
     require(_shareCyber <= 100, 'ISO');
 
     address sender = _msgSender();
