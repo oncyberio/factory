@@ -26,24 +26,15 @@ import type {
 export interface LibDiamondInterface extends ethers.utils.Interface {
   functions: {
     "DIAMOND_STORAGE_POSITION()": FunctionFragment;
-    "c_0x753e461c(bytes32)": FunctionFragment;
   };
 
   encodeFunctionData(
     functionFragment: "DIAMOND_STORAGE_POSITION",
     values?: undefined
   ): string;
-  encodeFunctionData(
-    functionFragment: "c_0x753e461c",
-    values: [BytesLike]
-  ): string;
 
   decodeFunctionResult(
     functionFragment: "DIAMOND_STORAGE_POSITION",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "c_0x753e461c",
     data: BytesLike
   ): Result;
 
@@ -78,47 +69,22 @@ export interface LibDiamond extends BaseContract {
 
   functions: {
     DIAMOND_STORAGE_POSITION(overrides?: CallOverrides): Promise<[string]>;
-
-    c_0x753e461c(
-      c__0x753e461c: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<[void]>;
   };
 
   DIAMOND_STORAGE_POSITION(overrides?: CallOverrides): Promise<string>;
 
-  c_0x753e461c(
-    c__0x753e461c: BytesLike,
-    overrides?: CallOverrides
-  ): Promise<void>;
-
   callStatic: {
     DIAMOND_STORAGE_POSITION(overrides?: CallOverrides): Promise<string>;
-
-    c_0x753e461c(
-      c__0x753e461c: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<void>;
   };
 
   filters: {};
 
   estimateGas: {
     DIAMOND_STORAGE_POSITION(overrides?: CallOverrides): Promise<BigNumber>;
-
-    c_0x753e461c(
-      c__0x753e461c: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     DIAMOND_STORAGE_POSITION(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    c_0x753e461c(
-      c__0x753e461c: BytesLike,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };

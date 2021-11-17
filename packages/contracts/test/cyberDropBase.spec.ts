@@ -1260,11 +1260,11 @@ describe('CyberDropBase', function () {
   describe('Mint', () => {
     it('Should mint ', async () => {
       const uri = 'Qmsfzefi221ifjzifj'
-      const timeStart = parseInt((Date.now() / 1000 - 100).toString())
-      const timeEnd = parseInt((Date.now() / 1000 + 1000).toString())
+      const timeStart = parseInt((Date.now() / 1000 - 1000).toString())
+      const timeEnd = parseInt((Date.now() / 1000 + 10000).toString())
       const priceStart = 100
       const priceEnd = 10
-      const stepDuration = 30
+      const stepDuration = 300
       const amountCap = 10
       const shareCyber = 50
       const nonce = 0
@@ -1324,11 +1324,11 @@ describe('CyberDropBase', function () {
 
     it('Should mint more than one multiple accounts', async () => {
       const uri = 'Qmsfzefi221ifjzifj'
-      const timeStart = parseInt((Date.now() / 1000 - 100).toString())
-      const timeEnd = parseInt((Date.now() / 1000 + 1000).toString())
+      const timeStart = parseInt((Date.now() / 1000 - 1000).toString())
+      const timeEnd = parseInt((Date.now() / 1000 + 10000).toString())
       const priceStart = 100
       const priceEnd = 10
-      const stepDuration = 30
+      const stepDuration = 300
       const amountCap = 10
       const shareCyber = 50
       const nonce = 0
