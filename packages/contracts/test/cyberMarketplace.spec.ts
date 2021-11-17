@@ -40,7 +40,7 @@ function delay(ms: number) {
   })
 }
 
-describe('CyberMarketplace', function () {
+describe.only('CyberMarketplace', function () {
   beforeEach(async () => {
     let signerArr = await ethers.getSigners()
     signers.deployer = signerArr[0]
@@ -149,6 +149,10 @@ describe('CyberMarketplace', function () {
       expect(
         await contracts.nft.balanceOf(signers.buyer.address, KONG)
       ).to.be.equal(1)
+
+      await expect(
+        contracts.marketplace.buy(listingId, { value: price })
+      ).to.be.revertedWith('Invalid listing id')
     })
 
     it('Should fail to buy if price is insufficient', async () => {
