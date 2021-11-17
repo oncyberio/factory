@@ -29,6 +29,7 @@ export interface ERC1155URIInterface extends ethers.utils.Interface {
     "accountsByToken(uint256)": FunctionFragment;
     "balanceOf(address,uint256)": FunctionFragment;
     "balanceOfBatch(address[],uint256[])": FunctionFragment;
+    "c_0x68791152(bytes32)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
     "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)": FunctionFragment;
     "safeTransferFrom(address,address,uint256,uint256,bytes)": FunctionFragment;
@@ -51,6 +52,10 @@ export interface ERC1155URIInterface extends ethers.utils.Interface {
   encodeFunctionData(
     functionFragment: "balanceOfBatch",
     values: [string[], BigNumberish[]]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "c_0x68791152",
+    values: [BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "isApprovedForAll",
@@ -93,6 +98,10 @@ export interface ERC1155URIInterface extends ethers.utils.Interface {
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "balanceOfBatch",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "c_0x68791152",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -226,6 +235,11 @@ export interface ERC1155URI extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber[]]>;
 
+    c_0x68791152(
+      c__0x68791152: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<[void]>;
+
     isApprovedForAll(
       account: string,
       operator: string,
@@ -296,6 +310,11 @@ export interface ERC1155URI extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber[]>;
 
+  c_0x68791152(
+    c__0x68791152: BytesLike,
+    overrides?: CallOverrides
+  ): Promise<void>;
+
   isApprovedForAll(
     account: string,
     operator: string,
@@ -359,6 +378,11 @@ export interface ERC1155URI extends BaseContract {
       ids: BigNumberish[],
       overrides?: CallOverrides
     ): Promise<BigNumber[]>;
+
+    c_0x68791152(
+      c__0x68791152: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     isApprovedForAll(
       account: string,
@@ -480,6 +504,11 @@ export interface ERC1155URI extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    c_0x68791152(
+      c__0x68791152: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     isApprovedForAll(
       account: string,
       operator: string,
@@ -548,6 +577,11 @@ export interface ERC1155URI extends BaseContract {
     balanceOfBatch(
       accounts: string[],
       ids: BigNumberish[],
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    c_0x68791152(
+      c__0x68791152: BytesLike,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

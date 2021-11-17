@@ -1480,8 +1480,8 @@ describe('CyberDropBase', function () {
 
     it('Should mint throw out of time to late', async () => {
       const uri = 'Qmsfzefi221ifjzifj'
-      const timeStart = parseInt((Date.now() / 1000 - 100).toString())
-      const timeEnd = parseInt((Date.now() / 1000 - 10).toString())
+      const timeStart = parseInt((Date.now() / 1000 - 1000).toString())
+      const timeEnd = parseInt((Date.now() / 1000 - 100).toString())
       const priceStart = 100
       const priceEnd = 10
       const stepDuration = 30
