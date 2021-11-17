@@ -70,7 +70,7 @@ async function main() {
 
   txReceipt.logs.forEach((log: Log) => {
     const logParsed = iFace.parseLog(log)
-    if (logParsed.name === 'DestinationMinted') {
+    if (logParsed.name === 'DropCreated') {
       tokenId = logParsed.args[1].toString()
       console.log('tokenId', tokenId)
     }

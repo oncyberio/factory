@@ -13,7 +13,7 @@ contract CyberDropBase is CyberTokenBase {
   using ECDSA for bytes32;
   using Counters for Counters.Counter;
 
-  event DestinationMinted(address indexed account, uint256 indexed tokenId);
+  event DropCreated(address indexed account, uint256 indexed tokenId);
 
   function getDrop(uint256 _tokenId)
     public
@@ -60,7 +60,7 @@ contract CyberDropBase is CyberTokenBase {
       .recover(_signature);
     require(recoveredAddress == LibAppStorage.layout().manager, 'NM');
 
-    // Mint token
+    // Effects
     _tokenId = LibAppStorage.layout().totalSupply.current();
     setTokenURI(_tokenId, _uri);
     LibAppStorage.layout().totalSupply.increment();
@@ -78,7 +78,7 @@ contract CyberDropBase is CyberTokenBase {
     });
     LibDropStorage.layout().drops[_tokenId] = drop;
 
-    emit DestinationMinted(sender, _tokenId);
+    emit DropCreated(sender, _tokenId);
 
     return _tokenId;
   }
@@ -100,12 +100,15 @@ contract CyberDropBase is CyberTokenBase {
     require(msg.value >= price, 'IA');
     uint256 amountOnCyber = (msg.value * drop.shareCyber) / 100;
     uint256 amountCreator = msg.value - amountOnCyber;
-    drop.minted += 1;
 
+    // Effects
+    drop.minted += 1;
     _safeMint(sender, _tokenId, 1, '');
-    emit Minted(sender, _tokenId, 1);
     drop.creator.transfer(amountCreator);
     payable(LibAppStorage.layout().oncyber).transfer(amountOnCyber);
+
+    emit Minted(sender, _tokenId, 1);
+
     return true;
   }
 

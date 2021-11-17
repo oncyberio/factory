@@ -29,6 +29,9 @@ export interface CyberTokenBaseInterface extends ethers.utils.Interface {
     "accountsByToken(uint256)": FunctionFragment;
     "balanceOf(address,uint256)": FunctionFragment;
     "balanceOfBatch(address[],uint256[])": FunctionFragment;
+    "c_0x68791152(bytes32)": FunctionFragment;
+    "c_0x792934de(bytes32)": FunctionFragment;
+    "c_0xd4dc4272(bytes32)": FunctionFragment;
     "initialize(string,address,address,address,address)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
     "isTrustedForwarder(address)": FunctionFragment;
@@ -56,6 +59,18 @@ export interface CyberTokenBaseInterface extends ethers.utils.Interface {
   encodeFunctionData(
     functionFragment: "balanceOfBatch",
     values: [string[], BigNumberish[]]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "c_0x68791152",
+    values: [BytesLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "c_0x792934de",
+    values: [BytesLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "c_0xd4dc4272",
+    values: [BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "initialize",
@@ -109,6 +124,18 @@ export interface CyberTokenBaseInterface extends ethers.utils.Interface {
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "balanceOfBatch",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "c_0x68791152",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "c_0x792934de",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "c_0xd4dc4272",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
@@ -262,6 +289,21 @@ export interface CyberTokenBase extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber[]]>;
 
+    c_0x68791152(
+      c__0x68791152: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<[void]>;
+
+    c_0x792934de(
+      c__0x792934de: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<[void]>;
+
+    c_0xd4dc4272(
+      c__0xd4dc4272: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<[void]>;
+
     initialize(
       _uri: string,
       _manager: string,
@@ -357,6 +399,21 @@ export interface CyberTokenBase extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber[]>;
 
+  c_0x68791152(
+    c__0x68791152: BytesLike,
+    overrides?: CallOverrides
+  ): Promise<void>;
+
+  c_0x792934de(
+    c__0x792934de: BytesLike,
+    overrides?: CallOverrides
+  ): Promise<void>;
+
+  c_0xd4dc4272(
+    c__0xd4dc4272: BytesLike,
+    overrides?: CallOverrides
+  ): Promise<void>;
+
   initialize(
     _uri: string,
     _manager: string,
@@ -445,6 +502,21 @@ export interface CyberTokenBase extends BaseContract {
       ids: BigNumberish[],
       overrides?: CallOverrides
     ): Promise<BigNumber[]>;
+
+    c_0x68791152(
+      c__0x68791152: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    c_0x792934de(
+      c__0x792934de: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    c_0xd4dc4272(
+      c__0xd4dc4272: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     initialize(
       _uri: string,
@@ -599,6 +671,21 @@ export interface CyberTokenBase extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    c_0x68791152(
+      c__0x68791152: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    c_0x792934de(
+      c__0x792934de: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    c_0xd4dc4272(
+      c__0xd4dc4272: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     initialize(
       _uri: string,
       _manager: string,
@@ -689,6 +776,21 @@ export interface CyberTokenBase extends BaseContract {
     balanceOfBatch(
       accounts: string[],
       ids: BigNumberish[],
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    c_0x68791152(
+      c__0x68791152: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    c_0x792934de(
+      c__0x792934de: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    c_0xd4dc4272(
+      c__0xd4dc4272: BytesLike,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
