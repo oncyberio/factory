@@ -98,14 +98,12 @@ contract CyberDropBase is CyberTokenBase {
 
     uint256 price = getMintPriceForDrop(drop);
     require(msg.value >= price, 'IA');
-
-    _safeMint(sender, _tokenId, 1, '');
-    drop.minted += 1;
-    emit Minted(sender, _tokenId, 1);
-
     uint256 amountOnCyber = (msg.value * drop.shareCyber) / 100;
     uint256 amountCreator = msg.value - amountOnCyber;
+    drop.minted += 1;
 
+    _safeMint(sender, _tokenId, 1, '');
+    emit Minted(sender, _tokenId, 1);
     drop.creator.transfer(amountCreator);
     payable(LibAppStorage.layout().oncyber).transfer(amountOnCyber);
     return true;
