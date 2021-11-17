@@ -59,7 +59,7 @@ export type DropStructOutput = [
   minted: BigNumber;
 };
 
-export interface CyberDestinationUtilityFactoryFacetInterface
+export interface CyberObjectFactoryFacetInterface
   extends ethers.utils.Interface {
   functions: {
     "accountsByToken(uint256)": FunctionFragment;
@@ -322,12 +322,12 @@ export type URIEvent = TypedEvent<
 
 export type URIEventFilter = TypedEventFilter<URIEvent>;
 
-export interface CyberDestinationUtilityFactoryFacet extends BaseContract {
+export interface CyberObjectFactoryFacet extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: CyberDestinationUtilityFactoryFacetInterface;
+  interface: CyberObjectFactoryFacetInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

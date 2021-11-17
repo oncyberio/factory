@@ -7,9 +7,9 @@ import '@openzeppelin/contracts/utils/Counters.sol';
 
 import './libraries/LibAppStorage.sol';
 import './libraries/LibDropStorage.sol';
-import './CyberDestinationFactoryBase.sol';
+import './CyberTokenBase.sol';
 
-contract CyberDropBase is CyberDestinationFactoryBase {
+contract CyberDropBase is CyberTokenBase {
   using ECDSA for bytes32;
   using Counters for Counters.Counter;
 

@@ -42,10 +42,11 @@ const config: HardhatUserConfig = {
   },
   namedAccounts: {
     deployer: 0,
-    managerDestination: process.env.MANAGER_DESTINATION_ADDRESS || 1,
+    oncyber: process.env.ONCYBER_ADDRESS || 1,
+    managerDestination: process.env.MANAGER_DESTINATION_ADDRESS || 2,
     managerDestinationUtility:
-      process.env.MANAGER_DESTINATION_UTILITY_ADDRESS || 1,
-    oncyber: process.env.ONCYBER_ADDRESS || 2,
+      process.env.MANAGER_DESTINATION_UTILITY_ADDRESS || 3,
+    managerObject: process.env.MANAGER_OBJECT_ADDRESS || 4,
     biconomyForwarder:
       process.env.BICONOMY_FORWARDER ||
       '0x9399BB24DBB5C4b782C70c2969F58716Ebbd6a3b',

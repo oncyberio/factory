@@ -12,7 +12,7 @@ import './ERC1155URI/ERC1155URI.sol';
 
 import './libraries/LibAppStorage.sol';
 
-contract CyberDestinationFactoryBase is BaseRelayRecipient, ERC1155URI {
+contract CyberTokenBase is BaseRelayRecipient, ERC1155URI {
   using ECDSA for bytes32;
   using Counters for Counters.Counter;
 
