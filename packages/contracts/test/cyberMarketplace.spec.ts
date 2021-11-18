@@ -40,7 +40,7 @@ function delay(ms: number) {
   })
 }
 
-describe.only('CyberMarketplace', function () {
+describe('CyberMarketplace', function () {
   beforeEach(async () => {
     let signerArr = await ethers.getSigners()
     signers.deployer = signerArr[0]
