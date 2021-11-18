@@ -59,6 +59,10 @@ contract CyberMarketplace is ERC1155Holder {
       IERC1155(nftContract).balanceOf(msg.sender, tokenId) > 0,
       'Empty balance'
     );
+    require(
+      IERC1155(nftContract).isApprovedForAll(msg.sender, address(this)),
+      'Not approved'
+    );
 
     listingsId.increment();
     uint256 id = listingsId.current();

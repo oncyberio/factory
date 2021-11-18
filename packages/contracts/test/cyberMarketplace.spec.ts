@@ -45,8 +45,9 @@ describe.only('CyberMarketplace', function () {
     let signerArr = await ethers.getSigners()
     signers.deployer = signerArr[0]
     signers.seller = signerArr[1]
-    signers.buyer = signerArr[2]
-    signers.addr1 = signerArr[3]
+    signers.nonSeller = signerArr[2]
+    signers.buyer = signerArr[3]
+    signers.addr1 = signerArr[4]
 
     const MarketplaceContract = await ethers.getContractFactory(
       'CyberMarketplace'
@@ -64,6 +65,14 @@ describe.only('CyberMarketplace', function () {
       signers.deployer.address,
       signers.seller.address,
       KONG,
+      10,
+      '0x00'
+    )
+
+    await contracts.nft.safeTransferFrom(
+      signers.deployer.address,
+      signers.nonSeller.address,
+      PUDGY,
       10,
       '0x00'
     )
@@ -88,9 +97,17 @@ describe.only('CyberMarketplace', function () {
     it('Should revert on empty balance', async () => {
       await expect(
         contracts.marketplace
-          .connect(signers.buyer)
+          .connect(signers.addr1)
           .sell(contracts.nft.address, KONG, eth(1), days(1))
       ).to.be.revertedWith('Empty balance')
+    })
+
+    it('Should revert if non approved', async () => {
+      await expect(
+        contracts.marketplace
+          .connect(signers.nonSeller)
+          .sell(contracts.nft.address, PUDGY, eth(1), days(1))
+      ).to.be.revertedWith('Not approved')
     })
 
     it('Should sell', async () => {
