@@ -1,13 +1,11 @@
 import { ethers, network } from 'hardhat'
 import { expect } from 'chai'
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers'
-import { BigNumber } from 'ethers'
 
 import type {
   DummyContract,
   DummyNFT,
-  CyberMarketplace,
-} from '../typechain-types'
+  CyberMarketplace} from '../typechain-types'
 
 const contracts: {
   marketplace: CyberMarketplace
@@ -26,14 +24,14 @@ function days(n: number) {
 }
 
 function eth(n: number) {
-  return BigNumber.from(n).mul(BigNumber.from(10).pow(18))
+  return ethers.utils.parseEther(String(n))
 }
 
 
 
 describe('CyberMarketplace', function () {
   beforeEach(async () => {
-    let signerArr = await ethers.getSigners()
+    const signerArr = await ethers.getSigners()
     signers.deployer = signerArr[0]
     signers.seller = signerArr[1]
     signers.nonSeller = signerArr[2]
@@ -137,10 +135,10 @@ describe('CyberMarketplace', function () {
         .connect(signers.seller)
         .sell(contracts.nft.address, KONG, price, duration)
 
-      let result = await tx.wait()
+      const result = await tx.wait()
       expect(result.events?.length).to.be.greaterThan(0)
 
-      let sellEvent = result.events?.find((it: any) => it.event === 'Sell')
+      const sellEvent = result.events?.find((it: any) => it.event === 'Sell')
       expect(sellEvent).to.be.not.undefined
 
       expect(
@@ -163,24 +161,24 @@ describe('CyberMarketplace', function () {
     it('Should buy', async () => {
       const price = eth(1)
 
-      let tx = await contracts.marketplace
+      const tx = await contracts.marketplace
         .connect(signers.seller)
         .sell(contracts.nft.address, KONG, price, days(1))
         .then((tx: any) => tx.wait())
 
-      let listingId = tx.events.find((it: any) => it.event === 'Sell').args[0]
+      const listingId = tx.events.find((it: any) => it.event === 'Sell').args[0]
 
-      let sellerBalanceBefore = await signers.seller.getBalance()
+      const sellerBalanceBefore = await signers.seller.getBalance()
 
-      tx = await contracts.marketplace
+      const tx2 = await contracts.marketplace
         .connect(signers.buyer)
         .buy(listingId, { value: price })
         .then((tx: any) => tx.wait())
 
-      let sellEvent = tx.events?.find((it: any) => it.event === 'Buy')
+      const sellEvent = tx2.events?.find((it: any) => it.event === 'Buy')
       expect(sellEvent).to.be.not.undefined
 
-      let sellerBalanceAfter = await signers.seller.getBalance()
+      const sellerBalanceAfter = await signers.seller.getBalance()
 
       expect(sellerBalanceAfter.sub(sellerBalanceBefore)).to.be.equal(
         price,
@@ -197,14 +195,14 @@ describe('CyberMarketplace', function () {
     })
 
     it('Should fail to buy if price is insufficient', async () => {
-      let price = eth(2)
+      const price = eth(2)
 
-      let tx = await contracts.marketplace
+      const tx = await contracts.marketplace
         .connect(signers.seller)
         .sell(contracts.nft.address, KONG, price, days(1))
         .then((tx: any) => tx.wait())
 
-      let listingId = tx.events.find((it: any) => it.event === 'Sell').args[0]
+      const listingId = tx.events.find((it: any) => it.event === 'Sell').args[0]
 
       await expect(
         contracts.marketplace.buy(listingId, { value: eth(1) })
@@ -212,16 +210,16 @@ describe('CyberMarketplace', function () {
     })
 
     it('Should fail to buy if expired', async () => {
-      let price = eth(1)
-      let duration = days(1)
+      const price = eth(1)
+      const duration = days(1)
 
-      let tx = await contracts.marketplace
+      const tx = await contracts.marketplace
         .connect(signers.seller)
         .sell(contracts.nft.address, KONG, price, duration)
         .then((tx: any) => tx.wait())
 
-      let event = tx.events.find((it: any) => it.event === 'Sell')
-      let listingId = event.args[0]
+      const event = tx.events.find((it: any) => it.event === 'Sell')
+      const listingId = event.args[0]
 
       await network.provider.send('evm_increaseTime', [days(1) + 1])
       await network.provider.send('evm_mine')
