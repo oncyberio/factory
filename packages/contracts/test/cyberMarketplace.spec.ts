@@ -1,9 +1,7 @@
-import chai from 'chai'
-import { solidity } from 'ethereum-waffle'
 import { ethers, network } from 'hardhat'
 import { expect } from 'chai'
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers'
-import { BigNumber, Contract } from 'ethers'
+import { BigNumber } from 'ethers'
 
 import type {
   DummyContract,
@@ -14,6 +12,7 @@ import type {
 const contracts: {
   marketplace: CyberMarketplace
   nft: DummyNFT
+  notAllowedNft: DummyNFT,
   dummy: DummyContract
 } = {} as any
 
@@ -30,15 +29,7 @@ function eth(n: number) {
   return BigNumber.from(n).mul(BigNumber.from(10).pow(18))
 }
 
-function big(n: number) {
-  return BigNumber.from(n)
-}
 
-function delay(ms: number) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, ms)
-  })
-}
 
 describe('CyberMarketplace', function () {
   beforeEach(async () => {
@@ -59,6 +50,7 @@ describe('CyberMarketplace', function () {
 
     contracts.marketplace = (await MarketplaceContract.deploy()) as any
     contracts.nft = (await NFTContract.deploy()) as any
+    contracts.notAllowedNft = (await NFTContract.deploy()) as any
     contracts.dummy = (await DummyContract.deploy()) as any
 
     await contracts.nft.safeTransferFrom(
@@ -76,22 +68,49 @@ describe('CyberMarketplace', function () {
       10,
       '0x00'
     )
+    
 
     await contracts.nft
       .connect(signers.seller)
       .setApprovalForAll(contracts.marketplace.address, true)
+
+  })
+
+  describe('init', () => {
+    it('init should revert on invalid NFT', async () => {
+      await expect(
+        contracts.marketplace.init([
+          contracts.notAllowedNft.address,
+          contracts.dummy.address
+        ])
+      ).to.be.revertedWith('Invalid NFT')
+
+      await expect(
+        contracts.marketplace.whitelist(contracts.dummy.address)
+      ).to.be.revertedWith('Invalid NFT')
+
+      await expect(
+        contracts.marketplace.whitelist(contracts.nft.address)
+      ).to.be.not.revertedWith('Invalid NFT')
+
+    })
   })
 
   describe('sell', () => {
-    it('Should revert on invalid NFT', async () => {
+
+    beforeEach(async () => {
+      await contracts.marketplace.whitelist(contracts.nft.address)
+    })
+
+    it('Should revert on non whitelisted NFT', async () => {
       await expect(
         contracts.marketplace.sell(
-          contracts.dummy.address,
+          contracts.notAllowedNft.address,
           KONG,
           eth(1),
           days(1)
         )
-      ).to.be.revertedWith('Invalid NFT')
+      ).to.be.revertedWith('Not whitelisted')
     })
 
     it('Should revert on empty balance', async () => {
@@ -136,6 +155,11 @@ describe('CyberMarketplace', function () {
   })
 
   describe('buy', () => {
+
+    beforeEach(async () => {
+      await contracts.marketplace.whitelist(contracts.nft.address)
+    })
+
     it('Should buy', async () => {
       const price = eth(1)
 

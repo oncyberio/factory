@@ -8,8 +8,6 @@ import '@openzeppelin/contracts/token/ERC1155/IERC1155.sol';
 import '@openzeppelin/contracts/utils/introspection/ERC165Checker.sol';
 import '@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol';
 
-bytes4 constant NFT_SIG = 0xd9b67a26;
-
 contract CyberMarketplace is ERC1155Holder {
   using Counters for Counters.Counter;
 
@@ -23,26 +21,55 @@ contract CyberMarketplace is ERC1155Holder {
   }
 
   event Sell(
-    uint256 id,
-    address nftContract,
-    uint256 tokenId,
+    uint256 indexed id,
+    address indexed nftContract,
+    uint256 indexed tokenId,
     address seller,
     uint256 price,
     uint256 endTime
   );
 
   event Buy(
-    uint256 id,
-    address nftContract,
-    uint256 tokenId,
+    uint256 indexed id,
+    address indexed nftContract,
+    uint256 indexed tokenId,
     address seller,
     address buyer,
     uint256 price
   );
 
+  address[] private whitelistedContracts;
+
   Counters.Counter private listingsId;
 
-  mapping(uint256 => Listing) private listings;
+  mapping(uint256 => Listing) public listings;
+
+  function isValidNFT(address nftContract) public view returns (bool) {
+    return ERC165Checker.supportsInterface(nftContract, type(IERC1155).interfaceId);
+  }
+
+
+  function init(address[] calldata _whitelist) public {
+    for(uint i = 0; i < _whitelist.length; i++) {
+      address nftContract = _whitelist[i];
+      require(isValidNFT(nftContract), 'Invalid NFT');
+      whitelistedContracts.push(_whitelist[i]);
+    }
+  }
+
+  function isWhitelisted(address nftContract) public view returns (bool) {
+    for(uint i = 0; i < whitelistedContracts.length; i++) {
+      if(nftContract == whitelistedContracts[i]) return true;
+    }
+    return false;
+  }
+
+  function whitelist(address nftContract) public {
+    require(isValidNFT(nftContract), 'Invalid NFT');
+    if(!isWhitelisted(nftContract)) {
+      whitelistedContracts.push(nftContract);
+    }
+  }
 
   function sell(
     address nftContract,
@@ -51,10 +78,7 @@ contract CyberMarketplace is ERC1155Holder {
     uint256 duration
   ) public {
     // pre
-    require(
-      ERC165Checker.supportsInterface(nftContract, NFT_SIG),
-      'Invalid NFT'
-    );
+    require(isWhitelisted(nftContract), "Not whitelisted");
     require(
       IERC1155(nftContract).balanceOf(msg.sender, tokenId) > 0,
       'Empty balance'
@@ -66,6 +90,7 @@ contract CyberMarketplace is ERC1155Holder {
 
     listingsId.increment();
     uint256 id = listingsId.current();
+    uint256 endTime = block.timestamp + duration;
 
     listings[id] = Listing(
       id,
@@ -73,7 +98,7 @@ contract CyberMarketplace is ERC1155Holder {
       payable(msg.sender),
       tokenId,
       price,
-      block.timestamp + duration
+      endTime
     );
 
     IERC1155(nftContract).safeTransferFrom(
@@ -81,7 +106,7 @@ contract CyberMarketplace is ERC1155Holder {
       address(this),
       tokenId,
       1,
-      '0x0'
+      ''
     );
 
     emit Sell(
@@ -90,7 +115,7 @@ contract CyberMarketplace is ERC1155Holder {
       tokenId,
       msg.sender,
       price,
-      block.timestamp + duration
+      endTime
     );
   }
 
