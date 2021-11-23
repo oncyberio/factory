@@ -28,13 +28,28 @@ import type {
 export interface CyberMarketplaceInterface extends ethers.utils.Interface {
   functions: {
     "buy(uint256)": FunctionFragment;
+    "init(address[])": FunctionFragment;
+    "isValidNFT(address)": FunctionFragment;
+    "isWhitelisted(address)": FunctionFragment;
+    "listings(uint256)": FunctionFragment;
     "onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)": FunctionFragment;
     "onERC1155Received(address,address,uint256,uint256,bytes)": FunctionFragment;
     "sell(address,uint256,uint256,uint256)": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
+    "whitelist(address)": FunctionFragment;
   };
 
   encodeFunctionData(functionFragment: "buy", values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: "init", values: [string[]]): string;
+  encodeFunctionData(functionFragment: "isValidNFT", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "isWhitelisted",
+    values: [string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "listings",
+    values: [BigNumberish]
+  ): string;
   encodeFunctionData(
     functionFragment: "onERC1155BatchReceived",
     values: [string, string, BigNumberish[], BigNumberish[], BytesLike]
@@ -51,8 +66,16 @@ export interface CyberMarketplaceInterface extends ethers.utils.Interface {
     functionFragment: "supportsInterface",
     values: [BytesLike]
   ): string;
+  encodeFunctionData(functionFragment: "whitelist", values: [string]): string;
 
   decodeFunctionResult(functionFragment: "buy", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "init", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "isValidNFT", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "isWhitelisted",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "listings", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "onERC1155BatchReceived",
     data: BytesLike
@@ -66,6 +89,7 @@ export interface CyberMarketplaceInterface extends ethers.utils.Interface {
     functionFragment: "supportsInterface",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "whitelist", data: BytesLike): Result;
 
   events: {
     "Buy(uint256,address,uint256,address,address,uint256)": EventFragment;
@@ -136,6 +160,35 @@ export interface CyberMarketplace extends BaseContract {
       overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    init(
+      _whitelist: string[],
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    isValidNFT(
+      nftContract: string,
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
+
+    isWhitelisted(
+      nftContract: string,
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
+
+    listings(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<
+      [BigNumber, string, string, BigNumber, BigNumber, BigNumber] & {
+        id: BigNumber;
+        nftContract: string;
+        seller: string;
+        tokenId: BigNumber;
+        price: BigNumber;
+        endTime: BigNumber;
+      }
+    >;
+
     onERC1155BatchReceived(
       arg0: string,
       arg1: string,
@@ -166,12 +219,43 @@ export interface CyberMarketplace extends BaseContract {
       interfaceId: BytesLike,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
+
+    whitelist(
+      nftContract: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
   };
 
   buy(
     listingId: BigNumberish,
     overrides?: PayableOverrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
+
+  init(
+    _whitelist: string[],
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  isValidNFT(nftContract: string, overrides?: CallOverrides): Promise<boolean>;
+
+  isWhitelisted(
+    nftContract: string,
+    overrides?: CallOverrides
+  ): Promise<boolean>;
+
+  listings(
+    arg0: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<
+    [BigNumber, string, string, BigNumber, BigNumber, BigNumber] & {
+      id: BigNumber;
+      nftContract: string;
+      seller: string;
+      tokenId: BigNumber;
+      price: BigNumber;
+      endTime: BigNumber;
+    }
+  >;
 
   onERC1155BatchReceived(
     arg0: string,
@@ -204,8 +288,39 @@ export interface CyberMarketplace extends BaseContract {
     overrides?: CallOverrides
   ): Promise<boolean>;
 
+  whitelist(
+    nftContract: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   callStatic: {
     buy(listingId: BigNumberish, overrides?: CallOverrides): Promise<void>;
+
+    init(_whitelist: string[], overrides?: CallOverrides): Promise<void>;
+
+    isValidNFT(
+      nftContract: string,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
+
+    isWhitelisted(
+      nftContract: string,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
+
+    listings(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<
+      [BigNumber, string, string, BigNumber, BigNumber, BigNumber] & {
+        id: BigNumber;
+        nftContract: string;
+        seller: string;
+        tokenId: BigNumber;
+        price: BigNumber;
+        endTime: BigNumber;
+      }
+    >;
 
     onERC1155BatchReceived(
       arg0: string,
@@ -237,38 +352,40 @@ export interface CyberMarketplace extends BaseContract {
       interfaceId: BytesLike,
       overrides?: CallOverrides
     ): Promise<boolean>;
+
+    whitelist(nftContract: string, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
     "Buy(uint256,address,uint256,address,address,uint256)"(
-      id?: null,
-      nftContract?: null,
-      tokenId?: null,
+      id?: BigNumberish | null,
+      nftContract?: string | null,
+      tokenId?: BigNumberish | null,
       seller?: null,
       buyer?: null,
       price?: null
     ): BuyEventFilter;
     Buy(
-      id?: null,
-      nftContract?: null,
-      tokenId?: null,
+      id?: BigNumberish | null,
+      nftContract?: string | null,
+      tokenId?: BigNumberish | null,
       seller?: null,
       buyer?: null,
       price?: null
     ): BuyEventFilter;
 
     "Sell(uint256,address,uint256,address,uint256,uint256)"(
-      id?: null,
-      nftContract?: null,
-      tokenId?: null,
+      id?: BigNumberish | null,
+      nftContract?: string | null,
+      tokenId?: BigNumberish | null,
       seller?: null,
       price?: null,
       endTime?: null
     ): SellEventFilter;
     Sell(
-      id?: null,
-      nftContract?: null,
-      tokenId?: null,
+      id?: BigNumberish | null,
+      nftContract?: string | null,
+      tokenId?: BigNumberish | null,
       seller?: null,
       price?: null,
       endTime?: null
@@ -281,6 +398,23 @@ export interface CyberMarketplace extends BaseContract {
       overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    init(
+      _whitelist: string[],
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    isValidNFT(
+      nftContract: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    isWhitelisted(
+      nftContract: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    listings(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+
     onERC1155BatchReceived(
       arg0: string,
       arg1: string,
@@ -310,6 +444,11 @@ export interface CyberMarketplace extends BaseContract {
     supportsInterface(
       interfaceId: BytesLike,
       overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    whitelist(
+      nftContract: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
   };
 
@@ -319,6 +458,26 @@ export interface CyberMarketplace extends BaseContract {
       overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
+    init(
+      _whitelist: string[],
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    isValidNFT(
+      nftContract: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    isWhitelisted(
+      nftContract: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    listings(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     onERC1155BatchReceived(
       arg0: string,
       arg1: string,
@@ -348,6 +507,11 @@ export interface CyberMarketplace extends BaseContract {
     supportsInterface(
       interfaceId: BytesLike,
       overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    whitelist(
+      nftContract: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
   };
 }
