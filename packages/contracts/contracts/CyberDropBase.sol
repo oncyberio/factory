@@ -89,11 +89,10 @@ contract CyberDropBase is CyberTokenBase {
       .toEthSignedMessageHash()
       .recover(_signature);
     require(recoveredAddress == LibAppStorage.layout().manager, 'NM');
+    _tokenId = LibAppStorage.layout().totalSupply.current();
 
     // Effects
-    _tokenId = LibAppStorage.layout().totalSupply.current();
     setTokenURI(_tokenId, _uri);
-
     LibAppStorage.layout().totalSupply.increment();
     LibAppStorage.layout().minterNonce[sender].increment();
 
