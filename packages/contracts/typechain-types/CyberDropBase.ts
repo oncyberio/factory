@@ -25,59 +25,21 @@ import type {
   OnEvent,
 } from "./common";
 
-export type DropStruct = {
-  timeStart: BigNumberish;
-  timeEnd: BigNumberish;
-  priceStart: BigNumberish;
-  priceEnd: BigNumberish;
-  stepDuration: BigNumberish;
-  amountCap: BigNumberish;
-  shareCyber: BigNumberish;
-  creator: string;
-  minted: BigNumberish;
-};
-
-export type DropStructOutput = [
-  BigNumber,
-  BigNumber,
-  BigNumber,
-  BigNumber,
-  BigNumber,
-  BigNumber,
-  BigNumber,
-  string,
-  BigNumber
-] & {
-  timeStart: BigNumber;
-  timeEnd: BigNumber;
-  priceStart: BigNumber;
-  priceEnd: BigNumber;
-  stepDuration: BigNumber;
-  amountCap: BigNumber;
-  shareCyber: BigNumber;
-  creator: string;
-  minted: BigNumber;
-};
-
 export interface CyberDropBaseInterface extends ethers.utils.Interface {
   functions: {
     "accountsByToken(uint256)": FunctionFragment;
     "balanceOf(address,uint256)": FunctionFragment;
     "balanceOfBatch(address[],uint256[])": FunctionFragment;
-    "c_0x0cb09206(bytes32)": FunctionFragment;
-    "c_0x68791152(bytes32)": FunctionFragment;
-    "c_0x792934de(bytes32)": FunctionFragment;
-    "c_0xd4dc4272(bytes32)": FunctionFragment;
     "createDrop(string,uint256,uint256,uint256,uint256,uint256,uint256,uint256,bytes)": FunctionFragment;
     "getDrop(uint256)": FunctionFragment;
-    "getMintPriceForDrop((uint256,uint256,uint256,uint256,uint256,uint256,uint256,address,uint256))": FunctionFragment;
     "getMintPriceForToken(uint256)": FunctionFragment;
+    "getMintedByDrop(uint256,address)": FunctionFragment;
     "getPriceFor(uint256,uint256,uint256,uint256,uint256)": FunctionFragment;
     "initialize(string,address,address,address,address)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
     "isTrustedForwarder(address)": FunctionFragment;
     "manager()": FunctionFragment;
-    "mint(uint256)": FunctionFragment;
+    "mint(uint256,bytes)": FunctionFragment;
     "minterNonce(address)": FunctionFragment;
     "oncyber()": FunctionFragment;
     "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)": FunctionFragment;
@@ -103,22 +65,6 @@ export interface CyberDropBaseInterface extends ethers.utils.Interface {
     values: [string[], BigNumberish[]]
   ): string;
   encodeFunctionData(
-    functionFragment: "c_0x0cb09206",
-    values: [BytesLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "c_0x68791152",
-    values: [BytesLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "c_0x792934de",
-    values: [BytesLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "c_0xd4dc4272",
-    values: [BytesLike]
-  ): string;
-  encodeFunctionData(
     functionFragment: "createDrop",
     values: [
       string,
@@ -137,12 +83,12 @@ export interface CyberDropBaseInterface extends ethers.utils.Interface {
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "getMintPriceForDrop",
-    values: [DropStruct]
-  ): string;
-  encodeFunctionData(
     functionFragment: "getMintPriceForToken",
     values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getMintedByDrop",
+    values: [BigNumberish, string]
   ): string;
   encodeFunctionData(
     functionFragment: "getPriceFor",
@@ -167,7 +113,10 @@ export interface CyberDropBaseInterface extends ethers.utils.Interface {
     values: [string]
   ): string;
   encodeFunctionData(functionFragment: "manager", values?: undefined): string;
-  encodeFunctionData(functionFragment: "mint", values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: "mint",
+    values: [BigNumberish, BytesLike]
+  ): string;
   encodeFunctionData(functionFragment: "minterNonce", values: [string]): string;
   encodeFunctionData(functionFragment: "oncyber", values?: undefined): string;
   encodeFunctionData(
@@ -209,30 +158,14 @@ export interface CyberDropBaseInterface extends ethers.utils.Interface {
     functionFragment: "balanceOfBatch",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "c_0x0cb09206",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "c_0x68791152",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "c_0x792934de",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "c_0xd4dc4272",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "createDrop", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "getDrop", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "getMintPriceForDrop",
+    functionFragment: "getMintPriceForToken",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "getMintPriceForToken",
+    functionFragment: "getMintedByDrop",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -400,26 +333,6 @@ export interface CyberDropBase extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber[]]>;
 
-    c_0x0cb09206(
-      c__0x0cb09206: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<[void]>;
-
-    c_0x68791152(
-      c__0x68791152: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<[void]>;
-
-    c_0x792934de(
-      c__0x792934de: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<[void]>;
-
-    c_0xd4dc4272(
-      c__0xd4dc4272: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<[void]>;
-
     createDrop(
       _uri: string,
       _timeStart: BigNumberish,
@@ -436,15 +349,38 @@ export interface CyberDropBase extends BaseContract {
     getDrop(
       _tokenId: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[DropStructOutput]>;
-
-    getMintPriceForDrop(
-      drop: DropStruct,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<
+      [
+        BigNumber,
+        BigNumber,
+        BigNumber,
+        BigNumber,
+        BigNumber,
+        BigNumber,
+        BigNumber,
+        string,
+        BigNumber
+      ] & {
+        timeStart: BigNumber;
+        timeEnd: BigNumber;
+        priceStart: BigNumber;
+        priceEnd: BigNumber;
+        stepDuration: BigNumber;
+        amountCap: BigNumber;
+        shareCyber: BigNumber;
+        creator: string;
+        minted: BigNumber;
+      }
+    >;
 
     getMintPriceForToken(
       _tokenId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
+    getMintedByDrop(
+      _tokenId: BigNumberish,
+      _minter: string,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
@@ -481,6 +417,7 @@ export interface CyberDropBase extends BaseContract {
 
     mint(
       _tokenId: BigNumberish,
+      _signature: BytesLike,
       overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -557,26 +494,6 @@ export interface CyberDropBase extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber[]>;
 
-  c_0x0cb09206(
-    c__0x0cb09206: BytesLike,
-    overrides?: CallOverrides
-  ): Promise<void>;
-
-  c_0x68791152(
-    c__0x68791152: BytesLike,
-    overrides?: CallOverrides
-  ): Promise<void>;
-
-  c_0x792934de(
-    c__0x792934de: BytesLike,
-    overrides?: CallOverrides
-  ): Promise<void>;
-
-  c_0xd4dc4272(
-    c__0xd4dc4272: BytesLike,
-    overrides?: CallOverrides
-  ): Promise<void>;
-
   createDrop(
     _uri: string,
     _timeStart: BigNumberish,
@@ -593,15 +510,38 @@ export interface CyberDropBase extends BaseContract {
   getDrop(
     _tokenId: BigNumberish,
     overrides?: CallOverrides
-  ): Promise<DropStructOutput>;
-
-  getMintPriceForDrop(
-    drop: DropStruct,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  ): Promise<
+    [
+      BigNumber,
+      BigNumber,
+      BigNumber,
+      BigNumber,
+      BigNumber,
+      BigNumber,
+      BigNumber,
+      string,
+      BigNumber
+    ] & {
+      timeStart: BigNumber;
+      timeEnd: BigNumber;
+      priceStart: BigNumber;
+      priceEnd: BigNumber;
+      stepDuration: BigNumber;
+      amountCap: BigNumber;
+      shareCyber: BigNumber;
+      creator: string;
+      minted: BigNumber;
+    }
+  >;
 
   getMintPriceForToken(
     _tokenId: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
+  getMintedByDrop(
+    _tokenId: BigNumberish,
+    _minter: string,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
@@ -638,6 +578,7 @@ export interface CyberDropBase extends BaseContract {
 
   mint(
     _tokenId: BigNumberish,
+    _signature: BytesLike,
     overrides?: PayableOverrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -708,26 +649,6 @@ export interface CyberDropBase extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber[]>;
 
-    c_0x0cb09206(
-      c__0x0cb09206: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    c_0x68791152(
-      c__0x68791152: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    c_0x792934de(
-      c__0x792934de: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    c_0xd4dc4272(
-      c__0xd4dc4272: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
     createDrop(
       _uri: string,
       _timeStart: BigNumberish,
@@ -744,15 +665,38 @@ export interface CyberDropBase extends BaseContract {
     getDrop(
       _tokenId: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<DropStructOutput>;
-
-    getMintPriceForDrop(
-      drop: DropStruct,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    ): Promise<
+      [
+        BigNumber,
+        BigNumber,
+        BigNumber,
+        BigNumber,
+        BigNumber,
+        BigNumber,
+        BigNumber,
+        string,
+        BigNumber
+      ] & {
+        timeStart: BigNumber;
+        timeEnd: BigNumber;
+        priceStart: BigNumber;
+        priceEnd: BigNumber;
+        stepDuration: BigNumber;
+        amountCap: BigNumber;
+        shareCyber: BigNumber;
+        creator: string;
+        minted: BigNumber;
+      }
+    >;
 
     getMintPriceForToken(
       _tokenId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    getMintedByDrop(
+      _tokenId: BigNumberish,
+      _minter: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -787,7 +731,11 @@ export interface CyberDropBase extends BaseContract {
 
     manager(overrides?: CallOverrides): Promise<string>;
 
-    mint(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    mint(
+      _tokenId: BigNumberish,
+      _signature: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
 
     minterNonce(_minter: string, overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -929,26 +877,6 @@ export interface CyberDropBase extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    c_0x0cb09206(
-      c__0x0cb09206: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    c_0x68791152(
-      c__0x68791152: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    c_0x792934de(
-      c__0x792934de: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    c_0xd4dc4272(
-      c__0xd4dc4272: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     createDrop(
       _uri: string,
       _timeStart: BigNumberish,
@@ -967,13 +895,14 @@ export interface CyberDropBase extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    getMintPriceForDrop(
-      drop: DropStruct,
+    getMintPriceForToken(
+      _tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    getMintPriceForToken(
+    getMintedByDrop(
       _tokenId: BigNumberish,
+      _minter: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -1010,6 +939,7 @@ export interface CyberDropBase extends BaseContract {
 
     mint(
       _tokenId: BigNumberish,
+      _signature: BytesLike,
       overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -1084,26 +1014,6 @@ export interface CyberDropBase extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    c_0x0cb09206(
-      c__0x0cb09206: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    c_0x68791152(
-      c__0x68791152: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    c_0x792934de(
-      c__0x792934de: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    c_0xd4dc4272(
-      c__0xd4dc4272: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     createDrop(
       _uri: string,
       _timeStart: BigNumberish,
@@ -1122,13 +1032,14 @@ export interface CyberDropBase extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    getMintPriceForDrop(
-      drop: DropStruct,
+    getMintPriceForToken(
+      _tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    getMintPriceForToken(
+    getMintedByDrop(
       _tokenId: BigNumberish,
+      _minter: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -1165,6 +1076,7 @@ export interface CyberDropBase extends BaseContract {
 
     mint(
       _tokenId: BigNumberish,
+      _signature: BytesLike,
       overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
