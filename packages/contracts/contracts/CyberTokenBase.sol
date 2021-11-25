@@ -41,23 +41,19 @@ contract CyberTokenBase is BaseRelayRecipient, ERC1155URI {
     LibAppStorage.layout().oncyber = _oncyber;
   }
 
-  function totalSupply() public view returns (uint256 totalSupply) {
+  function totalSupply() public view returns (uint256) {
     return LibAppStorage.layout().totalSupply.current();
   }
 
-  function manager() public view returns (address manager) {
+  function manager() public view returns (address) {
     return LibAppStorage.layout().manager;
   }
 
-  function oncyber() public view returns (address oncyber) {
+  function oncyber() public view returns (address) {
     return LibAppStorage.layout().oncyber;
   }
 
-  function minterNonce(address _minter)
-    public
-    view
-    returns (uint256 minterNonce)
-  {
+  function minterNonce(address _minter) public view returns (uint256) {
     return LibAppStorage.layout().minterNonce[_minter].current();
   }
 }

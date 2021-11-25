@@ -18,7 +18,7 @@ contract CyberDropBase is CyberTokenBase {
   function dropMintCounter(uint256 _tokenId, address _minter)
     public
     view
-    returns (uint256 dropMintCounter)
+    returns (uint256)
   {
     LibDropStorage.Drop storage drop = LibDropStorage.layout().drops[_tokenId];
     require(drop.priceStart != 0, 'DNE');
