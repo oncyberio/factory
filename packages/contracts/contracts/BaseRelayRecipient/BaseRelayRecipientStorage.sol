@@ -13,10 +13,10 @@ library BaseRelayRecipientStorage {
     address trustedForwarder;
   }
 
-  function layout() internal pure returns (Layout storage layout) {
+  function layout() internal pure returns (Layout storage l) {
     bytes32 slot = STORAGE_SLOT;
     assembly {
-      layout.slot := slot
+      l.slot := slot
     }
   }
 }
