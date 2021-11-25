@@ -26,15 +26,24 @@ import type {
 export interface LibDropStorageInterface extends ethers.utils.Interface {
   functions: {
     "STORAGE_SLOT()": FunctionFragment;
+    "c_0x54377202(bytes32)": FunctionFragment;
   };
 
   encodeFunctionData(
     functionFragment: "STORAGE_SLOT",
     values?: undefined
   ): string;
+  encodeFunctionData(
+    functionFragment: "c_0x54377202",
+    values: [BytesLike]
+  ): string;
 
   decodeFunctionResult(
     functionFragment: "STORAGE_SLOT",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "c_0x54377202",
     data: BytesLike
   ): Result;
 
@@ -69,21 +78,46 @@ export interface LibDropStorage extends BaseContract {
 
   functions: {
     STORAGE_SLOT(overrides?: CallOverrides): Promise<[string]>;
+
+    c_0x54377202(
+      c__0x54377202: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<[void]>;
   };
 
   STORAGE_SLOT(overrides?: CallOverrides): Promise<string>;
 
+  c_0x54377202(
+    c__0x54377202: BytesLike,
+    overrides?: CallOverrides
+  ): Promise<void>;
+
   callStatic: {
     STORAGE_SLOT(overrides?: CallOverrides): Promise<string>;
+
+    c_0x54377202(
+      c__0x54377202: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<void>;
   };
 
   filters: {};
 
   estimateGas: {
     STORAGE_SLOT(overrides?: CallOverrides): Promise<BigNumber>;
+
+    c_0x54377202(
+      c__0x54377202: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     STORAGE_SLOT(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    c_0x54377202(
+      c__0x54377202: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
   };
 }

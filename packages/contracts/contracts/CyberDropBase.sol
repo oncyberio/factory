@@ -15,29 +15,29 @@ contract CyberDropBase is CyberTokenBase {
 
   event DropCreated(address indexed account, uint256 indexed tokenId);
 
-  function getMintedByDrop(uint256 _tokenId, address _minter)
+  function dropMintCounter(uint256 _tokenId, address _minter)
     public
     view
-    returns (uint256)
+    returns (uint256 dropMintCounter)
   {
     LibDropStorage.Drop storage drop = LibDropStorage.layout().drops[_tokenId];
     require(drop.priceStart != 0, 'DNE');
-    return drop.minterNonce[_minter].current();
+    return drop.mintCounter[_minter].current();
   }
 
   function getDrop(uint256 _tokenId)
     public
     view
     returns (
-      uint256 _timeStart,
-      uint256 _timeEnd,
-      uint256 _priceStart,
-      uint256 _priceEnd,
-      uint256 _stepDuration,
-      uint256 _amountCap,
-      uint256 _shareCyber,
-      address _creator,
-      uint256 _minted
+      uint256 timeStart,
+      uint256 timeEnd,
+      uint256 priceStart,
+      uint256 priceEnd,
+      uint256 stepDuration,
+      uint256 amountCap,
+      uint256 shareCyber,
+      address creator,
+      uint256 minted
     )
   {
     LibDropStorage.Drop storage drop = LibDropStorage.layout().drops[_tokenId];
@@ -66,7 +66,7 @@ contract CyberDropBase is CyberTokenBase {
     uint256 _amountCap,
     uint256 _shareCyber,
     bytes memory _signature
-  ) public returns (uint256 _tokenId) {
+  ) public returns (uint256 tokenId) {
     require(_timeEnd - _timeStart >= _stepDuration && _stepDuration > 0, 'IT');
     require(_priceStart >= _priceEnd && _priceStart > 0, 'IP');
     require(_shareCyber <= 100, 'ISO');
@@ -89,39 +89,41 @@ contract CyberDropBase is CyberTokenBase {
       .toEthSignedMessageHash()
       .recover(_signature);
     require(recoveredAddress == LibAppStorage.layout().manager, 'NM');
-    _tokenId = LibAppStorage.layout().totalSupply.current();
+    tokenId = LibAppStorage.layout().totalSupply.current();
 
     // Effects
-    setTokenURI(_tokenId, _uri);
+    setTokenURI(tokenId, _uri);
     LibAppStorage.layout().totalSupply.increment();
     LibAppStorage.layout().minterNonce[sender].increment();
 
-    LibDropStorage.layout().drops[_tokenId].timeStart = _timeStart;
-    LibDropStorage.layout().drops[_tokenId].timeEnd = _timeEnd;
-    LibDropStorage.layout().drops[_tokenId].priceStart = _priceStart;
-    LibDropStorage.layout().drops[_tokenId].priceEnd = _priceEnd;
-    LibDropStorage.layout().drops[_tokenId].stepDuration = _stepDuration;
-    LibDropStorage.layout().drops[_tokenId].amountCap = _amountCap;
-    LibDropStorage.layout().drops[_tokenId].shareCyber = _shareCyber;
-    LibDropStorage.layout().drops[_tokenId].creator = payable(sender);
+    LibDropStorage.layout().drops[tokenId].timeStart = _timeStart;
+    LibDropStorage.layout().drops[tokenId].timeEnd = _timeEnd;
+    LibDropStorage.layout().drops[tokenId].priceStart = _priceStart;
+    LibDropStorage.layout().drops[tokenId].priceEnd = _priceEnd;
+    LibDropStorage.layout().drops[tokenId].stepDuration = _stepDuration;
+    LibDropStorage.layout().drops[tokenId].amountCap = _amountCap;
+    LibDropStorage.layout().drops[tokenId].shareCyber = _shareCyber;
+    LibDropStorage.layout().drops[tokenId].creator = payable(sender);
 
-    emit DropCreated(sender, _tokenId);
-
-    return _tokenId;
+    emit DropCreated(sender, tokenId);
   }
 
-  function mint(uint256 _tokenId, bytes memory _signature) public payable returns (bool) {
+  function mint(uint256 _tokenId, bytes memory _signature)
+    public
+    payable
+    returns (bool success)
+  {
     address sender = _msgSender();
     LibDropStorage.Drop storage drop = LibDropStorage.layout().drops[_tokenId];
+
+    if (drop.amountCap != 0) {
+      require(drop.minted < drop.amountCap, 'CR');
+    }
 
     require(
       block.timestamp > drop.timeStart && block.timestamp <= drop.timeEnd,
       'OOT'
     );
-
-    if (drop.amountCap != 0) {
-      require(drop.minted < drop.amountCap, 'CR');
-    }
     uint256 timeSpent = block.timestamp - drop.timeStart;
     uint256 duration = drop.timeEnd - drop.timeStart;
     uint256 price = getPriceFor(
@@ -135,7 +137,7 @@ contract CyberDropBase is CyberTokenBase {
     uint256 amountOnCyber = (msg.value * drop.shareCyber) / 100;
     uint256 amountCreator = msg.value - amountOnCyber;
 
-    uint256 senderDropNonce = drop.minterNonce[sender].current();
+    uint256 senderDropNonce = drop.mintCounter[sender].current();
     bytes memory _message = abi.encodePacked(_tokenId, sender, senderDropNonce);
     address recoveredAddress = keccak256(_message)
       .toEthSignedMessageHash()
@@ -144,7 +146,7 @@ contract CyberDropBase is CyberTokenBase {
 
     // Effects
     drop.minted += 1;
-    drop.minterNonce[sender].increment();
+    drop.mintCounter[sender].increment();
     _safeMint(sender, _tokenId, 1, '');
     drop.creator.transfer(amountCreator);
     payable(LibAppStorage.layout().oncyber).transfer(amountOnCyber);
@@ -157,18 +159,19 @@ contract CyberDropBase is CyberTokenBase {
   function getMintPriceForToken(uint256 _tokenId)
     public
     view
-    returns (uint256)
+    returns (uint256 mintPrice)
   {
     LibDropStorage.Drop storage drop = LibDropStorage.layout().drops[_tokenId];
     require(drop.priceStart != 0, 'DNE');
+
+    if (drop.amountCap != 0) {
+      require(drop.minted < drop.amountCap, 'CR');
+    }
 
     require(
       block.timestamp > drop.timeStart && block.timestamp <= drop.timeEnd,
       'OOT'
     );
-    if (drop.amountCap != 0) {
-      require(drop.minted < drop.amountCap, 'CR');
-    }
     uint256 timeSpent = block.timestamp - drop.timeStart;
     uint256 duration = drop.timeEnd - drop.timeStart;
 
@@ -188,7 +191,7 @@ contract CyberDropBase is CyberTokenBase {
     uint256 _priceStart,
     uint256 _priceEnd,
     uint256 _stepDuration
-  ) public pure returns (uint256) {
+  ) public pure returns (uint256 price) {
     // https://www.desmos.com/calculator/oajpdvew5q
     // f\left(x\right)=\frac{s\ \cdot d\ +\ \operatorname{mod}\left(x,\ g\right)\ \cdot\ \left(s\ -\ l\right)\ -\ x\ \cdot\ \left(s\ -\ l\right)\ \ }{d}
     // (s * d + (x % g) * (s - l) - x * (s - l) / d
