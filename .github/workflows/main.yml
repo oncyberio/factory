@@ -32,11 +32,11 @@ jobs:
         env:
           CI: true
       - name: Testing
-        run: npm run test:coverage
+        run: cd packages/contracts && npm run test:coverage
         env:
           CI: true
       - name: Testing Coverage Check
-        run: npm run test:coverage:check
+        run: cd packages/contracts && npm run test:coverage:check
         env:
           CI: true
   lint:
