@@ -17,6 +17,7 @@ export type { ERC1155MetadataInternal } from "./ERC1155MetadataInternal";
 export type { IERC1155Metadata } from "./IERC1155Metadata";
 export type { IERC1155MetadataInternal } from "./IERC1155MetadataInternal";
 export type { BaseRelayRecipient } from "./BaseRelayRecipient";
+export type { BaseRelayRecipientStorage } from "./BaseRelayRecipientStorage";
 export type { CyberDropBase } from "./CyberDropBase";
 export type { CyberTokenBase } from "./CyberTokenBase";
 export type { CyberDestinationFactoryFacet } from "./CyberDestinationFactoryFacet";
@@ -24,6 +25,7 @@ export type { CyberDestinationUtilityFactoryFacet } from "./CyberDestinationUtil
 export type { CyberObjectFactoryFacet } from "./CyberObjectFactoryFacet";
 export type { LibDiamond } from "./LibDiamond";
 export type { ERC1155URI } from "./ERC1155URI";
+export type { ERC1155URIStorage } from "./ERC1155URIStorage";
 export type { LibAppStorage } from "./LibAppStorage";
 export type { LibDropStorage } from "./LibDropStorage";
 
@@ -43,6 +45,7 @@ export { ERC1155MetadataInternal__factory } from "./factories/ERC1155MetadataInt
 export { IERC1155Metadata__factory } from "./factories/IERC1155Metadata__factory";
 export { IERC1155MetadataInternal__factory } from "./factories/IERC1155MetadataInternal__factory";
 export { BaseRelayRecipient__factory } from "./factories/BaseRelayRecipient__factory";
+export { BaseRelayRecipientStorage__factory } from "./factories/BaseRelayRecipientStorage__factory";
 export { CyberDropBase__factory } from "./factories/CyberDropBase__factory";
 export { CyberTokenBase__factory } from "./factories/CyberTokenBase__factory";
 export { CyberDestinationFactoryFacet__factory } from "./factories/CyberDestinationFactoryFacet__factory";
@@ -50,5 +53,6 @@ export { CyberDestinationUtilityFactoryFacet__factory } from "./factories/CyberD
 export { CyberObjectFactoryFacet__factory } from "./factories/CyberObjectFactoryFacet__factory";
 export { LibDiamond__factory } from "./factories/LibDiamond__factory";
 export { ERC1155URI__factory } from "./factories/ERC1155URI__factory";
+export { ERC1155URIStorage__factory } from "./factories/ERC1155URIStorage__factory";
 export { LibAppStorage__factory } from "./factories/LibAppStorage__factory";
 export { LibDropStorage__factory } from "./factories/LibDropStorage__factory";
