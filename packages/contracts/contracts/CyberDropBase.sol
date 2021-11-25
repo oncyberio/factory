@@ -52,7 +52,7 @@ contract CyberDropBase is CyberTokenBase {
       drop.amountCap,
       drop.shareCyber,
       drop.creator,
-      drop.minted
+      drop.minted.current()
     );
   }
 
@@ -117,7 +117,7 @@ contract CyberDropBase is CyberTokenBase {
     LibDropStorage.Drop storage drop = LibDropStorage.layout().drops[_tokenId];
 
     if (drop.amountCap != 0) {
-      require(drop.minted < drop.amountCap, 'CR');
+      require(drop.minted.current() < drop.amountCap, 'CR');
     }
 
     require(
@@ -145,7 +145,7 @@ contract CyberDropBase is CyberTokenBase {
     require(recoveredAddress == LibAppStorage.layout().manager, 'NM');
 
     // Effects
-    drop.minted += 1;
+    drop.minted.increment();
     drop.mintCounter[sender].increment();
     _safeMint(sender, _tokenId, 1, '');
     drop.creator.transfer(amountCreator);
@@ -165,7 +165,7 @@ contract CyberDropBase is CyberTokenBase {
     require(drop.priceStart != 0, 'DNE');
 
     if (drop.amountCap != 0) {
-      require(drop.minted < drop.amountCap, 'CR');
+      require(drop.minted.current() < drop.amountCap, 'CR');
     }
 
     require(

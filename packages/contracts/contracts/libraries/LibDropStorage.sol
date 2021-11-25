@@ -16,7 +16,7 @@ library LibDropStorage {
     uint256 amountCap;
     uint256 shareCyber;
     address payable creator;
-    uint256 minted;
+    Counters.Counter minted;
     mapping(address => Counters.Counter) mintCounter;
   }
 
