@@ -3,6 +3,7 @@
 pragma solidity 0.8.9;
 
 //import 'hardhat/console.sol';
+import '@openzeppelin/contracts/utils/Counters.sol';
 
 library LibDropStorage {
   bytes32 public constant STORAGE_SLOT = keccak256('drop.app.storage');
@@ -15,7 +16,8 @@ library LibDropStorage {
     uint256 amountCap;
     uint256 shareCyber;
     address payable creator;
-    uint256 minted;
+    Counters.Counter minted;
+    mapping(address => Counters.Counter) mintCounter;
   }
 
   struct Layout {

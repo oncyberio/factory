@@ -56,3 +56,20 @@ export async function signCreateDropRequest(
 
   return signer.signMessage(pHash)
 }
+
+export async function signMintRequest(
+  tokenId: number,
+  creator: string,
+  nonce: number,
+  signer: Signer
+): Promise<string> {
+  const pTokenId = utils.hexZeroPad(BigNumber.from(tokenId).toHexString(), 32)
+  const pNonce = utils.hexZeroPad(BigNumber.from(nonce).toHexString(), 32)
+  const pCreator = utils.arrayify(creator)
+  const message = utils.concat([pTokenId, pCreator, pNonce])
+
+  const hash = utils.keccak256(message)
+  const pHash = utils.arrayify(hash)
+
+  return signer.signMessage(pHash)
+}

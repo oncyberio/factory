@@ -50,7 +50,7 @@ async function main() {
     manager
   )
 
-  const functionSignature = contractInterface.encodeFunctionData('mint', [
+  const functionSignature = contractInterface.encodeFunctionData('createDrop', [
     uri,
     timeStart,
     timeEnd,

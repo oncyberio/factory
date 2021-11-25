@@ -324,14 +324,14 @@ export interface CyberTokenBase extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
-    manager(overrides?: CallOverrides): Promise<[string]>;
+    manager(overrides?: CallOverrides): Promise<[string] & { manager: string }>;
 
     minterNonce(
       _minter: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<[BigNumber] & { minterNonce: BigNumber }>;
 
-    oncyber(overrides?: CallOverrides): Promise<[string]>;
+    oncyber(overrides?: CallOverrides): Promise<[string] & { oncyber: string }>;
 
     safeBatchTransferFrom(
       from: string,
@@ -372,7 +372,9 @@ export interface CyberTokenBase extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
-    "totalSupply()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+    "totalSupply()"(
+      overrides?: CallOverrides
+    ): Promise<[BigNumber] & { totalSupply: BigNumber }>;
 
     "totalSupply(uint256)"(
       id: BigNumberish,
