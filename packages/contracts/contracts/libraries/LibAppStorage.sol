@@ -17,10 +17,10 @@ library LibAppStorage {
     address oncyber;
   }
 
-  function layout() internal pure returns (Layout storage l) {
+  function layout() internal pure returns (Layout storage lay) {
     bytes32 slot = STORAGE_SLOT;
     assembly {
-      l.slot := slot
+      lay.slot := slot
     }
   }
 }

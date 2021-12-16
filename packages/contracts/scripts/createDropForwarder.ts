@@ -2,6 +2,7 @@
 import { ethers, deployments } from 'hardhat'
 import { Biconomy } from '@biconomy/mexa'
 import { signCreateDropRequest } from '../lib/utils'
+import { BigNumber } from 'ethers'
 
 const ethersProvider = new ethers.providers.JsonRpcProvider(
   'https://rpc-mumbai.maticvigil.com'
@@ -40,8 +41,8 @@ async function main() {
     uri,
     timeStart,
     timeEnd,
-    priceStart,
-    priceEnd,
+    BigNumber.from(priceStart),
+    BigNumber.from(priceEnd),
     stepDuration,
     amountCap,
     shareCyber,

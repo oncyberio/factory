@@ -24,10 +24,10 @@ library LibDropStorage {
     mapping(uint256 => Drop) drops;
   }
 
-  function layout() internal pure returns (Layout storage l) {
+  function layout() internal pure returns (Layout storage lay) {
     bytes32 slot = STORAGE_SLOT;
     assembly {
-      l.slot := slot
+      lay.slot := slot
     }
   }
 }

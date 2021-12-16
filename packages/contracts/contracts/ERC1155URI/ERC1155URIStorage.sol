@@ -11,10 +11,10 @@ library ERC1155URIStorage {
     string uri;
   }
 
-  function layout() internal pure returns (Layout storage l) {
+  function layout() internal pure returns (Layout storage lay) {
     bytes32 slot = STORAGESLOT;
     assembly {
-      l.slot := slot
+      lay.slot := slot
     }
   }
 }

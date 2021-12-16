@@ -31,7 +31,9 @@
     "verify:rinkeby": "hardhat etherscan-verify --network rinkeby --solc-input",
     "verify:ethereum": "hardhat etherscan-verify --network ethereum",
     "scripts:createDrop:rinkeby": "hardhat run scripts/createDrop.ts --network rinkeby",
-    "scripts:mint:rinkeby": "hardhat run scripts/mint.ts --network rinkeby"
+    "scripts:mint:rinkeby": "hardhat run scripts/mint.ts --network rinkeby",
+    "scripts:createDrop:localhost": "hardhat run scripts/createDrop.ts --network localhost",
+    "scripts:mint:localhost": "hardhat run scripts/mint.ts --network localhost"
   },
   "author": "oncyber",
   "license": "MIT",
