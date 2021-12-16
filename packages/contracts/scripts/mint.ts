@@ -1,4 +1,5 @@
 // @ts-ignore-next-line
+import { BigNumber } from '@ethersproject/bignumber'
 import { deployments, ethers } from 'hardhat'
 import { signMintRequest } from '../lib/utils'
 
@@ -29,17 +30,31 @@ async function main() {
     Contract.address,
     minter
   )
-  const tokenId = 0
+  const tokenId = 8
+
   const mintPrice = await contract.getMintPriceForToken(tokenId)
+
   const signatureMint = await signMintRequest(
     tokenId,
     minter.address,
     0,
     manager
   )
+
+  const estimation = await contract.estimateGas.mint(tokenId, signatureMint, {
+    value:
+        mintPrice
+  })
+
+  console.log("ESTIMATION")
+  // console.log(BigNumber.from("1.1"))
+  console.log(estimation.mul(ethers.utils.parseUnits("1.1")))
+
   const tx = await contract.mint(tokenId, signatureMint, {
     value: mintPrice,
+    gasLimit: estimation.mul(ethers.utils.parseUnits("1.1"))
   })
+
   const txReceipt = await tx.wait()
   console.log('txReceipt', txReceipt)
 }

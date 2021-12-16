@@ -89,7 +89,7 @@ describe('CyberDropBase', function () {
       const tokenId = 0
       expect(
         await memory.contract.balanceOf(memory.other.address, tokenId)
-      ).to.eq('0')
+      ).to.eq('1')
       expect(
         await memory.contract.balanceOf(memory.oncyber.address, tokenId)
       ).to.eq('0')
@@ -106,7 +106,7 @@ describe('CyberDropBase', function () {
       expect(drop.amountCap).to.eq(amountCap)
       expect(drop.shareCyber).to.eq(shareCyber)
       expect(drop.creator).to.eq(memory.other.address)
-      expect(drop.minted).to.eq('0')
+      expect(drop.minted).to.eq('1')
 
       await expect(
         memory.contract.connect(memory.other).getDrop(1)
@@ -152,7 +152,7 @@ describe('CyberDropBase', function () {
       const tokenId = 0
       expect(
         await memory.contract.balanceOf(memory.other.address, tokenId)
-      ).to.eq('0')
+      ).to.eq('1')
       expect(
         await memory.contract.balanceOf(memory.oncyber.address, tokenId)
       ).to.eq('0')
@@ -169,7 +169,7 @@ describe('CyberDropBase', function () {
       expect(drop.amountCap).to.eq(amountCap)
       expect(drop.shareCyber).to.eq(shareCyber)
       expect(drop.creator).to.eq(memory.other.address)
-      expect(drop.minted).to.eq('0')
+      expect(drop.minted).to.eq('1')
 
       await expect(
         memory.contract.connect(memory.other).getDrop(1)
@@ -216,7 +216,7 @@ describe('CyberDropBase', function () {
       const tokenId = 0
       expect(
         await memory.contract.balanceOf(memory.other.address, tokenId)
-      ).to.eq('0')
+      ).to.eq('1')
       expect(
         await memory.contract.balanceOf(memory.oncyber.address, tokenId)
       ).to.eq('0')
@@ -233,7 +233,7 @@ describe('CyberDropBase', function () {
       expect(drop.amountCap).to.eq(amountCap)
       expect(drop.shareCyber).to.eq(shareCyber)
       expect(drop.creator).to.eq(memory.other.address)
-      expect(drop.minted).to.eq('0')
+      expect(drop.minted).to.eq('1')
 
       await expect(
         memory.contract.connect(memory.other).getDrop(1)
@@ -278,7 +278,7 @@ describe('CyberDropBase', function () {
       const tokenId1 = 1
       expect(
         await memory.contract.balanceOf(memory.other.address, tokenId1)
-      ).to.eq('0')
+      ).to.eq('1')
       expect(
         await memory.contract.balanceOf(memory.oncyber.address, tokenId1)
       ).to.eq('0')
@@ -295,7 +295,7 @@ describe('CyberDropBase', function () {
       expect(drop1.amountCap).to.eq(amountCap1)
       expect(drop1.shareCyber).to.eq(shareCyber1)
       expect(drop1.creator).to.eq(memory.other.address)
-      expect(drop1.minted).to.eq('0')
+      expect(drop1.minted).to.eq('1')
 
       await expect(
         memory.contract.connect(memory.other).getDrop(2)
@@ -349,7 +349,7 @@ describe('CyberDropBase', function () {
       const tokenId = 0
       expect(
         await memory.contract.balanceOf(memory.other.address, tokenId)
-      ).to.eq('0')
+      ).to.eq('1')
       expect(
         await memory.contract.balanceOf(memory.oncyber.address, tokenId)
       ).to.eq('0')
@@ -366,7 +366,7 @@ describe('CyberDropBase', function () {
       expect(drop.amountCap).to.eq(amountCap)
       expect(drop.shareCyber).to.eq(shareCyber)
       expect(drop.creator).to.eq(memory.other.address)
-      expect(drop.minted).to.eq('0')
+      expect(drop.minted).to.eq('1')
 
       await expect(
         memory.contract.connect(memory.other).getDrop(1)
@@ -1142,7 +1142,7 @@ describe('CyberDropBase', function () {
       const priceStart = 100
       const priceEnd = 10
       const stepDuration = 200
-      const amountCap = 1
+      const amountCap = 2
       const shareCyber = 50
       const nonce = 0
       const signatureDrop = await signCreateDropRequest(
@@ -1386,6 +1386,10 @@ describe('CyberDropBase', function () {
         .mint(tokenId, signatureMint, {
           value: mintPrice,
         })
+      
+      expect(
+        await memory.contract.balanceOf(memory.other.address, tokenId)
+      ).to.eq('1')
       expect(
         await memory.contract.balanceOf(memory.other2.address, tokenId)
       ).to.eq('1')
@@ -1400,7 +1404,7 @@ describe('CyberDropBase', function () {
       )
 
       const drop = await memory.contract.getDrop(tokenId)
-      expect(drop.minted).to.eq('1')
+      expect(drop.minted).to.eq('2')
     })
 
     it('Should mint more than one multiple accounts', async () => {
@@ -1460,6 +1464,10 @@ describe('CyberDropBase', function () {
         .mint(tokenId, signatureMint, {
           value: mintPrice,
         })
+      
+      expect(
+        await memory.contract.balanceOf(memory.other.address, tokenId)
+      ).to.eq('1')
       expect(
         await memory.contract.balanceOf(memory.other2.address, tokenId)
       ).to.eq('1')
@@ -1503,7 +1511,7 @@ describe('CyberDropBase', function () {
       )
 
       const drop = await memory.contract.getDrop(tokenId)
-      expect(drop.minted).to.eq('2')
+      expect(drop.minted).to.eq('3')
     })
 
     it('Should mint more than one from same account', async () => {
@@ -1603,7 +1611,7 @@ describe('CyberDropBase', function () {
       )
 
       const drop = await memory.contract.getDrop(tokenId)
-      expect(drop.minted).to.eq('2')
+      expect(drop.minted).to.eq('3')
     })
 
     it('Should mint without cap', async () => {
@@ -1698,7 +1706,7 @@ describe('CyberDropBase', function () {
       )
 
       const drop = await memory.contract.getDrop(tokenId)
-      expect(drop.minted).to.eq('2')
+      expect(drop.minted).to.eq('3')
     })
 
     it('Should mint throw cap reach', async () => {
@@ -1708,7 +1716,7 @@ describe('CyberDropBase', function () {
       const priceStart = 100
       const priceEnd = 10
       const stepDuration = 30
-      const amountCap = 1
+      const amountCap = 2
       const shareCyber = 50
       const nonce = 0
       const signatureDrop = await signCreateDropRequest(
