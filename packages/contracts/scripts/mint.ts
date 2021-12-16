@@ -42,17 +42,16 @@ async function main() {
   )
 
   const estimation = await contract.estimateGas.mint(tokenId, signatureMint, {
-    value:
-        mintPrice
+    value: mintPrice,
   })
 
-  console.log("ESTIMATION")
+  console.log('ESTIMATION')
   // console.log(BigNumber.from("1.1"))
-  console.log(estimation.mul(ethers.utils.parseUnits("1.1")))
+  console.log(estimation.mul(ethers.utils.parseUnits('1.1')))
 
   const tx = await contract.mint(tokenId, signatureMint, {
     value: mintPrice,
-    gasLimit: estimation.mul(ethers.utils.parseUnits("1.1"))
+    gasLimit: estimation.mul(ethers.utils.parseUnits('1.1')),
   })
 
   const txReceipt = await tx.wait()

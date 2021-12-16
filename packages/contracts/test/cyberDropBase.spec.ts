@@ -1386,7 +1386,7 @@ describe('CyberDropBase', function () {
         .mint(tokenId, signatureMint, {
           value: mintPrice,
         })
-      
+
       expect(
         await memory.contract.balanceOf(memory.other.address, tokenId)
       ).to.eq('1')
@@ -1464,7 +1464,7 @@ describe('CyberDropBase', function () {
         .mint(tokenId, signatureMint, {
           value: mintPrice,
         })
-      
+
       expect(
         await memory.contract.balanceOf(memory.other.address, tokenId)
       ).to.eq('1')
