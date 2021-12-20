@@ -1560,6 +1560,7 @@ describe('CyberDropBase', function () {
       const mintPrice = await memory.contract
         .connect(memory.other2)
         .getMintPriceForToken(tokenId)
+
       const signatureMint = await signMintRequest(
         tokenId,
         memory.other2.address,
