@@ -105,7 +105,9 @@ contract CyberDropBase is CyberTokenBase {
     LibDropStorage.layout().drops[tokenId].shareCyber = _shareCyber;
     LibDropStorage.layout().drops[tokenId].creator = payable(sender);
 
+    // Mint for creator
     LibDropStorage.layout().drops[tokenId].minted.increment();
+    LibDropStorage.layout().drops[tokenId].mintCounter[sender].increment();
     _safeMint(sender, tokenId, 1, '');
 
     emit DropCreated(sender, tokenId);
@@ -137,9 +139,7 @@ contract CyberDropBase is CyberTokenBase {
       drop.priceEnd,
       drop.stepDuration
     );
-
     require(msg.value >= price, 'IA');
-
     uint256 amountOnCyber = (msg.value * drop.shareCyber) / 100;
     uint256 amountCreator = msg.value - amountOnCyber;
 
