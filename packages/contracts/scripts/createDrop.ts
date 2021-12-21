@@ -2,27 +2,14 @@
 import { deployments, ethers } from 'hardhat'
 import { Log } from '@ethersproject/abstract-provider/src.ts/index'
 import { signCreateDropRequest } from '../lib/utils'
+import { parseEther } from 'ethers/lib/utils'
 
 async function main() {
   const contractName = 'DiamondCyberDestinationFactory'
 
-  // for local
-  // const accounts = await ethers.getSigners()
-  // const manager = accounts[1]
-  // const minter = accounts[0]
-
-  // for testnet
-  const provider = new ethers.providers.JsonRpcProvider(
-    'https://rinkeby.infura.io/v3/b89e58ca51184cb783845c58340629c4'
-  )
-  const minter = new ethers.Wallet(
-    process.env.RINKEBY_ACCOUNT_1_PRIVATE_KEY as string,
-    provider
-  )
-  const manager = new ethers.Wallet(
-    process.env.RINKEBY_MANAGER_DESTINATION_PRIVATE_KEY as string,
-    provider
-  )
+  const accounts = await ethers.getSigners()
+  const manager = accounts[2]
+  const minter = accounts[0]
 
   const Contract = await deployments.get(contractName)
   const contract = await ethers.getContractAt(
@@ -34,8 +21,8 @@ async function main() {
   const uri = 'QmQwfto3zFsasHnvNpyKW7jZVVkAgxpLAKfxQhTbnykHh8'
   const timeStart = parseInt((Date.now() / 1000).toString())
   const timeEnd = parseInt((Date.now() / 1000 + 100000000).toString())
-  const priceStart = 1000000000
-  const priceEnd = 1000
+  const priceStart = parseEther('1')
+  const priceEnd = parseEther('0.1')
   const stepDuration = 300
   const amountCap = 100
   const shareCyber = 50

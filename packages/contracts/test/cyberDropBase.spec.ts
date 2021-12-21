@@ -1,6 +1,6 @@
 import { ethers, deployments, getNamedAccounts } from 'hardhat'
 import { expect } from 'chai'
-import { utils } from 'ethers'
+import { BigNumber, utils } from 'ethers'
 
 import { signCreateDropRequest, signMintRequest } from '../lib/utils'
 
@@ -63,8 +63,8 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        priceStart,
-        priceEnd,
+        BigNumber.from(priceStart),
+        BigNumber.from(priceEnd),
         stepDuration,
         amountCap,
         shareCyber,
@@ -78,8 +78,8 @@ describe('CyberDropBase', function () {
           uri,
           timeStart,
           timeEnd,
-          priceStart,
-          priceEnd,
+          BigNumber.from(priceStart),
+          BigNumber.from(priceEnd),
           stepDuration,
           amountCap,
           shareCyber,
@@ -89,7 +89,7 @@ describe('CyberDropBase', function () {
       const tokenId = 0
       expect(
         await memory.contract.balanceOf(memory.other.address, tokenId)
-      ).to.eq('0')
+      ).to.eq('1')
       expect(
         await memory.contract.balanceOf(memory.oncyber.address, tokenId)
       ).to.eq('0')
@@ -106,7 +106,7 @@ describe('CyberDropBase', function () {
       expect(drop.amountCap).to.eq(amountCap)
       expect(drop.shareCyber).to.eq(shareCyber)
       expect(drop.creator).to.eq(memory.other.address)
-      expect(drop.minted).to.eq('0')
+      expect(drop.minted).to.eq('1')
 
       await expect(
         memory.contract.connect(memory.other).getDrop(1)
@@ -126,8 +126,8 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        price,
-        price,
+        BigNumber.from(price),
+        BigNumber.from(price),
         stepDuration,
         amountCap,
         shareCyber,
@@ -152,7 +152,7 @@ describe('CyberDropBase', function () {
       const tokenId = 0
       expect(
         await memory.contract.balanceOf(memory.other.address, tokenId)
-      ).to.eq('0')
+      ).to.eq('1')
       expect(
         await memory.contract.balanceOf(memory.oncyber.address, tokenId)
       ).to.eq('0')
@@ -169,7 +169,7 @@ describe('CyberDropBase', function () {
       expect(drop.amountCap).to.eq(amountCap)
       expect(drop.shareCyber).to.eq(shareCyber)
       expect(drop.creator).to.eq(memory.other.address)
-      expect(drop.minted).to.eq('0')
+      expect(drop.minted).to.eq('1')
 
       await expect(
         memory.contract.connect(memory.other).getDrop(1)
@@ -190,8 +190,8 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        priceStart,
-        priceEnd,
+        BigNumber.from(priceStart),
+        BigNumber.from(priceEnd),
         stepDuration,
         amountCap,
         shareCyber,
@@ -205,8 +205,8 @@ describe('CyberDropBase', function () {
           uri,
           timeStart,
           timeEnd,
-          priceStart,
-          priceEnd,
+          BigNumber.from(priceStart),
+          BigNumber.from(priceEnd),
           stepDuration,
           amountCap,
           shareCyber,
@@ -216,7 +216,7 @@ describe('CyberDropBase', function () {
       const tokenId = 0
       expect(
         await memory.contract.balanceOf(memory.other.address, tokenId)
-      ).to.eq('0')
+      ).to.eq('1')
       expect(
         await memory.contract.balanceOf(memory.oncyber.address, tokenId)
       ).to.eq('0')
@@ -233,7 +233,7 @@ describe('CyberDropBase', function () {
       expect(drop.amountCap).to.eq(amountCap)
       expect(drop.shareCyber).to.eq(shareCyber)
       expect(drop.creator).to.eq(memory.other.address)
-      expect(drop.minted).to.eq('0')
+      expect(drop.minted).to.eq('1')
 
       await expect(
         memory.contract.connect(memory.other).getDrop(1)
@@ -252,8 +252,8 @@ describe('CyberDropBase', function () {
         uri1,
         timeStart1,
         timeEnd1,
-        priceStart1,
-        priceEnd1,
+        BigNumber.from(priceStart1),
+        BigNumber.from(priceEnd1),
         stepDuration1,
         amountCap1,
         shareCyber1,
@@ -278,7 +278,7 @@ describe('CyberDropBase', function () {
       const tokenId1 = 1
       expect(
         await memory.contract.balanceOf(memory.other.address, tokenId1)
-      ).to.eq('0')
+      ).to.eq('1')
       expect(
         await memory.contract.balanceOf(memory.oncyber.address, tokenId1)
       ).to.eq('0')
@@ -295,7 +295,7 @@ describe('CyberDropBase', function () {
       expect(drop1.amountCap).to.eq(amountCap1)
       expect(drop1.shareCyber).to.eq(shareCyber1)
       expect(drop1.creator).to.eq(memory.other.address)
-      expect(drop1.minted).to.eq('0')
+      expect(drop1.minted).to.eq('1')
 
       await expect(
         memory.contract.connect(memory.other).getDrop(2)
@@ -316,8 +316,8 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        priceStart,
-        priceEnd,
+        BigNumber.from(priceStart),
+        BigNumber.from(priceEnd),
         stepDuration,
         amountCap,
         shareCyber,
@@ -332,8 +332,8 @@ describe('CyberDropBase', function () {
           uri,
           timeStart,
           timeEnd,
-          priceStart,
-          priceEnd,
+          BigNumber.from(priceStart),
+          BigNumber.from(priceEnd),
           stepDuration,
           amountCap,
           shareCyber,
@@ -349,7 +349,7 @@ describe('CyberDropBase', function () {
       const tokenId = 0
       expect(
         await memory.contract.balanceOf(memory.other.address, tokenId)
-      ).to.eq('0')
+      ).to.eq('1')
       expect(
         await memory.contract.balanceOf(memory.oncyber.address, tokenId)
       ).to.eq('0')
@@ -366,7 +366,7 @@ describe('CyberDropBase', function () {
       expect(drop.amountCap).to.eq(amountCap)
       expect(drop.shareCyber).to.eq(shareCyber)
       expect(drop.creator).to.eq(memory.other.address)
-      expect(drop.minted).to.eq('0')
+      expect(drop.minted).to.eq('1')
 
       await expect(
         memory.contract.connect(memory.other).getDrop(1)
@@ -387,8 +387,8 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        priceStart,
-        priceEnd,
+        BigNumber.from(priceStart),
+        BigNumber.from(priceEnd),
         stepDuration,
         amountCap,
         shareCyber,
@@ -404,8 +404,8 @@ describe('CyberDropBase', function () {
             uri,
             timeStart,
             timeEnd,
-            priceStart,
-            priceEnd,
+            BigNumber.from(priceStart),
+            BigNumber.from(priceEnd),
             stepDuration,
             amountCap,
             shareCyber,
@@ -430,8 +430,8 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        priceStart,
-        priceEnd,
+        BigNumber.from(priceStart),
+        BigNumber.from(priceEnd),
         stepDuration,
         amountCap,
         shareCyber,
@@ -447,8 +447,8 @@ describe('CyberDropBase', function () {
             uri,
             timeStart,
             timeEnd,
-            priceStart,
-            priceEnd,
+            BigNumber.from(priceStart),
+            BigNumber.from(priceEnd),
             stepDuration,
             amountCap,
             shareCyber,
@@ -471,8 +471,8 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        priceStart,
-        priceEnd,
+        BigNumber.from(priceStart),
+        BigNumber.from(priceEnd),
         stepDuration,
         amountCap,
         shareCyber,
@@ -488,8 +488,8 @@ describe('CyberDropBase', function () {
             uri,
             timeStart,
             timeEnd,
-            priceStart,
-            priceEnd,
+            BigNumber.from(priceStart),
+            BigNumber.from(priceEnd),
             stepDuration,
             amountCap,
             shareCyber,
@@ -512,8 +512,8 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        priceStart,
-        priceEnd,
+        BigNumber.from(priceStart),
+        BigNumber.from(priceEnd),
         stepDuration,
         amountCap,
         shareCyber,
@@ -529,8 +529,8 @@ describe('CyberDropBase', function () {
             uri,
             timeStart,
             timeEnd,
-            priceStart,
-            priceEnd,
+            BigNumber.from(priceStart),
+            BigNumber.from(priceEnd),
             stepDuration,
             amountCap,
             shareCyber,
@@ -553,8 +553,8 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        priceStart,
-        priceEnd,
+        BigNumber.from(priceStart),
+        BigNumber.from(priceEnd),
         stepDuration,
         amountCap,
         shareCyber,
@@ -570,8 +570,8 @@ describe('CyberDropBase', function () {
             uri,
             timeStart,
             timeEnd,
-            priceStart,
-            priceEnd,
+            BigNumber.from(priceStart),
+            BigNumber.from(priceEnd),
             stepDuration,
             amountCap,
             shareCyber,
@@ -594,8 +594,8 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        priceStart,
-        priceEnd,
+        BigNumber.from(priceStart),
+        BigNumber.from(priceEnd),
         stepDuration,
         amountCap,
         shareCyber,
@@ -611,8 +611,8 @@ describe('CyberDropBase', function () {
             uri,
             timeStart,
             timeEnd,
-            priceStart,
-            priceEnd,
+            BigNumber.from(priceStart),
+            BigNumber.from(priceEnd),
             stepDuration,
             amountCap,
             shareCyber,
@@ -635,8 +635,8 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        priceStart,
-        priceEnd,
+        BigNumber.from(priceStart),
+        BigNumber.from(priceEnd),
         stepDuration,
         amountCap,
         shareCyber,
@@ -652,8 +652,8 @@ describe('CyberDropBase', function () {
             uri,
             timeStart,
             timeEnd,
-            priceStart,
-            priceEnd,
+            BigNumber.from(priceStart),
+            BigNumber.from(priceEnd),
             stepDuration,
             amountCap,
             shareCyber,
@@ -665,8 +665,8 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        priceStart,
-        priceEnd,
+        BigNumber.from(priceStart),
+        BigNumber.from(priceEnd),
         stepDuration,
         amountCap,
         shareCyber,
@@ -681,8 +681,8 @@ describe('CyberDropBase', function () {
             uri,
             timeStart,
             timeEnd,
-            priceStart,
-            priceEnd,
+            BigNumber.from(priceStart),
+            BigNumber.from(priceEnd),
             stepDuration,
             amountCap,
             shareCyber,
@@ -694,8 +694,8 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        priceStart,
-        priceEnd,
+        BigNumber.from(priceStart),
+        BigNumber.from(priceEnd),
         stepDuration,
         amountCap,
         shareCyber,
@@ -710,8 +710,8 @@ describe('CyberDropBase', function () {
             'invalid_uri',
             timeStart,
             timeEnd,
-            priceStart,
-            priceEnd,
+            BigNumber.from(priceStart),
+            BigNumber.from(priceEnd),
             stepDuration,
             amountCap,
             shareCyber,
@@ -723,8 +723,8 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        priceStart,
-        priceEnd,
+        BigNumber.from(priceStart),
+        BigNumber.from(priceEnd),
         stepDuration,
         amountCap,
         shareCyber,
@@ -739,8 +739,8 @@ describe('CyberDropBase', function () {
             uri,
             1,
             timeEnd,
-            priceStart,
-            priceEnd,
+            BigNumber.from(priceStart),
+            BigNumber.from(priceEnd),
             stepDuration,
             amountCap,
             shareCyber,
@@ -752,8 +752,8 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        priceStart,
-        priceEnd,
+        BigNumber.from(priceStart),
+        BigNumber.from(priceEnd),
         stepDuration,
         amountCap,
         shareCyber,
@@ -768,8 +768,8 @@ describe('CyberDropBase', function () {
             uri,
             timeStart,
             timeStart + 3,
-            priceStart,
-            priceEnd,
+            BigNumber.from(priceStart),
+            BigNumber.from(priceEnd),
             stepDuration,
             amountCap,
             shareCyber,
@@ -781,8 +781,8 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        priceStart,
-        priceEnd,
+        BigNumber.from(priceStart),
+        BigNumber.from(priceEnd),
         stepDuration,
         amountCap,
         shareCyber,
@@ -797,8 +797,8 @@ describe('CyberDropBase', function () {
             uri,
             timeStart,
             timeEnd,
-            priceStart,
-            priceEnd,
+            BigNumber.from(priceStart),
+            BigNumber.from(priceEnd),
             1,
             amountCap,
             shareCyber,
@@ -810,8 +810,8 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        priceStart,
-        priceEnd,
+        BigNumber.from(priceStart),
+        BigNumber.from(priceEnd),
         stepDuration,
         amountCap,
         shareCyber,
@@ -827,7 +827,7 @@ describe('CyberDropBase', function () {
             timeStart,
             timeEnd,
             10000000,
-            priceEnd,
+            BigNumber.from(priceEnd),
             stepDuration,
             amountCap,
             shareCyber,
@@ -839,8 +839,8 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        priceStart,
-        priceEnd,
+        BigNumber.from(priceStart),
+        BigNumber.from(priceEnd),
         stepDuration,
         amountCap,
         shareCyber,
@@ -855,7 +855,7 @@ describe('CyberDropBase', function () {
             uri,
             timeStart,
             timeEnd,
-            priceStart,
+            BigNumber.from(priceStart),
             1,
             stepDuration,
             amountCap,
@@ -868,8 +868,8 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        priceStart,
-        priceEnd,
+        BigNumber.from(priceStart),
+        BigNumber.from(priceEnd),
         stepDuration,
         amountCap,
         shareCyber,
@@ -884,8 +884,8 @@ describe('CyberDropBase', function () {
             uri,
             timeStart,
             timeEnd,
-            priceStart,
-            priceEnd,
+            BigNumber.from(priceStart),
+            BigNumber.from(priceEnd),
             stepDuration,
             1,
             shareCyber,
@@ -897,8 +897,8 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        priceStart,
-        priceEnd,
+        BigNumber.from(priceStart),
+        BigNumber.from(priceEnd),
         stepDuration,
         amountCap,
         shareCyber,
@@ -913,8 +913,8 @@ describe('CyberDropBase', function () {
             uri,
             timeStart,
             timeEnd,
-            priceStart,
-            priceEnd,
+            BigNumber.from(priceStart),
+            BigNumber.from(priceEnd),
             stepDuration,
             amountCap,
             1,
@@ -926,8 +926,8 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        priceStart,
-        priceEnd,
+        BigNumber.from(priceStart),
+        BigNumber.from(priceEnd),
         stepDuration,
         amountCap,
         shareCyber,
@@ -942,8 +942,8 @@ describe('CyberDropBase', function () {
             uri,
             timeStart,
             timeEnd,
-            priceStart,
-            priceEnd,
+            BigNumber.from(priceStart),
+            BigNumber.from(priceEnd),
             stepDuration,
             amountCap,
             shareCyber,
@@ -1026,8 +1026,8 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        priceStart,
-        priceEnd,
+        BigNumber.from(priceStart),
+        BigNumber.from(priceEnd),
         stepDuration,
         amountCap,
         shareCyber,
@@ -1041,8 +1041,8 @@ describe('CyberDropBase', function () {
           uri,
           timeStart,
           timeEnd,
-          priceStart,
-          priceEnd,
+          BigNumber.from(priceStart),
+          BigNumber.from(priceEnd),
           stepDuration,
           amountCap,
           shareCyber,
@@ -1067,8 +1067,8 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        priceStart,
-        priceEnd,
+        BigNumber.from(priceStart),
+        BigNumber.from(priceEnd),
         stepDuration,
         amountCap,
         shareCyber,
@@ -1082,8 +1082,8 @@ describe('CyberDropBase', function () {
           uri,
           timeStart,
           timeEnd,
-          priceStart,
-          priceEnd,
+          BigNumber.from(priceStart),
+          BigNumber.from(priceEnd),
           stepDuration,
           amountCap,
           shareCyber,
@@ -1108,8 +1108,8 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        priceStart,
-        priceEnd,
+        BigNumber.from(priceStart),
+        BigNumber.from(priceEnd),
         stepDuration,
         amountCap,
         shareCyber,
@@ -1123,8 +1123,8 @@ describe('CyberDropBase', function () {
           uri,
           timeStart,
           timeEnd,
-          priceStart,
-          priceEnd,
+          BigNumber.from(priceStart),
+          BigNumber.from(priceEnd),
           stepDuration,
           amountCap,
           shareCyber,
@@ -1142,15 +1142,15 @@ describe('CyberDropBase', function () {
       const priceStart = 100
       const priceEnd = 10
       const stepDuration = 200
-      const amountCap = 1
+      const amountCap = 2
       const shareCyber = 50
       const nonce = 0
       const signatureDrop = await signCreateDropRequest(
         uri,
         timeStart,
         timeEnd,
-        priceStart,
-        priceEnd,
+        BigNumber.from(priceStart),
+        BigNumber.from(priceEnd),
         stepDuration,
         amountCap,
         shareCyber,
@@ -1164,8 +1164,8 @@ describe('CyberDropBase', function () {
           uri,
           timeStart,
           timeEnd,
-          priceStart,
-          priceEnd,
+          BigNumber.from(priceStart),
+          BigNumber.from(priceEnd),
           stepDuration,
           amountCap,
           shareCyber,
@@ -1204,8 +1204,8 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        priceStart,
-        priceEnd,
+        BigNumber.from(priceStart),
+        BigNumber.from(priceEnd),
         stepDuration,
         amountCap,
         shareCyber,
@@ -1219,8 +1219,8 @@ describe('CyberDropBase', function () {
           uri,
           timeStart,
           timeEnd,
-          priceStart,
-          priceEnd,
+          BigNumber.from(priceStart),
+          BigNumber.from(priceEnd),
           stepDuration,
           amountCap,
           shareCyber,
@@ -1246,8 +1246,8 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        priceStart,
-        priceEnd,
+        BigNumber.from(priceStart),
+        BigNumber.from(priceEnd),
         stepDuration,
         amountCap,
         shareCyber,
@@ -1261,8 +1261,8 @@ describe('CyberDropBase', function () {
           uri,
           timeStart,
           timeEnd,
-          priceStart,
-          priceEnd,
+          BigNumber.from(priceStart),
+          BigNumber.from(priceEnd),
           stepDuration,
           amountCap,
           shareCyber,
@@ -1289,8 +1289,8 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        priceStart,
-        priceEnd,
+        BigNumber.from(priceStart),
+        BigNumber.from(priceEnd),
         stepDuration,
         amountCap,
         shareCyber,
@@ -1304,8 +1304,8 @@ describe('CyberDropBase', function () {
           uri,
           timeStart,
           timeEnd,
-          priceStart,
-          priceEnd,
+          BigNumber.from(priceStart),
+          BigNumber.from(priceEnd),
           stepDuration,
           amountCap,
           shareCyber,
@@ -1342,8 +1342,8 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        priceStart,
-        priceEnd,
+        BigNumber.from(priceStart),
+        BigNumber.from(priceEnd),
         stepDuration,
         amountCap,
         shareCyber,
@@ -1357,8 +1357,8 @@ describe('CyberDropBase', function () {
           uri,
           timeStart,
           timeEnd,
-          priceStart,
-          priceEnd,
+          BigNumber.from(priceStart),
+          BigNumber.from(priceEnd),
           stepDuration,
           amountCap,
           shareCyber,
@@ -1386,6 +1386,10 @@ describe('CyberDropBase', function () {
         .mint(tokenId, signatureMint, {
           value: mintPrice,
         })
+
+      expect(
+        await memory.contract.balanceOf(memory.other.address, tokenId)
+      ).to.eq('1')
       expect(
         await memory.contract.balanceOf(memory.other2.address, tokenId)
       ).to.eq('1')
@@ -1400,7 +1404,7 @@ describe('CyberDropBase', function () {
       )
 
       const drop = await memory.contract.getDrop(tokenId)
-      expect(drop.minted).to.eq('1')
+      expect(drop.minted).to.eq('2')
     })
 
     it('Should mint more than one multiple accounts', async () => {
@@ -1417,8 +1421,8 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        priceStart,
-        priceEnd,
+        BigNumber.from(priceStart),
+        BigNumber.from(priceEnd),
         stepDuration,
         amountCap,
         shareCyber,
@@ -1432,8 +1436,8 @@ describe('CyberDropBase', function () {
           uri,
           timeStart,
           timeEnd,
-          priceStart,
-          priceEnd,
+          BigNumber.from(priceStart),
+          BigNumber.from(priceEnd),
           stepDuration,
           amountCap,
           shareCyber,
@@ -1460,6 +1464,10 @@ describe('CyberDropBase', function () {
         .mint(tokenId, signatureMint, {
           value: mintPrice,
         })
+
+      expect(
+        await memory.contract.balanceOf(memory.other.address, tokenId)
+      ).to.eq('1')
       expect(
         await memory.contract.balanceOf(memory.other2.address, tokenId)
       ).to.eq('1')
@@ -1503,7 +1511,7 @@ describe('CyberDropBase', function () {
       )
 
       const drop = await memory.contract.getDrop(tokenId)
-      expect(drop.minted).to.eq('2')
+      expect(drop.minted).to.eq('3')
     })
 
     it('Should mint more than one from same account', async () => {
@@ -1520,8 +1528,8 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        priceStart,
-        priceEnd,
+        BigNumber.from(priceStart),
+        BigNumber.from(priceEnd),
         stepDuration,
         amountCap,
         shareCyber,
@@ -1535,8 +1543,8 @@ describe('CyberDropBase', function () {
           uri,
           timeStart,
           timeEnd,
-          priceStart,
-          priceEnd,
+          BigNumber.from(priceStart),
+          BigNumber.from(priceEnd),
           stepDuration,
           amountCap,
           shareCyber,
@@ -1552,6 +1560,7 @@ describe('CyberDropBase', function () {
       const mintPrice = await memory.contract
         .connect(memory.other2)
         .getMintPriceForToken(tokenId)
+
       const signatureMint = await signMintRequest(
         tokenId,
         memory.other2.address,
@@ -1603,7 +1612,7 @@ describe('CyberDropBase', function () {
       )
 
       const drop = await memory.contract.getDrop(tokenId)
-      expect(drop.minted).to.eq('2')
+      expect(drop.minted).to.eq('3')
     })
 
     it('Should mint without cap', async () => {
@@ -1620,8 +1629,8 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        priceStart,
-        priceEnd,
+        BigNumber.from(priceStart),
+        BigNumber.from(priceEnd),
         stepDuration,
         amountCap,
         shareCyber,
@@ -1635,8 +1644,8 @@ describe('CyberDropBase', function () {
           uri,
           timeStart,
           timeEnd,
-          priceStart,
-          priceEnd,
+          BigNumber.from(priceStart),
+          BigNumber.from(priceEnd),
           stepDuration,
           amountCap,
           shareCyber,
@@ -1698,7 +1707,7 @@ describe('CyberDropBase', function () {
       )
 
       const drop = await memory.contract.getDrop(tokenId)
-      expect(drop.minted).to.eq('2')
+      expect(drop.minted).to.eq('3')
     })
 
     it('Should mint throw cap reach', async () => {
@@ -1708,15 +1717,15 @@ describe('CyberDropBase', function () {
       const priceStart = 100
       const priceEnd = 10
       const stepDuration = 30
-      const amountCap = 1
+      const amountCap = 2
       const shareCyber = 50
       const nonce = 0
       const signatureDrop = await signCreateDropRequest(
         uri,
         timeStart,
         timeEnd,
-        priceStart,
-        priceEnd,
+        BigNumber.from(priceStart),
+        BigNumber.from(priceEnd),
         stepDuration,
         amountCap,
         shareCyber,
@@ -1730,8 +1739,8 @@ describe('CyberDropBase', function () {
           uri,
           timeStart,
           timeEnd,
-          priceStart,
-          priceEnd,
+          BigNumber.from(priceStart),
+          BigNumber.from(priceEnd),
           stepDuration,
           amountCap,
           shareCyber,
@@ -1793,8 +1802,8 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        priceStart,
-        priceEnd,
+        BigNumber.from(priceStart),
+        BigNumber.from(priceEnd),
         stepDuration,
         amountCap,
         shareCyber,
@@ -1808,8 +1817,8 @@ describe('CyberDropBase', function () {
           uri,
           timeStart,
           timeEnd,
-          priceStart,
-          priceEnd,
+          BigNumber.from(priceStart),
+          BigNumber.from(priceEnd),
           stepDuration,
           amountCap,
           shareCyber,
@@ -1844,8 +1853,8 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        priceStart,
-        priceEnd,
+        BigNumber.from(priceStart),
+        BigNumber.from(priceEnd),
         stepDuration,
         amountCap,
         shareCyber,
@@ -1859,8 +1868,8 @@ describe('CyberDropBase', function () {
           uri,
           timeStart,
           timeEnd,
-          priceStart,
-          priceEnd,
+          BigNumber.from(priceStart),
+          BigNumber.from(priceEnd),
           stepDuration,
           amountCap,
           shareCyber,
@@ -1895,8 +1904,8 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        priceStart,
-        priceEnd,
+        BigNumber.from(priceStart),
+        BigNumber.from(priceEnd),
         stepDuration,
         amountCap,
         shareCyber,
@@ -1910,8 +1919,8 @@ describe('CyberDropBase', function () {
           uri,
           timeStart,
           timeEnd,
-          priceStart,
-          priceEnd,
+          BigNumber.from(priceStart),
+          BigNumber.from(priceEnd),
           stepDuration,
           amountCap,
           shareCyber,
@@ -1945,8 +1954,8 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        priceStart,
-        priceEnd,
+        BigNumber.from(priceStart),
+        BigNumber.from(priceEnd),
         stepDuration,
         amountCap,
         shareCyber,
@@ -1960,8 +1969,8 @@ describe('CyberDropBase', function () {
           uri,
           timeStart,
           timeEnd,
-          priceStart,
-          priceEnd,
+          BigNumber.from(priceStart),
+          BigNumber.from(priceEnd),
           stepDuration,
           amountCap,
           shareCyber,

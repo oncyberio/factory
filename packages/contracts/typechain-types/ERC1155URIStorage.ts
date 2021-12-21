@@ -16,16 +16,16 @@ import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 
 export interface ERC1155URIStorageInterface extends utils.Interface {
   functions: {
-    "c_0x64a239c3(bytes32)": FunctionFragment;
+    "c_0x281cd3c6(bytes32)": FunctionFragment;
   };
 
   encodeFunctionData(
-    functionFragment: "c_0x64a239c3",
+    functionFragment: "c_0x281cd3c6",
     values: [BytesLike]
   ): string;
 
   decodeFunctionResult(
-    functionFragment: "c_0x64a239c3",
+    functionFragment: "c_0x281cd3c6",
     data: BytesLike
   ): Result;
 
@@ -59,20 +59,20 @@ export interface ERC1155URIStorage extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    c_0x64a239c3(
-      c__0x64a239c3: BytesLike,
+    c_0x281cd3c6(
+      c__0x281cd3c6: BytesLike,
       overrides?: CallOverrides
     ): Promise<[void]>;
   };
 
-  c_0x64a239c3(
-    c__0x64a239c3: BytesLike,
+  c_0x281cd3c6(
+    c__0x281cd3c6: BytesLike,
     overrides?: CallOverrides
   ): Promise<void>;
 
   callStatic: {
-    c_0x64a239c3(
-      c__0x64a239c3: BytesLike,
+    c_0x281cd3c6(
+      c__0x281cd3c6: BytesLike,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -80,15 +80,15 @@ export interface ERC1155URIStorage extends BaseContract {
   filters: {};
 
   estimateGas: {
-    c_0x64a239c3(
-      c__0x64a239c3: BytesLike,
+    c_0x281cd3c6(
+      c__0x281cd3c6: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    c_0x64a239c3(
-      c__0x64a239c3: BytesLike,
+    c_0x281cd3c6(
+      c__0x281cd3c6: BytesLike,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };

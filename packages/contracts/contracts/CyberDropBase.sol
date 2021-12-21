@@ -105,7 +105,13 @@ contract CyberDropBase is CyberTokenBase {
     LibDropStorage.layout().drops[tokenId].shareCyber = _shareCyber;
     LibDropStorage.layout().drops[tokenId].creator = payable(sender);
 
+    // Mint for creator
+    LibDropStorage.layout().drops[tokenId].minted.increment();
+    LibDropStorage.layout().drops[tokenId].mintCounter[sender].increment();
+    _safeMint(sender, tokenId, 1, '');
+
     emit DropCreated(sender, tokenId);
+    emit Minted(sender, tokenId, 1);
   }
 
   function mint(uint256 _tokenId, bytes memory _signature)

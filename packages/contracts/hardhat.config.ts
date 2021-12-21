@@ -65,8 +65,18 @@ const config: HardhatUserConfig = {
     rinkeby: {
       chainId: 4,
       url: 'https://rinkeby.infura.io/v3/b89e58ca51184cb783845c58340629c4',
-      gasPrice: parseUnits('1', 'gwei').toNumber(),
-      accounts: [process.env.RINKEBY_PRIVATE_KEY || defaultPrivateKey],
+      gasPrice: parseUnits('50', 'gwei').toNumber(),
+      accounts: [process.env.RINKEBY_PRIVATE_KEY || defaultPrivateKey]
+        .concat(
+          process.env.RINKEBY_ACCOUNT_1_PRIVATE_KEY
+            ? process.env.RINKEBY_ACCOUNT_1_PRIVATE_KEY
+            : []
+        )
+        .concat(
+          process.env.RINKEBY_MANAGER_DESTINATION_PRIVATE_KEY
+            ? process.env.RINKEBY_MANAGER_DESTINATION_PRIVATE_KEY
+            : []
+        ),
     },
     ethereum: {
       chainId: 1,
