@@ -29,7 +29,7 @@
     "deploy:rinkeby": "hardhat --network rinkeby deploy",
     "deploy:ethereum": "hardhat --network ethereum deploy",
     "verify:rinkeby": "hardhat etherscan-verify --network rinkeby --solc-input",
-    "verify:ethereum": "hardhat etherscan-verify --network ethereum",
+    "verify:ethereum": "hardhat etherscan-verify --network ethereum --solc-input",
     "scripts:createDrop:rinkeby": "hardhat run scripts/createDrop.ts --network rinkeby",
     "scripts:mint:rinkeby": "hardhat run scripts/mint.ts --network rinkeby",
     "scripts:createDrop:localhost": "hardhat run scripts/createDrop.ts --network localhost",
