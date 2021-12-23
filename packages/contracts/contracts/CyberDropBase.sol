@@ -162,6 +162,37 @@ contract CyberDropBase is CyberTokenBase {
     return true;
   }
 
+  // function to mint many editions at once.
+  function batchMint(string memory _uri, uint256 _amount, bytes memory _signature)
+    public returns (uint256 tokenId)
+  {
+
+    require(_amount > 0, 'IA');
+
+    address sender = _msgSender();
+    uint256 nonce = minterNonce(sender);
+    bytes memory _message = abi.encodePacked(
+      _uri,
+      _amount,
+      nonce
+    );
+    address recoveredAddress = keccak256(_message)
+      .toEthSignedMessageHash()
+      .recover(_signature);
+    require(recoveredAddress == LibAppStorage.layout().manager, 'NM');
+
+    tokenId = LibAppStorage.layout().totalSupply.current();
+
+    // Effects
+    setTokenURI(tokenId, _uri);
+
+    _safeMint(sender, tokenId, _amount, '');
+
+    emit Minted(sender, tokenId, _amount);
+
+    return tokenId;
+  }
+
   function getMintPriceForToken(uint256 _tokenId)
     public
     view

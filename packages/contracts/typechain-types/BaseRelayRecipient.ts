@@ -16,14 +16,23 @@ import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 
 export interface BaseRelayRecipientInterface extends utils.Interface {
   functions: {
+    "c_0x1c93e179(bytes32)": FunctionFragment;
     "isTrustedForwarder(address)": FunctionFragment;
   };
 
+  encodeFunctionData(
+    functionFragment: "c_0x1c93e179",
+    values: [BytesLike]
+  ): string;
   encodeFunctionData(
     functionFragment: "isTrustedForwarder",
     values: [string]
   ): string;
 
+  decodeFunctionResult(
+    functionFragment: "c_0x1c93e179",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "isTrustedForwarder",
     data: BytesLike
@@ -59,11 +68,21 @@ export interface BaseRelayRecipient extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    c_0x1c93e179(
+      c__0x1c93e179: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<[void]>;
+
     isTrustedForwarder(
       forwarder: string,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
   };
+
+  c_0x1c93e179(
+    c__0x1c93e179: BytesLike,
+    overrides?: CallOverrides
+  ): Promise<void>;
 
   isTrustedForwarder(
     forwarder: string,
@@ -71,6 +90,11 @@ export interface BaseRelayRecipient extends BaseContract {
   ): Promise<boolean>;
 
   callStatic: {
+    c_0x1c93e179(
+      c__0x1c93e179: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     isTrustedForwarder(
       forwarder: string,
       overrides?: CallOverrides
@@ -80,6 +104,11 @@ export interface BaseRelayRecipient extends BaseContract {
   filters: {};
 
   estimateGas: {
+    c_0x1c93e179(
+      c__0x1c93e179: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     isTrustedForwarder(
       forwarder: string,
       overrides?: CallOverrides
@@ -87,6 +116,11 @@ export interface BaseRelayRecipient extends BaseContract {
   };
 
   populateTransaction: {
+    c_0x1c93e179(
+      c__0x1c93e179: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     isTrustedForwarder(
       forwarder: string,
       overrides?: CallOverrides

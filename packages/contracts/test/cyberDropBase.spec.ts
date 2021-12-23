@@ -2,7 +2,7 @@ import { ethers, deployments, getNamedAccounts } from 'hardhat'
 import { expect } from 'chai'
 import { BigNumber, utils } from 'ethers'
 
-import { signCreateDropRequest, signMintRequest } from '../lib/utils'
+import { signBatchMint, signCreateDropRequest, signMintRequest } from '../lib/utils'
 
 const memory: any = {}
 
@@ -2048,6 +2048,81 @@ describe('CyberDropBase', function () {
           .connect(memory.other)
           .dropMintCounter(123, memory.other.address)
       ).to.be.revertedWith('DNE')
+    })
+  })
+
+  describe('BatchMint', () => {
+    it('Should batch mint tokens', async () => {
+      const uri = 'Qmsfzefi221ifjzifj'
+      const amount = 10
+      const nonce = 0
+
+      const signatureDrop = await signBatchMint(
+        uri,
+        amount,
+        nonce,
+        memory.manager
+      )
+
+      let tokenId = await memory.contract
+        .connect(memory.other)
+        .batchMint(
+          uri,
+          amount,
+          signatureDrop
+        )
+      console.log("TOKENID")
+      console.log(tokenId)
+      expect(
+        await memory.contract.balanceOf(memory.other.address, 0)
+      ).to.eq('10')
+    })
+
+
+    it('Should not mint batch tokens invalid amount', async () => {
+      const uri = 'Qmsfzefi221ifjzifj'
+      const amount = 0
+      const nonce = 0
+
+      const signatureDrop = await signBatchMint(
+        uri,
+        amount,
+        nonce,
+        memory.manager
+      )
+
+      await expect(
+        memory.contract
+        .connect(memory.other)
+        .batchMint(
+          uri,
+          amount,
+          signatureDrop
+        )
+      ).to.be.revertedWith('IA')
+    })
+
+    it('Should not mint batch tokens with notmanager sig', async () => {
+      const uri = 'Qmsfzefi221ifjzifj'
+      const amount = 10
+      const nonce = 0
+
+      const signatureDrop = await signBatchMint(
+        uri,
+        amount,
+        nonce,
+        memory.other
+      )
+
+      await expect(
+        memory.contract
+        .connect(memory.other)
+        .batchMint(
+          uri,
+          amount,
+          signatureDrop
+        )
+      ).to.be.revertedWith('NM')
     })
   })
 })

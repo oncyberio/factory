@@ -17,15 +17,24 @@ import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 export interface LibDiamondInterface extends utils.Interface {
   functions: {
     "DIAMOND_STORAGE_POSITION()": FunctionFragment;
+    "c_0xa32ac8c0(bytes32)": FunctionFragment;
   };
 
   encodeFunctionData(
     functionFragment: "DIAMOND_STORAGE_POSITION",
     values?: undefined
   ): string;
+  encodeFunctionData(
+    functionFragment: "c_0xa32ac8c0",
+    values: [BytesLike]
+  ): string;
 
   decodeFunctionResult(
     functionFragment: "DIAMOND_STORAGE_POSITION",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "c_0xa32ac8c0",
     data: BytesLike
   ): Result;
 
@@ -60,22 +69,47 @@ export interface LibDiamond extends BaseContract {
 
   functions: {
     DIAMOND_STORAGE_POSITION(overrides?: CallOverrides): Promise<[string]>;
+
+    c_0xa32ac8c0(
+      c__0xa32ac8c0: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<[void]>;
   };
 
   DIAMOND_STORAGE_POSITION(overrides?: CallOverrides): Promise<string>;
 
+  c_0xa32ac8c0(
+    c__0xa32ac8c0: BytesLike,
+    overrides?: CallOverrides
+  ): Promise<void>;
+
   callStatic: {
     DIAMOND_STORAGE_POSITION(overrides?: CallOverrides): Promise<string>;
+
+    c_0xa32ac8c0(
+      c__0xa32ac8c0: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<void>;
   };
 
   filters: {};
 
   estimateGas: {
     DIAMOND_STORAGE_POSITION(overrides?: CallOverrides): Promise<BigNumber>;
+
+    c_0xa32ac8c0(
+      c__0xa32ac8c0: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     DIAMOND_STORAGE_POSITION(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    c_0xa32ac8c0(
+      c__0xa32ac8c0: BytesLike,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };
