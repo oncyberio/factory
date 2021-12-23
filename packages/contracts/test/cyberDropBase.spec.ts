@@ -2068,11 +2068,10 @@ describe('CyberDropBase', function () {
         memory.manager
       )
 
-      let tokenId = await memory.contract
+      await memory.contract
         .connect(memory.other)
         .batchMint(uri, amount, signatureDrop)
-      console.log('TOKENID')
-      console.log(tokenId)
+
       expect(await memory.contract.balanceOf(memory.other.address, 0)).to.eq(
         '10'
       )
