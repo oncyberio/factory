@@ -17,24 +17,15 @@ import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 export interface LibAppStorageInterface extends utils.Interface {
   functions: {
     "STORAGE_SLOT()": FunctionFragment;
-    "c_0x2eebe50c(bytes32)": FunctionFragment;
   };
 
   encodeFunctionData(
     functionFragment: "STORAGE_SLOT",
     values?: undefined
   ): string;
-  encodeFunctionData(
-    functionFragment: "c_0x2eebe50c",
-    values: [BytesLike]
-  ): string;
 
   decodeFunctionResult(
     functionFragment: "STORAGE_SLOT",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "c_0x2eebe50c",
     data: BytesLike
   ): Result;
 
@@ -69,46 +60,21 @@ export interface LibAppStorage extends BaseContract {
 
   functions: {
     STORAGE_SLOT(overrides?: CallOverrides): Promise<[string]>;
-
-    c_0x2eebe50c(
-      c__0x2eebe50c: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<[void]>;
   };
 
   STORAGE_SLOT(overrides?: CallOverrides): Promise<string>;
 
-  c_0x2eebe50c(
-    c__0x2eebe50c: BytesLike,
-    overrides?: CallOverrides
-  ): Promise<void>;
-
   callStatic: {
     STORAGE_SLOT(overrides?: CallOverrides): Promise<string>;
-
-    c_0x2eebe50c(
-      c__0x2eebe50c: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<void>;
   };
 
   filters: {};
 
   estimateGas: {
     STORAGE_SLOT(overrides?: CallOverrides): Promise<BigNumber>;
-
-    c_0x2eebe50c(
-      c__0x2eebe50c: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     STORAGE_SLOT(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    c_0x2eebe50c(
-      c__0x2eebe50c: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
   };
 }
