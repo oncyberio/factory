@@ -80,11 +80,8 @@ export async function signBatchMint(
   nonce: number,
   signer: Signer
 ): Promise<string> {
-  const pUri = utils.toUtf8Bytes(uri);
-  const pAmount = utils.hexZeroPad(
-    BigNumber.from(amount).toHexString(),
-    32
-  )
+  const pUri = utils.toUtf8Bytes(uri)
+  const pAmount = utils.hexZeroPad(BigNumber.from(amount).toHexString(), 32)
   const pNonce = utils.hexZeroPad(BigNumber.from(nonce).toHexString(), 32)
   const message = utils.concat([pUri, pAmount, pNonce])
 

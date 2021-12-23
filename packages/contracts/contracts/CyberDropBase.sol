@@ -163,19 +163,16 @@ contract CyberDropBase is CyberTokenBase {
   }
 
   // function to mint many editions at once.
-  function batchMint(string memory _uri, uint256 _amount, bytes memory _signature)
-    public returns (uint256 tokenId)
-  {
-
+  function batchMint(
+    string memory _uri,
+    uint256 _amount,
+    bytes memory _signature
+  ) public returns (uint256 tokenId) {
     require(_amount > 0, 'IA');
 
     address sender = _msgSender();
     uint256 nonce = minterNonce(sender);
-    bytes memory _message = abi.encodePacked(
-      _uri,
-      _amount,
-      nonce
-    );
+    bytes memory _message = abi.encodePacked(_uri, _amount, nonce);
     address recoveredAddress = keccak256(_message)
       .toEthSignedMessageHash()
       .recover(_signature);

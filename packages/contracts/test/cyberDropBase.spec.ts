@@ -2,7 +2,11 @@ import { ethers, deployments, getNamedAccounts } from 'hardhat'
 import { expect } from 'chai'
 import { BigNumber, utils } from 'ethers'
 
-import { signBatchMint, signCreateDropRequest, signMintRequest } from '../lib/utils'
+import {
+  signBatchMint,
+  signCreateDropRequest,
+  signMintRequest,
+} from '../lib/utils'
 
 const memory: any = {}
 
@@ -2066,18 +2070,13 @@ describe('CyberDropBase', function () {
 
       let tokenId = await memory.contract
         .connect(memory.other)
-        .batchMint(
-          uri,
-          amount,
-          signatureDrop
-        )
-      console.log("TOKENID")
+        .batchMint(uri, amount, signatureDrop)
+      console.log('TOKENID')
       console.log(tokenId)
-      expect(
-        await memory.contract.balanceOf(memory.other.address, 0)
-      ).to.eq('10')
+      expect(await memory.contract.balanceOf(memory.other.address, 0)).to.eq(
+        '10'
+      )
     })
-
 
     it('Should not mint batch tokens invalid amount', async () => {
       const uri = 'Qmsfzefi221ifjzifj'
@@ -2093,12 +2092,8 @@ describe('CyberDropBase', function () {
 
       await expect(
         memory.contract
-        .connect(memory.other)
-        .batchMint(
-          uri,
-          amount,
-          signatureDrop
-        )
+          .connect(memory.other)
+          .batchMint(uri, amount, signatureDrop)
       ).to.be.revertedWith('IA')
     })
 
@@ -2116,12 +2111,8 @@ describe('CyberDropBase', function () {
 
       await expect(
         memory.contract
-        .connect(memory.other)
-        .batchMint(
-          uri,
-          amount,
-          signatureDrop
-        )
+          .connect(memory.other)
+          .batchMint(uri, amount, signatureDrop)
       ).to.be.revertedWith('NM')
     })
   })
