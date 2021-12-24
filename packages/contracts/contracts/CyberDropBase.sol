@@ -172,7 +172,7 @@ contract CyberDropBase is CyberTokenBase {
 
     address sender = _msgSender();
     uint256 nonce = minterNonce(sender);
-    bytes memory _message = abi.encodePacked(_uri, _amount, nonce);
+    bytes memory _message = abi.encodePacked(_uri, sender, _amount, nonce);
     address recoveredAddress = keccak256(_message)
       .toEthSignedMessageHash()
       .recover(_signature);

@@ -2058,11 +2058,12 @@ describe('CyberDropBase', function () {
   describe('BatchMint', () => {
     it('Should batch mint tokens', async () => {
       const uri = 'Qmsfzefi221ifjzifj'
-      const amount = 10
+      const amount = 20000
       const nonce = 0
 
       const signatureDrop = await signBatchMint(
         uri,
+        memory.other.address,
         amount,
         nonce,
         memory.manager
@@ -2073,7 +2074,7 @@ describe('CyberDropBase', function () {
         .batchMint(uri, amount, signatureDrop)
 
       expect(await memory.contract.balanceOf(memory.other.address, 0)).to.eq(
-        '10'
+        '20000'
       )
     })
 
@@ -2084,6 +2085,7 @@ describe('CyberDropBase', function () {
 
       const signatureDrop = await signBatchMint(
         uri,
+        memory.other.address,
         amount,
         nonce,
         memory.manager
@@ -2103,6 +2105,7 @@ describe('CyberDropBase', function () {
 
       const signatureDrop = await signBatchMint(
         uri,
+        memory.other.address,
         amount,
         nonce,
         memory.other
