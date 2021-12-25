@@ -187,7 +187,6 @@ contract CyberDropBase is CyberTokenBase {
     _safeMint(sender, tokenId, _amount, '');
 
     emit Minted(sender, tokenId, _amount);
-
   }
 
   function getMintPriceForToken(uint256 _tokenId)
