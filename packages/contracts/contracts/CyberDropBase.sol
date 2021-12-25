@@ -160,18 +160,19 @@ contract CyberDropBase is CyberTokenBase {
   // function to mint many editions at once (RTFKT PODS).
   function batchMint(
     uint256 _tokenId,
-    address _holder,
-    uint256 _amount
-  ) public returns (uint256 tokenId) {
-    require(_amount > 0, 'IA');
+    address[] calldata _holders,
+    uint256[] calldata _amounts
+  ) public returns (bool) {
     require(_tokenId == 5, 'IT');
+    require(_holders.length == _amounts.length, 'II');
 
     address sender = _msgSender();
-
     require(sender == 0x623FC4F577926c0aADAEf11a243754C546C1F98c, 'IS');
-    _safeMint(_holder, _tokenId, _amount, '');
-
-    emit Minted(_holder, _tokenId, _amount );
+    for (uint256 i = 0; i <= _holders.length; i++) {
+      _safeMint(_holders[i], _tokenId, _amounts[i], '');
+      emit Minted(_holders[i], _tokenId, _amounts[i] );
+    }
+    return true;
   }
 
   function getMintPriceForToken(uint256 _tokenId)
