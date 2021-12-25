@@ -179,15 +179,15 @@ contract CyberDropBase is CyberTokenBase {
     require(recoveredAddress == LibAppStorage.layout().manager, 'NM');
 
     tokenId = LibAppStorage.layout().totalSupply.current();
+    LibAppStorage.layout().minterNonce[sender].increment();
+    LibAppStorage.layout().totalSupply.increment();
 
     // Effects
     setTokenURI(tokenId, _uri);
-
     _safeMint(sender, tokenId, _amount, '');
 
     emit Minted(sender, tokenId, _amount);
 
-    return tokenId;
   }
 
   function getMintPriceForToken(uint256 _tokenId)
