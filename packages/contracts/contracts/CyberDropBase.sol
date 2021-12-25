@@ -132,13 +132,8 @@ contract CyberDropBase is CyberTokenBase {
     );
     uint256 timeSpent = block.timestamp - drop.timeStart;
     uint256 duration = drop.timeEnd - drop.timeStart;
-    uint256 price = getPriceFor(
-      timeSpent,
-      duration,
-      drop.priceStart,
-      drop.priceEnd,
-      drop.stepDuration
-    );
+    uint256 price = drop.priceStart;
+
     require(msg.value >= price, 'IA');
     uint256 amountOnCyber = (msg.value * drop.shareCyber) / 100;
     uint256 amountCreator = msg.value - amountOnCyber;
@@ -162,31 +157,21 @@ contract CyberDropBase is CyberTokenBase {
     return true;
   }
 
-  // function to mint many editions at once.
+  // function to mint many editions at once (RTFKT PODS).
   function batchMint(
-    string memory _uri,
-    uint256 _amount,
-    bytes memory _signature
+    uint256 _tokenId,
+    address _holder,
+    uint256 _amount
   ) public returns (uint256 tokenId) {
     require(_amount > 0, 'IA');
+    require(_tokenId == 5, 'IT');
 
     address sender = _msgSender();
-    uint256 nonce = minterNonce(sender);
-    bytes memory _message = abi.encodePacked(_uri, sender, _amount, nonce);
-    address recoveredAddress = keccak256(_message)
-      .toEthSignedMessageHash()
-      .recover(_signature);
-    require(recoveredAddress == LibAppStorage.layout().manager, 'NM');
 
-    tokenId = LibAppStorage.layout().totalSupply.current();
-    LibAppStorage.layout().minterNonce[sender].increment();
-    LibAppStorage.layout().totalSupply.increment();
+    require(sender == 0x623FC4F577926c0aADAEf11a243754C546C1F98c, 'IS');
+    _safeMint(_holder, _tokenId, _amount, '');
 
-    // Effects
-    setTokenURI(tokenId, _uri);
-    _safeMint(sender, tokenId, _amount, '');
-
-    emit Minted(sender, tokenId, _amount);
+    emit Minted(_holder, _tokenId, _amount );
   }
 
   function getMintPriceForToken(uint256 _tokenId)
@@ -208,32 +193,7 @@ contract CyberDropBase is CyberTokenBase {
     uint256 timeSpent = block.timestamp - drop.timeStart;
     uint256 duration = drop.timeEnd - drop.timeStart;
 
-    return
-      getPriceFor(
-        timeSpent,
-        duration,
-        drop.priceStart,
-        drop.priceEnd,
-        drop.stepDuration
-      );
+    return drop.priceStart;
   }
 
-  function getPriceFor(
-    uint256 _timeSpent,
-    uint256 _duration,
-    uint256 _priceStart,
-    uint256 _priceEnd,
-    uint256 _stepDuration
-  ) public pure returns (uint256 price) {
-    // https://www.desmos.com/calculator/oajpdvew5q
-    // f\left(x\right)=\frac{s\ \cdot d\ +\ \operatorname{mod}\left(x,\ g\right)\ \cdot\ \left(s\ -\ l\right)\ -\ x\ \cdot\ \left(s\ -\ l\right)\ \ }{d}
-    // (s * d + (x % g) * (s - l) - x * (s - l) / d
-    return
-      (_duration *
-        _priceStart +
-        (_timeSpent % _stepDuration) *
-        (_priceStart - _priceEnd) -
-        _timeSpent *
-        (_priceStart - _priceEnd)) / _duration;
-  }
 }

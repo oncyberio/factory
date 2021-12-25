@@ -1337,8 +1337,8 @@ describe('CyberDropBase', function () {
       const timeStart = parseInt((Date.now() / 1000 - 1000).toString())
       const timeEnd = parseInt((Date.now() / 1000 + 10000).toString())
       const priceStart = 100
-      const priceEnd = 10
-      const stepDuration = 300
+      const priceEnd = 100
+      const stepDuration = 1
       const amountCap = 10
       const shareCyber = 50
       const nonce = 0

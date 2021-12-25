@@ -24,7 +24,7 @@ export interface CyberDestinationUtilityFactoryFacetInterface
     "accountsByToken(uint256)": FunctionFragment;
     "balanceOf(address,uint256)": FunctionFragment;
     "balanceOfBatch(address[],uint256[])": FunctionFragment;
-    "batchMint(string,uint256,bytes)": FunctionFragment;
+    "batchMint(uint256,address,uint256)": FunctionFragment;
     "createDrop(string,uint256,uint256,uint256,uint256,uint256,uint256,uint256,bytes)": FunctionFragment;
     "dropMintCounter(uint256,address)": FunctionFragment;
     "getDrop(uint256)": FunctionFragment;
@@ -60,7 +60,7 @@ export interface CyberDestinationUtilityFactoryFacetInterface
   ): string;
   encodeFunctionData(
     functionFragment: "batchMint",
-    values: [string, BigNumberish, BytesLike]
+    values: [BigNumberish, string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "createDrop",
@@ -319,9 +319,9 @@ export interface CyberDestinationUtilityFactoryFacet extends BaseContract {
     ): Promise<[BigNumber[]]>;
 
     batchMint(
-      _uri: string,
+      _tokenId: BigNumberish,
+      _holder: string,
       _amount: BigNumberish,
-      _signature: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -478,9 +478,9 @@ export interface CyberDestinationUtilityFactoryFacet extends BaseContract {
   ): Promise<BigNumber[]>;
 
   batchMint(
-    _uri: string,
+    _tokenId: BigNumberish,
+    _holder: string,
     _amount: BigNumberish,
-    _signature: BytesLike,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -631,9 +631,9 @@ export interface CyberDestinationUtilityFactoryFacet extends BaseContract {
     ): Promise<BigNumber[]>;
 
     batchMint(
-      _uri: string,
+      _tokenId: BigNumberish,
+      _holder: string,
       _amount: BigNumberish,
-      _signature: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -857,9 +857,9 @@ export interface CyberDestinationUtilityFactoryFacet extends BaseContract {
     ): Promise<BigNumber>;
 
     batchMint(
-      _uri: string,
+      _tokenId: BigNumberish,
+      _holder: string,
       _amount: BigNumberish,
-      _signature: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -992,9 +992,9 @@ export interface CyberDestinationUtilityFactoryFacet extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     batchMint(
-      _uri: string,
+      _tokenId: BigNumberish,
+      _holder: string,
       _amount: BigNumberish,
-      _signature: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
