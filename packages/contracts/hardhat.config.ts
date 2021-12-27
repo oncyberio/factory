@@ -83,7 +83,7 @@ const config: HardhatUserConfig = {
       url:
         process.env.ALCHEMY_URL ||
         'https://mainnet.infura.io/v3/b89e58ca51184cb783845c58340629c4',
-      gasPrice: parseUnits('60', 'gwei').toNumber(),
+      gasPrice: parseUnits('50', 'gwei').toNumber(),
       accounts: [process.env.MAINNET_FACTORY_PRIVATE_KEY || defaultPrivateKey],
     },
   },
