@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity 0.8.7;
+pragma solidity 0.8.10;
 
 library BaseRelayRecipientStorage {
   bytes32 internal constant STORAGE_SLOT =
@@ -13,10 +13,10 @@ library BaseRelayRecipientStorage {
     address trustedForwarder;
   }
 
-  function layout() internal pure returns (Layout storage layout) {
+  function layout() internal pure returns (Layout storage lay) {
     bytes32 slot = STORAGE_SLOT;
     assembly {
-      layout.slot := slot
+      lay.slot := slot
     }
   }
 }

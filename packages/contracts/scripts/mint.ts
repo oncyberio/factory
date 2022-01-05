@@ -1,53 +1,42 @@
 // @ts-ignore-next-line
 import { deployments, ethers } from 'hardhat'
-import { Log } from '@ethersproject/abstract-provider/src.ts/index'
-import { signMintingRequest } from '../lib/utils'
+import { signMintRequest } from '../lib/utils'
 
 async function main() {
   const contractName = 'DiamondCyberDestinationFactory'
+
   const accounts = await ethers.getSigners()
-  const manager = accounts[1]
-  const minter = accounts[0]
+  const minter = accounts[3]
+  const manager = accounts[2]
 
-  // for testnet
-  // const provider = new ethers.providers.JsonRpcProvider('https://rpc-mumbai.maticvigil.com')
-  // const minter = new ethers.Wallet(process.env.MUMBAI_ACCOUNT_1_PRIVATE_KEY as string, provider)
-  // const manager = new ethers.Wallet(process.env.MUMBAI_MANAGER_DESTINATION_PRIVATE_KEY as string, provider)
-
-  // for local
   const Contract = await deployments.get(contractName)
   const contract = await ethers.getContractAt(
     Contract.abi,
     Contract.address,
     minter
   )
+  const tokenId = 0
 
-  const uri = 'QmQwfto3zFsasHnvNpyKW7jZVVkAgxpLAKfxQhTbnykHh8'
-  const amount = '11'
-  const amountOncyber = '1'
-  const nonce = await contract.minterNonce(minter.address)
-  const signature = await signMintingRequest(
-    uri,
-    amount,
-    amountOncyber,
-    nonce.toString(),
+  const mintPrice = await contract.getMintPriceForToken(tokenId)
+
+  const signatureMint = await signMintRequest(
+    tokenId,
     minter.address,
+    0,
     manager
   )
-  const tx = await contract.mint(uri, amount, amountOncyber, signature)
-  const txReceipt = await tx.wait()
-  const iface = new ethers.utils.Interface(Contract.abi)
-  let tokenId = null
 
-  txReceipt.logs.forEach((log: Log) => {
-    const logParsed = iface.parseLog(log)
-    if (logParsed.name === 'Minted') {
-      tokenId = logParsed.args[1].toString()
-      console.log('tokenId', tokenId)
-    }
+  const estimation = await contract.estimateGas.mint(tokenId, signatureMint, {
+    value: mintPrice,
   })
-  const balanceMinter = await contract.balanceOf(minter.address, tokenId)
-  console.log('balanceMinter token 0', balanceMinter.toString())
+
+  const tx = await contract.mint(tokenId, signatureMint, {
+    value: mintPrice,
+    gasLimit: estimation.mul(100).div(90),
+  })
+
+  const txReceipt = await tx.wait()
+  console.log('txReceipt', txReceipt)
 }
 
 main()

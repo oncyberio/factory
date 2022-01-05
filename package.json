@@ -1,7 +1,6 @@
 {
   "private": true,
   "scripts": {
-    "server:dev": "vercel dev",
     "install": "lerna bootstrap",
     "build": "lerna run build",
     "test": "lerna run test",
@@ -11,10 +10,7 @@
     "prettier:write": "prettier --write . && lerna run prettier:write"
   },
   "devDependencies": {
-    "prettier": "^2.3.2",
-    "lerna": "^4.0.0"
-  },
-  "dependencies": {
-    "vercel": "^23.1.2"
+    "lerna": "^3.22.1",
+    "prettier": "^2.5.0"
   }
 }

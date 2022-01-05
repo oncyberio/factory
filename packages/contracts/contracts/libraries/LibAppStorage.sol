@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity 0.8.7;
+pragma solidity 0.8.10;
 
 import '@openzeppelin/contracts/utils/Counters.sol';
 
-// import "hardhat/console.sol";
+//import 'hardhat/console.sol';
 
 library LibAppStorage {
   bytes32 public constant STORAGE_SLOT = keccak256('app.storage');
@@ -17,10 +17,10 @@ library LibAppStorage {
     address oncyber;
   }
 
-  function layout() internal pure returns (Layout storage layout) {
+  function layout() internal pure returns (Layout storage lay) {
     bytes32 slot = STORAGE_SLOT;
     assembly {
-      layout.slot := slot
+      lay.slot := slot
     }
   }
 }

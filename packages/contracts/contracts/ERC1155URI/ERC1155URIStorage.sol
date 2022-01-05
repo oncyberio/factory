@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity 0.8.7;
+pragma solidity 0.8.10;
 
 library ERC1155URIStorage {
   bytes32 internal constant STORAGESLOT =
@@ -11,10 +11,10 @@ library ERC1155URIStorage {
     string uri;
   }
 
-  function layout() internal pure returns (Layout storage layout) {
+  function layout() internal pure returns (Layout storage lay) {
     bytes32 slot = STORAGESLOT;
     assembly {
-      layout.slot := slot
+      lay.slot := slot
     }
   }
 }
