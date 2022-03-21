@@ -7,6 +7,7 @@ import { Listener, Provider } from "@ethersproject/providers";
 import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 
 export interface ERC1155EnumerableInternalInterface extends utils.Interface {
+  contractName: "ERC1155EnumerableInternal";
   functions: {};
 
   events: {
@@ -54,6 +55,7 @@ export type TransferSingleEvent = TypedEvent<
 export type TransferSingleEventFilter = TypedEventFilter<TransferSingleEvent>;
 
 export interface ERC1155EnumerableInternal extends BaseContract {
+  contractName: "ERC1155EnumerableInternal";
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;

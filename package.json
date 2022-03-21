@@ -10,7 +10,7 @@
     "prettier:write": "prettier --write . && lerna run prettier:write"
   },
   "devDependencies": {
-    "lerna": "^3.22.1",
-    "prettier": "^2.5.0"
+    "lerna": "^4.0.0",
+    "prettier": "^2.6.0"
   }
 }

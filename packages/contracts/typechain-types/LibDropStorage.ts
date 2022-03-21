@@ -15,6 +15,7 @@ import { Listener, Provider } from "@ethersproject/providers";
 import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 
 export interface LibDropStorageInterface extends utils.Interface {
+  contractName: "LibDropStorage";
   functions: {
     "STORAGE_SLOT()": FunctionFragment;
   };
@@ -33,6 +34,7 @@ export interface LibDropStorageInterface extends utils.Interface {
 }
 
 export interface LibDropStorage extends BaseContract {
+  contractName: "LibDropStorage";
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
