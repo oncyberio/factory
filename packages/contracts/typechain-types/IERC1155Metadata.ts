@@ -16,6 +16,7 @@ import { Listener, Provider } from "@ethersproject/providers";
 import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 
 export interface IERC1155MetadataInterface extends utils.Interface {
+  contractName: "IERC1155Metadata";
   functions: {
     "uri(uint256)": FunctionFragment;
   };
@@ -28,6 +29,7 @@ export interface IERC1155MetadataInterface extends utils.Interface {
 }
 
 export interface IERC1155Metadata extends BaseContract {
+  contractName: "IERC1155Metadata";
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;

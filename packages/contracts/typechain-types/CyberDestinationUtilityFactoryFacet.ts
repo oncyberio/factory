@@ -20,6 +20,7 @@ import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 
 export interface CyberDestinationUtilityFactoryFacetInterface
   extends utils.Interface {
+  contractName: "CyberDestinationUtilityFactoryFacet";
   functions: {
     "accountsByToken(uint256)": FunctionFragment;
     "balanceOf(address,uint256)": FunctionFragment;
@@ -284,6 +285,7 @@ export type URIEvent = TypedEvent<
 export type URIEventFilter = TypedEventFilter<URIEvent>;
 
 export interface CyberDestinationUtilityFactoryFacet extends BaseContract {
+  contractName: "CyberDestinationUtilityFactoryFacet";
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
