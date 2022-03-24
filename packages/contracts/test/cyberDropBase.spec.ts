@@ -53,9 +53,7 @@ describe('CyberDropBase', function () {
       const uri = 'Qmsfzefi221ifjzifj'
       const timeStart = parseInt((Date.now() / 1000).toString())
       const timeEnd = parseInt((Date.now() / 1000 + 10).toString())
-      const priceStart = 100
-      const priceEnd = 10
-      const stepDuration = 2
+      const price = 10
       const amountCap = 10
       const shareCyber = 50
       const nonce = 0
@@ -63,9 +61,7 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        BigNumber.from(priceStart),
-        BigNumber.from(priceEnd),
-        stepDuration,
+        BigNumber.from(price),
         amountCap,
         shareCyber,
         memory.other.address,
@@ -78,9 +74,7 @@ describe('CyberDropBase', function () {
           uri,
           timeStart,
           timeEnd,
-          BigNumber.from(priceStart),
-          BigNumber.from(priceEnd),
-          stepDuration,
+          BigNumber.from(price),
           amountCap,
           shareCyber,
           signatureDrop
@@ -89,7 +83,7 @@ describe('CyberDropBase', function () {
       const tokenId = 0
       expect(
         await memory.contract.balanceOf(memory.other.address, tokenId)
-      ).to.eq('1')
+      ).to.eq('0')
       expect(
         await memory.contract.balanceOf(memory.oncyber.address, tokenId)
       ).to.eq('0')
@@ -100,17 +94,16 @@ describe('CyberDropBase', function () {
       const drop = await memory.contract.getDrop(tokenId)
       expect(drop.timeStart).to.eq(timeStart)
       expect(drop.timeEnd).to.eq(timeEnd)
-      expect(drop.priceStart).to.eq(priceStart)
-      expect(drop.priceEnd).to.eq(priceEnd)
-      expect(drop.stepDuration).to.eq(stepDuration)
+      expect(drop.price).to.eq(price)
       expect(drop.amountCap).to.eq(amountCap)
       expect(drop.shareCyber).to.eq(shareCyber)
       expect(drop.creator).to.eq(memory.other.address)
-      expect(drop.minted).to.eq('1')
+      expect(drop.minted).to.eq('0')
 
       await expect(
         memory.contract.connect(memory.other).getDrop(1)
-      ).to.be.revertedWith('DNE')
+      ).not.to.be.revertedWith('DNE')
+
     })
 
     it('Should create drop fixed price', async () => {
@@ -118,7 +111,6 @@ describe('CyberDropBase', function () {
       const timeStart = parseInt((Date.now() / 1000).toString())
       const timeEnd = parseInt((Date.now() / 1000 + 10).toString())
       const price = 100
-      const stepDuration = 1
       const amountCap = 10
       const shareCyber = 50
       const nonce = 0
@@ -127,8 +119,6 @@ describe('CyberDropBase', function () {
         timeStart,
         timeEnd,
         BigNumber.from(price),
-        BigNumber.from(price),
-        stepDuration,
         amountCap,
         shareCyber,
         memory.other.address,
@@ -142,8 +132,6 @@ describe('CyberDropBase', function () {
           timeStart,
           timeEnd,
           price,
-          price,
-          stepDuration,
           amountCap,
           shareCyber,
           signatureDrop
@@ -152,7 +140,7 @@ describe('CyberDropBase', function () {
       const tokenId = 0
       expect(
         await memory.contract.balanceOf(memory.other.address, tokenId)
-      ).to.eq('1')
+      ).to.eq('0')
       expect(
         await memory.contract.balanceOf(memory.oncyber.address, tokenId)
       ).to.eq('0')
@@ -163,26 +151,22 @@ describe('CyberDropBase', function () {
       const drop = await memory.contract.getDrop(tokenId)
       expect(drop.timeStart).to.eq(timeStart)
       expect(drop.timeEnd).to.eq(timeEnd)
-      expect(drop.priceStart).to.eq(price)
-      expect(drop.priceEnd).to.eq(price)
-      expect(drop.stepDuration).to.eq(stepDuration)
+      expect(drop.price).to.eq(price)
       expect(drop.amountCap).to.eq(amountCap)
       expect(drop.shareCyber).to.eq(shareCyber)
       expect(drop.creator).to.eq(memory.other.address)
-      expect(drop.minted).to.eq('1')
+      expect(drop.minted).to.eq('0')
 
       await expect(
         memory.contract.connect(memory.other).getDrop(1)
-      ).to.be.revertedWith('DNE')
+      ).not.to.be.revertedWith('DNE')
     })
 
     it('Should create drop more than one time', async () => {
       const uri = 'Qmsfzefi221ifjzifj'
       const timeStart = parseInt((Date.now() / 1000).toString())
       const timeEnd = parseInt((Date.now() / 1000 + 10).toString())
-      const priceStart = 100
-      const priceEnd = 10
-      const stepDuration = 2
+      const price1 = 100
       const amountCap = 10
       const shareCyber = 50
       const nonce = 0
@@ -190,9 +174,7 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        BigNumber.from(priceStart),
-        BigNumber.from(priceEnd),
-        stepDuration,
+        BigNumber.from(price1),
         amountCap,
         shareCyber,
         memory.other.address,
@@ -205,9 +187,7 @@ describe('CyberDropBase', function () {
           uri,
           timeStart,
           timeEnd,
-          BigNumber.from(priceStart),
-          BigNumber.from(priceEnd),
-          stepDuration,
+          BigNumber.from(price1),
           amountCap,
           shareCyber,
           signatureDrop
@@ -216,7 +196,7 @@ describe('CyberDropBase', function () {
       const tokenId = 0
       expect(
         await memory.contract.balanceOf(memory.other.address, tokenId)
-      ).to.eq('1')
+      ).to.eq('0')
       expect(
         await memory.contract.balanceOf(memory.oncyber.address, tokenId)
       ).to.eq('0')
@@ -227,24 +207,20 @@ describe('CyberDropBase', function () {
       const drop = await memory.contract.getDrop(tokenId)
       expect(drop.timeStart).to.eq(timeStart.toString())
       expect(drop.timeEnd).to.eq(timeEnd.toString())
-      expect(drop.priceStart).to.eq(priceStart)
-      expect(drop.priceEnd).to.eq(priceEnd)
-      expect(drop.stepDuration).to.eq(stepDuration)
+      expect(drop.price).to.eq(price1)
       expect(drop.amountCap).to.eq(amountCap)
       expect(drop.shareCyber).to.eq(shareCyber)
       expect(drop.creator).to.eq(memory.other.address)
-      expect(drop.minted).to.eq('1')
+      expect(drop.minted).to.eq('0')
 
       await expect(
         memory.contract.connect(memory.other).getDrop(1)
-      ).to.be.revertedWith('DNE')
+      ).not.to.be.revertedWith('DNE')
 
       const uri1 = 'Qmsfzefi221ifjzifj1'
       const timeStart1 = parseInt((Date.now() / 1000).toString())
       const timeEnd1 = parseInt((Date.now() / 1000 + 200).toString())
-      const priceStart1 = 1000
-      const priceEnd1 = 100
-      const stepDuration1 = 20
+      const price = 1000
       const amountCap1 = 100
       const shareCyber1 = 5
       const nonce1 = 1
@@ -252,9 +228,7 @@ describe('CyberDropBase', function () {
         uri1,
         timeStart1,
         timeEnd1,
-        BigNumber.from(priceStart1),
-        BigNumber.from(priceEnd1),
-        stepDuration1,
+        BigNumber.from(price),
         amountCap1,
         shareCyber1,
         memory.other.address,
@@ -267,9 +241,7 @@ describe('CyberDropBase', function () {
           uri1,
           timeStart1,
           timeEnd1,
-          priceStart1,
-          priceEnd1,
-          stepDuration1,
+          price,
           amountCap1,
           shareCyber1,
           signatureDrop1
@@ -278,7 +250,7 @@ describe('CyberDropBase', function () {
       const tokenId1 = 1
       expect(
         await memory.contract.balanceOf(memory.other.address, tokenId1)
-      ).to.eq('1')
+      ).to.eq('0')
       expect(
         await memory.contract.balanceOf(memory.oncyber.address, tokenId1)
       ).to.eq('0')
@@ -289,26 +261,22 @@ describe('CyberDropBase', function () {
       const drop1 = await memory.contract.getDrop(tokenId1)
       expect(drop1.timeStart).to.eq(timeStart1)
       expect(drop1.timeEnd).to.eq(timeEnd1)
-      expect(drop1.priceStart).to.eq(priceStart1)
-      expect(drop1.priceEnd).to.eq(priceEnd1)
-      expect(drop1.stepDuration).to.eq(stepDuration1)
+      expect(drop1.price).to.eq(price)
       expect(drop1.amountCap).to.eq(amountCap1)
       expect(drop1.shareCyber).to.eq(shareCyber1)
       expect(drop1.creator).to.eq(memory.other.address)
-      expect(drop1.minted).to.eq('1')
+      expect(drop1.minted).to.eq('0')
 
       await expect(
         memory.contract.connect(memory.other).getDrop(2)
-      ).to.be.revertedWith('DNE')
+      ).not.to.be.revertedWith('DNE')
     })
 
     it('Should create drop with forwarder', async () => {
       const uri = 'Qmsfzefi221ifjzifj'
       const timeStart = parseInt((Date.now() / 1000).toString())
       const timeEnd = parseInt((Date.now() / 1000 + 10).toString())
-      const priceStart = 100
-      const priceEnd = 10
-      const stepDuration = 2
+      const price = 10
       const amountCap = 10
       const shareCyber = 50
       const nonce = 0
@@ -316,9 +284,7 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        BigNumber.from(priceStart),
-        BigNumber.from(priceEnd),
-        stepDuration,
+        BigNumber.from(price),
         amountCap,
         shareCyber,
         memory.other.address,
@@ -332,9 +298,7 @@ describe('CyberDropBase', function () {
           uri,
           timeStart,
           timeEnd,
-          BigNumber.from(priceStart),
-          BigNumber.from(priceEnd),
-          stepDuration,
+          BigNumber.from(price),
           amountCap,
           shareCyber,
           signatureDrop,
@@ -349,7 +313,7 @@ describe('CyberDropBase', function () {
       const tokenId = 0
       expect(
         await memory.contract.balanceOf(memory.other.address, tokenId)
-      ).to.eq('1')
+      ).to.eq('0')
       expect(
         await memory.contract.balanceOf(memory.oncyber.address, tokenId)
       ).to.eq('0')
@@ -360,26 +324,22 @@ describe('CyberDropBase', function () {
       const drop = await memory.contract.getDrop(tokenId)
       expect(drop.timeStart).to.eq(timeStart)
       expect(drop.timeEnd).to.eq(timeEnd)
-      expect(drop.priceStart).to.eq(priceStart)
-      expect(drop.priceEnd).to.eq(priceEnd)
-      expect(drop.stepDuration).to.eq(stepDuration)
+      expect(drop.price).to.eq(price)
       expect(drop.amountCap).to.eq(amountCap)
       expect(drop.shareCyber).to.eq(shareCyber)
       expect(drop.creator).to.eq(memory.other.address)
-      expect(drop.minted).to.eq('1')
+      expect(drop.minted).to.eq('0')
 
       await expect(
         memory.contract.connect(memory.other).getDrop(1)
-      ).to.be.revertedWith('DNE')
-    })
+      ).not.to.be.revertedWith('DNE')
+    });
 
     it("Can't create drop invalid time start/end", async () => {
       const uri = 'Qmsfzefi221ifjzifj'
       const timeStart = 20
       const timeEnd = 10
-      const priceStart = 100
-      const priceEnd = 100
-      const stepDuration = 2
+      const price = 100
       const amountCap = 10
       const shareCyber = 10
       const nonce = 0
@@ -387,9 +347,7 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        BigNumber.from(priceStart),
-        BigNumber.from(priceEnd),
-        stepDuration,
+        BigNumber.from(price),
         amountCap,
         shareCyber,
         memory.other.address,
@@ -404,9 +362,7 @@ describe('CyberDropBase', function () {
             uri,
             timeStart,
             timeEnd,
-            BigNumber.from(priceStart),
-            BigNumber.from(priceEnd),
-            stepDuration,
+            BigNumber.from(price),
             amountCap,
             shareCyber,
             signatureDrop
@@ -416,95 +372,11 @@ describe('CyberDropBase', function () {
       )
     })
 
-    it("Can't create drop invalid step duration", async () => {
-      const uri = 'Qmsfzefi221ifjzifj'
-      const timeStart = 80
-      const timeEnd = 100
-      const priceStart = 1
-      const priceEnd = 2
-      const stepDuration = 30
-      const amountCap = 10
-      const shareCyber = 10
-      const nonce = 0
-      const signatureDrop = await signCreateDropRequest(
-        uri,
-        timeStart,
-        timeEnd,
-        BigNumber.from(priceStart),
-        BigNumber.from(priceEnd),
-        stepDuration,
-        amountCap,
-        shareCyber,
-        memory.other.address,
-        nonce,
-        memory.manager
-      )
-
-      await expect(
-        memory.contract
-          .connect(memory.other)
-          .createDrop(
-            uri,
-            timeStart,
-            timeEnd,
-            BigNumber.from(priceStart),
-            BigNumber.from(priceEnd),
-            stepDuration,
-            amountCap,
-            shareCyber,
-            signatureDrop
-          )
-      ).to.be.revertedWith('IT')
-    })
-
-    it("Can't create drop invalid step duration zero", async () => {
-      const uri = 'Qmsfzefi221ifjzifj'
-      const timeStart = 80
-      const timeEnd = 100
-      const priceStart = 1
-      const priceEnd = 2
-      const stepDuration = 0
-      const amountCap = 10
-      const shareCyber = 10
-      const nonce = 0
-      const signatureDrop = await signCreateDropRequest(
-        uri,
-        timeStart,
-        timeEnd,
-        BigNumber.from(priceStart),
-        BigNumber.from(priceEnd),
-        stepDuration,
-        amountCap,
-        shareCyber,
-        memory.other.address,
-        nonce,
-        memory.manager
-      )
-
-      await expect(
-        memory.contract
-          .connect(memory.other)
-          .createDrop(
-            uri,
-            timeStart,
-            timeEnd,
-            BigNumber.from(priceStart),
-            BigNumber.from(priceEnd),
-            stepDuration,
-            amountCap,
-            shareCyber,
-            signatureDrop
-          )
-      ).to.be.revertedWith('IT')
-    })
-
     it("Can't create drop price start zero", async () => {
       const uri = 'Qmsfzefi221ifjzifj'
       const timeStart = parseInt((Date.now() / 1000).toString())
       const timeEnd = parseInt((Date.now() / 1000 + 10).toString())
-      const priceStart = 0
-      const priceEnd = 0
-      const stepDuration = 2
+      const price = 0
       const amountCap = 10
       const shareCyber = 10
       const nonce = 0
@@ -512,9 +384,7 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        BigNumber.from(priceStart),
-        BigNumber.from(priceEnd),
-        stepDuration,
+        BigNumber.from(price),
         amountCap,
         shareCyber,
         memory.other.address,
@@ -529,50 +399,7 @@ describe('CyberDropBase', function () {
             uri,
             timeStart,
             timeEnd,
-            BigNumber.from(priceStart),
-            BigNumber.from(priceEnd),
-            stepDuration,
-            amountCap,
-            shareCyber,
-            signatureDrop
-          )
-      ).to.be.revertedWith('IP')
-    })
-
-    it("Can't create drop invalid price start/end", async () => {
-      const uri = 'Qmsfzefi221ifjzifj'
-      const timeStart = parseInt((Date.now() / 1000).toString())
-      const timeEnd = parseInt((Date.now() / 1000 + 10).toString())
-      const priceStart = 1
-      const priceEnd = 2
-      const stepDuration = 2
-      const amountCap = 10
-      const shareCyber = 10
-      const nonce = 0
-      const signatureDrop = await signCreateDropRequest(
-        uri,
-        timeStart,
-        timeEnd,
-        BigNumber.from(priceStart),
-        BigNumber.from(priceEnd),
-        stepDuration,
-        amountCap,
-        shareCyber,
-        memory.other.address,
-        nonce,
-        memory.manager
-      )
-
-      await expect(
-        memory.contract
-          .connect(memory.other)
-          .createDrop(
-            uri,
-            timeStart,
-            timeEnd,
-            BigNumber.from(priceStart),
-            BigNumber.from(priceEnd),
-            stepDuration,
+            BigNumber.from(price),
             amountCap,
             shareCyber,
             signatureDrop
@@ -584,9 +411,7 @@ describe('CyberDropBase', function () {
       const uri = 'Qmsfzefi221ifjzifj'
       const timeStart = parseInt((Date.now() / 1000).toString())
       const timeEnd = parseInt((Date.now() / 1000 + 10).toString())
-      const priceStart = 100
-      const priceEnd = 10
-      const stepDuration = 2
+      const price = 100
       const amountCap = 10
       const shareCyber = 101
       const nonce = 0
@@ -594,9 +419,7 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        BigNumber.from(priceStart),
-        BigNumber.from(priceEnd),
-        stepDuration,
+        BigNumber.from(price),
         amountCap,
         shareCyber,
         memory.other.address,
@@ -611,9 +434,7 @@ describe('CyberDropBase', function () {
             uri,
             timeStart,
             timeEnd,
-            BigNumber.from(priceStart),
-            BigNumber.from(priceEnd),
-            stepDuration,
+            BigNumber.from(price),
             amountCap,
             shareCyber,
             signatureDrop
@@ -625,9 +446,7 @@ describe('CyberDropBase', function () {
       const uri = 'Qmsfzefi221ifjzifj'
       const timeStart = parseInt((Date.now() / 1000).toString())
       const timeEnd = parseInt((Date.now() / 1000 + 10).toString())
-      const priceStart = 100
-      const priceEnd = 10
-      const stepDuration = 2
+      const price = 100
       const amountCap = 10
       const shareCyber = 50
       const nonce = 0
@@ -635,9 +454,7 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        BigNumber.from(priceStart),
-        BigNumber.from(priceEnd),
-        stepDuration,
+        BigNumber.from(price),
         amountCap,
         shareCyber,
         memory.other.address,
@@ -652,9 +469,7 @@ describe('CyberDropBase', function () {
             uri,
             timeStart,
             timeEnd,
-            BigNumber.from(priceStart),
-            BigNumber.from(priceEnd),
-            stepDuration,
+            BigNumber.from(price),
             amountCap,
             shareCyber,
             signatureDropInvalidManager
@@ -665,9 +480,7 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        BigNumber.from(priceStart),
-        BigNumber.from(priceEnd),
-        stepDuration,
+        BigNumber.from(price),
         amountCap,
         shareCyber,
         memory.other2.address,
@@ -681,9 +494,7 @@ describe('CyberDropBase', function () {
             uri,
             timeStart,
             timeEnd,
-            BigNumber.from(priceStart),
-            BigNumber.from(priceEnd),
-            stepDuration,
+            BigNumber.from(price),
             amountCap,
             shareCyber,
             signatureDropInvalidCreator
@@ -694,9 +505,7 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        BigNumber.from(priceStart),
-        BigNumber.from(priceEnd),
-        stepDuration,
+        BigNumber.from(price),
         amountCap,
         shareCyber,
         memory.other.address,
@@ -710,9 +519,7 @@ describe('CyberDropBase', function () {
             'invalid_uri',
             timeStart,
             timeEnd,
-            BigNumber.from(priceStart),
-            BigNumber.from(priceEnd),
-            stepDuration,
+            BigNumber.from(price),
             amountCap,
             shareCyber,
             signatureDropInvalidUrl
@@ -723,9 +530,7 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        BigNumber.from(priceStart),
-        BigNumber.from(priceEnd),
-        stepDuration,
+        BigNumber.from(price),
         amountCap,
         shareCyber,
         memory.other.address,
@@ -739,9 +544,7 @@ describe('CyberDropBase', function () {
             uri,
             1,
             timeEnd,
-            BigNumber.from(priceStart),
-            BigNumber.from(priceEnd),
-            stepDuration,
+            BigNumber.from(price),
             amountCap,
             shareCyber,
             signatureDropInvalidTimeStart
@@ -752,9 +555,7 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        BigNumber.from(priceStart),
-        BigNumber.from(priceEnd),
-        stepDuration,
+        BigNumber.from(price),
         amountCap,
         shareCyber,
         memory.other.address,
@@ -768,128 +569,10 @@ describe('CyberDropBase', function () {
             uri,
             timeStart,
             timeStart + 3,
-            BigNumber.from(priceStart),
-            BigNumber.from(priceEnd),
-            stepDuration,
+            BigNumber.from(price),
             amountCap,
             shareCyber,
             signatureDropInvalidTimeEnd
-          )
-      ).to.be.revertedWith('NM')
-
-      const signatureDropInvalidStep = await signCreateDropRequest(
-        uri,
-        timeStart,
-        timeEnd,
-        BigNumber.from(priceStart),
-        BigNumber.from(priceEnd),
-        stepDuration,
-        amountCap,
-        shareCyber,
-        memory.other.address,
-        nonce,
-        memory.manager
-      )
-      await expect(
-        memory.contract
-          .connect(memory.other)
-          .createDrop(
-            uri,
-            timeStart,
-            timeEnd,
-            BigNumber.from(priceStart),
-            BigNumber.from(priceEnd),
-            1,
-            amountCap,
-            shareCyber,
-            signatureDropInvalidStep
-          )
-      ).to.be.revertedWith('NM')
-
-      const signatureDropInvalidPriceStart = await signCreateDropRequest(
-        uri,
-        timeStart,
-        timeEnd,
-        BigNumber.from(priceStart),
-        BigNumber.from(priceEnd),
-        stepDuration,
-        amountCap,
-        shareCyber,
-        memory.other.address,
-        nonce,
-        memory.manager
-      )
-      await expect(
-        memory.contract
-          .connect(memory.other)
-          .createDrop(
-            uri,
-            timeStart,
-            timeEnd,
-            10000000,
-            BigNumber.from(priceEnd),
-            stepDuration,
-            amountCap,
-            shareCyber,
-            signatureDropInvalidPriceStart
-          )
-      ).to.be.revertedWith('NM')
-
-      const signatureDropInvalidPriceEnd = await signCreateDropRequest(
-        uri,
-        timeStart,
-        timeEnd,
-        BigNumber.from(priceStart),
-        BigNumber.from(priceEnd),
-        stepDuration,
-        amountCap,
-        shareCyber,
-        memory.other.address,
-        nonce,
-        memory.manager
-      )
-      await expect(
-        memory.contract
-          .connect(memory.other)
-          .createDrop(
-            uri,
-            timeStart,
-            timeEnd,
-            BigNumber.from(priceStart),
-            1,
-            stepDuration,
-            amountCap,
-            shareCyber,
-            signatureDropInvalidPriceEnd
-          )
-      ).to.be.revertedWith('NM')
-
-      const signatureDropInvalidAmountCap = await signCreateDropRequest(
-        uri,
-        timeStart,
-        timeEnd,
-        BigNumber.from(priceStart),
-        BigNumber.from(priceEnd),
-        stepDuration,
-        amountCap,
-        shareCyber,
-        memory.other.address,
-        nonce,
-        memory.manager
-      )
-      await expect(
-        memory.contract
-          .connect(memory.other)
-          .createDrop(
-            uri,
-            timeStart,
-            timeEnd,
-            BigNumber.from(priceStart),
-            BigNumber.from(priceEnd),
-            stepDuration,
-            1,
-            shareCyber,
-            signatureDropInvalidAmountCap
           )
       ).to.be.revertedWith('NM')
 
@@ -897,9 +580,7 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        BigNumber.from(priceStart),
-        BigNumber.from(priceEnd),
-        stepDuration,
+        BigNumber.from(price),
         amountCap,
         shareCyber,
         memory.other.address,
@@ -913,9 +594,7 @@ describe('CyberDropBase', function () {
             uri,
             timeStart,
             timeEnd,
-            BigNumber.from(priceStart),
-            BigNumber.from(priceEnd),
-            stepDuration,
+            BigNumber.from(price),
             amountCap,
             1,
             signatureDropInvalidShareCyber
@@ -926,9 +605,7 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        BigNumber.from(priceStart),
-        BigNumber.from(priceEnd),
-        stepDuration,
+        BigNumber.from(price),
         amountCap,
         shareCyber,
         memory.other.address,
@@ -942,9 +619,7 @@ describe('CyberDropBase', function () {
             uri,
             timeStart,
             timeEnd,
-            BigNumber.from(priceStart),
-            BigNumber.from(priceEnd),
-            stepDuration,
+            BigNumber.from(price),
             amountCap,
             shareCyber,
             signatureDropInvalidNonce
@@ -953,388 +628,12 @@ describe('CyberDropBase', function () {
     })
   })
 
-  describe('getDrop', () => {
-    it('Should throw to get drop if not exist', async () => {
-      await expect(
-        memory.contract.connect(memory.other).getDrop(0)
-      ).to.be.revertedWith('DNE')
-      await expect(
-        memory.contract.connect(memory.other).getDrop(123)
-      ).to.be.revertedWith('DNE')
-    })
-  })
-
-  describe('GetPriceFor', () => {
-    it('Should get price for', async () => {
-      expect(await memory.contract.getPriceFor(10, 1800, 50, 5, 300)).to.be.eq(
-        '50'
-      )
-      expect(await memory.contract.getPriceFor(299, 1800, 50, 5, 300)).to.be.eq(
-        '50'
-      )
-      expect(await memory.contract.getPriceFor(301, 1800, 50, 5, 300)).to.be.eq(
-        '42'
-      )
-      expect(await memory.contract.getPriceFor(600, 1800, 50, 5, 300)).to.be.eq(
-        '35'
-      )
-      expect(await memory.contract.getPriceFor(900, 1800, 50, 5, 300)).to.be.eq(
-        '27'
-      )
-      expect(
-        await memory.contract.getPriceFor(1200, 1800, 50, 5, 300)
-      ).to.be.eq('20')
-      expect(
-        await memory.contract.getPriceFor(1500, 1800, 50, 5, 300)
-      ).to.be.eq('12')
-      expect(
-        await memory.contract.getPriceFor(1799, 1800, 50, 5, 300)
-      ).to.be.eq('12')
-      expect(
-        await memory.contract.getPriceFor(1800, 1800, 50, 5, 300)
-      ).to.be.eq('5')
-      expect(await memory.contract.getPriceFor(200, 1800, 5, 5, 1)).to.be.eq(
-        '5'
-      )
-      expect(await memory.contract.getPriceFor(900, 1800, 5, 5, 1)).to.be.eq(
-        '5'
-      )
-    })
-  })
-
-  describe('GetMintPriceForToken', () => {
-    it('Should throw get mint price for token not exist', async () => {
-      await expect(memory.contract.getMintPriceForToken(0)).to.be.revertedWith(
-        'DNE'
-      )
-      await expect(
-        memory.contract.getMintPriceForToken(1234)
-      ).to.be.revertedWith('DNE')
-    })
-
-    it('Should get mint price for token', async () => {
-      const uri = 'Qmsfzefi221ifjzifj'
-      const timeStart = parseInt((Date.now() / 1000 - 100).toString())
-      const timeEnd = parseInt((Date.now() / 1000 + 1000).toString())
-      const priceStart = 100
-      const priceEnd = 10
-      const stepDuration = 200
-      const amountCap = 10
-      const shareCyber = 50
-      const nonce = 0
-      const signatureDrop = await signCreateDropRequest(
-        uri,
-        timeStart,
-        timeEnd,
-        BigNumber.from(priceStart),
-        BigNumber.from(priceEnd),
-        stepDuration,
-        amountCap,
-        shareCyber,
-        memory.other.address,
-        nonce,
-        memory.manager
-      )
-      await memory.contract
-        .connect(memory.other)
-        .createDrop(
-          uri,
-          timeStart,
-          timeEnd,
-          BigNumber.from(priceStart),
-          BigNumber.from(priceEnd),
-          stepDuration,
-          amountCap,
-          shareCyber,
-          signatureDrop
-        )
-      const tokenId = 0
-      const mintPrice = await memory.contract.getMintPriceForToken(tokenId)
-      expect(mintPrice).to.be.eq('100')
-    })
-
-    it('Should get mint price for token fixed price', async () => {
-      const uri = 'Qmsfzefi221ifjzifj'
-      const timeStart = parseInt((Date.now() / 1000 - 100).toString())
-      const timeEnd = parseInt((Date.now() / 1000 + 1000).toString())
-      const priceStart = 100
-      const priceEnd = 100
-      const stepDuration = 1
-      const amountCap = 10
-      const shareCyber = 50
-      const nonce = 0
-      const signature = await signCreateDropRequest(
-        uri,
-        timeStart,
-        timeEnd,
-        BigNumber.from(priceStart),
-        BigNumber.from(priceEnd),
-        stepDuration,
-        amountCap,
-        shareCyber,
-        memory.other.address,
-        nonce,
-        memory.manager
-      )
-      await memory.contract
-        .connect(memory.other)
-        .createDrop(
-          uri,
-          timeStart,
-          timeEnd,
-          BigNumber.from(priceStart),
-          BigNumber.from(priceEnd),
-          stepDuration,
-          amountCap,
-          shareCyber,
-          signature
-        )
-      const tokenId = 0
-      const mintPrice = await memory.contract.getMintPriceForToken(tokenId)
-      expect(mintPrice).to.be.eq('100')
-    })
-
-    it('Should get mint price for token without cap', async () => {
-      const uri = 'Qmsfzefi221ifjzifj'
-      const timeStart = parseInt((Date.now() / 1000 - 100).toString())
-      const timeEnd = parseInt((Date.now() / 1000 + 1000).toString())
-      const priceStart = 100
-      const priceEnd = 10
-      const stepDuration = 200
-      const amountCap = 0
-      const shareCyber = 50
-      const nonce = 0
-      const signatureDrop = await signCreateDropRequest(
-        uri,
-        timeStart,
-        timeEnd,
-        BigNumber.from(priceStart),
-        BigNumber.from(priceEnd),
-        stepDuration,
-        amountCap,
-        shareCyber,
-        memory.other.address,
-        nonce,
-        memory.manager
-      )
-      await memory.contract
-        .connect(memory.other)
-        .createDrop(
-          uri,
-          timeStart,
-          timeEnd,
-          BigNumber.from(priceStart),
-          BigNumber.from(priceEnd),
-          stepDuration,
-          amountCap,
-          shareCyber,
-          signatureDrop
-        )
-      const tokenId = 0
-      const mintPrice = await memory.contract.getMintPriceForToken(tokenId)
-      expect(mintPrice).to.be.eq('100')
-    })
-
-    it('Should get mint price for token throw when cap reach', async () => {
-      const uri = 'Qmsfzefi221ifjzifj'
-      const timeStart = parseInt((Date.now() / 1000 - 100).toString())
-      const timeEnd = parseInt((Date.now() / 1000 + 1000).toString())
-      const priceStart = 100
-      const priceEnd = 10
-      const stepDuration = 200
-      const amountCap = 2
-      const shareCyber = 50
-      const nonce = 0
-      const signatureDrop = await signCreateDropRequest(
-        uri,
-        timeStart,
-        timeEnd,
-        BigNumber.from(priceStart),
-        BigNumber.from(priceEnd),
-        stepDuration,
-        amountCap,
-        shareCyber,
-        memory.other.address,
-        nonce,
-        memory.manager
-      )
-      await memory.contract
-        .connect(memory.other)
-        .createDrop(
-          uri,
-          timeStart,
-          timeEnd,
-          BigNumber.from(priceStart),
-          BigNumber.from(priceEnd),
-          stepDuration,
-          amountCap,
-          shareCyber,
-          signatureDrop
-        )
-      const tokenId = 0
-      const mintPrice = await memory.contract.getMintPriceForToken(tokenId)
-      expect(mintPrice).to.be.eq('100')
-      const signatureMint = await signMintRequest(
-        tokenId,
-        memory.other2.address,
-        0,
-        memory.manager
-      )
-      await memory.contract
-        .connect(memory.other2)
-        .mint(tokenId, signatureMint, {
-          value: mintPrice,
-        })
-      await expect(
-        memory.contract.getMintPriceForToken(tokenId)
-      ).to.be.revertedWith('CR')
-    })
-
-    it('Should get mint price for token throw out of time before', async () => {
-      const uri = 'Qmsfzefi221ifjzifj'
-      const timeStart = parseInt((Date.now() / 1000 + 100).toString())
-      const timeEnd = parseInt((Date.now() / 1000 + 500).toString())
-      const priceStart = 100
-      const priceEnd = 10
-      const stepDuration = 20
-      const amountCap = 10
-      const shareCyber = 50
-      const nonce = 0
-      const signatureDrop = await signCreateDropRequest(
-        uri,
-        timeStart,
-        timeEnd,
-        BigNumber.from(priceStart),
-        BigNumber.from(priceEnd),
-        stepDuration,
-        amountCap,
-        shareCyber,
-        memory.other.address,
-        nonce,
-        memory.manager
-      )
-      await memory.contract
-        .connect(memory.other)
-        .createDrop(
-          uri,
-          timeStart,
-          timeEnd,
-          BigNumber.from(priceStart),
-          BigNumber.from(priceEnd),
-          stepDuration,
-          amountCap,
-          shareCyber,
-          signatureDrop
-        )
-      const tokenId = 0
-      await expect(
-        memory.contract.getMintPriceForToken(tokenId)
-      ).to.be.revertedWith('OOT')
-    })
-
-    it('Should get mint price for token throw out of time after', async () => {
-      const uri = 'Qmsfzefi221ifjzifj'
-      const timeStart = parseInt((Date.now() / 1000 - 500).toString())
-      const timeEnd = parseInt((Date.now() / 1000 - 100).toString())
-      const priceStart = 100
-      const priceEnd = 10
-      const stepDuration = 20
-      const amountCap = 10
-      const shareCyber = 50
-      const nonce = 0
-      const signatureDrop = await signCreateDropRequest(
-        uri,
-        timeStart,
-        timeEnd,
-        BigNumber.from(priceStart),
-        BigNumber.from(priceEnd),
-        stepDuration,
-        amountCap,
-        shareCyber,
-        memory.other.address,
-        nonce,
-        memory.manager
-      )
-      await memory.contract
-        .connect(memory.other)
-        .createDrop(
-          uri,
-          timeStart,
-          timeEnd,
-          BigNumber.from(priceStart),
-          BigNumber.from(priceEnd),
-          stepDuration,
-          amountCap,
-          shareCyber,
-          signatureDrop
-        )
-      const tokenId = 0
-      await expect(
-        memory.contract.getMintPriceForToken(tokenId)
-      ).to.be.revertedWith('OOT')
-    })
-
-    it('Should get mint price for token with time spent', async () => {
-      const now = Date.now()
-      const uri = 'Qmsfzefi221ifjzifj'
-      const timeStart = parseInt((now / 1000).toString())
-      const timeEnd = parseInt((now / 1000 + 1800).toString())
-      const priceStart = 50
-      const priceEnd = 5
-      const stepDuration = 300
-      const amountCap = 10
-      const shareCyber = 50
-      const nonce = 0
-      const signatureDrop = await signCreateDropRequest(
-        uri,
-        timeStart,
-        timeEnd,
-        BigNumber.from(priceStart),
-        BigNumber.from(priceEnd),
-        stepDuration,
-        amountCap,
-        shareCyber,
-        memory.other.address,
-        nonce,
-        memory.manager
-      )
-      await memory.contract
-        .connect(memory.other)
-        .createDrop(
-          uri,
-          timeStart,
-          timeEnd,
-          BigNumber.from(priceStart),
-          BigNumber.from(priceEnd),
-          stepDuration,
-          amountCap,
-          shareCyber,
-          signatureDrop
-        )
-      const tokenId = 0
-      await ethers.provider.send('evm_increaseTime', [100])
-      await ethers.provider.send('evm_mine', [])
-      expect(await memory.contract.getMintPriceForToken(tokenId)).to.be.eq('50')
-      await ethers.provider.send('evm_increaseTime', [300])
-      await ethers.provider.send('evm_mine', [])
-      expect(await memory.contract.getMintPriceForToken(tokenId)).to.be.eq('42')
-      await ethers.provider.send('evm_increaseTime', [600])
-      await ethers.provider.send('evm_mine', [])
-      expect(await memory.contract.getMintPriceForToken(tokenId)).to.be.eq('27')
-      await ethers.provider.send('evm_increaseTime', [700])
-      await ethers.provider.send('evm_mine', [])
-      expect(await memory.contract.getMintPriceForToken(tokenId)).to.be.eq('12')
-    })
-  })
-
   describe('Mint', () => {
     it('Should mint ', async () => {
       const uri = 'Qmsfzefi221ifjzifj'
       const timeStart = parseInt((Date.now() / 1000 - 1000).toString())
       const timeEnd = parseInt((Date.now() / 1000 + 10000).toString())
-      const priceStart = 100
-      const priceEnd = 10
-      const stepDuration = 300
+      const price = 100
       const amountCap = 10
       const shareCyber = 50
       const nonce = 0
@@ -1342,78 +641,58 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        BigNumber.from(priceStart),
-        BigNumber.from(priceEnd),
-        stepDuration,
+        BigNumber.from(price),
         amountCap,
         shareCyber,
         memory.other.address,
         nonce,
         memory.manager
       )
+
       await memory.contract
         .connect(memory.other)
         .createDrop(
           uri,
           timeStart,
           timeEnd,
-          BigNumber.from(priceStart),
-          BigNumber.from(priceEnd),
-          stepDuration,
+          BigNumber.from(price),
           amountCap,
           shareCyber,
           signatureDrop
         )
-      const otherBalance = await ethers.provider.getBalance(
-        memory.other.address
-      )
-      const oncyberBalance = await ethers.provider.getBalance(
-        memory.oncyber.address
-      )
+
       const tokenId = 0
-      const mintPrice = await memory.contract
-        .connect(memory.other2)
-        .getMintPriceForToken(tokenId)
-      expect(mintPrice).to.be.eq('92')
+
       const signatureMint = await signMintRequest(
         tokenId,
+        1,
         memory.other2.address,
         0,
         memory.manager
       )
+
       await memory.contract
         .connect(memory.other2)
-        .mint(tokenId, signatureMint, {
-          value: mintPrice,
-        })
+        .mint(tokenId, 1, signatureMint, {
+          value: ethers.utils.parseEther("0.5")
+        });
 
       expect(
         await memory.contract.balanceOf(memory.other.address, tokenId)
-      ).to.eq('1')
+      ).to.eq('0')
       expect(
         await memory.contract.balanceOf(memory.other2.address, tokenId)
       ).to.eq('1')
-      expect(
-        await memory.contract.dropMintCounter(tokenId, memory.other2.address)
-      ).to.be.eq('1')
-      expect(await ethers.provider.getBalance(memory.other.address)).to.eq(
-        otherBalance.add(mintPrice.sub(mintPrice.div(100 / shareCyber)))
-      )
-      expect(await ethers.provider.getBalance(memory.oncyber.address)).to.eq(
-        oncyberBalance.add(mintPrice.div(100 / shareCyber))
-      )
 
       const drop = await memory.contract.getDrop(tokenId)
-      expect(drop.minted).to.eq('2')
+      expect(drop.minted).to.eq('1')
     })
 
     it('Should mint more than one multiple accounts', async () => {
       const uri = 'Qmsfzefi221ifjzifj'
       const timeStart = parseInt((Date.now() / 1000 - 1000).toString())
       const timeEnd = parseInt((Date.now() / 1000 + 10000).toString())
-      const priceStart = 100
-      const priceEnd = 10
-      const stepDuration = 300
+      const price = 100
       const amountCap = 10
       const shareCyber = 50
       const nonce = 0
@@ -1421,9 +700,7 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        BigNumber.from(priceStart),
-        BigNumber.from(priceEnd),
-        stepDuration,
+        BigNumber.from(price),
         amountCap,
         shareCyber,
         memory.other.address,
@@ -1436,91 +713,64 @@ describe('CyberDropBase', function () {
           uri,
           timeStart,
           timeEnd,
-          BigNumber.from(priceStart),
-          BigNumber.from(priceEnd),
-          stepDuration,
+          BigNumber.from(price),
           amountCap,
           shareCyber,
           signatureDrop
         )
-      const otherBalance = await ethers.provider.getBalance(
-        memory.other.address
-      )
-      const oncyberBalance = await ethers.provider.getBalance(
-        memory.oncyber.address
-      )
       const tokenId = 0
-      const mintPrice = await memory.contract
-        .connect(memory.other2)
-        .getMintPriceForToken(tokenId)
       const signatureMint = await signMintRequest(
         tokenId,
+        3,
         memory.other2.address,
         0,
         memory.manager
       )
       await memory.contract
         .connect(memory.other2)
-        .mint(tokenId, signatureMint, {
-          value: mintPrice,
-        })
+        .mint(tokenId, 3, signatureMint, {
+          value: ethers.utils.parseEther("0.5"),
+        });
 
       expect(
         await memory.contract.balanceOf(memory.other.address, tokenId)
-      ).to.eq('1')
+      ).to.eq('0')
       expect(
         await memory.contract.balanceOf(memory.other2.address, tokenId)
-      ).to.eq('1')
+      ).to.eq('3')
       expect(
-        await memory.contract.dropMintCounter(tokenId, memory.other2.address)
-      ).to.be.eq('1')
-      expect(await ethers.provider.getBalance(memory.other.address)).to.eq(
-        otherBalance.add(mintPrice.sub(mintPrice.div(100 / shareCyber)))
-      )
-      expect(await ethers.provider.getBalance(memory.oncyber.address)).to.eq(
-        oncyberBalance.add(mintPrice.div(100 / shareCyber))
-      )
+        await memory.contract.dropMintCounter(tokenId, memory.other2.address)).to.be.eq('1')
 
       const signatureMint1 = await signMintRequest(
         tokenId,
+        2,
         memory.other3.address,
         0,
         memory.manager
       )
       await memory.contract
         .connect(memory.other3)
-        .mint(tokenId, signatureMint1, {
-          value: mintPrice,
+        .mint(tokenId, 2, signatureMint1, {
+          value: ethers.utils.parseEther("0.1"),
         })
       expect(
         await memory.contract.balanceOf(memory.other3.address, tokenId)
-      ).to.eq('1')
+      ).to.eq('2')
       expect(
         await memory.contract.dropMintCounter(tokenId, memory.other2.address)
       ).to.be.eq('1')
       expect(
         await memory.contract.dropMintCounter(tokenId, memory.other3.address)
       ).to.be.eq('1')
-      expect(await ethers.provider.getBalance(memory.other.address)).to.eq(
-        otherBalance.add(
-          mintPrice.mul(2).sub(mintPrice.mul(2).div(100 / shareCyber))
-        )
-      )
-      expect(await ethers.provider.getBalance(memory.oncyber.address)).to.eq(
-        oncyberBalance.add(mintPrice.mul(2).div(100 / shareCyber))
-      )
-
       const drop = await memory.contract.getDrop(tokenId)
-      expect(drop.minted).to.eq('3')
+      expect(drop.minted).to.eq('2')
     })
 
     it('Should mint more than one from same account', async () => {
       const uri = 'Qmsfzefi221ifjzifj'
       const timeStart = parseInt((Date.now() / 1000 - 1000).toString())
       const timeEnd = parseInt((Date.now() / 1000 + 100).toString())
-      const priceStart = 100
-      const priceEnd = 10
-      const stepDuration = 300
+      const price = 100
       const amountCap = 10
       const shareCyber = 50
       const nonce = 0
@@ -1528,9 +778,7 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        BigNumber.from(priceStart),
-        BigNumber.from(priceEnd),
-        stepDuration,
+        BigNumber.from(price),
         amountCap,
         shareCyber,
         memory.other.address,
@@ -1543,85 +791,64 @@ describe('CyberDropBase', function () {
           uri,
           timeStart,
           timeEnd,
-          BigNumber.from(priceStart),
-          BigNumber.from(priceEnd),
-          stepDuration,
+          BigNumber.from(price),
           amountCap,
           shareCyber,
           signatureDrop
         )
-      const otherBalance = await ethers.provider.getBalance(
-        memory.other.address
-      )
-      const oncyberBalance = await ethers.provider.getBalance(
-        memory.oncyber.address
-      )
+
+      const mintPrice = ethers.utils.parseEther("0.1")
+
       const tokenId = 0
-      const mintPrice = await memory.contract
-        .connect(memory.other2)
-        .getMintPriceForToken(tokenId)
 
       const signatureMint = await signMintRequest(
         tokenId,
+        4,
         memory.other2.address,
         0,
         memory.manager
       )
       await memory.contract
         .connect(memory.other2)
-        .mint(tokenId, signatureMint, {
+        .mint(tokenId, 4, signatureMint, {
           value: mintPrice,
         })
       expect(
         await memory.contract.balanceOf(memory.other2.address, tokenId)
-      ).to.eq('1')
+      ).to.eq('4')
       expect(
         await memory.contract.dropMintCounter(tokenId, memory.other2.address)
       ).to.be.eq('1')
-      expect(await ethers.provider.getBalance(memory.other.address)).to.eq(
-        otherBalance.add(mintPrice.sub(mintPrice.div(100 / shareCyber)))
-      )
-      expect(await ethers.provider.getBalance(memory.oncyber.address)).to.eq(
-        oncyberBalance.add(mintPrice.div(100 / shareCyber))
-      )
 
       const signatureMint1 = await signMintRequest(
         tokenId,
+        1,
         memory.other2.address,
         1,
         memory.manager
       )
       await memory.contract
         .connect(memory.other2)
-        .mint(tokenId, signatureMint1, {
+        .mint(tokenId, 1, signatureMint1, {
           value: mintPrice,
         })
       expect(
         await memory.contract.balanceOf(memory.other2.address, tokenId)
-      ).to.eq('2')
+      ).to.eq('5')
       expect(
         await memory.contract.dropMintCounter(tokenId, memory.other2.address)
       ).to.be.eq('2')
-      expect(await ethers.provider.getBalance(memory.other.address)).to.eq(
-        otherBalance.add(
-          mintPrice.mul(2).sub(mintPrice.mul(2).div(100 / shareCyber))
-        )
-      )
-      expect(await ethers.provider.getBalance(memory.oncyber.address)).to.eq(
-        oncyberBalance.add(mintPrice.mul(2).div(100 / shareCyber))
-      )
 
       const drop = await memory.contract.getDrop(tokenId)
-      expect(drop.minted).to.eq('3')
+      expect(drop.minted).to.eq('2')
+
     })
 
     it('Should mint without cap', async () => {
       const uri = 'Qmsfzefi221ifjzifj'
       const timeStart = parseInt((Date.now() / 1000 - 1000).toString())
       const timeEnd = parseInt((Date.now() / 1000 + 100).toString())
-      const priceStart = 100
-      const priceEnd = 10
-      const stepDuration = 300
+      const price = 100
       const amountCap = 0
       const shareCyber = 50
       const nonce = 0
@@ -1629,9 +856,7 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        BigNumber.from(priceStart),
-        BigNumber.from(priceEnd),
-        stepDuration,
+        BigNumber.from(price),
         amountCap,
         shareCyber,
         memory.other.address,
@@ -1644,79 +869,56 @@ describe('CyberDropBase', function () {
           uri,
           timeStart,
           timeEnd,
-          BigNumber.from(priceStart),
-          BigNumber.from(priceEnd),
-          stepDuration,
+          BigNumber.from(price),
           amountCap,
           shareCyber,
           signatureDrop
         )
 
-      const otherBalance = await ethers.provider.getBalance(
-        memory.other.address
-      )
-      const oncyberBalance = await ethers.provider.getBalance(
-        memory.oncyber.address
-      )
       const tokenId = 0
+      const mintPrice = ethers.utils.parseEther("0.1")
       const signatureMint = await signMintRequest(
         tokenId,
+        1,
         memory.other2.address,
         0,
         memory.manager
       )
-      const mintPrice = await memory.contract
-        .connect(memory.other2)
-        .getMintPriceForToken(tokenId)
       await memory.contract
         .connect(memory.other2)
-        .mint(tokenId, signatureMint, {
+        .mint(tokenId, 1, signatureMint, {
           value: mintPrice,
         })
       expect(
         await memory.contract.balanceOf(memory.other2.address, tokenId)
       ).to.eq('1')
-      expect(await ethers.provider.getBalance(memory.other.address)).to.eq(
-        otherBalance.add(mintPrice.sub(mintPrice.div(100 / shareCyber)))
-      )
-      expect(await ethers.provider.getBalance(memory.oncyber.address)).to.eq(
-        oncyberBalance.add(mintPrice.div(100 / shareCyber))
-      )
 
       const signatureMint1 = await signMintRequest(
         tokenId,
+        1,
         memory.other3.address,
         0,
         memory.manager
       )
       await memory.contract
         .connect(memory.other3)
-        .mint(tokenId, signatureMint1, {
+        .mint(tokenId, 1, signatureMint1, {
           value: mintPrice,
         })
+
       expect(
         await memory.contract.balanceOf(memory.other3.address, tokenId)
       ).to.eq('1')
-      expect(await ethers.provider.getBalance(memory.other.address)).to.eq(
-        otherBalance.add(
-          mintPrice.mul(2).sub(mintPrice.mul(2).div(100 / shareCyber))
-        )
-      )
-      expect(await ethers.provider.getBalance(memory.oncyber.address)).to.eq(
-        oncyberBalance.add(mintPrice.mul(2).div(100 / shareCyber))
-      )
 
       const drop = await memory.contract.getDrop(tokenId)
-      expect(drop.minted).to.eq('3')
+      expect(drop.minted).to.eq('2')
     })
 
     it('Should mint throw cap reach', async () => {
       const uri = 'Qmsfzefi221ifjzifj'
       const timeStart = parseInt((Date.now() / 1000 - 100).toString())
       const timeEnd = parseInt((Date.now() / 1000 + 10).toString())
-      const priceStart = 100
-      const priceEnd = 10
-      const stepDuration = 30
+      const price = 100
       const amountCap = 2
       const shareCyber = 50
       const nonce = 0
@@ -1724,9 +926,7 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        BigNumber.from(priceStart),
-        BigNumber.from(priceEnd),
-        stepDuration,
+        BigNumber.from(price),
         amountCap,
         shareCyber,
         memory.other.address,
@@ -1739,50 +939,22 @@ describe('CyberDropBase', function () {
           uri,
           timeStart,
           timeEnd,
-          BigNumber.from(priceStart),
-          BigNumber.from(priceEnd),
-          stepDuration,
+          BigNumber.from(price),
           amountCap,
           shareCyber,
           signatureDrop
         )
-      const otherBalance = await ethers.provider.getBalance(
-        memory.other.address
-      )
-      const oncyberBalance = await ethers.provider.getBalance(
-        memory.oncyber.address
-      )
       const tokenId = 0
-      const mintPrice = await memory.contract.getMintPriceForToken(tokenId)
+      const mintPrice = ethers.utils.parseEther("0.1")
       const signatureMint = await signMintRequest(
         tokenId,
+        3,
         memory.other2.address,
         0,
         memory.manager
       )
-      await memory.contract
-        .connect(memory.other2)
-        .mint(tokenId, signatureMint, {
-          value: mintPrice,
-        })
-      expect(
-        await memory.contract.balanceOf(memory.other2.address, tokenId)
-      ).to.eq('1')
-      expect(await ethers.provider.getBalance(memory.other.address)).to.eq(
-        otherBalance.add(mintPrice.sub(mintPrice.div(100 / shareCyber)))
-      )
-      expect(await ethers.provider.getBalance(memory.oncyber.address)).to.eq(
-        oncyberBalance.add(mintPrice.div(100 / shareCyber))
-      )
-
-      const signatureMint1 = await signMintRequest(
-        tokenId,
-        memory.other2.address,
-        1,
-        memory.manager
-      )
       await expect(
-        memory.contract.connect(memory.other2).mint(tokenId, signatureMint1, {
+        memory.contract.connect(memory.other2).mint(tokenId, 3, signatureMint, {
           value: mintPrice,
         })
       ).to.be.revertedWith('CR')
@@ -1792,9 +964,7 @@ describe('CyberDropBase', function () {
       const uri = 'Qmsfzefi221ifjzifj'
       const timeStart = parseInt((Date.now() / 1000 - 1000).toString())
       const timeEnd = parseInt((Date.now() / 1000 - 100).toString())
-      const priceStart = 100
-      const priceEnd = 10
-      const stepDuration = 30
+      const price = 100
       const amountCap = 10
       const shareCyber = 50
       const nonce = 0
@@ -1802,9 +972,7 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        BigNumber.from(priceStart),
-        BigNumber.from(priceEnd),
-        stepDuration,
+        BigNumber.from(price),
         amountCap,
         shareCyber,
         memory.other.address,
@@ -1817,9 +985,7 @@ describe('CyberDropBase', function () {
           uri,
           timeStart,
           timeEnd,
-          BigNumber.from(priceStart),
-          BigNumber.from(priceEnd),
-          stepDuration,
+          BigNumber.from(price),
           amountCap,
           shareCyber,
           signatureDrop
@@ -1828,12 +994,13 @@ describe('CyberDropBase', function () {
       const tokenId = 0
       const signatureMint = await signMintRequest(
         tokenId,
+        1,
         memory.other2.address,
         0,
         memory.manager
       )
       await expect(
-        memory.contract.connect(memory.other2).mint(tokenId, signatureMint, {
+        memory.contract.connect(memory.other2).mint(tokenId, 1, signatureMint, {
           value: 92,
         })
       ).to.be.revertedWith('OOT')
@@ -1843,9 +1010,7 @@ describe('CyberDropBase', function () {
       const uri = 'Qmsfzefi221ifjzifj'
       const timeStart = parseInt((Date.now() / 1000 + 1000).toString())
       const timeEnd = parseInt((Date.now() / 1000 + 2000).toString())
-      const priceStart = 100
-      const priceEnd = 10
-      const stepDuration = 30
+      const price = 100
       const amountCap = 10
       const shareCyber = 50
       const nonce = 0
@@ -1853,9 +1018,7 @@ describe('CyberDropBase', function () {
         uri,
         timeStart,
         timeEnd,
-        BigNumber.from(priceStart),
-        BigNumber.from(priceEnd),
-        stepDuration,
+        BigNumber.from(price),
         amountCap,
         shareCyber,
         memory.other.address,
@@ -1868,9 +1031,7 @@ describe('CyberDropBase', function () {
           uri,
           timeStart,
           timeEnd,
-          BigNumber.from(priceStart),
-          BigNumber.from(priceEnd),
-          stepDuration,
+          BigNumber.from(price),
           amountCap,
           shareCyber,
           signatureDrop
@@ -1879,12 +1040,13 @@ describe('CyberDropBase', function () {
       const tokenId = 0
       const signatureMint = await signMintRequest(
         tokenId,
+        1,
         memory.other2.address,
         0,
         memory.manager
       )
       await expect(
-        memory.contract.connect(memory.other2).mint(tokenId, signatureMint, {
+        memory.contract.connect(memory.other2).mint(tokenId, 1, signatureMint, {
           value: 92,
         })
       ).to.be.revertedWith('OOT')
@@ -1892,21 +1054,17 @@ describe('CyberDropBase', function () {
 
     it('Should throw to mint invalid amount', async () => {
       const uri = 'Qmsfzefi221ifjzifj'
-      const timeStart = parseInt((Date.now() / 1000 - 100).toString())
-      const timeEnd = parseInt((Date.now() / 1000 + 10).toString())
-      const priceStart = 100
-      const priceEnd = 10
-      const stepDuration = 30
-      const amountCap = 10
+      const timeStart = parseInt((Date.now() / 1000 - 1000).toString())
+      const timeEnd = parseInt((Date.now() / 1000 + 100).toString())
+      const price = 100
+      const amountCap = 0
       const shareCyber = 50
       const nonce = 0
       const signatureDrop = await signCreateDropRequest(
         uri,
         timeStart,
         timeEnd,
-        BigNumber.from(priceStart),
-        BigNumber.from(priceEnd),
-        stepDuration,
+        BigNumber.from(price),
         amountCap,
         shareCyber,
         memory.other.address,
@@ -1919,9 +1077,7 @@ describe('CyberDropBase', function () {
           uri,
           timeStart,
           timeEnd,
-          BigNumber.from(priceStart),
-          BigNumber.from(priceEnd),
-          stepDuration,
+          BigNumber.from(price),
           amountCap,
           shareCyber,
           signatureDrop
@@ -1929,12 +1085,13 @@ describe('CyberDropBase', function () {
       const tokenId = 0
       const signatureMint = await signMintRequest(
         tokenId,
+        1,
         memory.other2.address,
         0,
         memory.manager
       )
       await expect(
-        memory.contract.connect(memory.other2).mint(tokenId, signatureMint, {
+        memory.contract.connect(memory.other2).mint(tokenId, 1, signatureMint, {
           value: 1,
         })
       ).to.be.revertedWith('IA')
@@ -1942,21 +1099,17 @@ describe('CyberDropBase', function () {
 
     it("Can't create drop with invalid signature", async () => {
       const uri = 'Qmsfzefi221ifjzifj'
-      const timeStart = parseInt((Date.now() / 1000 - 100).toString())
-      const timeEnd = parseInt((Date.now() / 1000 + 10).toString())
-      const priceStart = 100
-      const priceEnd = 10
-      const stepDuration = 30
-      const amountCap = 10
+      const timeStart = parseInt((Date.now() / 1000 - 1000).toString())
+      const timeEnd = parseInt((Date.now() / 1000 + 100).toString())
+      const price = 100
+      const amountCap = 0
       const shareCyber = 50
       const nonce = 0
       const signatureDrop = await signCreateDropRequest(
         uri,
         timeStart,
         timeEnd,
-        BigNumber.from(priceStart),
-        BigNumber.from(priceEnd),
-        stepDuration,
+        BigNumber.from(price),
         amountCap,
         shareCyber,
         memory.other.address,
@@ -1969,9 +1122,7 @@ describe('CyberDropBase', function () {
           uri,
           timeStart,
           timeEnd,
-          BigNumber.from(priceStart),
-          BigNumber.from(priceEnd),
-          stepDuration,
+          BigNumber.from(price),
           amountCap,
           shareCyber,
           signatureDrop
@@ -1980,6 +1131,7 @@ describe('CyberDropBase', function () {
 
       const signatureMintInvalidManager = await signMintRequest(
         tokenId,
+        3,
         memory.other2.address,
         0,
         memory.other3
@@ -1987,13 +1139,14 @@ describe('CyberDropBase', function () {
       await expect(
         memory.contract
           .connect(memory.other2)
-          .mint(tokenId, signatureMintInvalidManager, {
-            value: 92,
+          .mint(tokenId, 2, signatureMintInvalidManager, {
+            value: 100000,
           })
       ).to.be.revertedWith('NM')
 
       const signatureMintInvalidMinter = await signMintRequest(
         tokenId,
+        4,
         memory.other3.address,
         0,
         memory.manager
@@ -2001,13 +1154,14 @@ describe('CyberDropBase', function () {
       await expect(
         memory.contract
           .connect(memory.other2)
-          .mint(tokenId, signatureMintInvalidMinter, {
-            value: 92,
+          .mint(tokenId, 8, signatureMintInvalidMinter, {
+            value: 100000,
           })
       ).to.be.revertedWith('NM')
 
       const signatureMintInvalidTokenId = await signMintRequest(
         1234,
+        1,
         memory.other2.address,
         0,
         memory.manager
@@ -2015,13 +1169,14 @@ describe('CyberDropBase', function () {
       await expect(
         memory.contract
           .connect(memory.other2)
-          .mint(tokenId, signatureMintInvalidTokenId, {
-            value: 92,
+          .mint(tokenId, 1, signatureMintInvalidTokenId, {
+            value: 100000,
           })
       ).to.be.revertedWith('NM')
 
       const signatureMintInvalidNonce = await signMintRequest(
         tokenId,
+        1,
         memory.other2.address,
         1,
         memory.manager
@@ -2029,25 +1184,12 @@ describe('CyberDropBase', function () {
       await expect(
         memory.contract
           .connect(memory.other2)
-          .mint(tokenId, signatureMintInvalidNonce, {
-            value: 92,
+          .mint(tokenId, 1, signatureMintInvalidNonce, {
+            value: 10000,
           })
       ).to.be.revertedWith('NM')
+
     })
   })
 
-  describe('DropMintCounter', () => {
-    it('Should throw to get drop mint counter if drop doesnt exist', async () => {
-      await expect(
-        memory.contract
-          .connect(memory.other)
-          .dropMintCounter(0, memory.other.address)
-      ).to.be.revertedWith('DNE')
-      await expect(
-        memory.contract
-          .connect(memory.other)
-          .dropMintCounter(123, memory.other.address)
-      ).to.be.revertedWith('DNE')
-    })
-  })
 })
