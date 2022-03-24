@@ -4,7 +4,6 @@ pragma solidity 0.8.13;
 //import 'hardhat/console.sol';
 import '@openzeppelin/contracts/utils/cryptography/ECDSA.sol';
 import '@openzeppelin/contracts/utils/Counters.sol';
-import "hardhat/console.sol";
 
 import './libraries/LibAppStorage.sol';
 import './libraries/LibDropStorage.sol';
@@ -60,8 +59,8 @@ contract CyberDropBase is CyberTokenBase {
     uint256 _shareCyber,
     bytes memory _signature
   ) public returns (uint256 tokenId) {
-    require(_timeEnd - _timeStart >= 0, 'IT');
-    require(_price > 0, 'IP');
+    require(_timeEnd - _timeStart > 0, 'IT');
+    require(_price >= 0, 'IP');
     require(_shareCyber <= 100, 'ISO');
 
     address sender = _msgSender();
@@ -86,7 +85,6 @@ contract CyberDropBase is CyberTokenBase {
     setTokenURI(tokenId, _uri);
     LibAppStorage.layout().totalSupply.increment();
 
-    // this is if the user mints, not if the user just creates drop
     LibAppStorage.layout().minterNonce[sender].increment();
 
     LibDropStorage.layout().drops[tokenId].timeStart = _timeStart;
@@ -116,7 +114,7 @@ contract CyberDropBase is CyberTokenBase {
       'OOT'
     );
 
-    require(msg.value >= drop.price * _quantity, 'IA');
+    require(msg.value > drop.price * _quantity, 'IA');
 
     uint256 senderDropNonce = drop.mintCounter[sender].current();
     bytes memory _message = abi.encodePacked(_tokenId, _quantity, sender, senderDropNonce);

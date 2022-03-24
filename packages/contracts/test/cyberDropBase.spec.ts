@@ -372,7 +372,7 @@ describe('CyberDropBase', function () {
       )
     })
 
-    it("Can't create drop price start zero", async () => {
+    it("Create drop price start zero", async () => {
       const uri = 'Qmsfzefi221ifjzifj'
       const timeStart = parseInt((Date.now() / 1000).toString())
       const timeEnd = parseInt((Date.now() / 1000 + 10).toString())
@@ -404,7 +404,7 @@ describe('CyberDropBase', function () {
             shareCyber,
             signatureDrop
           )
-      ).to.be.revertedWith('IP')
+      ).not.to.be.revertedWith('IP')
     })
 
     it("Can't create drop invalid share onCyber", async () => {

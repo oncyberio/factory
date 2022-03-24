@@ -6,6 +6,7 @@ async function main() {
   const contractName = 'DiamondCyberDestinationFactory'
 
   const accounts = await ethers.getSigners()
+  const creator = accounts[1];
   const minter = accounts[3]
   const manager = accounts[2]
 
@@ -22,6 +23,7 @@ async function main() {
   const signatureMint = await signMintRequest(
     tokenId,
     minter.address,
+    creator,
     0,
     manager
   )
