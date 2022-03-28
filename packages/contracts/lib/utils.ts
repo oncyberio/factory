@@ -1,5 +1,7 @@
 import { BigNumber, Signer, utils } from 'ethers'
 
+export const tokenURI = (uri: string) => `ipfs://${uri}`
+
 export async function signCreateDropRequest(
   uri: string,
   timeStart: number,

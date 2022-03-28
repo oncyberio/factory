@@ -13,12 +13,12 @@ library LibDropStorage {
     uint256 priceStart;
     uint256 priceEnd;
     uint256 stepDuration;
-    uint256 price;
     uint256 amountCap;
     uint256 shareCyber;
     address payable creator;
     Counters.Counter minted;
     mapping(address => Counters.Counter) mintCounter;
+    uint256 price;
   }
 
   struct Layout {
