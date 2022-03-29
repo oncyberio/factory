@@ -38,7 +38,7 @@ contract CyberDropBase is CyberTokenBase {
     )
   {
     LibDropStorage.Drop storage drop = LibDropStorage.layout().drops[_tokenId];
-    
+
     return (
       drop.timeStart,
       drop.timeEnd,
@@ -97,16 +97,20 @@ contract CyberDropBase is CyberTokenBase {
     emit DropCreated(sender, tokenId);
   }
 
-  function mint(uint256 _tokenId, uint256 _quantity, bytes memory _signature)
-    public
-    payable
-    returns (bool success)
-  {
+  function mint(
+    uint256 _tokenId,
+    uint256 _quantity,
+    bytes memory _signature
+  ) public payable returns (bool success) {
     address sender = _msgSender();
     LibDropStorage.Drop storage drop = LibDropStorage.layout().drops[_tokenId];
 
     if (drop.amountCap != 0) {
-      require((drop.minted.current() < drop.amountCap) && (drop.amountCap - drop.minted.current() >= _quantity), 'CR');
+      require(
+        (drop.minted.current() < drop.amountCap) &&
+          (drop.amountCap - drop.minted.current() >= _quantity),
+        'CR'
+      );
     }
 
     require(
@@ -117,7 +121,12 @@ contract CyberDropBase is CyberTokenBase {
     require(msg.value > drop.price * _quantity, 'IA');
 
     uint256 senderDropNonce = drop.mintCounter[sender].current();
-    bytes memory _message = abi.encodePacked(_tokenId, _quantity, sender, senderDropNonce);
+    bytes memory _message = abi.encodePacked(
+      _tokenId,
+      _quantity,
+      sender,
+      senderDropNonce
+    );
     address recoveredAddress = keccak256(_message)
       .toEthSignedMessageHash()
       .recover(_signature);
@@ -132,7 +141,7 @@ contract CyberDropBase is CyberTokenBase {
     if (drop.price > 0) {
       uint256 amountOnCyber = (msg.value * drop.shareCyber) / 100;
       uint256 amountCreator = msg.value - amountOnCyber;
-      
+
       drop.creator.transfer(amountCreator);
       payable(LibAppStorage.layout().oncyber).transfer(amountOnCyber);
     }
@@ -141,5 +150,4 @@ contract CyberDropBase is CyberTokenBase {
 
     return true;
   }
-
 }

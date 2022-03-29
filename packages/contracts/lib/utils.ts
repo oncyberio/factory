@@ -19,10 +19,7 @@ export async function signCreateDropRequest(
     32
   )
   const pTimeEnd = utils.hexZeroPad(BigNumber.from(timeEnd).toHexString(), 32)
-  const pPrice = utils.hexZeroPad(
-    BigNumber.from(price).toHexString(),
-    32
-  )
+  const pPrice = utils.hexZeroPad(BigNumber.from(price).toHexString(), 32)
   const pAmountCap = utils.hexZeroPad(
     BigNumber.from(amountCap).toHexString(),
     32
