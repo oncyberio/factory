@@ -232,6 +232,67 @@ describe('CyberDropBase', function () {
       expect(drop.minted).to.eq(0x00)
     })
 
+    it('Should create drop with forwarder', async () => {
+      const uri = 'Qmsfzefi221ifjzifj'
+      const timeStart = parseInt((Date.now() / 1000).toString())
+      const timeEnd = parseInt((Date.now() / 1000 + 10).toString())
+      const price = 100
+      const amountCap = 10
+      const shareCyber = 50
+      const nonce = 0
+      const signatureDrop = await signCreateDropRequest(
+        uri,
+        timeStart,
+        timeEnd,
+        BigNumber.from(price),
+        amountCap,
+        shareCyber,
+        memory.other.address,
+        nonce,
+        memory.manager
+      )
+      const contractInterface = new ethers.utils.Interface(memory.abi)
+      const functionSignature = contractInterface.encodeFunctionData(
+        'createDrop',
+        [
+          uri,
+          timeStart,
+          timeEnd,
+          BigNumber.from(price),
+          amountCap,
+          shareCyber,
+          signatureDrop,
+        ]
+      )
+
+      await memory.biconomyForwarder.sendTransaction({
+        to: memory.contract.address,
+        data: utils.hexConcat([functionSignature, memory.other.address]),
+      })
+
+      const tokenId = 0
+      expect(
+        await memory.contract.balanceOf(memory.other.address, tokenId)
+      ).to.eq(0x00)
+      expect(
+        await memory.contract.balanceOf(memory.oncyber.address, tokenId)
+      ).to.eq(0x00)
+      expect(await memory.contract.minterNonce(memory.other.address)).to.eq(
+        0x01
+      )
+      expect(await memory.contract.uri(tokenId)).to.eq(tokenURI(uri))
+      expect(await memory.contract['totalSupply()']()).to.eq(0x01)
+
+      const drop = await memory.contract.getDrop(tokenId)
+      expect(drop.timeStart).to.eq(timeStart)
+      expect(drop.timeEnd).to.eq(timeEnd)
+      expect(drop.price).to.eq(price)
+      expect(drop.amountCap).to.eq(amountCap)
+      expect(drop.shareCyber).to.eq(shareCyber)
+      expect(drop.creator).to.eq(memory.other.address)
+      expect(drop.minted).to.eq(0x00)
+    })
+
     it('Should throw drop if time start/end invalid', async () => {
       const uri = 'Qmsfzefi221ifjzifj'
       const timeStart = parseInt((Date.now() / 1000 + 10).toString())
