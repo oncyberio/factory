@@ -60,7 +60,6 @@ contract CyberDropBase is CyberTokenBase {
     bytes memory _signature
   ) public returns (uint256 tokenId) {
     require(_timeEnd - _timeStart > 0, 'IT');
-    require(_price >= 0, 'IP');
     require(_shareCyber <= 100, 'ISO');
 
     address sender = _msgSender();

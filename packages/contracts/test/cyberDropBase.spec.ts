@@ -542,6 +542,15 @@ describe('CyberDropBase', function () {
 
       const tokenId = 0
 
+      const mintPrice = 200
+
+      const otherBalance = await ethers.provider.getBalance(
+        memory.other.address
+      )
+      const oncyberBalance = await ethers.provider.getBalance(
+        memory.oncyber.address
+      )
+
       const signatureMint = await signMintRequest(
         tokenId,
         quality,
@@ -553,7 +562,7 @@ describe('CyberDropBase', function () {
       await memory.contract
         .connect(memory.other2)
         .mint(tokenId, quality, signatureMint, {
-          value: 10000,
+          value: mintPrice,
         })
 
       expect(
@@ -563,6 +572,92 @@ describe('CyberDropBase', function () {
       expect(
         await memory.contract.balanceOf(memory.other2.address, tokenId)
       ).to.eq(0x01)
+
+      expect(await ethers.provider.getBalance(memory.oncyber.address)).to.eq(
+        oncyberBalance.add(0x64)
+      )
+
+      expect(await ethers.provider.getBalance(memory.other.address)).to.eq(
+        otherBalance.add(0x64)
+      )
+
+      const drop = await memory.contract.getDrop(tokenId)
+      expect(drop.minted).to.eq(0x01)
+    })
+
+    it('Should mint with price zero', async () => {
+      const uri = 'Qmsfzefi221ifjzifj'
+      const timeStart = parseInt((Date.now() / 1000 - 1000).toString())
+      const timeEnd = parseInt((Date.now() / 1000 + 10000).toString())
+      const price = 0
+      const amountCap = 10
+      const shareCyber = 50
+      const nonce = 0
+      const quality = 1
+      const signatureDrop = await signCreateDropRequest(
+        uri,
+        timeStart,
+        timeEnd,
+        BigNumber.from(price),
+        amountCap,
+        shareCyber,
+        memory.other.address,
+        nonce,
+        memory.manager
+      )
+
+      await memory.contract
+        .connect(memory.other)
+        .createDrop(
+          uri,
+          timeStart,
+          timeEnd,
+          BigNumber.from(price),
+          amountCap,
+          shareCyber,
+          signatureDrop
+        )
+
+      const tokenId = 0
+
+      const mintPrice = 200
+
+      const otherBalance = await ethers.provider.getBalance(
+        memory.other.address
+      )
+      const oncyberBalance = await ethers.provider.getBalance(
+        memory.oncyber.address
+      )
+
+      const signatureMint = await signMintRequest(
+        tokenId,
+        quality,
+        memory.other2.address,
+        nonce,
+        memory.manager
+      )
+
+      await memory.contract
+        .connect(memory.other2)
+        .mint(tokenId, quality, signatureMint, {
+          value: mintPrice,
+        })
+
+      expect(
+        await memory.contract.balanceOf(memory.other.address, tokenId)
+      ).to.eq(0x00)
+
+      expect(
+        await memory.contract.balanceOf(memory.other2.address, tokenId)
+      ).to.eq(0x01)
+
+      expect(await ethers.provider.getBalance(memory.other.address)).to.eq(
+        otherBalance
+      )
+
+      expect(await ethers.provider.getBalance(memory.oncyber.address)).to.eq(
+        oncyberBalance
+      )
 
       const drop = await memory.contract.getDrop(tokenId)
       expect(drop.minted).to.eq(0x01)
@@ -712,6 +807,104 @@ describe('CyberDropBase', function () {
             value: 100,
           })
       ).to.be.revertedWith('IA')
+    })
+
+    it('Should mint more than one multiple accounts', async () => {
+      const uri = 'Qmsfzefi221ifjzifj'
+      const timeStart = parseInt((Date.now() / 1000 - 1000).toString())
+      const timeEnd = parseInt((Date.now() / 1000 + 10000).toString())
+      const price = 100
+      const amountCap = 10
+      const shareCyber = 50
+      const nonce = 0
+      const signatureDrop = await signCreateDropRequest(
+        uri,
+        timeStart,
+        timeEnd,
+        BigNumber.from(price),
+        amountCap,
+        shareCyber,
+        memory.other.address,
+        nonce,
+        memory.manager
+      )
+      await memory.contract
+        .connect(memory.other)
+        .createDrop(
+          uri,
+          timeStart,
+          timeEnd,
+          BigNumber.from(price),
+          amountCap,
+          shareCyber,
+          signatureDrop
+        )
+
+      const tokenId = 0
+
+      const mintPrice = 200
+
+      const otherBalance = await ethers.provider.getBalance(
+        memory.other.address
+      )
+      const oncyberBalance = await ethers.provider.getBalance(
+        memory.oncyber.address
+      )
+
+      const signatureMint = await signMintRequest(
+        tokenId,
+        1,
+        memory.other2.address,
+        0,
+        memory.manager
+      )
+      await memory.contract
+        .connect(memory.other2)
+        .mint(tokenId, 1, signatureMint, {
+          value: mintPrice,
+        })
+
+      expect(
+        await memory.contract.balanceOf(memory.other.address, tokenId)
+      ).to.eq(0x00)
+      expect(
+        await memory.contract.balanceOf(memory.other2.address, tokenId)
+      ).to.eq(0x01)
+      expect(
+        await memory.contract.dropMintCounter(tokenId, memory.other2.address)
+      ).to.be.eq(0x01)
+
+      const signatureMint1 = await signMintRequest(
+        tokenId,
+        1,
+        memory.other3.address,
+        0,
+        memory.manager
+      )
+      await memory.contract
+        .connect(memory.other3)
+        .mint(tokenId, 1, signatureMint1, {
+          value: mintPrice,
+        })
+      expect(
+        await memory.contract.balanceOf(memory.other3.address, tokenId)
+      ).to.eq(0x01)
+      expect(
+        await memory.contract.dropMintCounter(tokenId, memory.other2.address)
+      ).to.be.eq(0x01)
+      expect(
+        await memory.contract.dropMintCounter(tokenId, memory.other3.address)
+      ).to.be.eq(0x01)
+      const drop = await memory.contract.getDrop(tokenId)
+      expect(drop.minted).to.eq(0x02)
+
+      expect(await ethers.provider.getBalance(memory.other.address)).to.eq(
+        otherBalance.add(0xc8)
+      )
+
+      expect(await ethers.provider.getBalance(memory.oncyber.address)).to.eq(
+        oncyberBalance.add(0xc8)
+      )
     })
 
     it('Should throw mint if signature invalid', async () => {
