@@ -48,11 +48,11 @@ describe('CyberDropBase', function () {
 
   describe('DropMintCounter', () => {
     it('Should return zero if drop doesnt exist', async () => {
-      expect(
-        await memory.contract
+      await expect(
+        memory.contract
           .connect(memory.other)
           .dropMintCounter(0, memory.other.address)
-      ).to.be.eq(0x00)
+      ).to.be.revertedWith('DNE')
     })
 
     it('Should get drop mint counter greater than zero if drop exist', async () => {
@@ -103,7 +103,7 @@ describe('CyberDropBase', function () {
 
       expect(
         await memory.contract.dropMintCounter(tokenId, memory.other2.address)
-      ).to.be.eq(0x01)
+      ).to.be.eq('1')
     })
   })
 
@@ -143,16 +143,14 @@ describe('CyberDropBase', function () {
 
       expect(
         await memory.contract.balanceOf(memory.other.address, tokenId)
-      ).to.eq(0x00)
+      ).to.eq('0')
       expect(
         await memory.contract.balanceOf(memory.oncyber.address, tokenId)
-      ).to.eq(0x00)
+      ).to.eq('0')
 
-      expect(await memory.contract.minterNonce(memory.other.address)).to.eq(
-        0x01
-      )
+      expect(await memory.contract.minterNonce(memory.other.address)).to.eq('1')
       expect(await memory.contract.uri(tokenId)).to.eq(tokenURI(uri))
-      expect(await memory.contract['totalSupply()']()).to.eq(0x01)
+      expect(await memory.contract['totalSupply()']()).to.eq('1')
 
       const drop_exist = await memory.contract.getDrop(tokenId)
       expect(drop_exist.timeStart).to.eq(timeStart)
@@ -164,17 +162,19 @@ describe('CyberDropBase', function () {
       expect(drop_exist.minted).to.eq(0x00)
 
       const drop_not_exist = await memory.contract.getDrop(1)
-      expect(drop_not_exist.timeStart).to.eq(0x00)
-      expect(drop_not_exist.timeEnd).to.eq(0x00)
-      expect(drop_not_exist.price).to.eq(0x00)
-      expect(drop_not_exist.amountCap).to.eq(0x00)
-      expect(drop_not_exist.shareCyber).to.eq(0x00)
+      expect(drop_not_exist.timeStart).to.eq('0')
+      expect(drop_not_exist.timeEnd).to.eq('0')
+      expect(drop_not_exist.price).to.eq('0')
+      expect(drop_not_exist.amountCap).to.eq('0')
+      expect(drop_not_exist.shareCyber).to.eq('0')
       expect(drop_not_exist.creator).to.eq(
         '0x0000000000000000000000000000000000000000'
       )
-      expect(drop_not_exist.minted).to.eq(0x00)
+      expect(drop_not_exist.minted).to.eq('0')
     })
   })
+
+  // tutorial
 
   describe('CreateDrop', () => {
     it('Should create drop', async () => {
@@ -211,16 +211,14 @@ describe('CyberDropBase', function () {
       const tokenId = 0
       expect(
         await memory.contract.balanceOf(memory.other.address, tokenId)
-      ).to.eq(0x00)
+      ).to.eq('0')
       expect(
         await memory.contract.balanceOf(memory.oncyber.address, tokenId)
-      ).to.eq(0x00)
+      ).to.eq('0')
 
-      expect(await memory.contract.minterNonce(memory.other.address)).to.eq(
-        0x01
-      )
+      expect(await memory.contract.minterNonce(memory.other.address)).to.eq('1')
       expect(await memory.contract.uri(tokenId)).to.eq(tokenURI(uri))
-      expect(await memory.contract['totalSupply()']()).to.eq(0x01)
+      expect(await memory.contract['totalSupply()']()).to.eq('1')
 
       const drop = await memory.contract.getDrop(tokenId)
       expect(drop.creator).to.eq(memory.other.address)
@@ -273,15 +271,13 @@ describe('CyberDropBase', function () {
       const tokenId = 0
       expect(
         await memory.contract.balanceOf(memory.other.address, tokenId)
-      ).to.eq(0x00)
+      ).to.eq('0')
       expect(
         await memory.contract.balanceOf(memory.oncyber.address, tokenId)
-      ).to.eq(0x00)
-      expect(await memory.contract.minterNonce(memory.other.address)).to.eq(
-        0x01
-      )
+      ).to.eq('0')
+      expect(await memory.contract.minterNonce(memory.other.address)).to.eq('1')
       expect(await memory.contract.uri(tokenId)).to.eq(tokenURI(uri))
-      expect(await memory.contract['totalSupply()']()).to.eq(0x01)
+      expect(await memory.contract['totalSupply()']()).to.eq('1')
 
       const drop = await memory.contract.getDrop(tokenId)
       expect(drop.timeStart).to.eq(timeStart)
@@ -290,7 +286,7 @@ describe('CyberDropBase', function () {
       expect(drop.amountCap).to.eq(amountCap)
       expect(drop.shareCyber).to.eq(shareCyber)
       expect(drop.creator).to.eq(memory.other.address)
-      expect(drop.minted).to.eq(0x00)
+      expect(drop.minted).to.eq('0')
     })
 
     it('Should throw drop if time start/end invalid', async () => {
@@ -567,22 +563,22 @@ describe('CyberDropBase', function () {
 
       expect(
         await memory.contract.balanceOf(memory.other.address, tokenId)
-      ).to.eq(0x00)
+      ).to.eq('0')
 
       expect(
         await memory.contract.balanceOf(memory.other2.address, tokenId)
-      ).to.eq(0x01)
+      ).to.eq('1')
 
       expect(await ethers.provider.getBalance(memory.oncyber.address)).to.eq(
-        oncyberBalance.add(0x64)
+        oncyberBalance.add(100)
       )
 
       expect(await ethers.provider.getBalance(memory.other.address)).to.eq(
-        otherBalance.add(0x64)
+        otherBalance.add(100)
       )
 
       const drop = await memory.contract.getDrop(tokenId)
-      expect(drop.minted).to.eq(0x01)
+      expect(drop.minted).to.eq('1')
     })
 
     it('Should mint with price zero', async () => {
@@ -645,11 +641,11 @@ describe('CyberDropBase', function () {
 
       expect(
         await memory.contract.balanceOf(memory.other.address, tokenId)
-      ).to.eq(0x00)
+      ).to.eq('0')
 
       expect(
         await memory.contract.balanceOf(memory.other2.address, tokenId)
-      ).to.eq(0x01)
+      ).to.eq('1')
 
       expect(await ethers.provider.getBalance(memory.other.address)).to.eq(
         otherBalance
@@ -660,7 +656,7 @@ describe('CyberDropBase', function () {
       )
 
       const drop = await memory.contract.getDrop(tokenId)
-      expect(drop.minted).to.eq(0x01)
+      expect(drop.minted).to.eq('1')
     })
 
     it('Should throw mint if cap invalid', async () => {
@@ -866,13 +862,13 @@ describe('CyberDropBase', function () {
 
       expect(
         await memory.contract.balanceOf(memory.other.address, tokenId)
-      ).to.eq(0x00)
+      ).to.eq('0')
       expect(
         await memory.contract.balanceOf(memory.other2.address, tokenId)
-      ).to.eq(0x01)
+      ).to.eq('1')
       expect(
         await memory.contract.dropMintCounter(tokenId, memory.other2.address)
-      ).to.be.eq(0x01)
+      ).to.be.eq('1')
 
       const signatureMint1 = await signMintRequest(
         tokenId,
@@ -888,22 +884,22 @@ describe('CyberDropBase', function () {
         })
       expect(
         await memory.contract.balanceOf(memory.other3.address, tokenId)
-      ).to.eq(0x01)
+      ).to.eq('1')
       expect(
         await memory.contract.dropMintCounter(tokenId, memory.other2.address)
-      ).to.be.eq(0x01)
+      ).to.be.eq('1')
       expect(
         await memory.contract.dropMintCounter(tokenId, memory.other3.address)
-      ).to.be.eq(0x01)
+      ).to.be.eq('1')
       const drop = await memory.contract.getDrop(tokenId)
-      expect(drop.minted).to.eq(0x02)
+      expect(drop.minted).to.eq('2')
 
       expect(await ethers.provider.getBalance(memory.other.address)).to.eq(
-        otherBalance.add(0xc8)
+        otherBalance.add(200)
       )
 
       expect(await ethers.provider.getBalance(memory.oncyber.address)).to.eq(
-        oncyberBalance.add(0xc8)
+        oncyberBalance.add(200)
       )
     })
 
