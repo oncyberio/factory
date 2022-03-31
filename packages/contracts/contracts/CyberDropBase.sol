@@ -39,7 +39,7 @@ contract CyberDropBase is CyberTokenBase {
     )
   {
     LibDropStorage.Drop storage drop = LibDropStorage.layout().drops[_tokenId];
-
+    require(drop.amountCap != 0, 'DNE');
     return (
       drop.timeStart,
       drop.timeEnd,

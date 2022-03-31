@@ -152,29 +152,63 @@ describe('CyberDropBase', function () {
       expect(await memory.contract.uri(tokenId)).to.eq(tokenURI(uri))
       expect(await memory.contract['totalSupply()']()).to.eq('1')
 
-      const drop_exist = await memory.contract.getDrop(tokenId)
-      expect(drop_exist.timeStart).to.eq(timeStart)
-      expect(drop_exist.timeEnd).to.eq(timeEnd)
-      expect(drop_exist.price).to.eq(price)
-      expect(drop_exist.amountCap).to.eq(amountCap)
-      expect(drop_exist.shareCyber).to.eq(shareCyber)
-      expect(drop_exist.creator).to.eq(memory.other.address)
-      expect(drop_exist.minted).to.eq(0x00)
+      const drop = await memory.contract.getDrop(tokenId)
+      expect(drop.timeStart).to.eq(timeStart)
+      expect(drop.timeEnd).to.eq(timeEnd)
+      expect(drop.price).to.eq(price)
+      expect(drop.amountCap).to.eq(amountCap)
+      expect(drop.shareCyber).to.eq(shareCyber)
+      expect(drop.creator).to.eq(memory.other.address)
+      expect(drop.minted).to.eq(0x00)
+    })
 
-      const drop_not_exist = await memory.contract.getDrop(1)
-      expect(drop_not_exist.timeStart).to.eq('0')
-      expect(drop_not_exist.timeEnd).to.eq('0')
-      expect(drop_not_exist.price).to.eq('0')
-      expect(drop_not_exist.amountCap).to.eq('0')
-      expect(drop_not_exist.shareCyber).to.eq('0')
-      expect(drop_not_exist.creator).to.eq(
-        '0x0000000000000000000000000000000000000000'
+    it('Should throw error if drop does not exist', async () => {
+      const uri = 'Qmsfzefi221ifjzifj'
+      const timeStart = parseInt((Date.now() / 1000).toString())
+      const timeEnd = parseInt((Date.now() / 1000 + 10).toString())
+      const price = 10
+      const amountCap = 10
+      const shareCyber = 50
+      const nonce = 0
+      const signatureDrop = await signCreateDropRequest(
+        uri,
+        timeStart,
+        timeEnd,
+        BigNumber.from(price),
+        amountCap,
+        shareCyber,
+        memory.other.address,
+        nonce,
+        memory.manager
       )
-      expect(drop_not_exist.minted).to.eq('0')
+      await memory.contract
+        .connect(memory.other)
+        .createDrop(
+          uri,
+          timeStart,
+          timeEnd,
+          BigNumber.from(price),
+          amountCap,
+          shareCyber,
+          signatureDrop
+        )
+
+      const tokenId = 0
+
+      expect(
+        await memory.contract.balanceOf(memory.other.address, tokenId)
+      ).to.eq('0')
+      expect(
+        await memory.contract.balanceOf(memory.oncyber.address, tokenId)
+      ).to.eq('0')
+
+      expect(await memory.contract.minterNonce(memory.other.address)).to.eq('1')
+      expect(await memory.contract.uri(tokenId)).to.eq(tokenURI(uri))
+      expect(await memory.contract['totalSupply()']()).to.eq('1')
+
+      await expect(memory.contract.getDrop(1)).to.be.revertedWith('DNE')
     })
   })
-
-  // tutorial
 
   describe('CreateDrop', () => {
     it('Should create drop', async () => {
