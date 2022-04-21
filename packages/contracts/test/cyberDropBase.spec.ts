@@ -545,7 +545,7 @@ describe('CyberDropBase', function () {
       const amountCap = 10
       const shareCyber = 50
       const nonce = 0
-      const quality = 1
+      const quantity = 1
       const signatureDrop = await signCreateDropRequest(
         uri,
         timeStart,
@@ -583,7 +583,7 @@ describe('CyberDropBase', function () {
 
       const signatureMint = await signMintRequest(
         tokenId,
-        quality,
+        quantity,
         memory.other2.address,
         nonce,
         memory.manager
@@ -591,7 +591,7 @@ describe('CyberDropBase', function () {
 
       await memory.contract
         .connect(memory.other2)
-        .mint(tokenId, quality, signatureMint, {
+        .mint(tokenId, quantity, signatureMint, {
           value: mintPrice,
         })
 
@@ -623,7 +623,7 @@ describe('CyberDropBase', function () {
       const amountCap = 10
       const shareCyber = 50
       const nonce = 0
-      const quality = 1
+      const quantity = 1
       const signatureDrop = await signCreateDropRequest(
         uri,
         timeStart,
@@ -661,7 +661,7 @@ describe('CyberDropBase', function () {
 
       const signatureMint = await signMintRequest(
         tokenId,
-        quality,
+        quantity,
         memory.other2.address,
         nonce,
         memory.manager
@@ -669,7 +669,7 @@ describe('CyberDropBase', function () {
 
       await memory.contract
         .connect(memory.other2)
-        .mint(tokenId, quality, signatureMint, {
+        .mint(tokenId, quantity, signatureMint, {
           value: mintPrice,
         })
 
@@ -700,7 +700,7 @@ describe('CyberDropBase', function () {
       const price = 100
       const amountCap = 2
       const shareCyber = 50
-      const quality = 3
+      const quantity = 3
       const nonce = 0
       const signatureDrop = await signCreateDropRequest(
         uri,
@@ -728,7 +728,7 @@ describe('CyberDropBase', function () {
       const mintPrice = 100
       const signatureMint = await signMintRequest(
         tokenId,
-        quality,
+        quantity,
         memory.other2.address,
         nonce,
         memory.manager
@@ -736,7 +736,7 @@ describe('CyberDropBase', function () {
       await expect(
         memory.contract
           .connect(memory.other2)
-          .mint(tokenId, quality, signatureMint, {
+          .mint(tokenId, quantity, signatureMint, {
             value: mintPrice,
           })
       ).to.be.revertedWith('CR')
@@ -749,7 +749,7 @@ describe('CyberDropBase', function () {
       const price = 100
       const amountCap = 10
       const shareCyber = 50
-      const quality = 1
+      const quantity = 1
       const nonce = 0
       const signatureDrop = await signCreateDropRequest(
         uri,
@@ -777,7 +777,7 @@ describe('CyberDropBase', function () {
       const tokenId = 0
       const signatureMint = await signMintRequest(
         tokenId,
-        quality,
+        quantity,
         memory.other2.address,
         nonce,
         memory.manager
@@ -785,7 +785,7 @@ describe('CyberDropBase', function () {
       await expect(
         memory.contract
           .connect(memory.other2)
-          .mint(tokenId, quality, signatureMint, {
+          .mint(tokenId, quantity, signatureMint, {
             value: 1000,
           })
       ).to.be.revertedWith('OOT')
@@ -798,7 +798,7 @@ describe('CyberDropBase', function () {
       const price = 100
       const amountCap = 0
       const shareCyber = 50
-      const quality = 3
+      const quantity = 3
       const nonce = 0
       const signatureDrop = await signCreateDropRequest(
         uri,
@@ -825,7 +825,7 @@ describe('CyberDropBase', function () {
       const tokenId = 0
       const signatureMint = await signMintRequest(
         tokenId,
-        quality,
+        quantity,
         memory.other2.address,
         nonce,
         memory.manager
@@ -833,7 +833,7 @@ describe('CyberDropBase', function () {
       await expect(
         memory.contract
           .connect(memory.other2)
-          .mint(tokenId, quality, signatureMint, {
+          .mint(tokenId, quantity, signatureMint, {
             value: 100,
           })
       ).to.be.revertedWith('IA')
@@ -945,7 +945,7 @@ describe('CyberDropBase', function () {
       const amountCap = 10
       const shareCyber = 50
       const nonce = 0
-      const quality = 1
+      const quantity = 1
       const signatureDrop = await signCreateDropRequest(
         uri,
         timeStart,
@@ -974,7 +974,7 @@ describe('CyberDropBase', function () {
 
       const signatureMint = await signMintRequest(
         tokenId,
-        quality,
+        quantity,
         memory.other2.address,
         nonce,
         memory.manager
@@ -988,7 +988,7 @@ describe('CyberDropBase', function () {
 
       const signatureMint1 = await signMintRequest(
         tokenId,
-        quality,
+        quantity,
         memory.other2.address,
         nonce,
         memory.manager
@@ -997,7 +997,7 @@ describe('CyberDropBase', function () {
       expect(
         memory.contract
           .connect(memory.other2)
-          .mint(tokenId, quality, signatureMint1, {
+          .mint(tokenId, quantity, signatureMint1, {
             value: 10000,
           })
       ).to.be.revertedWith('NM')
