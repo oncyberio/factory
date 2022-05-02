@@ -6,7 +6,6 @@ async function main() {
   const contractName = 'DiamondCyberDestinationFactory'
 
   const accounts = await ethers.getSigners()
-  const creator = accounts[1]
   const minter = accounts[3]
   const manager = accounts[2]
 
@@ -17,13 +16,13 @@ async function main() {
     minter
   )
   const tokenId = 0
-
+  const quantity = 1
   const mintPrice = await contract.getMintPriceForToken(tokenId)
 
   const signatureMint = await signMintRequest(
     tokenId,
+    quantity,
     minter.address,
-    creator,
     0,
     manager
   )

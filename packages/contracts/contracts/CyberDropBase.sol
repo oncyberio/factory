@@ -16,17 +16,19 @@ contract CyberDropBase is CyberTokenBase {
   event DropCreated(address indexed account, uint256 indexed tokenId);
 
   function dropMintCounter(uint256 _tokenId, address _minter)
-    public
+    external
     view
     returns (uint256)
   {
-    LibDropStorage.Drop storage drop = LibDropStorage.layout().drops[_tokenId];
+    LibDropStorage.DropV1 storage drop = LibDropStorage.layout().dropsV1[
+      _tokenId
+    ];
     require(drop.amountCap != 0, 'DNE');
     return drop.mintCounter[_minter].current();
   }
 
   function getDrop(uint256 _tokenId)
-    public
+    external
     view
     returns (
       uint256 timeStart,
@@ -38,7 +40,9 @@ contract CyberDropBase is CyberTokenBase {
       uint256 minted
     )
   {
-    LibDropStorage.Drop storage drop = LibDropStorage.layout().drops[_tokenId];
+    LibDropStorage.DropV1 storage drop = LibDropStorage.layout().dropsV1[
+      _tokenId
+    ];
     require(drop.amountCap != 0, 'DNE');
     return (
       drop.timeStart,
@@ -47,7 +51,7 @@ contract CyberDropBase is CyberTokenBase {
       drop.amountCap,
       drop.shareCyber,
       drop.creator,
-      drop.minted.current()
+      drop.minted
     );
   }
 
@@ -59,9 +63,10 @@ contract CyberDropBase is CyberTokenBase {
     uint256 _amountCap,
     uint256 _shareCyber,
     bytes memory _signature
-  ) public returns (uint256 tokenId) {
+  ) external returns (uint256 tokenId) {
     require(_timeEnd - _timeStart > 0, 'IT');
     require(_shareCyber <= 100, 'ISO');
+    require(_amountCap > 0, 'IAC');
 
     address sender = _msgSender();
     uint256 nonce = minterNonce(sender);
@@ -87,12 +92,12 @@ contract CyberDropBase is CyberTokenBase {
 
     LibAppStorage.layout().minterNonce[sender].increment();
 
-    LibDropStorage.layout().drops[tokenId].timeStart = _timeStart;
-    LibDropStorage.layout().drops[tokenId].timeEnd = _timeEnd;
-    LibDropStorage.layout().drops[tokenId].price = _price;
-    LibDropStorage.layout().drops[tokenId].amountCap = _amountCap;
-    LibDropStorage.layout().drops[tokenId].shareCyber = _shareCyber;
-    LibDropStorage.layout().drops[tokenId].creator = payable(sender);
+    LibDropStorage.layout().dropsV1[tokenId].timeStart = _timeStart;
+    LibDropStorage.layout().dropsV1[tokenId].timeEnd = _timeEnd;
+    LibDropStorage.layout().dropsV1[tokenId].price = _price;
+    LibDropStorage.layout().dropsV1[tokenId].amountCap = _amountCap;
+    LibDropStorage.layout().dropsV1[tokenId].shareCyber = _shareCyber;
+    LibDropStorage.layout().dropsV1[tokenId].creator = payable(sender);
 
     emit DropCreated(sender, tokenId);
   }
@@ -101,24 +106,20 @@ contract CyberDropBase is CyberTokenBase {
     uint256 _tokenId,
     uint256 _quantity,
     bytes memory _signature
-  ) public payable returns (bool success) {
+  ) external payable returns (bool success) {
     address sender = _msgSender();
-    LibDropStorage.Drop storage drop = LibDropStorage.layout().drops[_tokenId];
+    LibDropStorage.DropV1 storage drop = LibDropStorage.layout().dropsV1[
+      _tokenId
+    ];
 
-    if (drop.amountCap != 0) {
-      require(
-        (drop.minted.current() < drop.amountCap) &&
-          (drop.amountCap - drop.minted.current() >= _quantity),
-        'CR'
-      );
-    }
+    require(drop.amountCap - drop.minted >= _quantity, 'CR');
 
     require(
       block.timestamp > drop.timeStart && block.timestamp <= drop.timeEnd,
       'OOT'
     );
 
-    require(msg.value > drop.price * _quantity, 'IA');
+    require(msg.value == drop.price * _quantity, 'IA');
 
     uint256 senderDropNonce = drop.mintCounter[sender].current();
     bytes memory _message = abi.encodePacked(
@@ -130,11 +131,10 @@ contract CyberDropBase is CyberTokenBase {
     address recoveredAddress = keccak256(_message)
       .toEthSignedMessageHash()
       .recover(_signature);
-
     require(recoveredAddress == LibAppStorage.layout().manager, 'NM');
 
     // Effects
-    drop.minted.increment();
+    drop.minted += _quantity;
     drop.mintCounter[sender].increment();
     _safeMint(sender, _tokenId, _quantity, '');
 
