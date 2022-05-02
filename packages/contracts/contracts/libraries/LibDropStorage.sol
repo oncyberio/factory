@@ -8,7 +8,7 @@ import '@openzeppelin/contracts/utils/Counters.sol';
 library LibDropStorage {
   bytes32 public constant STORAGE_SLOT = keccak256('drop.app.storage');
   // Deprecated
-  struct Drop {
+  struct DropV1 {
     uint256 timeStart;
     uint256 timeEnd;
     uint256 priceStart;
@@ -22,8 +22,8 @@ library LibDropStorage {
   }
 
   struct Layout {
-    mapping(uint256 => Drop) drops; // Deprecated
-    mapping(uint256 => DropV1) dropsV1;
+    mapping(uint256 => DropV1) dropsV1; // Deprecated
+    mapping(uint256 => Drop) drops;
   }
 
   function layout() internal pure returns (Layout storage lay) {
@@ -33,7 +33,7 @@ library LibDropStorage {
     }
   }
 
-  struct DropV1 {
+  struct Drop {
     uint256 timeStart;
     uint256 timeEnd;
     uint256 price;

@@ -20,9 +20,7 @@ contract CyberDropBase is CyberTokenBase {
     view
     returns (uint256)
   {
-    LibDropStorage.DropV1 storage drop = LibDropStorage.layout().dropsV1[
-      _tokenId
-    ];
+    LibDropStorage.Drop storage drop = LibDropStorage.layout().drops[_tokenId];
     require(drop.amountCap != 0, 'DNE');
     return drop.mintCounter[_minter].current();
   }
@@ -40,9 +38,7 @@ contract CyberDropBase is CyberTokenBase {
       uint256 minted
     )
   {
-    LibDropStorage.DropV1 storage drop = LibDropStorage.layout().dropsV1[
-      _tokenId
-    ];
+    LibDropStorage.Drop storage drop = LibDropStorage.layout().drops[_tokenId];
     require(drop.amountCap != 0, 'DNE');
     return (
       drop.timeStart,
@@ -68,6 +64,7 @@ contract CyberDropBase is CyberTokenBase {
     require(_shareCyber <= 100, 'ISO');
     require(_amountCap > 0, 'IAC');
 
+    LibAppStorage.Layout storage layout = LibAppStorage.layout();
     address sender = _msgSender();
     uint256 nonce = minterNonce(sender);
     bytes memory _message = abi.encodePacked(
@@ -83,21 +80,21 @@ contract CyberDropBase is CyberTokenBase {
     address recoveredAddress = keccak256(_message)
       .toEthSignedMessageHash()
       .recover(_signature);
-    require(recoveredAddress == LibAppStorage.layout().manager, 'NM');
-    tokenId = LibAppStorage.layout().totalSupply.current();
+    require(recoveredAddress == layout.manager, 'NM');
+    tokenId = layout.totalSupply.current();
 
     // Effects
     setTokenURI(tokenId, _uri);
-    LibAppStorage.layout().totalSupply.increment();
+    layout.totalSupply.increment();
+    layout.minterNonce[sender].increment();
 
-    LibAppStorage.layout().minterNonce[sender].increment();
-
-    LibDropStorage.layout().dropsV1[tokenId].timeStart = _timeStart;
-    LibDropStorage.layout().dropsV1[tokenId].timeEnd = _timeEnd;
-    LibDropStorage.layout().dropsV1[tokenId].price = _price;
-    LibDropStorage.layout().dropsV1[tokenId].amountCap = _amountCap;
-    LibDropStorage.layout().dropsV1[tokenId].shareCyber = _shareCyber;
-    LibDropStorage.layout().dropsV1[tokenId].creator = payable(sender);
+    LibDropStorage.Drop storage drop = LibDropStorage.layout().drops[tokenId];
+    drop.timeStart = _timeStart;
+    drop.timeEnd = _timeEnd;
+    drop.price = _price;
+    drop.amountCap = _amountCap;
+    drop.shareCyber = _shareCyber;
+    drop.creator = payable(sender);
 
     emit DropCreated(sender, tokenId);
   }
@@ -108,9 +105,7 @@ contract CyberDropBase is CyberTokenBase {
     bytes memory _signature
   ) external payable returns (bool success) {
     address sender = _msgSender();
-    LibDropStorage.DropV1 storage drop = LibDropStorage.layout().dropsV1[
-      _tokenId
-    ];
+    LibDropStorage.Drop storage drop = LibDropStorage.layout().drops[_tokenId];
 
     require(drop.amountCap - drop.minted >= _quantity, 'CR');
 
@@ -128,10 +123,11 @@ contract CyberDropBase is CyberTokenBase {
       sender,
       senderDropNonce
     );
+    LibAppStorage.Layout storage layout = LibAppStorage.layout();
     address recoveredAddress = keccak256(_message)
       .toEthSignedMessageHash()
       .recover(_signature);
-    require(recoveredAddress == LibAppStorage.layout().manager, 'NM');
+    require(recoveredAddress == layout.manager, 'NM');
 
     // Effects
     drop.minted += _quantity;
@@ -143,7 +139,7 @@ contract CyberDropBase is CyberTokenBase {
       uint256 amountCreator = msg.value - amountOnCyber;
 
       drop.creator.transfer(amountCreator);
-      payable(LibAppStorage.layout().oncyber).transfer(amountOnCyber);
+      payable(layout.oncyber).transfer(amountOnCyber);
     }
 
     emit Minted(sender, _tokenId, _quantity);
