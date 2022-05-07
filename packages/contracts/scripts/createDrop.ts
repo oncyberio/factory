@@ -21,9 +21,7 @@ async function main() {
   const uri = 'QmQwfto3zFsasHnvNpyKW7jZVVkAgxpLAKfxQhTbnykHh8'
   const timeStart = parseInt((Date.now() / 1000).toString())
   const timeEnd = parseInt((Date.now() / 1000 + 100000000).toString())
-  const priceStart = parseEther('1')
-  const priceEnd = parseEther('0.1')
-  const stepDuration = 300
+  const price = parseEther('1')
   const amountCap = 100
   const shareCyber = 50
   const nonce = await contract.minterNonce(minter.address)
@@ -31,9 +29,7 @@ async function main() {
     uri,
     timeStart,
     timeEnd,
-    priceStart,
-    priceEnd,
-    stepDuration,
+    price,
     amountCap,
     shareCyber,
     minter.address,
@@ -44,9 +40,7 @@ async function main() {
     uri,
     timeStart,
     timeEnd,
-    priceStart,
-    priceEnd,
-    stepDuration,
+    price,
     amountCap,
     shareCyber,
     signature

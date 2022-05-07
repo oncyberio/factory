@@ -31,9 +31,7 @@ async function main() {
   const uri = 'QmQwfto3zFsasHnvNpyKW7jZVVkAgxpLAKfxQhTbnykHh8'
   const timeStart = parseInt((Date.now() / 1000).toString())
   const timeEnd = parseInt((Date.now() / 1000 + 100000000).toString())
-  const priceStart = 100
-  const priceEnd = 10
-  const stepDuration = 2
+  const price = 100
   const amountCap = 10
   const shareCyber = 50
   const nonce = await contract.minterNonce(minter.address)
@@ -41,9 +39,7 @@ async function main() {
     uri,
     timeStart,
     timeEnd,
-    BigNumber.from(priceStart),
-    BigNumber.from(priceEnd),
-    stepDuration,
+    BigNumber.from(price),
     amountCap,
     shareCyber,
     minter.address,
@@ -55,9 +51,7 @@ async function main() {
     uri,
     timeStart,
     timeEnd,
-    priceStart,
-    priceEnd,
-    stepDuration,
+    price,
     amountCap,
     shareCyber,
     minter.address,

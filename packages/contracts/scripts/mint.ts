@@ -16,11 +16,12 @@ async function main() {
     minter
   )
   const tokenId = 0
-
+  const quantity = 1
   const mintPrice = await contract.getMintPriceForToken(tokenId)
 
   const signatureMint = await signMintRequest(
     tokenId,
+    quantity,
     minter.address,
     0,
     manager
