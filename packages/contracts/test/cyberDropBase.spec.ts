@@ -1,17 +1,20 @@
-import { expect } from 'chai'
+import { assert, expect } from 'chai'
 import { BigNumber, utils } from 'ethers'
 import { ethers, deployments, getNamedAccounts } from 'hardhat'
 
-import { signCreateDropRequest, signMintRequest, tokenURI } from '../lib/utils'
+import {
+  signCreateDropRequest,
+  signMintRandomRequest,
+  signMintRequest,
+  tokenURI,
+} from '../lib/utils'
 
-const memory: any = {}
+let memory: any = {}
 
 describe('CyberDropBase', function () {
-  before(async () => {
-    memory.signers = await ethers.getSigners()
-  })
-
   beforeEach(async () => {
+    memory = {}
+    memory.signers = await ethers.getSigners()
     memory.namedAccounts = await getNamedAccounts()
 
     await deployments.fixture()
@@ -1367,6 +1370,177 @@ describe('CyberDropBase', function () {
           .connect(memory.other2)
           .mint(tokenId, quantity, signatureMintInvalidNonce, {
             value: mintPrice,
+          })
+      ).to.be.revertedWith('NM')
+    })
+  })
+
+  describe('Random', () => {
+    it('Should get random', async () => {
+      expect(await memory.contract.random(2, memory.other.address)).to.be.lt(2)
+      expect(await memory.contract.random(2, memory.other.address)).to.be.gte(0)
+      expect(await memory.contract.random(1, memory.other.address)).to.be.eq(0)
+    })
+  })
+
+  describe('mintRandom', () => {
+    beforeEach(async () => {
+      memory.tokenIds = [0, 1, 2]
+      memory.mintPrice = BigNumber.from(100)
+      memory.shareCyber = 50
+      for (let i = 0; i < 3; i++) {
+        const uri = 'Qmsfzefi221ifjzifj'
+        const timeStart = parseInt((Date.now() / 1000 - 1000).toString())
+        const timeEnd = parseInt((Date.now() / 1000 + 10000).toString())
+        const amountCap = 10
+        const signatureDrop = await signCreateDropRequest(
+          uri,
+          timeStart,
+          timeEnd,
+          memory.mintPrice,
+          amountCap,
+          memory.shareCyber,
+          memory.other.address,
+          i,
+          memory.manager
+        )
+
+        await memory.contract
+          .connect(memory.other)
+          .createDrop(
+            uri,
+            timeStart,
+            timeEnd,
+            memory.mintPrice,
+            amountCap,
+            memory.shareCyber,
+            signatureDrop
+          )
+      }
+    })
+
+    it('Should mint random', async () => {
+      const otherBalance = await ethers.provider.getBalance(
+        memory.other.address
+      )
+      const oncyberBalance = await ethers.provider.getBalance(
+        memory.oncyber.address
+      )
+      const signatureMintRandom = await signMintRandomRequest(
+        memory.tokenIds,
+        memory.other2.address,
+        memory.manager
+      )
+
+      await memory.contract
+        .connect(memory.other2)
+        .mintRandom(memory.tokenIds, signatureMintRandom, {
+          value: memory.mintPrice,
+        })
+
+      let findOne = false
+
+      await Promise.all(
+        memory.tokenIds.map(async (tokenId: number) => {
+          const balance = await memory.contract.balanceOf(
+            memory.other2.address,
+            tokenId
+          )
+
+          if (!balance.eq(0)) {
+            if (findOne) {
+              throw new Error('Mint more than one')
+            }
+            findOne = true
+            expect(balance).to.be.eq('1')
+            expect(
+              await ethers.provider.getBalance(memory.other.address)
+            ).to.eq(
+              otherBalance.add(
+                memory.mintPrice.sub(
+                  memory.mintPrice.div(100 / memory.shareCyber)
+                )
+              )
+            )
+            expect(
+              await ethers.provider.getBalance(memory.oncyber.address)
+            ).to.eq(
+              oncyberBalance.add(memory.mintPrice.div(100 / memory.shareCyber))
+            )
+
+            const drop = await memory.contract.getDrop(tokenId)
+            expect(drop.minted).to.eq('1')
+          }
+        })
+      )
+
+      assert(findOne, 'Mint nothing')
+    })
+
+    it('Should mint random throw when call from contract', async () => {
+      const deployResult = await deployments.deploy('DropRandomCaller', {
+        from: memory.deployer.address,
+      })
+      const contract = await ethers.getContractAt(
+        'DropRandomCaller',
+        deployResult.address
+      )
+      const signatureMintRandom = await signMintRandomRequest(
+        memory.tokenIds,
+        memory.other2.address,
+        memory.manager
+      )
+
+      await expect(
+        contract
+          .connect(memory.other2)
+          .testMintRandom(
+            memory.contract.address,
+            memory.tokenIds,
+            signatureMintRandom,
+            {
+              value: memory.mintPrice,
+            }
+          )
+      ).to.be.revertedWith('NC')
+    })
+
+    it("Can't mint random with invalid signature", async () => {
+      // Invalid manager
+      const signatureMintRandomInvalidManager = await signMintRandomRequest(
+        memory.tokenIds,
+        memory.other2.address,
+        memory.other3
+      )
+      await expect(
+        memory.contract
+          .connect(memory.other2)
+          .mintRandom(memory.tokenIds, signatureMintRandomInvalidManager, {
+            value: memory.mintPrice,
+          })
+      ).to.be.revertedWith('NM')
+
+      const signatureMintRandom = await signMintRandomRequest(
+        memory.tokenIds,
+        memory.other2.address,
+        memory.manager
+      )
+
+      // Invalid minter
+      await expect(
+        memory.contract
+          .connect(memory.other)
+          .mintRandom(memory.tokenIds, signatureMintRandom, {
+            value: memory.mintPrice,
+          })
+      ).to.be.revertedWith('NM')
+
+      // Invalid token ids
+      await expect(
+        memory.contract
+          .connect(memory.other)
+          .mintRandom([1], signatureMintRandom, {
+            value: memory.mintPrice,
           })
       ).to.be.revertedWith('NM')
     })

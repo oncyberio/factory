@@ -65,3 +65,19 @@ export async function signMintRequest(
 
   return signer.signMessage(pHash)
 }
+
+export async function signMintRandomRequest(
+  tokenIds: number[],
+  creator: string,
+  signer: Signer
+): Promise<string> {
+  const pTokenIds = tokenIds.map((tokenId) =>
+    utils.hexZeroPad(BigNumber.from(tokenId).toHexString(), 32)
+  )
+  const pCreator = utils.arrayify(creator)
+  const message = utils.concat([...pTokenIds, pCreator])
+  const hash = utils.keccak256(message)
+  const pHash = utils.arrayify(hash)
+
+  return signer.signMessage(pHash)
+}

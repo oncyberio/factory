@@ -15,6 +15,11 @@ contract CyberDropBase is CyberTokenBase {
 
   event DropCreated(address indexed account, uint256 indexed tokenId);
 
+  modifier noContract() {
+    require(msg.sender == tx.origin, 'NC');
+    _;
+  }
+
   function dropMintCounter(uint256 _tokenId, address _minter)
     external
     view
@@ -99,12 +104,11 @@ contract CyberDropBase is CyberTokenBase {
     emit DropCreated(sender, tokenId);
   }
 
-  function mint(
+  function mintInternal(
     uint256 _tokenId,
     uint256 _quantity,
-    bytes memory _signature
-  ) external payable returns (bool success) {
-    address sender = _msgSender();
+    address minter
+  ) internal returns (bool success) {
     LibDropStorage.Drop storage drop = LibDropStorage.layout().drops[_tokenId];
 
     require(drop.amountCap - drop.minted >= _quantity, 'CR');
@@ -116,34 +120,86 @@ contract CyberDropBase is CyberTokenBase {
 
     require(msg.value == drop.price * _quantity, 'IA');
 
-    uint256 senderDropNonce = drop.mintCounter[sender].current();
-    bytes memory _message = abi.encodePacked(
-      _tokenId,
-      _quantity,
-      sender,
-      senderDropNonce
-    );
-    LibAppStorage.Layout storage layout = LibAppStorage.layout();
-    address recoveredAddress = keccak256(_message)
-      .toEthSignedMessageHash()
-      .recover(_signature);
-    require(recoveredAddress == layout.manager, 'NM');
-
     // Effects
     drop.minted += _quantity;
-    drop.mintCounter[sender].increment();
-    _safeMint(sender, _tokenId, _quantity, '');
+    drop.mintCounter[minter].increment();
+    _safeMint(minter, _tokenId, _quantity, '');
 
     if (drop.price > 0) {
       uint256 amountOnCyber = (msg.value * drop.shareCyber) / 100;
       uint256 amountCreator = msg.value - amountOnCyber;
 
       drop.creator.transfer(amountCreator);
-      payable(layout.oncyber).transfer(amountOnCyber);
+      payable(LibAppStorage.layout().oncyber).transfer(amountOnCyber);
     }
 
-    emit Minted(sender, _tokenId, _quantity);
+    emit Minted(minter, _tokenId, _quantity);
 
     return true;
+  }
+
+  function mint(
+    uint256 _tokenId,
+    uint256 _quantity,
+    bytes memory _signature
+  ) external payable returns (bool success) {
+    address sender = _msgSender();
+    uint256 senderDropNonce = LibDropStorage
+      .layout()
+      .drops[_tokenId]
+      .mintCounter[sender]
+      .current();
+
+    bytes memory _message = abi.encodePacked(
+      _tokenId,
+      _quantity,
+      sender,
+      senderDropNonce
+    );
+    address recoveredAddress = keccak256(_message)
+      .toEthSignedMessageHash()
+      .recover(_signature);
+    require(recoveredAddress == LibAppStorage.layout().manager, 'NM');
+
+    return mintInternal(_tokenId, _quantity, sender);
+  }
+
+  function mintRandom(uint256[] calldata _tokenIds, bytes memory _signature)
+    external
+    payable
+    noContract
+    returns (bool success)
+  {
+    address sender = _msgSender();
+    uint256 index = random(_tokenIds.length, sender);
+
+    bytes memory _message = abi.encodePacked(_tokenIds, sender);
+    address recoveredAddress = keccak256(_message)
+      .toEthSignedMessageHash()
+      .recover(_signature);
+    require(recoveredAddress == LibAppStorage.layout().manager, 'NM');
+
+    return mintInternal(_tokenIds[index], 1, sender);
+  }
+
+  function random(uint256 _max, address _sender)
+    public
+    view
+    returns (uint256 number)
+  {
+    uint256 seed = uint256(
+      keccak256(
+        abi.encodePacked(
+          block.timestamp +
+            block.difficulty +
+            block.gaslimit +
+            block.number +
+            (uint256(keccak256(abi.encodePacked(block.coinbase))) /
+              block.timestamp) +
+            (uint256(keccak256(abi.encodePacked(_sender))) / block.timestamp)
+        )
+      )
+    );
+    return (seed - ((seed / _max) * _max));
   }
 }

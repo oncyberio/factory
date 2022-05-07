@@ -32,8 +32,10 @@ export interface CyberDestinationFactoryFacetInterface extends utils.Interface {
     "isTrustedForwarder(address)": FunctionFragment;
     "manager()": FunctionFragment;
     "mint(uint256,uint256,bytes)": FunctionFragment;
+    "mintRandom(uint256[],bytes)": FunctionFragment;
     "minterNonce(address)": FunctionFragment;
     "oncyber()": FunctionFragment;
+    "random(uint256,address)": FunctionFragment;
     "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)": FunctionFragment;
     "safeTransferFrom(address,address,uint256,uint256,bytes)": FunctionFragment;
     "setApprovalForAll(address,bool)": FunctionFragment;
@@ -93,8 +95,16 @@ export interface CyberDestinationFactoryFacetInterface extends utils.Interface {
     functionFragment: "mint",
     values: [BigNumberish, BigNumberish, BytesLike]
   ): string;
+  encodeFunctionData(
+    functionFragment: "mintRandom",
+    values: [BigNumberish[], BytesLike]
+  ): string;
   encodeFunctionData(functionFragment: "minterNonce", values: [string]): string;
   encodeFunctionData(functionFragment: "oncyber", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "random",
+    values: [BigNumberish, string]
+  ): string;
   encodeFunctionData(
     functionFragment: "safeBatchTransferFrom",
     values: [string, string, BigNumberish[], BigNumberish[], BytesLike]
@@ -151,11 +161,13 @@ export interface CyberDestinationFactoryFacetInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "manager", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "mintRandom", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "minterNonce",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "oncyber", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "random", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "safeBatchTransferFrom",
     data: BytesLike
@@ -371,12 +383,24 @@ export interface CyberDestinationFactoryFacet extends BaseContract {
       overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    mintRandom(
+      _tokenIds: BigNumberish[],
+      _signature: BytesLike,
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     minterNonce(
       _minter: string,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     oncyber(overrides?: CallOverrides): Promise<[string]>;
+
+    random(
+      _max: BigNumberish,
+      _sender: string,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber] & { number: BigNumber }>;
 
     safeBatchTransferFrom(
       from: string,
@@ -513,9 +537,21 @@ export interface CyberDestinationFactoryFacet extends BaseContract {
     overrides?: PayableOverrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  mintRandom(
+    _tokenIds: BigNumberish[],
+    _signature: BytesLike,
+    overrides?: PayableOverrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   minterNonce(_minter: string, overrides?: CallOverrides): Promise<BigNumber>;
 
   oncyber(overrides?: CallOverrides): Promise<string>;
+
+  random(
+    _max: BigNumberish,
+    _sender: string,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
   safeBatchTransferFrom(
     from: string,
@@ -649,9 +685,21 @@ export interface CyberDestinationFactoryFacet extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
+    mintRandom(
+      _tokenIds: BigNumberish[],
+      _signature: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
+
     minterNonce(_minter: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     oncyber(overrides?: CallOverrides): Promise<string>;
+
+    random(
+      _max: BigNumberish,
+      _sender: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     safeBatchTransferFrom(
       from: string,
@@ -840,9 +888,21 @@ export interface CyberDestinationFactoryFacet extends BaseContract {
       overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    mintRandom(
+      _tokenIds: BigNumberish[],
+      _signature: BytesLike,
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     minterNonce(_minter: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     oncyber(overrides?: CallOverrides): Promise<BigNumber>;
+
+    random(
+      _max: BigNumberish,
+      _sender: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     safeBatchTransferFrom(
       from: string,
@@ -962,12 +1022,24 @@ export interface CyberDestinationFactoryFacet extends BaseContract {
       overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
+    mintRandom(
+      _tokenIds: BigNumberish[],
+      _signature: BytesLike,
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
     minterNonce(
       _minter: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     oncyber(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    random(
+      _max: BigNumberish,
+      _sender: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     safeBatchTransferFrom(
       from: string,

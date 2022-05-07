@@ -1,6 +1,6 @@
 // @ts-ignore-next-line
 import { deployments, ethers } from 'hardhat'
-import { signMintRequest } from '../lib/utils'
+import { signMintRandomRequest } from '../lib/utils'
 
 async function main() {
   const contractName = 'DiamondCyberDestinationFactory'
@@ -15,24 +15,25 @@ async function main() {
     Contract.address,
     minter
   )
-  const tokenId = 0
-  const quantity = 1
-  const drop = await contract.getDrop(tokenId)
-  const mintPrice = drop.price.mul(quantity)
+  const tokenIds = [1, 2, 3]
+  const drop = await contract.getDrop(tokenIds[1])
+  const mintPrice = drop.price
 
-  const signatureMint = await signMintRequest(
-    tokenId,
-    quantity,
+  const signatureMintRandom = await signMintRandomRequest(
+    tokenIds,
     minter.address,
-    0,
     manager
   )
 
-  const estimation = await contract.estimateGas.mint(tokenId, signatureMint, {
-    value: mintPrice,
-  })
+  const estimation = await contract.estimateGas.mintRandom(
+    tokenIds,
+    signatureMintRandom,
+    {
+      value: mintPrice,
+    }
+  )
 
-  const tx = await contract.mint(tokenId, signatureMint, {
+  const tx = await contract.mintRandom(tokenIds, signatureMintRandom, {
     value: mintPrice,
     gasLimit: estimation.mul(100).div(90),
   })

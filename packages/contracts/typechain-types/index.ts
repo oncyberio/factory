@@ -26,6 +26,7 @@ export type { LibDiamond } from "./LibDiamond";
 export type { ERC1155URI } from "./ERC1155URI";
 export type { LibAppStorage } from "./LibAppStorage";
 export type { LibDropStorage } from "./LibDropStorage";
+export type { DropRandomCaller } from "./DropRandomCaller";
 
 export { ERC165__factory } from "./factories/ERC165__factory";
 export { IERC165__factory } from "./factories/IERC165__factory";
@@ -52,3 +53,4 @@ export { LibDiamond__factory } from "./factories/LibDiamond__factory";
 export { ERC1155URI__factory } from "./factories/ERC1155URI__factory";
 export { LibAppStorage__factory } from "./factories/LibAppStorage__factory";
 export { LibDropStorage__factory } from "./factories/LibDropStorage__factory";
+export { DropRandomCaller__factory } from "./factories/DropRandomCaller__factory";
