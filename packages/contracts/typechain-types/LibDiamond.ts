@@ -15,6 +15,7 @@ import { Listener, Provider } from "@ethersproject/providers";
 import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 
 export interface LibDiamondInterface extends utils.Interface {
+  contractName: "LibDiamond";
   functions: {
     "DIAMOND_STORAGE_POSITION()": FunctionFragment;
   };
@@ -33,6 +34,7 @@ export interface LibDiamondInterface extends utils.Interface {
 }
 
 export interface LibDiamond extends BaseContract {
+  contractName: "LibDiamond";
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;

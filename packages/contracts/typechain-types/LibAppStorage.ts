@@ -15,6 +15,7 @@ import { Listener, Provider } from "@ethersproject/providers";
 import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 
 export interface LibAppStorageInterface extends utils.Interface {
+  contractName: "LibAppStorage";
   functions: {
     "STORAGE_SLOT()": FunctionFragment;
   };
@@ -33,6 +34,7 @@ export interface LibAppStorageInterface extends utils.Interface {
 }
 
 export interface LibAppStorage extends BaseContract {
+  contractName: "LibAppStorage";
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;

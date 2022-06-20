@@ -18,6 +18,7 @@ import { Listener, Provider } from "@ethersproject/providers";
 import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 
 export interface IERC1155ReceiverInterface extends utils.Interface {
+  contractName: "IERC1155Receiver";
   functions: {
     "onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)": FunctionFragment;
     "onERC1155Received(address,address,uint256,uint256,bytes)": FunctionFragment;
@@ -54,6 +55,7 @@ export interface IERC1155ReceiverInterface extends utils.Interface {
 }
 
 export interface IERC1155Receiver extends BaseContract {
+  contractName: "IERC1155Receiver";
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;

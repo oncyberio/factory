@@ -16,6 +16,7 @@ import { Listener, Provider } from "@ethersproject/providers";
 import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 
 export interface ERC1155MetadataInterface extends utils.Interface {
+  contractName: "ERC1155Metadata";
   functions: {
     "uri(uint256)": FunctionFragment;
   };
@@ -39,6 +40,7 @@ export type URIEvent = TypedEvent<
 export type URIEventFilter = TypedEventFilter<URIEvent>;
 
 export interface ERC1155Metadata extends BaseContract {
+  contractName: "ERC1155Metadata";
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
