@@ -84,6 +84,12 @@ const config: HardhatUserConfig = {
             : []
         ),
     },
+    polygon: {
+      chainId: 137,
+      url: process.env.POLYGON_RPC,
+      gasPrice: parseUnits('50', 'gwei').toNumber(),
+      accounts: [process.env.POLYGON_PRIVATE_KEY || defaultPrivateKey]
+    },
     ethereum: {
       chainId: 1,
       url:

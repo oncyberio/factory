@@ -25,7 +25,7 @@
     "fix:deps": "sed -i.bak 's/skipSupportsInterface: false,/skipSupportsInterface: true,/' ./node_modules/hardhat-deploy/dist/src/helpers.js",
     "deploy:localhost": "hardhat --network localhost deploy",
     "deploy:mumbai": "hardhat --network mumbai deploy",
-    "deploy:mainnet": "hardhat --network mainnet deploy",
+    "deploy:polygon": "hardhat --network polygon deploy",
     "deploy:rinkeby": "hardhat --network rinkeby deploy",
     "deploy:ethereum": "hardhat --network ethereum deploy",
     "verify:rinkeby": "hardhat etherscan-verify --network rinkeby --solc-input",
