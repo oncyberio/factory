@@ -27,6 +27,7 @@
     "deploy:mumbai": "hardhat --network mumbai deploy",
     "deploy:mainnet": "hardhat --network mainnet deploy",
     "deploy:rinkeby": "hardhat --network rinkeby deploy",
+    "deploy:goerli": "hardhat --network goerli deploy",
     "deploy:ethereum": "hardhat --network ethereum deploy",
     "verify:rinkeby": "hardhat etherscan-verify --network rinkeby --solc-input",
     "verify:ethereum": "hardhat etherscan-verify --network ethereum --solc-input",
