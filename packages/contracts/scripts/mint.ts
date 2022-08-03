@@ -10,21 +10,12 @@ async function main() {
   const manager = accounts[2]
 
   const Contract = await deployments.get(contractName)
-  const contract = await ethers.getContractAt(
-    Contract.abi,
-    Contract.address,
-    minter
-  )
+  const contract = await ethers.getContractAt(Contract.abi, Contract.address, minter)
   const tokenId = 0
 
   const mintPrice = await contract.getMintPriceForToken(tokenId)
 
-  const signatureMint = await signMintRequest(
-    tokenId,
-    minter.address,
-    0,
-    manager
-  )
+  const signatureMint = await signMintRequest(tokenId, minter.address, 0, manager)
 
   const estimation = await contract.estimateGas.mint(tokenId, signatureMint, {
     value: mintPrice,

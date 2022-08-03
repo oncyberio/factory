@@ -8,8 +8,7 @@ pragma experimental ABIEncoderV2;
 /******************************************************************************/
 
 library LibDiamond {
-  bytes32 public constant DIAMOND_STORAGE_POSITION =
-    keccak256('diamond.standard.diamond.storage');
+  bytes32 public constant DIAMOND_STORAGE_POSITION = keccak256('diamond.standard.diamond.storage');
 
   struct FacetAddressAndPosition {
     address facetAddress;

@@ -1,12 +1,9 @@
-// @ts-ignore-next-line
-import { ethers, deployments } from 'hardhat'
 import { Biconomy } from '@biconomy/mexa'
-import { signCreateDropRequest } from '../lib/utils'
 import { BigNumber } from 'ethers'
+import { deployments, ethers } from 'hardhat'
+import { signCreateDropRequest } from '../lib/utils'
 
-const ethersProvider = new ethers.providers.JsonRpcProvider(
-  'https://rpc-mumbai.maticvigil.com'
-)
+const ethersProvider = new ethers.providers.JsonRpcProvider('https://rpc-mumbai.maticvigil.com')
 const biconomy = new Biconomy(ethersProvider, {
   apiKey: process.env.BICONOMY_API_KEY,
   debug: false,
@@ -14,18 +11,10 @@ const biconomy = new Biconomy(ethersProvider, {
 
 async function main() {
   const contractName = 'DiamondCyberDestinationFactory'
-  const minter = new ethers.Wallet(
-    process.env.MUMBAI_ACCOUNT_1_PRIVATE_KEY as string
-  ).connect(ethersProvider)
-  const manager = new ethers.Wallet(
-    process.env.MUMBAI_MANAGER_DESTINATION_PRIVATE_KEY as string
-  )
+  const minter = new ethers.Wallet(process.env.MUMBAI_ACCOUNT_1_PRIVATE_KEY as string).connect(ethersProvider)
+  const manager = new ethers.Wallet(process.env.MUMBAI_MANAGER_DESTINATION_PRIVATE_KEY as string)
   const Contract = await deployments.get(contractName)
-  const contract = await ethers.getContractAt(
-    Contract.abi,
-    Contract.address,
-    minter
-  )
+  const contract = await ethers.getContractAt(Contract.abi, Contract.address, minter)
   const contractInterface = new ethers.utils.Interface(Contract.abi)
 
   const uri = 'QmQwfto3zFsasHnvNpyKW7jZVVkAgxpLAKfxQhTbnykHh8'
@@ -73,17 +62,13 @@ async function main() {
 
   const signedTx = await minter.signTransaction(rawTx)
   await new Promise((resolve, reject) =>
-    biconomy
-      .onEvent(biconomy.READY, () => resolve(true))
-      .onEvent(biconomy.ERROR, (error: Error) => reject(error))
+    biconomy.onEvent(biconomy.READY, () => resolve(true)).onEvent(biconomy.ERROR, (error: Error) => reject(error))
   )
 
   const forwardData = await biconomy.getForwardRequestAndMessageToSign(signedTx)
   console.log(forwardData)
 
-  const signature = await minter.signMessage(
-    forwardData.personalSignatureFormat
-  )
+  const signature = await minter.signMessage(forwardData.personalSignatureFormat)
 
   const data = {
     signature: signature,

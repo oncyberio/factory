@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.10;
+pragma solidity 0.8.15;
 
 //import 'hardhat/console.sol';
 import '@openzeppelin/contracts/utils/cryptography/ECDSA.sol';
@@ -15,11 +15,7 @@ contract CyberDropBase is CyberTokenBase {
 
   event DropCreated(address indexed account, uint256 indexed tokenId);
 
-  function dropMintCounter(uint256 _tokenId, address _minter)
-    public
-    view
-    returns (uint256)
-  {
+  function dropMintCounter(uint256 _tokenId, address _minter) public view returns (uint256) {
     LibDropStorage.Drop storage drop = LibDropStorage.layout().drops[_tokenId];
     require(drop.priceStart != 0, 'DNE');
     return drop.mintCounter[_minter].current();
@@ -85,9 +81,7 @@ contract CyberDropBase is CyberTokenBase {
       sender,
       nonce
     );
-    address recoveredAddress = keccak256(_message)
-      .toEthSignedMessageHash()
-      .recover(_signature);
+    address recoveredAddress = keccak256(_message).toEthSignedMessageHash().recover(_signature);
     require(recoveredAddress == LibAppStorage.layout().manager, 'NM');
     tokenId = LibAppStorage.layout().totalSupply.current();
 
@@ -114,11 +108,7 @@ contract CyberDropBase is CyberTokenBase {
     emit Minted(sender, tokenId, 1);
   }
 
-  function mint(uint256 _tokenId, bytes memory _signature)
-    public
-    payable
-    returns (bool success)
-  {
+  function mint(uint256 _tokenId, bytes memory _signature) public payable returns (bool success) {
     address sender = _msgSender();
     LibDropStorage.Drop storage drop = LibDropStorage.layout().drops[_tokenId];
 
@@ -126,28 +116,17 @@ contract CyberDropBase is CyberTokenBase {
       require(drop.minted.current() < drop.amountCap, 'CR');
     }
 
-    require(
-      block.timestamp > drop.timeStart && block.timestamp <= drop.timeEnd,
-      'OOT'
-    );
+    require(block.timestamp > drop.timeStart && block.timestamp <= drop.timeEnd, 'OOT');
     uint256 timeSpent = block.timestamp - drop.timeStart;
     uint256 duration = drop.timeEnd - drop.timeStart;
-    uint256 price = getPriceFor(
-      timeSpent,
-      duration,
-      drop.priceStart,
-      drop.priceEnd,
-      drop.stepDuration
-    );
+    uint256 price = getPriceFor(timeSpent, duration, drop.priceStart, drop.priceEnd, drop.stepDuration);
     require(msg.value >= price, 'IA');
     uint256 amountOnCyber = (msg.value * drop.shareCyber) / 100;
     uint256 amountCreator = msg.value - amountOnCyber;
 
     uint256 senderDropNonce = drop.mintCounter[sender].current();
     bytes memory _message = abi.encodePacked(_tokenId, sender, senderDropNonce);
-    address recoveredAddress = keccak256(_message)
-      .toEthSignedMessageHash()
-      .recover(_signature);
+    address recoveredAddress = keccak256(_message).toEthSignedMessageHash().recover(_signature);
     require(recoveredAddress == LibAppStorage.layout().manager, 'NM');
 
     // Effects
@@ -162,11 +141,7 @@ contract CyberDropBase is CyberTokenBase {
     return true;
   }
 
-  function getMintPriceForToken(uint256 _tokenId)
-    public
-    view
-    returns (uint256 mintPrice)
-  {
+  function getMintPriceForToken(uint256 _tokenId) public view returns (uint256 mintPrice) {
     LibDropStorage.Drop storage drop = LibDropStorage.layout().drops[_tokenId];
     require(drop.priceStart != 0, 'DNE');
 
@@ -174,21 +149,11 @@ contract CyberDropBase is CyberTokenBase {
       require(drop.minted.current() < drop.amountCap, 'CR');
     }
 
-    require(
-      block.timestamp > drop.timeStart && block.timestamp <= drop.timeEnd,
-      'OOT'
-    );
+    require(block.timestamp > drop.timeStart && block.timestamp <= drop.timeEnd, 'OOT');
     uint256 timeSpent = block.timestamp - drop.timeStart;
     uint256 duration = drop.timeEnd - drop.timeStart;
 
-    return
-      getPriceFor(
-        timeSpent,
-        duration,
-        drop.priceStart,
-        drop.priceEnd,
-        drop.stepDuration
-      );
+    return getPriceFor(timeSpent, duration, drop.priceStart, drop.priceEnd, drop.stepDuration);
   }
 
   function getPriceFor(

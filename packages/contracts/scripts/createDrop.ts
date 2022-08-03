@@ -1,8 +1,7 @@
-// @ts-ignore-next-line
-import { deployments, ethers } from 'hardhat'
-import { Log } from '@ethersproject/abstract-provider/src.ts/index'
-import { signCreateDropRequest } from '../lib/utils'
 import { parseEther } from 'ethers/lib/utils'
+import { deployments, ethers } from 'hardhat'
+import { Log } from 'hardhat-deploy/dist/types'
+import { signCreateDropRequest } from '../lib/utils'
 
 async function main() {
   const contractName = 'DiamondCyberDestinationFactory'
@@ -12,11 +11,7 @@ async function main() {
   const minter = accounts[0]
 
   const Contract = await deployments.get(contractName)
-  const contract = await ethers.getContractAt(
-    Contract.abi,
-    Contract.address,
-    minter
-  )
+  const contract = await ethers.getContractAt(Contract.abi, Contract.address, minter)
 
   const uri = 'QmQwfto3zFsasHnvNpyKW7jZVVkAgxpLAKfxQhTbnykHh8'
   const timeStart = parseInt((Date.now() / 1000).toString())

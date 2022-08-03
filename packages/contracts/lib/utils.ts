@@ -14,28 +14,13 @@ export async function signCreateDropRequest(
   signer: Signer
 ): Promise<string> {
   const pUri = utils.toUtf8Bytes(uri)
-  const pTimeStart = utils.hexZeroPad(
-    BigNumber.from(timeStart).toHexString(),
-    32
-  )
+  const pTimeStart = utils.hexZeroPad(BigNumber.from(timeStart).toHexString(), 32)
   const pTimeEnd = utils.hexZeroPad(BigNumber.from(timeEnd).toHexString(), 32)
-  const pPriceStart = utils.hexZeroPad(
-    BigNumber.from(priceStart).toHexString(),
-    32
-  )
+  const pPriceStart = utils.hexZeroPad(BigNumber.from(priceStart).toHexString(), 32)
   const pPriceEnd = utils.hexZeroPad(BigNumber.from(priceEnd).toHexString(), 32)
-  const pStepDuration = utils.hexZeroPad(
-    BigNumber.from(stepDuration).toHexString(),
-    32
-  )
-  const pAmountCap = utils.hexZeroPad(
-    BigNumber.from(amountCap).toHexString(),
-    32
-  )
-  const pShareCyber = utils.hexZeroPad(
-    BigNumber.from(shareCyber).toHexString(),
-    32
-  )
+  const pStepDuration = utils.hexZeroPad(BigNumber.from(stepDuration).toHexString(), 32)
+  const pAmountCap = utils.hexZeroPad(BigNumber.from(amountCap).toHexString(), 32)
+  const pShareCyber = utils.hexZeroPad(BigNumber.from(shareCyber).toHexString(), 32)
   const pCreator = utils.arrayify(creator)
   const pNonce = utils.hexZeroPad(BigNumber.from(nonce).toHexString(), 32)
   const message = utils.concat([

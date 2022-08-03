@@ -27,10 +27,6 @@ jobs:
         run: npm i
         env:
           CI: true
-      - name: Fix deps
-        run: cd packages/contracts && npm run fix:deps
-        env:
-          CI: true
       - name: Testing
         run: cd packages/contracts && npm run test:coverage
         env:
@@ -54,10 +50,6 @@ jobs:
           key: nodeModules-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
       - name: Install packages
         run: npm i
-        env:
-          CI: true
-      - name: Fix deps
-        run: cd packages/contracts && npm run fix:deps
         env:
           CI: true
       - name: Linter

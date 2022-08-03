@@ -1,5 +1,4 @@
-// @ts-ignore-next-line
-import { ethers, deployments, getNamedAccounts } from 'hardhat'
+import { deployments, ethers, getNamedAccounts } from 'hardhat'
 
 async function main() {
   const contractName = 'DiamondCyberDestinationUtilityFactory'
@@ -8,11 +7,7 @@ async function main() {
   const minter = accounts[0]
 
   const Contract = await deployments.get(contractName)
-  const contract = await ethers.getContractAt(
-    Contract.abi,
-    Contract.address,
-    minter
-  )
+  const contract = await ethers.getContractAt(Contract.abi, Contract.address, minter)
 
   const tx = await contract.initialize(
     'ipfs://',
