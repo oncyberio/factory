@@ -9,8 +9,11 @@
     "prettier": "prettier --check . && lerna run prettier",
     "prettier:write": "prettier --write . && lerna run prettier:write"
   },
+  "engines": {
+    "node": "16.x"
+  },
   "devDependencies": {
-    "lerna": "^4.0.0",
-    "prettier": "^2.6.0"
+    "lerna": "^5.3.0",
+    "prettier": "^2.7.1"
   }
 }

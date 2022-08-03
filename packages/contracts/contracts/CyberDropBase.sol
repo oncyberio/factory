@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.13;
+pragma solidity 0.8.15;
 
 //import 'hardhat/console.sol';
 import '@openzeppelin/contracts/utils/cryptography/ECDSA.sol';
@@ -15,11 +15,7 @@ contract CyberDropBase is CyberTokenBase {
 
   event DropCreated(address indexed account, uint256 indexed tokenId);
 
-  function dropMintCounter(uint256 _tokenId, address _minter)
-    external
-    view
-    returns (uint256)
-  {
+  function dropMintCounter(uint256 _tokenId, address _minter) external view returns (uint256) {
     LibDropStorage.Drop storage drop = LibDropStorage.layout().drops[_tokenId];
     require(drop.amountCap != 0, 'DNE');
     return drop.mintCounter[_minter].current();
@@ -40,15 +36,7 @@ contract CyberDropBase is CyberTokenBase {
   {
     LibDropStorage.Drop storage drop = LibDropStorage.layout().drops[_tokenId];
     require(drop.amountCap != 0, 'DNE');
-    return (
-      drop.timeStart,
-      drop.timeEnd,
-      drop.price,
-      drop.amountCap,
-      drop.shareCyber,
-      drop.creator,
-      drop.minted
-    );
+    return (drop.timeStart, drop.timeEnd, drop.price, drop.amountCap, drop.shareCyber, drop.creator, drop.minted);
   }
 
   function createDrop(
@@ -77,9 +65,7 @@ contract CyberDropBase is CyberTokenBase {
       sender,
       nonce
     );
-    address recoveredAddress = keccak256(_message)
-      .toEthSignedMessageHash()
-      .recover(_signature);
+    address recoveredAddress = keccak256(_message).toEthSignedMessageHash().recover(_signature);
     require(recoveredAddress == layout.manager, 'NM');
     tokenId = layout.totalSupply.current();
 
@@ -109,24 +95,14 @@ contract CyberDropBase is CyberTokenBase {
 
     require(drop.amountCap - drop.minted >= _quantity, 'CR');
 
-    require(
-      block.timestamp > drop.timeStart && block.timestamp <= drop.timeEnd,
-      'OOT'
-    );
+    require(block.timestamp > drop.timeStart && block.timestamp <= drop.timeEnd, 'OOT');
 
     require(msg.value == drop.price * _quantity, 'IA');
 
     uint256 senderDropNonce = drop.mintCounter[sender].current();
-    bytes memory _message = abi.encodePacked(
-      _tokenId,
-      _quantity,
-      sender,
-      senderDropNonce
-    );
+    bytes memory _message = abi.encodePacked(_tokenId, _quantity, sender, senderDropNonce);
     LibAppStorage.Layout storage layout = LibAppStorage.layout();
-    address recoveredAddress = keccak256(_message)
-      .toEthSignedMessageHash()
-      .recover(_signature);
+    address recoveredAddress = keccak256(_message).toEthSignedMessageHash().recover(_signature);
     require(recoveredAddress == layout.manager, 'NM');
 
     // Effects
