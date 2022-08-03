@@ -22,6 +22,7 @@ import type {
 } from "../../../../../common";
 
 export interface IERC1155EnumerableInterface extends utils.Interface {
+  contractName: "IERC1155Enumerable";
   functions: {
     "accountsByToken(uint256)": FunctionFragment;
     "tokensByAccount(address)": FunctionFragment;
@@ -75,6 +76,7 @@ export interface IERC1155EnumerableInterface extends utils.Interface {
 }
 
 export interface IERC1155Enumerable extends BaseContract {
+  contractName: "IERC1155Enumerable";
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;

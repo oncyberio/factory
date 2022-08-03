@@ -19,6 +19,7 @@ import type {
 } from "../../../../../common";
 
 export interface IERC1155MetadataInternalInterface extends utils.Interface {
+  contractName: "IERC1155MetadataInternal";
   functions: {};
 
   events: {
@@ -37,6 +38,7 @@ export type URIEvent = TypedEvent<[string, BigNumber], URIEventObject>;
 export type URIEventFilter = TypedEventFilter<URIEvent>;
 
 export interface IERC1155MetadataInternal extends BaseContract {
+  contractName: "IERC1155MetadataInternal";
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;

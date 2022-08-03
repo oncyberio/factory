@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.15;
+pragma solidity 0.8.13;
 
 //import 'hardhat/console.sol';
 import '@openzeppelin/contracts/utils/cryptography/ECDSA.sol';
@@ -16,7 +16,11 @@ contract CyberTokenBase is BaseRelayRecipient, ERC1155URI {
   using ECDSA for bytes32;
   using Counters for Counters.Counter;
 
-  event Minted(address indexed account, uint256 indexed tokenId, uint256 indexed amount);
+  event Minted(
+    address indexed account,
+    uint256 indexed tokenId,
+    uint256 indexed amount
+  );
 
   function initialize(
     string memory _uri,
@@ -28,7 +32,9 @@ contract CyberTokenBase is BaseRelayRecipient, ERC1155URI {
     require(LibDiamond.diamondStorage().contractOwner == msg.sender, 'NO');
 
     BaseRelayRecipientStorage.layout().trustedForwarder = _trustedForwarder;
-    LibDiamond.diamondStorage().supportedInterfaces[type(IERC1155).interfaceId] = true;
+    LibDiamond.diamondStorage().supportedInterfaces[
+      type(IERC1155).interfaceId
+    ] = true;
     setURI(_uri);
     LibAppStorage.layout().manager = _manager;
     LibAppStorage.layout().opensea = _opensea;

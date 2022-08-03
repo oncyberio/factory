@@ -21,6 +21,7 @@ import type {
 } from "../../../common";
 
 export interface IERC165Interface extends utils.Interface {
+  contractName: "IERC165";
   functions: {
     "supportsInterface(bytes4)": FunctionFragment;
   };
@@ -41,6 +42,7 @@ export interface IERC165Interface extends utils.Interface {
 }
 
 export interface IERC165 extends BaseContract {
+  contractName: "IERC165";
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;

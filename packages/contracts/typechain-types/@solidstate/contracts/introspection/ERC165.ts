@@ -21,6 +21,7 @@ import type {
 } from "../../../common";
 
 export interface ERC165Interface extends utils.Interface {
+  contractName: "ERC165";
   functions: {
     "supportsInterface(bytes4)": FunctionFragment;
   };
@@ -41,6 +42,7 @@ export interface ERC165Interface extends utils.Interface {
 }
 
 export interface ERC165 extends BaseContract {
+  contractName: "ERC165";
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
