@@ -31,15 +31,7 @@ async function main() {
     nonce,
     manager
   )
-  const tx = await contract.createDrop(
-    uri,
-    timeStart,
-    timeEnd,
-    price,
-    amountCap,
-    shareCyber,
-    signature
-  )
+  const tx = await contract.createDrop(uri, timeStart, timeEnd, price, amountCap, shareCyber, signature)
   const txReceipt = await tx.wait()
   const iFace = new ethers.utils.Interface(Contract.abi)
   let tokenId = null

@@ -28,7 +28,6 @@ import type {
 } from "../../../../../common";
 
 export interface ERC1155BaseInterface extends utils.Interface {
-  contractName: "ERC1155Base";
   functions: {
     "balanceOf(address,uint256)": FunctionFragment;
     "balanceOfBatch(address[],uint256[])": FunctionFragment;
@@ -169,7 +168,6 @@ export type TransferSingleEvent = TypedEvent<
 export type TransferSingleEventFilter = TypedEventFilter<TransferSingleEvent>;
 
 export interface ERC1155Base extends BaseContract {
-  contractName: "ERC1155Base";
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;

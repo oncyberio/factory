@@ -19,7 +19,6 @@ import type {
 } from "../../../../../common";
 
 export interface ERC1155MetadataInternalInterface extends utils.Interface {
-  contractName: "ERC1155MetadataInternal";
   functions: {};
 
   events: {
@@ -38,7 +37,6 @@ export type URIEvent = TypedEvent<[string, BigNumber], URIEventObject>;
 export type URIEventFilter = TypedEventFilter<URIEvent>;
 
 export interface ERC1155MetadataInternal extends BaseContract {
-  contractName: "ERC1155MetadataInternal";
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;

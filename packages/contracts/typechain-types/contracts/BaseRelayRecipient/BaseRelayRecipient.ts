@@ -21,7 +21,6 @@ import type {
 } from "../../common";
 
 export interface BaseRelayRecipientInterface extends utils.Interface {
-  contractName: "BaseRelayRecipient";
   functions: {
     "isTrustedForwarder(address)": FunctionFragment;
   };
@@ -42,7 +41,6 @@ export interface BaseRelayRecipientInterface extends utils.Interface {
 }
 
 export interface BaseRelayRecipient extends BaseContract {
-  contractName: "BaseRelayRecipient";
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
