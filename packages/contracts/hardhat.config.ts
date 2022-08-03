@@ -13,6 +13,15 @@ const config: HardhatUserConfig = {
   preprocess: {
     eachLine: removeConsoleLog((hre) => hre.network.name !== 'localhost' && hre.network.name !== 'hardhat'),
   },
+  gasReporter: {
+    currency: 'EUR',
+    enabled: true,
+    coinmarketcap: process.env.COINMARKETCAP_API_KEY,
+    gasPrice: 100, // in gwei
+  },
+  etherscan: {
+    apiKey: process.env.ETHERSCAN_API_KEY,
+  },
   solidity: {
     compilers: [
       {
