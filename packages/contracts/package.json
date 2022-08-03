@@ -89,8 +89,5 @@
     "branches": 100,
     "functions": 100,
     "lines": 100
-  },
-  "dependencies": {
-    "@nomiclabs/hardhat-ethers": "^2.1.0"
   }
 }
