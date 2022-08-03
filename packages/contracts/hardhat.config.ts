@@ -1,46 +1,22 @@
+import '@nomicfoundation/hardhat-toolbox'
 import 'dotenv/config'
-import { HardhatUserConfig } from 'hardhat/types'
-import '@nomiclabs/hardhat-waffle'
-import '@nomiclabs/hardhat-etherscan'
-import '@nomiclabs/hardhat-ethers'
-import '@typechain/hardhat'
+import { parseUnits } from 'ethers/lib/utils'
 import 'hardhat-deploy'
-import 'hardhat-deploy-ethers'
-import 'hardhat-gas-reporter'
 import { removeConsoleLog } from 'hardhat-preprocessor'
 import 'hardhat-tracer'
-import 'solidity-coverage'
-import { parseUnits } from 'ethers/lib/utils'
+import { HardhatUserConfig } from 'hardhat/types'
 
-const defaultPrivateKey =
-  '0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80' // hardhat 0
+// hardhat 0 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+const defaultPrivateKey = '0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80'
 
 const config: HardhatUserConfig = {
   preprocess: {
-    eachLine: removeConsoleLog(
-      (hre) =>
-        hre.network.name !== 'localhost' && hre.network.name !== 'hardhat'
-    ),
-  },
-  gasReporter: {
-    currency: 'EUR',
-    enabled: true,
-    coinmarketcap: process.env.COINMARKETCAP_API_KEY,
-    gasPrice: 100, // in gwei
-  },
-  etherscan: {
-    apiKey: process.env.ETHERSCAN_API_KEY,
+    eachLine: removeConsoleLog((hre) => hre.network.name !== 'localhost' && hre.network.name !== 'hardhat'),
   },
   solidity: {
     compilers: [
       {
-        version: '0.8.13',
-        settings: {
-          optimizer: {
-            enabled: true,
-            runs: 20000,
-          },
-        },
+        version: '0.8.15',
       },
       {
         version: '0.7.6',
@@ -72,23 +48,17 @@ const config: HardhatUserConfig = {
     rinkeby: {
       chainId: 4,
       url: 'https://rinkeby.infura.io/v3/b89e58ca51184cb783845c58340629c4',
-      gasPrice: parseUnits('50', 'gwei').toNumber(),
+      gasPrice: parseUnits('2', 'gwei').toNumber(),
       accounts: [process.env.RINKEBY_PRIVATE_KEY || defaultPrivateKey]
+        .concat(process.env.RINKEBY_ACCOUNT_1_PRIVATE_KEY ? process.env.RINKEBY_ACCOUNT_1_PRIVATE_KEY : [])
         .concat(
-          process.env.RINKEBY_ACCOUNT_1_PRIVATE_KEY
-            ? process.env.RINKEBY_ACCOUNT_1_PRIVATE_KEY
-            : []
-        )
-        .concat(
-          process.env.RINKEBY_MANAGER_DESTINATION_PRIVATE_KEY
-            ? process.env.RINKEBY_MANAGER_DESTINATION_PRIVATE_KEY
-            : []
+          process.env.RINKEBY_MANAGER_DESTINATION_PRIVATE_KEY ? process.env.RINKEBY_MANAGER_DESTINATION_PRIVATE_KEY : []
         ),
     },
     goerli: {
       chainId: 5,
       url: 'https://goerli.infura.io/v3/b89e58ca51184cb783845c58340629c4',
-      gasPrice: parseUnits('1', 'gwei').toNumber(),
+      gasPrice: parseUnits('2', 'gwei').toNumber(),
       accounts: [process.env.RINKEBY_PRIVATE_KEY || defaultPrivateKey]
         .concat(
           process.env.RINKEBY_ACCOUNT_1_PRIVATE_KEY
