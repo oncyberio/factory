@@ -73,7 +73,7 @@ const config: HardhatUserConfig = {
     },
     polygon: {
       chainId: 137,
-      url: process.env.POLYGON_RPC,
+      url: process.env.POLYGON_RPC || "https://polygon.infura.io/v3/b89e58ca51184cb783845c58340629c4",
       gasPrice: parseUnits('50', 'gwei').toNumber(),
       accounts: [process.env.POLYGON_PRIVATE_KEY || defaultPrivateKey]
     },
