@@ -1,8 +1,7 @@
-// @ts-ignore-next-line
-import { deployments, ethers } from 'hardhat'
-import { Log } from '@ethersproject/abstract-provider/src.ts/index'
-import { signCreateDropRequest } from '../lib/utils'
 import { parseEther } from 'ethers/lib/utils'
+import { deployments, ethers } from 'hardhat'
+import { Log } from 'hardhat-deploy/dist/types'
+import { signCreateDropRequest } from '../lib/utils'
 
 async function main() {
   const contractName = 'DiamondCyberDestinationFactory'
@@ -12,18 +11,12 @@ async function main() {
   const minter = accounts[0]
 
   const Contract = await deployments.get(contractName)
-  const contract = await ethers.getContractAt(
-    Contract.abi,
-    Contract.address,
-    minter
-  )
+  const contract = await ethers.getContractAt(Contract.abi, Contract.address, minter)
 
   const uri = 'QmQwfto3zFsasHnvNpyKW7jZVVkAgxpLAKfxQhTbnykHh8'
   const timeStart = parseInt((Date.now() / 1000).toString())
   const timeEnd = parseInt((Date.now() / 1000 + 100000000).toString())
-  const priceStart = parseEther('1')
-  const priceEnd = parseEther('0.1')
-  const stepDuration = 300
+  const price = parseEther('1')
   const amountCap = 100
   const shareCyber = 50
   const nonce = await contract.minterNonce(minter.address)
@@ -31,26 +24,14 @@ async function main() {
     uri,
     timeStart,
     timeEnd,
-    priceStart,
-    priceEnd,
-    stepDuration,
+    price,
     amountCap,
     shareCyber,
     minter.address,
     nonce,
     manager
   )
-  const tx = await contract.createDrop(
-    uri,
-    timeStart,
-    timeEnd,
-    priceStart,
-    priceEnd,
-    stepDuration,
-    amountCap,
-    shareCyber,
-    signature
-  )
+  const tx = await contract.createDrop(uri, timeStart, timeEnd, price, amountCap, shareCyber, signature)
   const txReceipt = await tx.wait()
   const iFace = new ethers.utils.Interface(Contract.abi)
   let tokenId = null
