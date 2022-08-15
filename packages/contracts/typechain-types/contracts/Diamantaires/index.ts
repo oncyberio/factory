@@ -4,6 +4,8 @@
 import type * as destination from "./Destination";
 import type * as destinationUtility from "./DestinationUtility";
 import type * as object from "./Object";
+import type * as onCyberAndFriends from "./OnCyberAndFriends";
 export type { destination };
 export type { destinationUtility };
 export type { object };
+export type { onCyberAndFriends };

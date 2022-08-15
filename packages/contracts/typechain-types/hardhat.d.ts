@@ -97,6 +97,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.CyberObjectFactoryFacet__factory>;
     getContractFactory(
+      name: "OnCyberAndFriendsFactoryFacet",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.OnCyberAndFriendsFactoryFacet__factory>;
+    getContractFactory(
       name: "LibDiamond",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.LibDiamond__factory>;
@@ -218,6 +222,11 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.CyberObjectFactoryFacet>;
+    getContractAt(
+      name: "OnCyberAndFriendsFactoryFacet",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.OnCyberAndFriendsFactoryFacet>;
     getContractAt(
       name: "LibDiamond",
       address: string,

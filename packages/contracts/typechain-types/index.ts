@@ -24,6 +24,7 @@ export type { CyberTokenBase } from "./contracts/CyberTokenBase";
 export type { CyberDestinationFactoryFacet } from "./contracts/Diamantaires/Destination/CyberDestinationFactoryFacet";
 export type { CyberDestinationUtilityFactoryFacet } from "./contracts/Diamantaires/DestinationUtility/CyberDestinationUtilityFactoryFacet";
 export type { CyberObjectFactoryFacet } from "./contracts/Diamantaires/Object/CyberObjectFactoryFacet";
+export type { OnCyberAndFriendsFactoryFacet } from "./contracts/Diamantaires/OnCyberAndFriends/OnCyberAndFriendsFactoryFacet";
 export type { LibDiamond } from "./contracts/Diamond/LibDiamond";
 export type { ERC1155URI } from "./contracts/ERC1155URI/ERC1155URI";
 export type { LibAppStorage } from "./contracts/libraries/LibAppStorage";
@@ -50,6 +51,7 @@ export { CyberTokenBase__factory } from "./factories/contracts/CyberTokenBase__f
 export { CyberDestinationFactoryFacet__factory } from "./factories/contracts/Diamantaires/Destination/CyberDestinationFactoryFacet__factory";
 export { CyberDestinationUtilityFactoryFacet__factory } from "./factories/contracts/Diamantaires/DestinationUtility/CyberDestinationUtilityFactoryFacet__factory";
 export { CyberObjectFactoryFacet__factory } from "./factories/contracts/Diamantaires/Object/CyberObjectFactoryFacet__factory";
+export { OnCyberAndFriendsFactoryFacet__factory } from "./factories/contracts/Diamantaires/OnCyberAndFriends/OnCyberAndFriendsFactoryFacet__factory";
 export { LibDiamond__factory } from "./factories/contracts/Diamond/LibDiamond__factory";
 export { ERC1155URI__factory } from "./factories/contracts/ERC1155URI/ERC1155URI__factory";
 export { LibAppStorage__factory } from "./factories/contracts/libraries/LibAppStorage__factory";
