@@ -48,6 +48,7 @@ const config: HardhatUserConfig = {
       // accounts: [
       // defaultPrivateKey,
       // ]
+      gasPrice: parseUnits('10', 'gwei').toNumber(),
     },
     // ETHEREUM
     rinkeby: {

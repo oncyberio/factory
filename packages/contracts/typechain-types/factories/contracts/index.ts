@@ -8,3 +8,4 @@ export * as diamantaires from "./Diamantaires";
 export * as diamond from "./Diamond";
 export * as erc1155Uri from "./ERC1155URI";
 export * as libraries from "./libraries";
+export { OnCyberMultiSender__factory } from "./OnCyberMultiSender__factory";

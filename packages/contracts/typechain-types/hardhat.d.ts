@@ -116,6 +116,10 @@ declare module "hardhat/types/runtime" {
       name: "LibDropStorage",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.LibDropStorage__factory>;
+    getContractFactory(
+      name: "OnCyberMultiSender",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.OnCyberMultiSender__factory>;
 
     getContractAt(
       name: "ERC165",
@@ -247,6 +251,11 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.LibDropStorage>;
+    getContractAt(
+      name: "OnCyberMultiSender",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.OnCyberMultiSender>;
 
     // default types
     getContractFactory(
