@@ -1,28 +1,30 @@
-// @ts-ignore-next-line
-import { deployments, ethers } from 'hardhat'
+import { BigNumber } from 'ethers'
+import { config, deployments, ethers, network } from 'hardhat'
 import { signMintRequest } from '../lib/utils'
 
 async function main() {
-  const contractName = 'DiamondCyberDestinationFactory'
+  const contractName = 'DiamondOnCyberAndFriendsFactory'
 
   const accounts = await ethers.getSigners()
-  const minter = accounts[3]
-  const manager = accounts[2]
+  const minter = accounts[5]
+  const manager = accounts[3]
 
   const Contract = await deployments.get(contractName)
   const contract = await ethers.getContractAt(Contract.abi, Contract.address, minter)
   const tokenId = 0
-  const quantity = 1
-  const mintPrice = await contract.getMintPriceForToken(tokenId)
+  const quantity = 10000
+  const mintPrice = 0
 
   const signatureMint = await signMintRequest(tokenId, quantity, minter.address, 0, manager)
 
-  const estimation = await contract.estimateGas.mint(tokenId, signatureMint, {
+  const estimation = await contract.estimateGas.mint(tokenId, quantity, signatureMint, {
+    gasPrice: BigNumber.from(config.networks[network.name].gasPrice),
     value: mintPrice,
   })
 
-  const tx = await contract.mint(tokenId, signatureMint, {
+  const tx = await contract.mint(tokenId, quantity, signatureMint, {
     value: mintPrice,
+    gasPrice: BigNumber.from(config.networks[network.name].gasPrice),
     gasLimit: estimation.mul(100).div(90),
   })
 

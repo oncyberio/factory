@@ -1,4 +1,5 @@
-import { deployments, ethers, getNamedAccounts } from 'hardhat'
+import { BigNumber } from 'ethers'
+import { config, deployments, ethers, getNamedAccounts, network } from 'hardhat'
 
 async function main() {
   const contractName = 'DiamondCyberDestinationUtilityFactory'
@@ -14,7 +15,10 @@ async function main() {
     namedAccounts.managerDestinationUtility,
     namedAccounts.biconomyForwarder,
     namedAccounts.opensea,
-    namedAccounts.oncyber
+    namedAccounts.oncyber,
+    {
+      gasPrice: BigNumber.from(config.networks[network.name].gasPrice),
+    }
   )
   console.log('tx', tx)
 }

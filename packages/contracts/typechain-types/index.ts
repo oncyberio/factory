@@ -29,6 +29,7 @@ export type { LibDiamond } from "./contracts/Diamond/LibDiamond";
 export type { ERC1155URI } from "./contracts/ERC1155URI/ERC1155URI";
 export type { LibAppStorage } from "./contracts/libraries/LibAppStorage";
 export type { LibDropStorage } from "./contracts/libraries/LibDropStorage";
+export type { OnCyberMultiSender } from "./contracts/OnCyberMultiSender";
 export * as factories from "./factories";
 export { ERC165__factory } from "./factories/@solidstate/contracts/introspection/ERC165__factory";
 export { IERC165__factory } from "./factories/@solidstate/contracts/introspection/IERC165__factory";
@@ -56,5 +57,6 @@ export { LibDiamond__factory } from "./factories/contracts/Diamond/LibDiamond__f
 export { ERC1155URI__factory } from "./factories/contracts/ERC1155URI/ERC1155URI__factory";
 export { LibAppStorage__factory } from "./factories/contracts/libraries/LibAppStorage__factory";
 export { LibDropStorage__factory } from "./factories/contracts/libraries/LibDropStorage__factory";
+export { OnCyberMultiSender__factory } from "./factories/contracts/OnCyberMultiSender__factory";
 export type { solidstate };
 export type { contracts };

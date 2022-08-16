@@ -8,6 +8,7 @@ import type * as erc1155Uri from "./ERC1155URI";
 import type * as libraries from "./libraries";
 export type { CyberDropBase } from "./CyberDropBase";
 export type { CyberTokenBase } from "./CyberTokenBase";
+export type { OnCyberMultiSender } from "./OnCyberMultiSender";
 export type { baseRelayRecipient };
 export type { diamantaires };
 export type { diamond };

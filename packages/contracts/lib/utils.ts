@@ -1,4 +1,5 @@
 import { BigNumber, Signer, utils } from 'ethers'
+import { formatEther } from 'ethers/lib/utils'
 
 export const tokenURI = (uri: string) => `ipfs://${uri}`
 
@@ -47,3 +48,6 @@ export async function signMintRequest(
 
   return signer.signMessage(pHash)
 }
+
+export const displayAmount = (amount: BigNumber, decimal = 2): string =>
+  parseFloat(formatEther(amount)).toFixed(decimal)
