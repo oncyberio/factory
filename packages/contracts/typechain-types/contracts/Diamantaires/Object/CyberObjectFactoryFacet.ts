@@ -41,6 +41,7 @@ export interface CyberObjectFactoryFacetInterface extends utils.Interface {
     "isTrustedForwarder(address)": FunctionFragment;
     "manager()": FunctionFragment;
     "mint(uint256,uint256,bytes)": FunctionFragment;
+    "mintTransfer(address,uint256,uint256)": FunctionFragment;
     "minterNonce(address)": FunctionFragment;
     "oncyber()": FunctionFragment;
     "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)": FunctionFragment;
@@ -67,6 +68,7 @@ export interface CyberObjectFactoryFacetInterface extends utils.Interface {
       | "isTrustedForwarder"
       | "manager"
       | "mint"
+      | "mintTransfer"
       | "minterNonce"
       | "oncyber"
       | "safeBatchTransferFrom"
@@ -137,6 +139,14 @@ export interface CyberObjectFactoryFacetInterface extends utils.Interface {
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BytesLike>
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "mintTransfer",
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>
     ]
   ): string;
   encodeFunctionData(
@@ -219,6 +229,10 @@ export interface CyberObjectFactoryFacetInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "manager", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "mintTransfer",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "minterNonce",
     data: BytesLike
@@ -459,6 +473,13 @@ export interface CyberObjectFactoryFacet extends BaseContract {
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    mintTransfer(
+      to: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     minterNonce(
       _minter: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -602,6 +623,13 @@ export interface CyberObjectFactoryFacet extends BaseContract {
     _quantity: PromiseOrValue<BigNumberish>,
     _signature: PromiseOrValue<BytesLike>,
     overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  mintTransfer(
+    to: PromiseOrValue<string>,
+    id: PromiseOrValue<BigNumberish>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   minterNonce(
@@ -748,6 +776,13 @@ export interface CyberObjectFactoryFacet extends BaseContract {
       _signature: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<boolean>;
+
+    mintTransfer(
+      to: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     minterNonce(
       _minter: PromiseOrValue<string>,
@@ -949,6 +984,13 @@ export interface CyberObjectFactoryFacet extends BaseContract {
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    mintTransfer(
+      to: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     minterNonce(
       _minter: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -1075,6 +1117,13 @@ export interface CyberObjectFactoryFacet extends BaseContract {
       _quantity: PromiseOrValue<BigNumberish>,
       _signature: PromiseOrValue<BytesLike>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    mintTransfer(
+      to: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     minterNonce(
