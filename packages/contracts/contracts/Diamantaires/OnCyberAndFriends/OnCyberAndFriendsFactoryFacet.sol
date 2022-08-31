@@ -5,8 +5,6 @@ pragma solidity 0.8.15;
 import '../../CyberDropBase.sol';
 
 contract OnCyberAndFriendsFactoryFacet is CyberDropBase {
-  using ECDSA for bytes32;
-  using Counters for Counters.Counter;
 
   function mintTransfer(
     address to,
@@ -25,9 +23,9 @@ contract OnCyberAndFriendsFactoryFacet is CyberDropBase {
 
     // Effects
     drop.minted += amount;
-    drop.mintCounter[to].increment();
     _safeMint(to, tokenId, amount, '');
 
     emit Minted(to, tokenId, amount);
   }
+
 }
