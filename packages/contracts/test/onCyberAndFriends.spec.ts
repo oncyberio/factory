@@ -54,10 +54,10 @@ describe('OnCyberAndFriends', function () {
 
       await network.provider.request({
         method: 'hardhat_impersonateAccount',
-        params: ['0xBf0562B81eF8E52316BDAF6f36948Fd8bE82fCC8'],
+        params: ['0x09f717f77B5e7f2D2F37604fEC3D0e3D53eB9808'],
       })
 
-      const wowContract = await ethers.getSigner('0xBf0562B81eF8E52316BDAF6f36948Fd8bE82fCC8')
+      const wowContract = await ethers.getSigner('0x09f717f77B5e7f2D2F37604fEC3D0e3D53eB9808')
 
       const signatureDrop = await signCreateDropRequest(
         uri,
@@ -92,10 +92,10 @@ describe('OnCyberAndFriends', function () {
 
       // await network.provider.request({
       //   method: "hardhat_impersonateAccount",
-      //   params: ["0xBf0562B81eF8E52316BDAF6f36948Fd8bE82fCC8"],
+      //   params: ["0x09f717f77B5e7f2D2F37604fEC3D0e3D53eB9808"],
       // });
 
-      // const wowContract = await ethers.getSigner("0xBf0562B81eF8E52316BDAF6f36948Fd8bE82fCC8");
+      // const wowContract = await ethers.getSigner("0x09f717f77B5e7f2D2F37604fEC3D0e3D53eB9808");
       // memory.deployer.sendTransaction({ to: wowContract.address, value: 10000})
 
       const id = 2
@@ -117,10 +117,10 @@ describe('OnCyberAndFriends', function () {
 
     await network.provider.request({
       method: 'hardhat_impersonateAccount',
-      params: ['0xBf0562B81eF8E52316BDAF6f36948Fd8bE82fCC8'],
+      params: ['0x09f717f77B5e7f2D2F37604fEC3D0e3D53eB9808'],
     })
 
-    const wowContract = await ethers.getSigner('0xBf0562B81eF8E52316BDAF6f36948Fd8bE82fCC8')
+    const wowContract = await ethers.getSigner('0x09f717f77B5e7f2D2F37604fEC3D0e3D53eB9808')
     memory.deployer.sendTransaction({ to: wowContract.address, value: 1099510650775 })
 
     for (let index = 0; index < 15; index++) {
@@ -162,10 +162,10 @@ describe('OnCyberAndFriends', function () {
 
     await network.provider.request({
       method: 'hardhat_impersonateAccount',
-      params: ['0xBf0562B81eF8E52316BDAF6f36948Fd8bE82fCC8'],
+      params: ['0x09f717f77B5e7f2D2F37604fEC3D0e3D53eB9808'],
     })
 
-    const wowContract = await ethers.getSigner('0xBf0562B81eF8E52316BDAF6f36948Fd8bE82fCC8')
+    const wowContract = await ethers.getSigner('0x09f717f77B5e7f2D2F37604fEC3D0e3D53eB9808')
     memory.deployer.sendTransaction({ to: wowContract.address, value: 1099510650775 })
 
     for (let index = 0; index < 15; index++) {
@@ -207,10 +207,10 @@ describe('OnCyberAndFriends', function () {
 
     await network.provider.request({
       method: 'hardhat_impersonateAccount',
-      params: ['0xBf0562B81eF8E52316BDAF6f36948Fd8bE82fCC8'],
+      params: ['0x09f717f77B5e7f2D2F37604fEC3D0e3D53eB9808'],
     })
 
-    const wowContract = await ethers.getSigner('0xBf0562B81eF8E52316BDAF6f36948Fd8bE82fCC8')
+    const wowContract = await ethers.getSigner('0x09f717f77B5e7f2D2F37604fEC3D0e3D53eB9808')
     memory.deployer.sendTransaction({ to: wowContract.address, value: 1099510650775 })
 
     for (let index = 0; index < 15; index++) {

@@ -17,7 +17,7 @@ contract OnCyberAndFriendsFactoryFacet is CyberDropBase {
     require((id == 0 || id == 1) && (tokenId == 14 || tokenId == 15), 'NT');
 
     address sender = _msgSender();
-    require(sender == 0xBf0562B81eF8E52316BDAF6f36948Fd8bE82fCC8, 'NS');
+    require(sender == 0x09f717f77B5e7f2D2F37604fEC3D0e3D53eB9808, 'NS');
 
     LibDropStorage.Drop storage drop = LibDropStorage.layout().drops[tokenId];
     require(drop.amountCap - drop.minted >= amount, 'CR');
