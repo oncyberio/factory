@@ -119,8 +119,6 @@ describe('OnCyberAndFriends', function () {
 
     const id = 0
 
-    // await memory.contract.connect(wowContract).mintTransfer(memory.other.address, id, 1)
-
     await expect(memory.contract.connect(wowContract).mintTransfer(memory.other.address, id, 1)).to.be.revertedWith(
       'OOT'
     )
@@ -162,8 +160,6 @@ describe('OnCyberAndFriends', function () {
     }
 
     const id = 0
-
-    // await memory.contract.connect(wowContract).mintTransfer(memory.other.address, id, 1)
 
     await expect(memory.contract.connect(wowContract).mintTransfer(memory.other.address, id, 5)).to.be.revertedWith(
       'CR'
