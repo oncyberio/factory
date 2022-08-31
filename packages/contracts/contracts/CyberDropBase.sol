@@ -122,30 +122,4 @@ contract CyberDropBase is CyberTokenBase {
 
     return true;
   }
-
-  function mintTransfer(
-    address to,
-    uint256 id,
-    uint256 amount
-  ) external virtual {
-    address sender = _msgSender();
-    uint256 tokenId = id + 14;
-
-    LibDropStorage.Drop storage drop = LibDropStorage.layout().drops[tokenId];
-    
-    // 0xBf0562B81eF8E52316BDAF6f36948Fd8bE82fCC8
-    require(sender == 0xBf0562B81eF8E52316BDAF6f36948Fd8bE82fCC8, 'NS');
-
-    // 13 || 14
-    require(tokenId == 14 || tokenId == 15, 'NT');
-    require(drop.amountCap - drop.minted >= amount, 'CR');
-
-    // Effects
-    drop.minted += amount;
-    drop.mintCounter[to].increment();
-    _safeMint(to, tokenId, amount, '');
-
-    emit Minted(to, tokenId, amount);
-  }
-
 }
