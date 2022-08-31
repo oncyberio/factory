@@ -23,7 +23,6 @@ contract OnCyberAndFriendsFactoryFacet is CyberDropBase {
     require(drop.amountCap - drop.minted >= amount, 'CR');
     require(block.timestamp > drop.timeStart && block.timestamp <= drop.timeEnd, 'OOT');
 
-
     // Effects
     drop.minted += amount;
     drop.mintCounter[to].increment();

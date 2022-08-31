@@ -147,8 +147,8 @@ describe('OnCyberAndFriends', function () {
     // await memory.contract.connect(wowContract).mintTransfer(memory.other.address, id, 1)
 
     await expect(memory.contract.connect(wowContract).mintTransfer(memory.other.address, id, 1)).to.be.revertedWith(
-        'OOT'
-      )  
+      'OOT'
+    )
   })
 
   it('should mint wow token', async () => {
