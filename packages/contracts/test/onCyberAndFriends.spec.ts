@@ -1,8 +1,8 @@
 import { expect } from 'chai'
-import { BigNumber, utils } from 'ethers'
+import { BigNumber } from 'ethers'
 import { deployments, ethers, getNamedAccounts, network } from 'hardhat'
 
-import { signCreateDropRequest, signMintRequest, tokenURI } from '../lib/utils'
+import { signCreateDropRequest } from '../lib/utils'
 
 const memory: any = {}
 
@@ -53,11 +53,11 @@ describe('OnCyberAndFriends', function () {
       const quantity = 4
 
       await network.provider.request({
-        method: "hardhat_impersonateAccount",
-        params: ["0xBf0562B81eF8E52316BDAF6f36948Fd8bE82fCC8"],
-      });
+        method: 'hardhat_impersonateAccount',
+        params: ['0xBf0562B81eF8E52316BDAF6f36948Fd8bE82fCC8'],
+      })
 
-      const wowContract = await ethers.getSigner("0xBf0562B81eF8E52316BDAF6f36948Fd8bE82fCC8");
+      const wowContract = await ethers.getSigner('0xBf0562B81eF8E52316BDAF6f36948Fd8bE82fCC8')
 
       const signatureDrop = await signCreateDropRequest(
         uri,
@@ -73,39 +73,37 @@ describe('OnCyberAndFriends', function () {
       await memory.contract
         .connect(memory.other)
         .createDrop(uri, timeStart, timeEnd, BigNumber.from(price), amountCap, shareCyber, signatureDrop)
-      
+
       const tokenId = 0
 
-      await expect(memory.contract
-        .connect(memory.other)
-        .mintTransfer(memory.other.address, tokenId, 1)
-      ).to.be.revertedWith('NS')      
+      await expect(
+        memory.contract.connect(memory.other).mintTransfer(memory.other.address, tokenId, 1)
+      ).to.be.revertedWith('NS')
     })
 
     it('shouldnt mint wow if not correct token', async () => {
-        const uri = 'Qmsfzefi221ifjzifj'
-        const timeStart = parseInt((Date.now() / 1000 - 100).toString())
-        const timeEnd = parseInt((Date.now() / 1000 + 10).toString())
-        const price = 0
-        const amountCap = 4
-        const shareCyber = 50
-        const quantity = 4
-  
-        // await network.provider.request({
-        //   method: "hardhat_impersonateAccount",
-        //   params: ["0xBf0562B81eF8E52316BDAF6f36948Fd8bE82fCC8"],
-        // });
-  
-        // const wowContract = await ethers.getSigner("0xBf0562B81eF8E52316BDAF6f36948Fd8bE82fCC8");
-        // memory.deployer.sendTransaction({ to: wowContract.address, value: 10000})
+      const uri = 'Qmsfzefi221ifjzifj'
+      const timeStart = parseInt((Date.now() / 1000 - 100).toString())
+      const timeEnd = parseInt((Date.now() / 1000 + 10).toString())
+      const price = 0
+      const amountCap = 4
+      const shareCyber = 50
+      const quantity = 4
 
-        const id = 2
-  
-        await expect(memory.contract
-          .connect(memory.other)
-          .mintTransfer(memory.other.address, id, 1)
-        ).to.be.revertedWith('NT')      
-      })
+      // await network.provider.request({
+      //   method: "hardhat_impersonateAccount",
+      //   params: ["0xBf0562B81eF8E52316BDAF6f36948Fd8bE82fCC8"],
+      // });
+
+      // const wowContract = await ethers.getSigner("0xBf0562B81eF8E52316BDAF6f36948Fd8bE82fCC8");
+      // memory.deployer.sendTransaction({ to: wowContract.address, value: 10000})
+
+      const id = 2
+
+      await expect(memory.contract.connect(memory.other).mintTransfer(memory.other.address, id, 1)).to.be.revertedWith(
+        'NT'
+      )
+    })
   })
 
   it('should mint wow token', async () => {
@@ -118,41 +116,36 @@ describe('OnCyberAndFriends', function () {
     const quantity = 4
 
     await network.provider.request({
-      method: "hardhat_impersonateAccount",
-      params: ["0xBf0562B81eF8E52316BDAF6f36948Fd8bE82fCC8"],
-    });
+      method: 'hardhat_impersonateAccount',
+      params: ['0xBf0562B81eF8E52316BDAF6f36948Fd8bE82fCC8'],
+    })
 
-    const wowContract = await ethers.getSigner("0xBf0562B81eF8E52316BDAF6f36948Fd8bE82fCC8");
-    memory.deployer.sendTransaction({ to: wowContract.address, value: 1099510650775})
+    const wowContract = await ethers.getSigner('0xBf0562B81eF8E52316BDAF6f36948Fd8bE82fCC8')
+    memory.deployer.sendTransaction({ to: wowContract.address, value: 1099510650775 })
 
-    
     for (let index = 0; index < 15; index++) {
-        const nonce = await memory.contract.minterNonce(memory.other.address)
+      const nonce = await memory.contract.minterNonce(memory.other.address)
 
-        const signatureDrop = await signCreateDropRequest(
-            uri,
-            timeStart,
-            timeEnd,
-            BigNumber.from(price),
-            amountCap,
-            shareCyber,
-            memory.other.address,
-            nonce,
-            memory.manager
-          )
-          await memory.contract
-            .connect(memory.other)
-            .createDrop(uri, timeStart, timeEnd, BigNumber.from(price), amountCap, shareCyber, signatureDrop)
-          
+      const signatureDrop = await signCreateDropRequest(
+        uri,
+        timeStart,
+        timeEnd,
+        BigNumber.from(price),
+        amountCap,
+        shareCyber,
+        memory.other.address,
+        nonce,
+        memory.manager
+      )
+      await memory.contract
+        .connect(memory.other)
+        .createDrop(uri, timeStart, timeEnd, BigNumber.from(price), amountCap, shareCyber, signatureDrop)
     }
 
     const id = 0
 
-    await memory.contract
-      .connect(wowContract)
-      .mintTransfer(memory.other.address, id, 1)
-        
+    await memory.contract.connect(wowContract).mintTransfer(memory.other.address, id, 1)
+
     expect(await memory.contract.dropMintCounter(id + 14, memory.other.address)).to.be.eq('1')
   })
-
 })

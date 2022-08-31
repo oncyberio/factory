@@ -15,7 +15,7 @@ contract OnCyberAndFriendsFactoryFacet is CyberDropBase {
   ) external virtual {
     uint256 tokenId = id + 14;
     require(tokenId == 14 || tokenId == 15, 'NT');
-    
+
     address sender = _msgSender();
     require(sender == 0xBf0562B81eF8E52316BDAF6f36948Fd8bE82fCC8, 'NS');
 
@@ -29,5 +29,4 @@ contract OnCyberAndFriendsFactoryFacet is CyberDropBase {
 
     emit Minted(to, tokenId, amount);
   }
-
 }
