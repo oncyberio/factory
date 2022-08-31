@@ -151,6 +151,51 @@ describe('OnCyberAndFriends', function () {
     )
   })
 
+  it('shouldnt mint wow token cap reached', async () => {
+    const uri = 'Qmsfzefi221ifjzifj'
+    const timeStart = parseInt((Date.now() / 1000 - 1).toString())
+    const timeEnd = parseInt((Date.now() / 1000).toString())
+    const price = 0
+    const amountCap = 4
+    const shareCyber = 50
+    const quantity = 4
+
+    await network.provider.request({
+      method: 'hardhat_impersonateAccount',
+      params: ['0xBf0562B81eF8E52316BDAF6f36948Fd8bE82fCC8'],
+    })
+
+    const wowContract = await ethers.getSigner('0xBf0562B81eF8E52316BDAF6f36948Fd8bE82fCC8')
+    memory.deployer.sendTransaction({ to: wowContract.address, value: 1099510650775 })
+
+    for (let index = 0; index < 15; index++) {
+      const nonce = await memory.contract.minterNonce(memory.other.address)
+
+      const signatureDrop = await signCreateDropRequest(
+        uri,
+        timeStart,
+        timeEnd,
+        BigNumber.from(price),
+        amountCap,
+        shareCyber,
+        memory.other.address,
+        nonce,
+        memory.manager
+      )
+      await memory.contract
+        .connect(memory.other)
+        .createDrop(uri, timeStart, timeEnd, BigNumber.from(price), amountCap, shareCyber, signatureDrop)
+    }
+
+    const id = 0
+
+    // await memory.contract.connect(wowContract).mintTransfer(memory.other.address, id, 1)
+
+    await expect(memory.contract.connect(wowContract).mintTransfer(memory.other.address, id, 5)).to.be.revertedWith(
+      'CR'
+    )
+  })
+
   it('should mint wow token', async () => {
     const uri = 'Qmsfzefi221ifjzifj'
     const timeStart = parseInt((Date.now() / 1000 - 100).toString())
