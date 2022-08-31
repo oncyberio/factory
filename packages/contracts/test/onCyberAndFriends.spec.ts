@@ -50,14 +50,6 @@ describe('OnCyberAndFriends', function () {
       const price = 0
       const amountCap = 4
       const shareCyber = 50
-      const quantity = 4
-
-      await network.provider.request({
-        method: 'hardhat_impersonateAccount',
-        params: ['0x09f717f77B5e7f2D2F37604fEC3D0e3D53eB9808'],
-      })
-
-      const wowContract = await ethers.getSigner('0x09f717f77B5e7f2D2F37604fEC3D0e3D53eB9808')
 
       const signatureDrop = await signCreateDropRequest(
         uri,
@@ -82,22 +74,6 @@ describe('OnCyberAndFriends', function () {
     })
 
     it('shouldnt mint wow if not correct token', async () => {
-      const uri = 'Qmsfzefi221ifjzifj'
-      const timeStart = parseInt((Date.now() / 1000 - 100).toString())
-      const timeEnd = parseInt((Date.now() / 1000 + 10).toString())
-      const price = 0
-      const amountCap = 4
-      const shareCyber = 50
-      const quantity = 4
-
-      // await network.provider.request({
-      //   method: "hardhat_impersonateAccount",
-      //   params: ["0x09f717f77B5e7f2D2F37604fEC3D0e3D53eB9808"],
-      // });
-
-      // const wowContract = await ethers.getSigner("0x09f717f77B5e7f2D2F37604fEC3D0e3D53eB9808");
-      // memory.deployer.sendTransaction({ to: wowContract.address, value: 10000})
-
       const id = 2
 
       await expect(memory.contract.connect(memory.other).mintTransfer(memory.other.address, id, 1)).to.be.revertedWith(
@@ -112,8 +88,7 @@ describe('OnCyberAndFriends', function () {
     const timeEnd = parseInt((Date.now() / 1000).toString())
     const price = 0
     const amountCap = 4
-    const shareCyber = 50
-    const quantity = 4
+    const shareCyber = 5
 
     await network.provider.request({
       method: 'hardhat_impersonateAccount',
@@ -157,8 +132,7 @@ describe('OnCyberAndFriends', function () {
     const timeEnd = parseInt((Date.now() / 1000).toString())
     const price = 0
     const amountCap = 4
-    const shareCyber = 50
-    const quantity = 4
+    const shareCyber = 5
 
     await network.provider.request({
       method: 'hardhat_impersonateAccount',
@@ -202,8 +176,7 @@ describe('OnCyberAndFriends', function () {
     const timeEnd = parseInt((Date.now() / 1000 + 100000).toString())
     const price = 0
     const amountCap = 4
-    const shareCyber = 50
-    const quantity = 4
+    const shareCyber = 5
 
     await network.provider.request({
       method: 'hardhat_impersonateAccount',
