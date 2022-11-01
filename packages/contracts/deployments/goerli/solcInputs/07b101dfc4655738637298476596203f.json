@@ -1,0 +1,49 @@
+{
+  "language": "Solidity",
+  "sources": {
+    "contracts/OnCyberMultiSender.sol": {
+      "content": "// SPDX-License-Identifier: MIT\npragma solidity 0.8.15;\nimport '@solidstate/contracts/token/ERC1155/IERC1155.sol';\n\n//\n\ncontract OnCyberMultiSender {\n  function transfer(\n    IERC1155 _token,\n    uint256 id,\n    address[] calldata _receivers,\n    uint256[] calldata _quantities\n  ) external {\n    require(_receivers.length == _quantities.length, 'OnCyberMultiSender: receivers and quantities length mismatch');\n    for (uint256 i = 0; i < _receivers.length; i++) {\n      _token.safeTransferFrom(msg.sender, _receivers[i], id, _quantities[i], '');\n    }\n  }\n}\n"
+    },
+    "@solidstate/contracts/token/ERC1155/IERC1155.sol": {
+      "content": "// SPDX-License-Identifier: MIT\n\npragma solidity ^0.8.0;\n\nimport { IERC1155Internal } from './IERC1155Internal.sol';\nimport { IERC165 } from '../../introspection/IERC165.sol';\n\n/**\n * @notice ERC1155 interface\n * @dev see https://github.com/ethereum/EIPs/issues/1155\n */\ninterface IERC1155 is IERC1155Internal, IERC165 {\n    /**\n     * @notice query the balance of given token held by given address\n     * @param account address to query\n     * @param id token to query\n     * @return token balance\n     */\n    function balanceOf(address account, uint256 id)\n        external\n        view\n        returns (uint256);\n\n    /**\n     * @notice query the balances of given tokens held by given addresses\n     * @param accounts addresss to query\n     * @param ids tokens to query\n     * @return token balances\n     */\n    function balanceOfBatch(address[] calldata accounts, uint256[] calldata ids)\n        external\n        view\n        returns (uint256[] memory);\n\n    /**\n     * @notice query approval status of given operator with respect to given address\n     * @param account address to query for approval granted\n     * @param operator address to query for approval received\n     * @return whether operator is approved to spend tokens held by account\n     */\n    function isApprovedForAll(address account, address operator)\n        external\n        view\n        returns (bool);\n\n    /**\n     * @notice grant approval to or revoke approval from given operator to spend held tokens\n     * @param operator address whose approval status to update\n     * @param status whether operator should be considered approved\n     */\n    function setApprovalForAll(address operator, bool status) external;\n\n    /**\n     * @notice transfer tokens between given addresses, checking for ERC1155Receiver implementation if applicable\n     * @param from sender of tokens\n     * @param to receiver of tokens\n     * @param id token ID\n     * @param amount quantity of tokens to transfer\n     * @param data data payload\n     */\n    function safeTransferFrom(\n        address from,\n        address to,\n        uint256 id,\n        uint256 amount,\n        bytes calldata data\n    ) external;\n\n    /**\n     * @notice transfer batch of tokens between given addresses, checking for ERC1155Receiver implementation if applicable\n     * @param from sender of tokens\n     * @param to receiver of tokens\n     * @param ids list of token IDs\n     * @param amounts list of quantities of tokens to transfer\n     * @param data data payload\n     */\n    function safeBatchTransferFrom(\n        address from,\n        address to,\n        uint256[] calldata ids,\n        uint256[] calldata amounts,\n        bytes calldata data\n    ) external;\n}\n"
+    },
+    "@solidstate/contracts/token/ERC1155/IERC1155Internal.sol": {
+      "content": "// SPDX-License-Identifier: MIT\n\npragma solidity ^0.8.0;\n\nimport { IERC165 } from '../../introspection/IERC165.sol';\n\n/**\n * @notice Partial ERC1155 interface needed by internal functions\n */\ninterface IERC1155Internal {\n    event TransferSingle(\n        address indexed operator,\n        address indexed from,\n        address indexed to,\n        uint256 id,\n        uint256 value\n    );\n\n    event TransferBatch(\n        address indexed operator,\n        address indexed from,\n        address indexed to,\n        uint256[] ids,\n        uint256[] values\n    );\n\n    event ApprovalForAll(\n        address indexed account,\n        address indexed operator,\n        bool approved\n    );\n}\n"
+    },
+    "@solidstate/contracts/introspection/IERC165.sol": {
+      "content": "// SPDX-License-Identifier: MIT\n\npragma solidity ^0.8.0;\n\n/**\n * @title ERC165 interface registration interface\n * @dev see https://eips.ethereum.org/EIPS/eip-165\n */\ninterface IERC165 {\n    /**\n     * @notice query whether contract has registered support for given interface\n     * @param interfaceId interface id\n     * @return bool whether interface is supported\n     */\n    function supportsInterface(bytes4 interfaceId) external view returns (bool);\n}\n"
+    }
+  },
+  "settings": {
+    "optimizer": {
+      "enabled": false,
+      "runs": 200
+    },
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers",
+          "metadata",
+          "devdoc",
+          "userdoc",
+          "storageLayout",
+          "evm.gasEstimates"
+        ],
+        "": [
+          "ast"
+        ]
+      }
+    },
+    "metadata": {
+      "useLiteralContent": true
+    },
+    "libraries": {
+      "": {
+        "__CACHE_BREAKER__": "0x00000000d41867734bbee4c6863d9255b2b06ac1"
+      }
+    }
+  }
+}
