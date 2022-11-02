@@ -21,6 +21,7 @@ export type { IERC1155MetadataInternal } from "./@solidstate/contracts/token/ERC
 export type { BaseRelayRecipient } from "./contracts/BaseRelayRecipient/BaseRelayRecipient";
 export type { CyberDropBase } from "./contracts/CyberDropBase";
 export type { CyberTokenBase } from "./contracts/CyberTokenBase";
+export type { OnCyberCommunityFactoryFacet } from "./contracts/Diamantaires/Community/OnCyberCommunityFactoryFacet";
 export type { CyberDestinationFactoryFacet } from "./contracts/Diamantaires/Destination/CyberDestinationFactoryFacet";
 export type { CyberDestinationUtilityFactoryFacet } from "./contracts/Diamantaires/DestinationUtility/CyberDestinationUtilityFactoryFacet";
 export type { CyberObjectFactoryFacet } from "./contracts/Diamantaires/Object/CyberObjectFactoryFacet";
@@ -49,6 +50,7 @@ export { IERC1155Metadata__factory } from "./factories/@solidstate/contracts/tok
 export { BaseRelayRecipient__factory } from "./factories/contracts/BaseRelayRecipient/BaseRelayRecipient__factory";
 export { CyberDropBase__factory } from "./factories/contracts/CyberDropBase__factory";
 export { CyberTokenBase__factory } from "./factories/contracts/CyberTokenBase__factory";
+export { OnCyberCommunityFactoryFacet__factory } from "./factories/contracts/Diamantaires/Community/OnCyberCommunityFactoryFacet__factory";
 export { CyberDestinationFactoryFacet__factory } from "./factories/contracts/Diamantaires/Destination/CyberDestinationFactoryFacet__factory";
 export { CyberDestinationUtilityFactoryFacet__factory } from "./factories/contracts/Diamantaires/DestinationUtility/CyberDestinationUtilityFactoryFacet__factory";
 export { CyberObjectFactoryFacet__factory } from "./factories/contracts/Diamantaires/Object/CyberObjectFactoryFacet__factory";
