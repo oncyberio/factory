@@ -744,6 +744,29 @@
       "inputs": [
         {
           "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "id",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "mintTransfer",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
           "name": "_minter",
           "type": "address"
         }
@@ -1069,6 +1092,7 @@
         "0x572b6c05",
         "0x481c6a75",
         "0x08dc9f42",
+        "0x96f33ef5",
         "0x1b023947",
         "0xbc01188e",
         "0x2eb2c2d6",

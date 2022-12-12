@@ -65,7 +65,7 @@ const config: HardhatUserConfig = {
     goerli: {
       chainId: 5,
       url: 'https://goerli.infura.io/v3/b89e58ca51184cb783845c58340629c4',
-      gasPrice: parseUnits('70', 'gwei').toNumber(),
+      gasPrice: parseUnits('5', 'gwei').toNumber(),
       accounts: [process.env.GOERLI_PRIVATE_KEY || defaultPrivateKey]
         .concat(process.env.GOERLI_ACCOUNT_1_PRIVATE_KEY ? process.env.GOERLI_ACCOUNT_1_PRIVATE_KEY : [])
         .concat(
