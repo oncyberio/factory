@@ -17,12 +17,12 @@ function chunkArray(array: any[], chunkSize: number): any[] {
 
 async function main() {
   const receiversDataPath = path.join(__dirname, './receiversData.json')
-  const contractName = 'DiamondOnCyberAndFriendsFactory'
-  const batchSize = 50
-  const tokenId = 0
+  const contractName = 'DiamondOnCyberCommunityFactory'
+  const batchSize = 33
+  const tokenId = 48
 
   const accounts = await ethers.getSigners()
-  const sender = accounts[5]
+  const sender = accounts[0];
 
   const Contract = await deployments.get(contractName)
   const contract = await ethers.getContractAt(Contract.abi, Contract.address, sender)
@@ -47,9 +47,12 @@ async function main() {
   )
   const remainsAddresses = receiversDataRemains.map((receiverDataRemains: any) => receiverDataRemains.address)
   assert(Array.from(new Set(remainsAddresses)).length === remainsAddresses.length, 'Receivers address duplicated')
+  console.log(receiversDataRemains);
   assert(
     !receiversDataRemains.find(
-      (receiverDataRemains: any) => receiverDataRemains.address !== getAddress(receiverDataRemains.address)
+      (receiverDataRemains: any) => {
+        receiverDataRemains.address !== getAddress(receiverDataRemains.address)
+      }
     ),
     'Address incorrect'
   )

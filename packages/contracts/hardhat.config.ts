@@ -26,9 +26,21 @@ const config: HardhatUserConfig = {
     compilers: [
       {
         version: '0.8.15',
+        settings: {
+          optimizer: {
+            enabled: true,
+            runs: 1000,
+          },
+        },
       },
       {
         version: '0.7.6',
+        settings: {
+          optimizer: {
+            enabled: true,
+            runs: 1000,
+          },
+        },
       },
     ],
   },
@@ -65,7 +77,7 @@ const config: HardhatUserConfig = {
     goerli: {
       chainId: 5,
       url: 'https://goerli.infura.io/v3/b89e58ca51184cb783845c58340629c4',
-      gasPrice: parseUnits('5', 'gwei').toNumber(),
+      gasPrice: parseUnits('1', 'gwei').toNumber(),
       accounts: [process.env.GOERLI_PRIVATE_KEY || defaultPrivateKey]
         .concat(process.env.GOERLI_ACCOUNT_1_PRIVATE_KEY ? process.env.GOERLI_ACCOUNT_1_PRIVATE_KEY : [])
         .concat(
@@ -81,7 +93,7 @@ const config: HardhatUserConfig = {
     ethereum: {
       chainId: 1,
       url: process.env.ALCHEMY_URL || 'https://mainnet.infura.io/v3/b89e58ca51184cb783845c58340629c4',
-      gasPrice: parseUnits('14', 'gwei').toNumber(),
+      gasPrice: parseUnits('16', 'gwei').toNumber(),
       accounts: [process.env.ETHEREUM_FACTORY_PRIVATE_KEY || defaultPrivateKey],
     },
   },
