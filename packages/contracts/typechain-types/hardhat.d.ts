@@ -105,6 +105,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.CyberObjectFactoryFacet__factory>;
     getContractFactory(
+      name: "OMFactoryFacet",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.OMFactoryFacet__factory>;
+    getContractFactory(
       name: "OnCyberAndFriendsFactoryFacet",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.OnCyberAndFriendsFactoryFacet__factory>;
@@ -244,6 +248,11 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.CyberObjectFactoryFacet>;
+    getContractAt(
+      name: "OMFactoryFacet",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.OMFactoryFacet>;
     getContractAt(
       name: "OnCyberAndFriendsFactoryFacet",
       address: string,

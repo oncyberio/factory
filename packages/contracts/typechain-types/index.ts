@@ -26,6 +26,7 @@ export type { CyberDestinationFactoryFacet } from "./contracts/Diamantaires/Dest
 export type { CyberDestinationUtilityFactoryFacet } from "./contracts/Diamantaires/DestinationUtility/CyberDestinationUtilityFactoryFacet.sol/CyberDestinationUtilityFactoryFacet";
 export type { LuxContract } from "./contracts/Diamantaires/DestinationUtility/CyberDestinationUtilityFactoryFacet.sol/LuxContract";
 export type { CyberObjectFactoryFacet } from "./contracts/Diamantaires/Object/CyberObjectFactoryFacet";
+export type { OMFactoryFacet } from "./contracts/Diamantaires/OM/OMFactoryFacet";
 export type { OnCyberAndFriendsFactoryFacet } from "./contracts/Diamantaires/OnCyberAndFriends/OnCyberAndFriendsFactoryFacet";
 export type { LibDiamond } from "./contracts/Diamond/LibDiamond";
 export type { ERC1155URI } from "./contracts/ERC1155URI/ERC1155URI";
@@ -56,6 +57,7 @@ export { CyberDestinationFactoryFacet__factory } from "./factories/contracts/Dia
 export { CyberDestinationUtilityFactoryFacet__factory } from "./factories/contracts/Diamantaires/DestinationUtility/CyberDestinationUtilityFactoryFacet.sol/CyberDestinationUtilityFactoryFacet__factory";
 export { LuxContract__factory } from "./factories/contracts/Diamantaires/DestinationUtility/CyberDestinationUtilityFactoryFacet.sol/LuxContract__factory";
 export { CyberObjectFactoryFacet__factory } from "./factories/contracts/Diamantaires/Object/CyberObjectFactoryFacet__factory";
+export { OMFactoryFacet__factory } from "./factories/contracts/Diamantaires/OM/OMFactoryFacet__factory";
 export { OnCyberAndFriendsFactoryFacet__factory } from "./factories/contracts/Diamantaires/OnCyberAndFriends/OnCyberAndFriendsFactoryFacet__factory";
 export { LibDiamond__factory } from "./factories/contracts/Diamond/LibDiamond__factory";
 export { ERC1155URI__factory } from "./factories/contracts/ERC1155URI/ERC1155URI__factory";
