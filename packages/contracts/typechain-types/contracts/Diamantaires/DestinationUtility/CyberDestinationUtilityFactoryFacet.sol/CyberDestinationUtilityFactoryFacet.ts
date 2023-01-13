@@ -34,7 +34,7 @@ export interface CyberDestinationUtilityFactoryFacetInterface
     "accountsByToken(uint256)": FunctionFragment;
     "balanceOf(address,uint256)": FunctionFragment;
     "balanceOfBatch(address[],uint256[])": FunctionFragment;
-    "burnTransfer(uint256)": FunctionFragment;
+    "burnTransfer(uint256,bool)": FunctionFragment;
     "createDrop(string,uint256,uint256,uint256,uint256,uint256,bytes)": FunctionFragment;
     "dropMintCounter(uint256,address)": FunctionFragment;
     "getDrop(uint256)": FunctionFragment;
@@ -97,7 +97,7 @@ export interface CyberDestinationUtilityFactoryFacetInterface
   ): string;
   encodeFunctionData(
     functionFragment: "burnTransfer",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>]
   ): string;
   encodeFunctionData(
     functionFragment: "createDrop",
@@ -402,7 +402,8 @@ export interface CyberDestinationUtilityFactoryFacet extends BaseContract {
     ): Promise<[BigNumber[]]>;
 
     burnTransfer(
-      amount: PromiseOrValue<BigNumberish>,
+      quantity: PromiseOrValue<BigNumberish>,
+      isLux: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -552,7 +553,8 @@ export interface CyberDestinationUtilityFactoryFacet extends BaseContract {
   ): Promise<BigNumber[]>;
 
   burnTransfer(
-    amount: PromiseOrValue<BigNumberish>,
+    quantity: PromiseOrValue<BigNumberish>,
+    isLux: PromiseOrValue<boolean>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -702,7 +704,8 @@ export interface CyberDestinationUtilityFactoryFacet extends BaseContract {
     ): Promise<BigNumber[]>;
 
     burnTransfer(
-      amount: PromiseOrValue<BigNumberish>,
+      quantity: PromiseOrValue<BigNumberish>,
+      isLux: PromiseOrValue<boolean>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -925,7 +928,8 @@ export interface CyberDestinationUtilityFactoryFacet extends BaseContract {
     ): Promise<BigNumber>;
 
     burnTransfer(
-      amount: PromiseOrValue<BigNumberish>,
+      quantity: PromiseOrValue<BigNumberish>,
+      isLux: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -1058,7 +1062,8 @@ export interface CyberDestinationUtilityFactoryFacet extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     burnTransfer(
-      amount: PromiseOrValue<BigNumberish>,
+      quantity: PromiseOrValue<BigNumberish>,
+      isLux: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
