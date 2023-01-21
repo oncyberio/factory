@@ -23,7 +23,7 @@ contract CyberDestinationUtilityFactoryFacet is CyberDropBase {
 
     // burn mechanisms
     lootPodContract.safeTransferFrom(msg.sender, 0x000000000000000000000000000000000000dEaD, 1, toBurn, '');
-    _burn(msg.sender, 1, toBurn);
+    _burn(msg.sender, 1, toBurn); // replace with 5
 
     // mint new token
     LuxContract luxPodContract = LuxContract(0xf763DB874F2A6014440D0F87F39D8A2B38801a31); // replace w new rtfkt contract
