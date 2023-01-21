@@ -42,6 +42,7 @@
     "scripts:createDrop:localhost": "hardhat run scripts/createDrop.ts --network localhost",
     "scripts:mint:localhost": "hardhat run scripts/mint.ts --network localhost",
     "scripts:multiSend:localhost": "hardhat run scripts/multiSend --network localhost",
+    "scripts:multiSend:ethereum": "hardhat run scripts/multiSend --network ethereum",
     "scripts:mint:polygon": "hardhat run scripts/mint.ts --network polygon",
     "scripts:burn:goerli": "hardhat run scripts/burn.ts --network goerli"
   },
