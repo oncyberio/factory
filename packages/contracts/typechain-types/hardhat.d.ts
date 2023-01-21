@@ -85,6 +85,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.CyberTokenBase__factory>;
     getContractFactory(
+      name: "OnCyberCommunityFactoryFacet",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.OnCyberCommunityFactoryFacet__factory>;
+    getContractFactory(
       name: "CyberDestinationFactoryFacet",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.CyberDestinationFactoryFacet__factory>;
@@ -211,6 +215,11 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.CyberTokenBase>;
+    getContractAt(
+      name: "OnCyberCommunityFactoryFacet",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.OnCyberCommunityFactoryFacet>;
     getContractAt(
       name: "CyberDestinationFactoryFacet",
       address: string,
