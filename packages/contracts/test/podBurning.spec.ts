@@ -112,11 +112,9 @@ describe('Pod Burning', function () {
 
       const newUri = 'Qmsfzefi221ifjzdfj'
 
-      await memory.contract
-        .connect(memory.manager)
-        .updateTokenURI(tokenId, newUri);
+      await memory.contract.connect(memory.manager).updateTokenURI(tokenId, newUri)
 
-      expect(await memory.contract.uri(tokenId)).to.be.eq("ipfs://" + newUri);
+      expect(await memory.contract.uri(tokenId)).to.be.eq('ipfs://' + newUri)
     })
 
     it('shouldnt update metadata uri bc not owner', async () => {
@@ -158,9 +156,7 @@ describe('Pod Burning', function () {
       //   .updateTokenURI(tokenId, newUri);
 
       // await expect(memory.contract.connect(memory.other).updateTokenURI(tokenId, newUri)).to.be.revertedWith('NM')
-      await expect(memory.contract.connect(memory.other).updateTokenURI(tokenId, newUri)).to.be.revertedWith(
-        'NM'
-      )
+      await expect(memory.contract.connect(memory.other).updateTokenURI(tokenId, newUri)).to.be.revertedWith('NM')
       // expect(await memory.contract.uri(tokenId)).to.not.be.eq("ipfs://" + newUri);
     })
 

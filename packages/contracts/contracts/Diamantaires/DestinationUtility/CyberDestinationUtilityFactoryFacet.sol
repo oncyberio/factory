@@ -33,7 +33,7 @@ contract CyberDestinationUtilityFactoryFacet is CyberDropBase {
   function updateTokenURI(uint256 tokenId, string memory _tokenURI) public {
     LibAppStorage.Layout storage layout = LibAppStorage.layout();
     require(msg.sender == layout.manager, 'NM');
-    
+
     setTokenURI(tokenId, _tokenURI);
   }
 }
