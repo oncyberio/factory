@@ -25,13 +25,13 @@ import type {
 
 export interface LuxContractInterface extends utils.Interface {
   functions: {
-    "mint(address,uint256,uint256)": FunctionFragment;
+    "mintThroughBurn(address,uint256,uint256)": FunctionFragment;
   };
 
-  getFunction(nameOrSignatureOrTopic: "mint"): FunctionFragment;
+  getFunction(nameOrSignatureOrTopic: "mintThroughBurn"): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "mint",
+    functionFragment: "mintThroughBurn",
     values: [
       PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>,
@@ -39,7 +39,10 @@ export interface LuxContractInterface extends utils.Interface {
     ]
   ): string;
 
-  decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "mintThroughBurn",
+    data: BytesLike
+  ): Result;
 
   events: {};
 }
@@ -71,7 +74,7 @@ export interface LuxContract extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    mint(
+    mintThroughBurn(
       newOwner: PromiseOrValue<string>,
       tokenId: PromiseOrValue<BigNumberish>,
       amount: PromiseOrValue<BigNumberish>,
@@ -79,7 +82,7 @@ export interface LuxContract extends BaseContract {
     ): Promise<ContractTransaction>;
   };
 
-  mint(
+  mintThroughBurn(
     newOwner: PromiseOrValue<string>,
     tokenId: PromiseOrValue<BigNumberish>,
     amount: PromiseOrValue<BigNumberish>,
@@ -87,7 +90,7 @@ export interface LuxContract extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    mint(
+    mintThroughBurn(
       newOwner: PromiseOrValue<string>,
       tokenId: PromiseOrValue<BigNumberish>,
       amount: PromiseOrValue<BigNumberish>,
@@ -98,7 +101,7 @@ export interface LuxContract extends BaseContract {
   filters: {};
 
   estimateGas: {
-    mint(
+    mintThroughBurn(
       newOwner: PromiseOrValue<string>,
       tokenId: PromiseOrValue<BigNumberish>,
       amount: PromiseOrValue<BigNumberish>,
@@ -107,7 +110,7 @@ export interface LuxContract extends BaseContract {
   };
 
   populateTransaction: {
-    mint(
+    mintThroughBurn(
       newOwner: PromiseOrValue<string>,
       tokenId: PromiseOrValue<BigNumberish>,
       amount: PromiseOrValue<BigNumberish>,

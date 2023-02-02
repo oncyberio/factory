@@ -53,8 +53,8 @@ const config: HardhatUserConfig = {
     managerAndFriends: process.env.MANAGER_ANDFRIENDS_ADDRESS || 3,
     managerCommunity: process.env.MANAGER_COMMUNITY_ADDRESS || 3,
     managerOM: process.env.MANAGER_OM_ADDRESS || 3,
-    biconomyForwarder: process.env.BICONOMY_FORWARDER || '0x9399BB24DBB5C4b782C70c2969F58716Ebbd6a3b',
-    opensea: process.env.OPENSEA || '0x53d791f18155c211ff8b58671d0f7e9b50e596ad',
+    biconomyForwarder: process.env.BICONOMY_FORWARDER || '0x84a0856b038eaAd1cC7E297cF34A7e72685A8693',
+    opensea: process.env.OPENSEA || '0x1E0049783F008A0085193E00003D00cd54003c71',
   },
   networks: {
     localhost: {
@@ -94,7 +94,7 @@ const config: HardhatUserConfig = {
     ethereum: {
       chainId: 1,
       url: process.env.ALCHEMY_URL || 'https://mainnet.infura.io/v3/b89e58ca51184cb783845c58340629c4',
-      gasPrice: parseUnits('18', 'gwei').toNumber(),
+      gasPrice: parseUnits('17', 'gwei').toNumber(),
       accounts: [process.env.ETHEREUM_FACTORY_PRIVATE_KEY || defaultPrivateKey],
     },
   },

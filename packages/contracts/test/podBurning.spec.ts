@@ -79,6 +79,91 @@ describe('Pod Burning', function () {
       await expect(memory.contract.connect(memory.other2).burnTransfer(1, false)).to.be.revertedWith('NS')
     })
 
+    it('should update metadata uri bc owner', async () => {
+      const uri = 'Qmsfzefi221ifjzifj'
+      const timeStart = parseInt((Date.now() / 1000 - 100).toString())
+      const timeEnd = parseInt((Date.now() / 1000 + 10).toString())
+      const price = 0
+      const amountCap = 40
+      const shareCyber = 50
+
+      const signatureDrop = await signCreateDropRequest(
+        uri,
+        timeStart,
+        timeEnd,
+        BigNumber.from(price),
+        amountCap,
+        shareCyber,
+        memory.other.address,
+        0,
+        memory.manager
+      )
+      await memory.contract
+        .connect(memory.other)
+        .createDrop(uri, timeStart, timeEnd, BigNumber.from(price), amountCap, shareCyber, signatureDrop)
+
+      const tokenId = 0
+
+      const signatureMint = await signMintRequest(tokenId, 1, memory.other2.address, 0, memory.manager)
+
+      await memory.contract.connect(memory.other2).mint(tokenId, 1, signatureMint, {
+        value: 0,
+      })
+
+      const newUri = 'Qmsfzefi221ifjzdfj'
+
+      await memory.contract
+        .connect(memory.manager)
+        .updateTokenURI(tokenId, newUri);
+
+      expect(await memory.contract.uri(tokenId)).to.be.eq("ipfs://" + newUri);
+    })
+
+    it('shouldnt update metadata uri bc not owner', async () => {
+      const uri = 'Qmsfzefi221ifjzifj'
+      const timeStart = parseInt((Date.now() / 1000 - 100).toString())
+      const timeEnd = parseInt((Date.now() / 1000 + 10).toString())
+      const price = 0
+      const amountCap = 40
+      const shareCyber = 50
+
+      const signatureDrop = await signCreateDropRequest(
+        uri,
+        timeStart,
+        timeEnd,
+        BigNumber.from(price),
+        amountCap,
+        shareCyber,
+        memory.other.address,
+        0,
+        memory.manager
+      )
+
+      await memory.contract
+        .connect(memory.other)
+        .createDrop(uri, timeStart, timeEnd, BigNumber.from(price), amountCap, shareCyber, signatureDrop)
+
+      const tokenId = 0
+
+      const signatureMint = await signMintRequest(tokenId, 1, memory.other2.address, 0, memory.manager)
+
+      await memory.contract.connect(memory.other2).mint(tokenId, 1, signatureMint, {
+        value: 0,
+      })
+
+      const newUri = 'Qmsfzefi221ifjzdfj'
+
+      // await memory.contract
+      //   .connect(memory.manager)
+      //   .updateTokenURI(tokenId, newUri);
+
+      // await expect(memory.contract.connect(memory.other).updateTokenURI(tokenId, newUri)).to.be.revertedWith('NM')
+      await expect(memory.contract.connect(memory.other).updateTokenURI(tokenId, newUri)).to.be.revertedWith(
+        'NM'
+      )
+      // expect(await memory.contract.uri(tokenId)).to.not.be.eq("ipfs://" + newUri);
+    })
+
     // it('shouldnt burn with 1 space pods', async () => {
     //   const uri = 'Qmsfzefi221ifjzifj'
     //   const timeStart = parseInt((Date.now() / 1000).toString())

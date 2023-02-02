@@ -53,6 +53,7 @@ export interface CyberDestinationUtilityFactoryFacetInterface
     "totalHolders(uint256)": FunctionFragment;
     "totalSupply()": FunctionFragment;
     "totalSupply(uint256)": FunctionFragment;
+    "updateTokenURI(uint256,string)": FunctionFragment;
     "uri(uint256)": FunctionFragment;
   };
 
@@ -80,6 +81,7 @@ export interface CyberDestinationUtilityFactoryFacetInterface
       | "totalHolders"
       | "totalSupply()"
       | "totalSupply(uint256)"
+      | "updateTokenURI"
       | "uri"
   ): FunctionFragment;
 
@@ -196,6 +198,10 @@ export interface CyberDestinationUtilityFactoryFacetInterface
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
+    functionFragment: "updateTokenURI",
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "uri",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
@@ -265,6 +271,10 @@ export interface CyberDestinationUtilityFactoryFacetInterface
   ): Result;
   decodeFunctionResult(
     functionFragment: "totalSupply(uint256)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "updateTokenURI",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "uri", data: BytesLike): Result;
@@ -529,6 +539,12 @@ export interface CyberDestinationUtilityFactoryFacet extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
+    updateTokenURI(
+      tokenId: PromiseOrValue<BigNumberish>,
+      _tokenURI: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     uri(
       _tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -680,6 +696,12 @@ export interface CyberDestinationUtilityFactoryFacet extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
+  updateTokenURI(
+    tokenId: PromiseOrValue<BigNumberish>,
+    _tokenURI: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   uri(
     _tokenId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
@@ -830,6 +852,12 @@ export interface CyberDestinationUtilityFactoryFacet extends BaseContract {
       id: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    updateTokenURI(
+      tokenId: PromiseOrValue<BigNumberish>,
+      _tokenURI: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     uri(
       _tokenId: PromiseOrValue<BigNumberish>,
@@ -1037,6 +1065,12 @@ export interface CyberDestinationUtilityFactoryFacet extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    updateTokenURI(
+      tokenId: PromiseOrValue<BigNumberish>,
+      _tokenURI: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     uri(
       _tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -1169,6 +1203,12 @@ export interface CyberDestinationUtilityFactoryFacet extends BaseContract {
     "totalSupply(uint256)"(
       id: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    updateTokenURI(
+      tokenId: PromiseOrValue<BigNumberish>,
+      _tokenURI: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     uri(

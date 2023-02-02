@@ -28,7 +28,7 @@ const _abi = [
         type: "uint256",
       },
     ],
-    name: "mint",
+    name: "mintThroughBurn",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
