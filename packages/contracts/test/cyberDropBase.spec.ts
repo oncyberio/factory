@@ -533,6 +533,292 @@ describe('CyberDropBase', function () {
     })
   })
 
+  describe('UpdateDrop', () => {
+    it('Should update a created drop', async () => {
+      // Create drop
+
+      const uri = 'Qmsfzefi221ifjzifj'
+      const timeStart = parseInt((Date.now() / 1000).toString())
+      const timeEnd = parseInt((Date.now() / 1000 + 10).toString())
+      const price = 10
+      const amountCap = 10
+      const shareCyber = 50
+      const signatureDrop = await signCreateDropRequest(
+        uri,
+        timeStart,
+        timeEnd,
+        BigNumber.from(price),
+        amountCap,
+        shareCyber,
+        memory.other.address,
+        0,
+        memory.manager
+      )
+      await memory.contract
+        .connect(memory.other)
+        .createDrop(uri, timeStart, timeEnd, BigNumber.from(price), amountCap, shareCyber, signatureDrop)
+
+      const tokenId = 0
+
+      expect(await memory.contract.balanceOf(memory.other.address, tokenId)).to.eq('0')
+      expect(await memory.contract.balanceOf(memory.oncyber.address, tokenId)).to.eq('0')
+
+      expect(await memory.contract.minterNonce(memory.other.address)).to.eq('1')
+      expect(await memory.contract.uri(tokenId)).to.eq(tokenURI(uri))
+      expect(await memory.contract['totalSupply()']()).to.eq('1')
+
+      const drop = await memory.contract.getDrop(tokenId)
+
+      expect(drop.timeStart).to.eq(timeStart)
+      expect(drop.timeEnd).to.eq(timeEnd)
+      expect(drop.price).to.eq(price)
+      expect(drop.amountCap).to.eq(amountCap)
+      expect(drop.shareCyber).to.eq(shareCyber)
+      expect(drop.creator).to.eq(memory.other.address)
+      expect(drop.minted).to.eq(0x00)
+
+      // Update drop
+
+      const newUri = 'Qmsfzefi221ifjzifj2'
+      const newTimeStart = parseInt((Date.now() / 1000 + 100).toString())
+      const newTimeEnd = parseInt((Date.now() / 1000 + 200).toString())
+
+      await memory.contract
+        .connect(memory.other)
+        .updateDrop(tokenId, newUri, newTimeStart, newTimeEnd)
+
+      const newDrop = await memory.contract.getDrop(tokenId)
+
+      expect(newDrop.timeStart).to.eq(newTimeStart)
+      expect(newDrop.timeEnd).to.eq(newTimeEnd)
+      expect(newDrop.price).to.eq(price)
+      expect(newDrop.amountCap).to.eq(amountCap)
+      expect(newDrop.shareCyber).to.eq(shareCyber)
+      expect(newDrop.creator).to.eq(memory.other.address)
+
+      expect(await memory.contract.uri(tokenId)).to.eq(tokenURI(newUri))
+    })
+
+    it('Shouldn\'t update drop created by another wallet', async () => {
+      // Create drop
+
+      const uri = 'Qmsfzefi221ifjzifj'
+      const timeStart = parseInt((Date.now() / 1000).toString())
+      const timeEnd = parseInt((Date.now() / 1000 + 10).toString())
+      const price = 10
+      const amountCap = 10
+      const shareCyber = 50
+      const signatureDrop = await signCreateDropRequest(
+        uri,
+        timeStart,
+        timeEnd,
+        BigNumber.from(price),
+        amountCap,
+        shareCyber,
+        memory.other.address,
+        0,
+        memory.manager
+      )
+      await memory.contract
+        .connect(memory.other)
+        .createDrop(uri, timeStart, timeEnd, BigNumber.from(price), amountCap, shareCyber, signatureDrop)
+
+      const tokenId = 0
+
+      expect(await memory.contract.balanceOf(memory.other.address, tokenId)).to.eq('0')
+      expect(await memory.contract.balanceOf(memory.oncyber.address, tokenId)).to.eq('0')
+
+      expect(await memory.contract.minterNonce(memory.other.address)).to.eq('1')
+      expect(await memory.contract.uri(tokenId)).to.eq(tokenURI(uri))
+      expect(await memory.contract['totalSupply()']()).to.eq('1')
+
+      const drop = await memory.contract.getDrop(tokenId)
+
+      expect(drop.timeStart).to.eq(timeStart)
+      expect(drop.timeEnd).to.eq(timeEnd)
+      expect(drop.price).to.eq(price)
+      expect(drop.amountCap).to.eq(amountCap)
+      expect(drop.shareCyber).to.eq(shareCyber)
+      expect(drop.creator).to.eq(memory.other.address)
+      expect(drop.minted).to.eq(0x00)
+
+      // Update drop from another wallet
+
+      const newUri = 'Qmsfzefi221ifjzifj2'
+      const newTimeStart = parseInt((Date.now() / 1000 + 100).toString())
+      const newTimeEnd = parseInt((Date.now() / 1000 + 200).toString())
+
+      await expect(memory.contract
+        .connect(memory.other2)
+        .updateDrop(tokenId, newUri, newTimeStart, newTimeEnd)).to.be.revertedWith('NM')
+
+      const newDrop = await memory.contract.getDrop(tokenId)
+
+      expect(newDrop.timeStart).to.eq(timeStart)
+      expect(newDrop.timeEnd).to.eq(timeEnd)
+      expect(newDrop.price).to.eq(price)
+      expect(newDrop.amountCap).to.eq(amountCap)
+      expect(newDrop.shareCyber).to.eq(shareCyber)
+      expect(newDrop.creator).to.eq(memory.other.address)
+
+      expect(await memory.contract.uri(tokenId)).to.eq(tokenURI(uri))
+
+    });
+
+    it('Should be able to update a drop multiple times', async () => {
+      const uri = 'Qmsfzefi221ifjzifj'
+      const timeStart = parseInt((Date.now() / 1000).toString())
+      const timeEnd = parseInt((Date.now() / 1000 + 10).toString())
+      const price = 10
+      const amountCap = 10
+      const shareCyber = 50
+      const signatureDrop = await signCreateDropRequest(
+        uri,
+        timeStart,
+        timeEnd,
+        BigNumber.from(price),
+        amountCap,
+        shareCyber,
+        memory.other.address,
+        0,
+        memory.manager
+      )
+      await memory.contract
+        .connect(memory.other)
+        .createDrop(uri, timeStart, timeEnd, BigNumber.from(price), amountCap, shareCyber, signatureDrop)
+
+      const tokenId = 0
+
+      // first update
+      let newUri = 'Qmsfzefi221ifjzifj2'
+      let newTimeStart = parseInt((Date.now() / 1000 + 100).toString())
+      let newTimeEnd = parseInt((Date.now() / 1000 + 200).toString())
+      await memory.contract
+        .connect(memory.other)
+        .updateDrop(tokenId, newUri, newTimeStart, newTimeEnd)
+
+      const newDropIntermediary = await memory.contract.getDrop(tokenId)
+
+      expect(newDropIntermediary.timeStart).to.eq(newTimeStart)
+      expect(newDropIntermediary.timeEnd).to.eq(newTimeEnd)
+      expect(newDropIntermediary.price).to.eq(price)
+      expect(newDropIntermediary.amountCap).to.eq(amountCap)
+      expect(newDropIntermediary.shareCyber).to.eq(shareCyber)
+      expect(newDropIntermediary.creator).to.eq(memory.other.address)
+      expect(await memory.contract.uri(tokenId)).to.eq(tokenURI(newUri))
+
+      // second update
+      newUri = 'Qmsfzefi221ifjzifj3'
+      newTimeStart = parseInt((Date.now() / 1000 + 300).toString())
+      newTimeEnd = parseInt((Date.now() / 1000 + 400).toString())
+      await memory.contract
+        .connect(memory.other)
+        .updateDrop(tokenId, newUri, newTimeStart, newTimeEnd)
+
+      const newDrop = await memory.contract.getDrop(tokenId)
+
+      expect(newDrop.timeStart).to.eq(newTimeStart)
+      expect(newDrop.timeEnd).to.eq(newTimeEnd)
+      expect(newDrop.price).to.eq(price)
+      expect(newDrop.amountCap).to.eq(amountCap)
+      expect(newDrop.shareCyber).to.eq(shareCyber)
+      expect(newDrop.creator).to.eq(memory.other.address)
+      expect(await memory.contract.uri(tokenId)).to.eq(tokenURI(newUri))
+    })
+
+    it('Shouldn\'t be able to update a drop with a end time before a start time', async () => {
+      const uri = 'Qmsfzefi221ifjzifj'
+      const timeStart = parseInt((Date.now() / 1000).toString())
+      const timeEnd = parseInt((Date.now() / 1000 + 10).toString())
+      const price = 10
+      const amountCap = 10
+      const shareCyber = 50
+      const signatureDrop = await signCreateDropRequest(
+        uri,
+        timeStart,
+        timeEnd,
+        BigNumber.from(price),
+        amountCap,
+        shareCyber,
+        memory.other.address,
+        0,
+        memory.manager
+      )
+      await memory.contract
+        .connect(memory.other)
+        .createDrop(uri, timeStart, timeEnd, BigNumber.from(price), amountCap, shareCyber, signatureDrop)
+
+      const tokenId = 0
+      const newUri = 'Qmsfzefi221ifjzifj2'
+      const newTimeStart = parseInt((Date.now() / 1000 + 200).toString())
+      const newTimeEnd = parseInt((Date.now() / 1000 + 100).toString())
+
+      await expect(memory.contract
+        .connect(memory.other)
+        .updateDrop(tokenId, newUri, newTimeStart, newTimeEnd)).to.be.revertedWithPanic(0x11)
+
+    })
+
+    it('Should be able to mint after an update', async () => {
+      const uri = 'Qmsfzefi221ifjzifj'
+      const timeStart = parseInt((Date.now() / 1000).toString())
+      const timeEnd = parseInt((Date.now() / 1000 + 10).toString())
+      const price = 10
+      const amountCap = 10
+      const shareCyber = 50
+      const signatureDrop = await signCreateDropRequest(
+        uri,
+        timeStart,
+        timeEnd,
+        BigNumber.from(price),
+        amountCap,
+        shareCyber,
+        memory.other.address,
+        0,
+        memory.manager
+      )
+
+      await memory.contract
+        .connect(memory.other)
+        .createDrop(uri, timeStart, timeEnd, BigNumber.from(price), amountCap, shareCyber, signatureDrop)
+
+      const tokenId = 0
+
+      // Update drop
+      const newUri = 'Qmsfzefi221ifjzifj2'
+      const newTimeStart = parseInt((Date.now() / 1000 - 100).toString())
+      const newTimeEnd = parseInt((Date.now() / 1000 + 200).toString())
+
+      await memory.contract
+        .connect(memory.other)
+        .updateDrop(tokenId, newUri, newTimeStart, newTimeEnd)
+
+      // Mint after update
+      const quantity = 1
+      const signatureMint = await signMintRequest(tokenId, quantity, memory.other2.address, 0, memory.manager)
+      const mintPrice = BigNumber.from(quantity).mul(price)
+      
+      await memory.contract.connect(memory.other2).mint(tokenId, quantity, signatureMint, {
+        value: mintPrice,
+      })
+      expect(await memory.contract.balanceOf(memory.other2.address, tokenId)).to.eq(quantity)
+    })
+
+    it('Souldn\'t update the drop if the drop does not exist', async () => {
+      const tokenId = 0
+
+      const newUri = 'Qmsfzefi221ifjzifj2'
+      const newTimeStart = parseInt((Date.now() / 1000 + 100).toString())
+      const newTimeEnd = parseInt((Date.now() / 1000 + 200).toString())
+
+      await expect(memory.contract
+        .connect(memory.other)
+        .updateDrop(tokenId, newUri, newTimeStart, newTimeEnd)).to.be.reverted
+
+      await expect(memory.contract.getDrop(tokenId)).to.be.revertedWith('DNE')
+    })
+  })
+
   describe('Mint', () => {
     it('Should mint one', async () => {
       const uri = 'Qmsfzefi221ifjzifj'
