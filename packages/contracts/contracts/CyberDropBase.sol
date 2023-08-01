@@ -14,6 +14,7 @@ contract CyberDropBase is CyberTokenBase {
   using Counters for Counters.Counter;
 
   event DropCreated(address indexed account, uint256 indexed tokenId);
+  event DropUpdated(address indexed account, uint256 indexed tokenId);
 
   function dropMintCounter(uint256 _tokenId, address _minter) external view returns (uint256) {
     LibDropStorage.Drop storage drop = LibDropStorage.layout().drops[_tokenId];
@@ -83,6 +84,26 @@ contract CyberDropBase is CyberTokenBase {
     drop.creator = payable(sender);
 
     emit DropCreated(sender, tokenId);
+  }
+
+  function updateDrop(
+    uint256 _tokenId,
+    string memory _uri,
+    uint256 _timeStart,
+    uint256 _timeEnd
+  ) external {
+    require(_timeEnd - _timeStart > 0, 'IT');
+
+    LibDropStorage.Drop storage drop = LibDropStorage.layout().drops[_tokenId];
+    address sender = _msgSender();
+
+    require(drop.creator == sender, 'NM');
+
+    setTokenURI(_tokenId, _uri);
+    drop.timeStart = _timeStart;
+    drop.timeEnd = _timeEnd;
+
+    emit DropUpdated(sender, _tokenId);
   }
 
   function mint(

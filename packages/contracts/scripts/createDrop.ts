@@ -5,10 +5,10 @@ import { Log } from 'hardhat-deploy/dist/types'
 import { signCreateDropRequest } from '../lib/utils'
 
 async function main() {
-  const contractName = 'DiamondOnCyberAndFriendsFactory'
+  const contractName = 'DiamondCyberDestinationUtilityFactory'
 
   const accounts = await ethers.getSigners()
-  const manager = accounts[3]
+  const manager = accounts[0]
   const minter = accounts[0]
 
   const Contract = await deployments.get(contractName)
@@ -16,7 +16,7 @@ async function main() {
 
   const uri = 'QmQwfto3zFsasHnvNpyKW7jZVVkAgxpLAKfxQhTbnykHh8'
   const timeStart = parseInt((Date.now() / 1000).toString())
-  const timeEnd = parseInt((Date.now() / 1000 + 100000000).toString())
+  const timeEnd = parseInt((Date.now() / 1000 + 100000000000).toString())
   const price = parseEther('0')
   const amountCap = 10000
   const shareCyber = 50

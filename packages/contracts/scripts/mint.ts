@@ -3,16 +3,16 @@ import { config, deployments, ethers, network } from 'hardhat'
 import { signMintRequest } from '../lib/utils'
 
 async function main() {
-  const contractName = 'DiamondCyberDestinationUtility'
+  const contractName = 'DiamondCyberDestinationUtilityFactory'
 
   const accounts = await ethers.getSigners()
-  const minter = accounts[5]
-  const manager = accounts[3]
+  const minter = accounts[0]
+  const manager = accounts[0]
 
   const Contract = await deployments.get(contractName)
   const contract = await ethers.getContractAt(Contract.abi, Contract.address, minter)
-  const tokenId = 6
-  const quantity = 10000
+  const tokenId = 1
+  const quantity = 30
   const mintPrice = 0
 
   const signatureMint = await signMintRequest(tokenId, quantity, minter.address, 0, manager)

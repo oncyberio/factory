@@ -97,9 +97,17 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.CyberDestinationUtilityFactoryFacet__factory>;
     getContractFactory(
+      name: "LuxContract",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.LuxContract__factory>;
+    getContractFactory(
       name: "CyberObjectFactoryFacet",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.CyberObjectFactoryFacet__factory>;
+    getContractFactory(
+      name: "OMFactoryFacet",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.OMFactoryFacet__factory>;
     getContractFactory(
       name: "OnCyberAndFriendsFactoryFacet",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -231,10 +239,20 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.CyberDestinationUtilityFactoryFacet>;
     getContractAt(
+      name: "LuxContract",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.LuxContract>;
+    getContractAt(
       name: "CyberObjectFactoryFacet",
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.CyberObjectFactoryFacet>;
+    getContractAt(
+      name: "OMFactoryFacet",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.OMFactoryFacet>;
     getContractAt(
       name: "OnCyberAndFriendsFactoryFacet",
       address: string,
